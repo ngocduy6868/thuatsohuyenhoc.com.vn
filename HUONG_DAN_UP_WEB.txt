@@ -1,0 +1,16 @@
+﻿================================================================================
+HUONG DAN UP TRANG WEB LEN HOSTING CHO TEN MIEN thuatsohuyenhoc.com.vn
+================================================================================
+Tat ca cac thu muc va file trong thu muc nay la BO MA NGUON HOAN CHINH 100%.
+
+CAC BUOC UP LEN HOSTING:
+1. Ban dung file 'TRON_BO_WEB_UP_HOSTING.zip' o ngoai man hinh Desktop.
+2. Dang nhap vao cPanel (hoac File Manager cua Hosting thuatsohuyenhoc.com.vn).
+3. Vao thu muc 'public_html' (thu muc goc cua ten mien).
+4. Xoa hoac don dep cac file cu bi thieu truoc do trong public_html.
+5. Bam nut 'Upload' va chon file 'TRON_BO_WEB_UP_HOSTING.zip'.
+6. Sau khi upload xong, nhap chuot phai vao file zip tren cPanel va chon 'Extract' (Giai nen).
+7. Kiem tra: File 'index.html', cac thu muc 'js', 'css', 'assets', 'Anh Bai Viet Khung 16-9'
+   phai nam ngay trong thu muc public_html.
+8. Mo trinh duyet vao lai: http://thuatsohuyenhoc.com.vn -> Toan bo anh va cong thuc se hien len day du 100%!
+================================================================================

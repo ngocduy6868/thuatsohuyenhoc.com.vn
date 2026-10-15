@@ -1,0 +1,35 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Rooster Cockscomb -->
+  <path d="M33,24 C31,18 36,17 38,20 C40,16 45,16 45,21 C48,18 52,21 49,26 L33,26 Z" fill="#DFBA73"/>
+  <!-- Head & Body -->
+  <ellipse cx="40" cy="48" rx="15" ry="16" fill="#8B1E1E"/>
+  <circle cx="39" cy="33" r="10" fill="#7A1414"/>
+  <!-- Eye -->
+  <circle cx="36" cy="31" r="2.2" fill="#FFE6AA"/>
+  <circle cx="36" cy="31" r="1.1" fill="#3D0000"/>
+  <!-- Beak & Wattle -->
+  <polygon points="30,34 23,37 30,39" fill="#DFBA73"/>
+  <path d="M32,39 C30,44 35,45 34,40 Z" fill="#B87314"/>
+  <!-- Chest Feather Arc -->
+  <path d="M34,47 C37,55 45,55 48,47" fill="none" stroke="#DFBA73" stroke-width="2"/>
+  <!-- Tail Feathers -->
+  <path d="M51,46 C59,42 63,33 60,25 C58,35 55,42 48,48" fill="#DFBA73"/>
+</svg>

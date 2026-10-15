@@ -1,0 +1,35 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Pig Pointed Flappy Ears -->
+  <polygon points="26,32 22,22 32,26" fill="#DFBA73"/>
+  <polygon points="54,32 58,22 48,26" fill="#DFBA73"/>
+  <!-- Plump Head & Body -->
+  <ellipse cx="40" cy="47" rx="16" ry="17" fill="#8B1E1E"/>
+  <circle cx="40" cy="38" r="13" fill="#7A1414"/>
+  <!-- Smiling Eyes -->
+  <path d="M31,34 C33,31 37,31 38,34" fill="none" stroke="#FFE6AA" stroke-width="1.8" stroke-linecap="round"/>
+  <path d="M42,34 C43,31 47,31 49,34" fill="none" stroke="#FFE6AA" stroke-width="1.8" stroke-linecap="round"/>
+  <!-- Big Cute Snout -->
+  <ellipse cx="40" cy="42" rx="7.5" ry="5" fill="#FFF4DE" stroke="#B87314" stroke-width="1"/>
+  <ellipse cx="37" cy="42" rx="1.5" ry="2" fill="#5E0D0D"/>
+  <ellipse cx="43" cy="42" rx="1.5" ry="2" fill="#5E0D0D"/>
+  <!-- Gold Lucky Ingot -->
+  <path d="M35,56 C35,52 45,52 45,56 C47,60 33,60 35,56 Z" fill="#DFBA73" stroke="#B87314" stroke-width="1"/>
+</svg>

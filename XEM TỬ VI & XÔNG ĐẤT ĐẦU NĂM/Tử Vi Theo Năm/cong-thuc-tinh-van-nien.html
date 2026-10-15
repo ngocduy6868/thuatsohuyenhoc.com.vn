@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Công Thức Tính Vận Niên Trong Tử Vi - Bảng Tra Cứu &amp; Luận Giải Chi Tiết</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-red: #8B1E1E;
+      --dark-red: #5C1010;
+      --border-gold: #DFBA73;
+      --bg-gold-light: #FFF9EE;
+      --text-main: #2C241E;
+      --gold-gradient: linear-gradient(135deg, #F3E2B8 0%, #DFBA73 50%, #B88E3E 100%);
+      --red-gradient: linear-gradient(135deg, #8B1E1E 0%, #5C1010 100%);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #F8F5EE;
+      color: var(--text-main);
+      font-family: 'Times New Roman', Times, 'Noto Serif', serif;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    /* Header */
+    .header-bar {
+      background: var(--red-gradient);
+      border-bottom: 3px solid var(--border-gold);
+      padding: 14px 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .header-logo {
+      width: 38px;
+      height: 38px;
+      background: var(--gold-gradient);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--dark-red);
+      font-size: 18px;
+    }
+
+    .header-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFE6B0;
+      letter-spacing: 0.5px;
+    }
+
+    .header-sub {
+      font-size: 12px;
+      color: #EBD3AB;
+    }
+
+    .header-actions {
+      display: flex;
+      gap: 10px;
+    }
+
+    .btn-header {
+      background: rgba(255,255,255,0.12);
+      border: 1px solid var(--border-gold);
+      color: #FFF2D1;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-header:hover {
+      background: var(--gold-gradient);
+      color: var(--dark-red);
+    }
+
+    /* Container */
+    .container {
+      max-width: 920px;
+      margin: 24px auto 50px auto;
+      padding: 0 16px;
+    }
+
+    /* Document Sheet */
+    .document-card {
+      background: #FFFFFF;
+      border: 1.5px solid #D5CBB5;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+      padding: 38px 46px;
+      border-radius: 6px;
+    }
+
+    .doc-main-heading {
+      text-align: center;
+      font-size: 21px;
+      font-weight: bold;
+      color: var(--primary-red);
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .doc-sub-heading {
+      text-align: center;
+      font-size: 13.5px;
+      color: #6B5D4D;
+      margin-bottom: 26px;
+      font-style: italic;
+    }
+
+    /* Interactive Calculator Box */
+    .calc-box {
+      background: var(--bg-gold-light);
+      border: 1.5px solid var(--border-gold);
+      border-radius: 8px;
+      padding: 18px 22px;
+      margin-bottom: 30px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .calc-title {
+      font-weight: 800;
+      color: var(--primary-red);
+      font-size: 15px;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .calc-group {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .calc-label {
+      font-size: 12.5px;
+      font-weight: 700;
+      color: #4A3E31;
+    }
+
+    .calc-input, .calc-select {
+      background: #fff;
+      border: 1px solid var(--border-gold);
+      padding: 7px 10px;
+      border-radius: 5px;
+      font-size: 13.5px;
+      color: #222;
+      outline: none;
+    }
+
+    .calc-result {
+      background: #fff;
+      border: 1px dashed var(--border-gold);
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-family: 'Times New Roman', serif;
+      line-height: 1.6;
+    }
+
+    /* Section Headings */
+    .sec-heading {
+      color: #D60000;
+      font-weight: bold;
+      font-size: 16.5px;
+      margin: 28px 0 10px 0;
+      padding-bottom: 4px;
+      border-bottom: 1.5px solid #E6D4B8;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sub-sec-heading {
+      color: var(--primary-red);
+      font-weight: bold;
+      font-size: 15px;
+      margin: 16px 0 6px 0;
+    }
+
+    /* Formulas & Code Blocks */
+    .formula-badge {
+      background: #F4F1EA;
+      border-left: 4px solid var(--primary-red);
+      padding: 12px 16px;
+      margin: 12px 0;
+      border-radius: 0 6px 6px 0;
+      font-family: 'Consolas', 'Courier New', monospace;
+      font-size: 13.5px;
+      color: #1A1A1A;
+    }
+
+    /* Tables */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0 24px 0;
+      font-size: 14px;
+    }
+
+    .data-table th {
+      background: var(--red-gradient);
+      color: #FFE6B0;
+      padding: 9px 12px;
+      text-align: left;
+      border: 1px solid rgba(223, 186, 115, 0.4);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+    }
+
+    .data-table td {
+      padding: 9px 12px;
+      border: 1px solid #E5DEC9;
+      line-height: 1.6;
+    }
+
+    .data-table tr:nth-child(even) {
+      background: #FAF8F4;
+    }
+
+    .data-table tr:hover {
+      background: #FFF7E6;
+    }
+
+    .tag-cat {
+      background: #DCFCE7;
+      color: #166534;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .tag-hung {
+      background: #FEE2E2;
+      color: #991B1B;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    .tag-binh {
+      background: #FEF3C7;
+      color: #92400E;
+      padding: 2px 8px;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 700;
+      display: inline-block;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+
+    /* Matrix Table */
+    .matrix-wrapper {
+      overflow-x: auto;
+      margin: 16px 0;
+    }
+
+    .matrix-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 12.5px;
+      min-width: 680px;
+    }
+
+    .matrix-table th, .matrix-table td {
+      border: 1px solid #D5CBB5;
+      padding: 6px 8px;
+      text-align: center;
+    }
+
+    .matrix-table th {
+      background: #8B1E1E;
+      color: #fff;
+    }
+
+    .matrix-table td.header-col {
+      background: #F4EEDF;
+      font-weight: bold;
+      color: var(--primary-red);
+    }
+
+    /* Print */
+    @media print {
+      .header-bar, .calc-box {
+        display: none !important;
+      }
+      body {
+        background: #fff;
+        color: #000;
+      }
+      .document-card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header-bar">
+    <div class="header-left">
+      <div class="header-logo"><i class="fa-solid fa-scroll"></i></div>
+      <div>
+        <div class="header-title">CÔNG THỨC TÍNH VẬN NIÊN</div>
+        <div class="header-sub">Hệ Thống Tra Cứu &amp; Giải Mã Vận Niên Tử Vi Trọn Bộ</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-header" onclick="window.print()">
+        <i class="fa-solid fa-print"></i> In / Lưu PDF
+      </button>
+      <a href="xem-tu-vi-dau-nam.html" class="btn-header">
+        <i class="fa-solid fa-arrow-left"></i> Phần Mềm Xem Tử Vi
+      </a>
+    </div>
+  </header>
+
+  <div class="container">
+    <div class="document-card">
+
+      <!-- Title -->
+      <h1 class="doc-main-heading">CÔNG THỨC &amp; NGUYÊN LÝ TÍNH VẬN NIÊN TRONG TỬ VI ĐẦU NĂM</h1>
+      <div class="doc-sub-heading">Tài liệu chuẩn mực trích xuất cho Công Cụ Tử Vi Theo Năm – Dành cho tra cứu và lập trình giải thuật</div>
+
+      <!-- Quick Interactive Calculator -->
+      <div class="calc-box">
+        <div class="calc-title">
+          <i class="fa-solid fa-calculator"></i> BỘ TRA CỨU NHANH VẬN NIÊN THEO TUỔI &amp; NĂM
+        </div>
+        <div class="calc-grid">
+          <div class="calc-group">
+            <label class="calc-label" for="inpNamSinh">Năm Sinh Gia Chủ:</label>
+            <input type="number" id="inpNamSinh" class="calc-input" value="1986" min="1930" max="2030" oninput="tinhVanNienNhanh()">
+          </div>
+          <div class="calc-group">
+            <label class="calc-label" for="selNamXem">Năm Cần Xem:</label>
+            <select id="selNamXem" class="calc-select" onchange="tinhVanNienNhanh()">
+              <option value="2026">2026 (Bính Ngọ)</option>
+              <option value="2027" selected>2027 (Đinh Mùi)</option>
+              <option value="2025">2025 (Ất Tỵ)</option>
+              <option value="2028">2028 (Mậu Thân)</option>
+              <option value="2029">2029 (Kỷ Dậu)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="calc-result" id="boxResultCalc">
+          <!-- Live result dynamically calculated -->
+        </div>
+      </div>
+
+      <!-- Section I: Khái Niệm -->
+      <h2 class="sec-heading">I. KHÁI NIỆM &amp; Ý NGHĨA CỦA VẬN NIÊN TRONG TỬ VI</h2>
+      <p>
+        Trong thuật toán số phương Đông và Tử Vi cổ truyền, <strong>Vận Niên</strong> (còn gọi là <em>Vận Niên Thần Thú</em>) là một chỉ số hình tượng biểu thị cho môi trường sống, thời vận may rủi, thiên thời địa lợi nhân hòa của bản mệnh trong một năm cụ thể.
+      </p>
+      <p style="margin-top: 8px;">
+        Nếu như <strong>Cửu Diệu Sao Chiếu Mệnh</strong> chủ về phúc họa từ thiên tinh trên cao, <strong>Bát Hạn</strong> chủ về những tai ương thử thách cụ thể dưới trần thế, thì <strong>Vận Niên</strong> là bức tranh cảnh tượng bao quát: <em>con giáp của bản mệnh đang ở trong hoàn cảnh nào</em> (như rồng gặp mây, chuột về đồng lúa, rắn dưới đáy giếng, hay trâu gặp lửa dữ).
+      </p>
+
+      <!-- Section II: Công Thức Tính -->
+      <h2 class="sec-heading">II. CÔNG THỨC TOÁN HỌC &amp; GIẢI THUẬT TÍNH VẬN NIÊN</h2>
+
+      <h3 class="sub-sec-heading">1. Công Thức Chu Kỳ Tuổi Mụ (Thập Đại Thần Thú Vận Niên)</h3>
+      <p>
+        Phương pháp tính toán kinh điển và phổ biến nhất trong các sách Tử Vi Hàng Năm là sử dụng <strong>Tuổi Mụ (Tuổi Âm Lịch)</strong> của gia chủ chiếu theo chu kỳ 10 hình tượng Thần Thú:
+      </p>
+
+      <div class="formula-badge">
+        <strong>Bước 1:</strong> Tuổi_Mụ = Năm_Xem - Năm_Sinh + 1<br>
+        <strong>Bước 2:</strong> Dư = (Tuổi_Mụ - 1) % 10<br>
+        <strong>Bước 3:</strong> Tra số Dư theo bảng quy chiếu từ 0 đến 9.
+      </div>
+
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th style="width: 10%;">Số Dư</th>
+            <th style="width: 25%;">Tên Vận Niên</th>
+            <th style="width: 15%;">Tính Chất</th>
+            <th style="width: 50%;">Ý Nghĩa Cốt Lõi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>0</strong></td>
+            <td><strong>Long Đắc Vũ</strong></td>
+            <td><span class="tag-cat">Đại Cát</span></td>
+            <td>Rồng gặp mưa – Cơ hội vẫy vùng, công danh rực rỡ, làm ăn đại thắng.</td>
+          </tr>
+          <tr>
+            <td><strong>1</strong></td>
+            <td><strong>Xà Can Tỉnh</strong></td>
+            <td><span class="tag-hung">Hung Tinh</span></td>
+            <td>Rắn bị nhốt đáy giếng – Bí bách, khó khăn, nên kiên nhẫn thủ thường chờ thời.</td>
+          </tr>
+          <tr>
+            <td><strong>2</strong></td>
+            <td><strong>Hổ Nhập Nội</strong></td>
+            <td><span class="tag-binh">Bình Hòa</span></td>
+            <td>Hổ về đồng bằng – Ít mồi, cần mềm mỏng khiêm nhường để giữ hòa khí.</td>
+          </tr>
+          <tr>
+            <td><strong>3</strong></td>
+            <td><strong>Thỏ Khổng Nguyệt</strong></td>
+            <td><span class="tag-cat">Tiểu Cát</span></td>
+            <td>Thỏ ngắm trăng – Cuộc sống an nhàn, thanh cảnh, thảnh thơi ít biến động.</td>
+          </tr>
+          <tr>
+            <td><strong>4</strong></td>
+            <td><strong>Long Ngộ Vân</strong></td>
+            <td><span class="tag-cat">Đại Cát</span></td>
+            <td>Rồng gặp mây – Thi thố đỗ đạt, mở rộng quy mô làm ăn, quý nhân tương trợ.</td>
+          </tr>
+          <tr>
+            <td><strong>5</strong></td>
+            <td><strong>Xà Đầu Tỉnh</strong></td>
+            <td><span class="tag-binh">Tiểu Cát</span></td>
+            <td>Rắn ngóc đầu giếng – Khởi sắc le lói, bắt đầu có cơ hội vượt khó khăn.</td>
+          </tr>
+          <tr>
+            <td><strong>6</strong></td>
+            <td><strong>Mã Bị Đao</strong></td>
+            <td><span class="tag-hung">Hung Tinh</span></td>
+            <td>Ngựa chiến bị thương – Tránh tranh chấp hơn thua, giữ gìn tài sản và xe cộ.</td>
+          </tr>
+          <tr>
+            <td><strong>7</strong></td>
+            <td><strong>Dương Hồi Ngạn</strong></td>
+            <td><span class="tag-cat">Cát Tinh</span></td>
+            <td>Dê về bờ cỏ – No đủ ấm êm, tài lộc đều đặn, gia đình sum họp hạnh phúc.</td>
+          </tr>
+          <tr>
+            <td><strong>8</strong></td>
+            <td><strong>Thử Quy Điền</strong></td>
+            <td><span class="tag-cat">Đại Cát</span></td>
+            <td>Chuột về ruộng lúa – Đúng sở trường, tiền tài bội thu, sung túc tích lũy.</td>
+          </tr>
+          <tr>
+            <td><strong>9</strong></td>
+            <td><strong>Trư Phùng Hỏa</strong></td>
+            <td><span class="tag-hung">Đại Hung</span></td>
+            <td>Heo gặp lửa quay – Nhiều biến cố bất ngờ, cần bình tâm tu dưỡng đức hạnh.</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 class="sub-sec-heading">2. Công Thức Ma Trận Địa Chi Tương Tác (Bản Mệnh Chi × Lưu Niên Chi)</h3>
+      <p>
+        Trong hệ phái chi tiết hơn, Vận Niên được tra cứu dựa trên sự đối chiếu giữa <strong>Địa Chi Năm Sinh</strong> và <strong>Địa Chi Năm Xem</strong>:
+      </p>
+
+      <div class="matrix-wrapper">
+        <table class="matrix-table">
+          <thead>
+            <tr>
+              <th>Tuổi \ Năm</th>
+              <th>Tý</th>
+              <th>Sửu</th>
+              <th>Dần</th>
+              <th>Mão</th>
+              <th>Thìn</th>
+              <th>Tỵ</th>
+              <th>Ngọ</th>
+              <th>Mùi</th>
+              <th>Thân</th>
+              <th>Dậu</th>
+              <th>Tuất</th>
+              <th>Hợi</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="header-col">Tý</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+            </tr>
+            <tr>
+              <td class="header-col">Sửu</td>
+              <td>Kê Giáp Viên</td>
+              <td>Ngưu Cuồng Hỏa</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Dương Hồi Ngạn</td>
+            </tr>
+            <tr>
+              <td class="header-col">Dần</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+            </tr>
+            <tr>
+              <td class="header-col">Mão</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+            </tr>
+            <tr>
+              <td class="header-col">Thìn</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+            </tr>
+            <tr>
+              <td class="header-col">Tỵ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+            </tr>
+            <tr>
+              <td class="header-col">Ngọ</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+            </tr>
+            <tr>
+              <td class="header-col">Mùi</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+            </tr>
+            <tr>
+              <td class="header-col">Thân</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+            </tr>
+            <tr>
+              <td class="header-col">Dậu</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+            </tr>
+            <tr>
+              <td class="header-col">Tuất</td>
+              <td>Thỏ Khổng Nguyệt</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+            </tr>
+            <tr>
+              <td class="header-col">Hợi</td>
+              <td>Trư Phùng Hỏa</td>
+              <td>Khuyển Cuồng Phong</td>
+              <td>Kê Giáp Viên</td>
+              <td>Dương Hồi Ngạn</td>
+              <td>Thử Quy Điền</td>
+              <td>Long Đắc Vũ</td>
+              <td>Xà Can Tỉnh</td>
+              <td>Hổ Nhập Nội</td>
+              <td>Hầu Thực Quả</td>
+              <td>Long Ngộ Vân</td>
+              <td>Mã Bị Đao</td>
+              <td>Thỏ Khổng Nguyệt</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Section III: Từ Điển Luận Giải -->
+      <h2 class="sec-heading">III. TỪ ĐIỂN LUẬN GIẢI CHI TIẾT 12 HÌNH TƯỢNG VẬN NIÊN</h2>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">1. Long Đắc Vũ (Rồng gặp mưa) – <span class="tag-cat">Đại Cát</span></h3>
+        <p>Rồng là linh vật dưới nước trên trời, gặp mưa là được thời cơ vùng vẫy khắp bốn phương. Báo hiệu một năm công danh đại phát, thi cử đỗ đạt cao, buôn bán phát tài phát lộc, gặp được bạn bè tri kỷ nâng đỡ.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">2. Thử Quy Điền (Chuột về ruộng lúa) – <span class="tag-cat">Đại Cát</span></h3>
+        <p>Chuột là loài thích ngũ cốc, được về ruộng lúa chín là rơi đúng môi trường sung túc nhất. Báo hiệu tiền của tích lũy dồi dào, kinh doanh buôn bán bội thu, không phải lo cái ăn cái mặc, gia đạo an vui thịnh vượng.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">3. Hầu Thực Quả (Khỉ ăn trái cây) – <span class="tag-cat">Đại Cát</span></h3>
+        <p>Khỉ được thỏa sức ăn trái chín trong rừng hoa quả, những công sức nỗ lực từ trước đến nay đều được đền đáp xứng đáng. Báo hiệu một năm thu hoạch thành quả lớn, thăng quan tiến chức, danh lợi song toàn.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">4. Long Ngộ Vân (Rồng gặp mây) – <span class="tag-cat">Đại Cát</span></h3>
+        <p>Rồng cưỡi mây bay lượn trên cao, mở rộng chí lớn. Bản mệnh có nhiều cơ hội thăng tiến vượt bậc, xuất hành ngoại giao hanh thông, ký kết hợp đồng thuận lợi.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">5. Dương Hồi Ngạn (Dê về bờ cỏ) – <span class="tag-cat">Cát Tinh</span></h3>
+        <p>Dê trở về đồng cỏ xanh tươi, có nguồn thức ăn no đủ sau chuỗi ngày bôn ba. Cuộc sống ấm êm, tài lộc đều đặn, gia đạo hòa thuận sum vầy, ốm đau mau khỏi.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">6. Thỏ Khổng Nguyệt (Thỏ ngắm trăng) – <span class="tag-binh">Tiểu Cát</span></h3>
+        <p>Thỏ thong thả ngồi ngắm trăng thanh gió mát, biểu tượng của sự thanh thản, nhàn nhã, ít bon chen. Không có biến động lớn về tài chính, thích hợp để tu dưỡng, học hỏi, củng cố nội lực.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">7. Kê Giáp Viên (Gà thả vào vườn) – <span class="tag-cat">Tiểu Cát</span></h3>
+        <p>Gà được vào vườn bới giun, tự do kiếm ăn không lo thiếu đói. Tiền tài ở mức khá, gia đạo có tin mừng, nên chăm chỉ làm ăn chân chính sẽ gặt hái bền vững.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">8. Xà Đầu Tỉnh (Rắn ngóc đầu giếng) – <span class="tag-binh">Bình Hòa</span></h3>
+        <p>Rắn bắt đầu ngóc đầu lên khỏi miệng giếng để đón ánh sáng mặt trời. Khó khăn dần đi qua, cơ hội mới le lói xuất hiện nhưng vẫn cần đề phòng cạm bẫy xung quanh.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">9. Hổ Nhập Nội (Hổ về đồng bằng) – <span class="tag-binh">Bình Hòa</span></h3>
+        <p>Chúa sơn lâm rời núi về vùng đồng bằng dân cư, khó săn mồi và dễ bị gièm pha dòm ngó. Lời khuyên là nên nhẫn nại, khiêm nhường, tránh kiêu căng tự phụ mà hỏng việc lớn.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">10. Mã Bị Đao (Ngựa chiến trúng đao) – <span class="tag-hung">Hung Tinh</span></h3>
+        <p>Ngựa xông trận bị thương, tiến thoái lưỡng nan. Bản mệnh dễ gặp tranh chấp, kiện tụng, khẩu thiệt thị phi, nên hạn chế cạnh tranh gay gắt, đề phòng tai nạn đi lại và hao hụt tài chính.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">11. Khuyển Cuồng Phong (Chó gặp gió dữ) – <span class="tag-hung">Hung Tinh</span></h3>
+        <p>Gặp giông bão lớn, phương hướng mịt mù, tâm lý dễ hoang mang lo lắng. Cần giữ vững lập trường, không nên nghe lời xúi giục đầu tư mạo hiểm kẻo tiền mất tật mang.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">12. Xà Can Tỉnh (Rắn bị nhốt đáy giếng) – <span class="tag-hung">Hung Tinh</span></h3>
+        <p>Bị giam hãm dưới đáy giếng sâu, vùng vẫy không có tác dụng. Thời vận chưa đến, tốt nhất nên giữ mình trong sạch, chuyên tâm học tập làm việc thiện, chớ mưu toan chuyện lớn.</p>
+      </div>
+
+      <div style="margin-bottom: 16px;">
+        <h3 class="sub-sec-heading">13. Trư Phùng Hỏa (Heo gặp lửa) – <span class="tag-hung">Đại Hung</span></h3>
+        <p>Heo bị đưa vào lò quay, chịu sức ép lớn và biến cố nặng nề. Cần hết sức cẩn trọng trong mọi quyết định, không vay mượn hộ người khác, cẩn thận kẻ gian lừa lọc và giữ gìn sức khỏe cẩn mật.</p>
+      </div>
+
+      <!-- Section IV: Mã Lập Trình Mẫu -->
+      <h2 class="sec-heading">IV. MÃ LẬP TRÌNH JAVASCRIPT ĐỂ TÍCH HỢP VÀO PHẦN MỀM</h2>
+      <div class="formula-badge" style="background:#282C34; color:#ABB2BF; font-size:13px; line-height:1.5;">
+<span style="color:#C678DD;">function</span> <span style="color:#61AFEF;">getVanNien</span>(namSinh, namXem) {<br>
+&nbsp;&nbsp;<span style="color:#C678DD;">const</span> tuoiMu = namXem - namSinh + <span style="color:#D19A66;">1</span>;<br>
+&nbsp;&nbsp;<span style="color:#C678DD;">const</span> danhSach = [<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Long Đắc Vũ'</span>, loai: <span style="color:#98C379;">'Đại Cát'</span>, nghia: <span style="color:#98C379;">'Rồng gặp mưa - Cơ hội thỏa chí vẫy vùng, công danh rực rỡ'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Xà Can Tỉnh'</span>, loai: <span style="color:#98C379;">'Hung Tinh'</span>, nghia: <span style="color:#98C379;">'Rắn bị nhốt đáy giếng - Nên kiên nhẫn thủ thường, chờ thời cơ'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Hổ Nhập Nội'</span>, loai: <span style="color:#98C379;">'Bình Hòa'</span>, nghia: <span style="color:#98C379;">'Hổ về đồng bằng - Cần mềm mỏng khiêm nhường giữ hòa khí'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Thỏ Khổng Nguyệt'</span>, loai: <span style="color:#98C379;">'Tiểu Cát'</span>, nghia: <span style="color:#98C379;">'Thỏ ngắm trăng - Cuộc sống an nhàn, thanh cảnh, thảnh thơi'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Long Ngộ Vân'</span>, loai: <span style="color:#98C379;">'Đại Cát'</span>, nghia: <span style="color:#98C379;">'Rồng gặp mây - Mở rộng việc làm ăn, thi thố công danh hanh thông'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Xà Đầu Tỉnh'</span>, loai: <span style="color:#98C379;">'Tiểu Cát'</span>, nghia: <span style="color:#98C379;">'Rắn ngóc đầu giếng - Bắt đầu le lói hy vọng, dần khởi sắc'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Mã Bị Đao'</span>, loai: <span style="color:#98C379;">'Hung Tinh'</span>, nghia: <span style="color:#98C379;">'Ngựa chiến bị thương - Chớ nên tranh chấp hơn thua, giữ gìn tài sản'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Dương Hồi Ngạn'</span>, loai: <span style="color:#98C379;">'Cát Tinh'</span>, nghia: <span style="color:#98C379;">'Dê về bờ cỏ - No đủ ấm êm, tài lộc đều đặn, gia đình sum họp'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Thử Quy Điền'</span>, loai: <span style="color:#98C379;">'Đại Cát'</span>, nghia: <span style="color:#98C379;">'Chuột về ruộng lúa - Gặp môi trường thuận lợi, tiền bạc tích lũy dồi dào'</span> },<br>
+&nbsp;&nbsp;&nbsp;&nbsp;{ ten: <span style="color:#98C379;">'Trư Phùng Hỏa'</span>, loai: <span style="color:#98C379;">'Đại Hung'</span>, nghia: <span style="color:#98C379;">'Heo gặp lửa quay - Nhiều biến cố trắc trở, cần bình tâm tu dưỡng đức hạnh'</span> }<br>
+&nbsp;&nbsp;];<br>
+&nbsp;&nbsp;<span style="color:#C678DD;">const</span> index = (tuoiMu - <span style="color:#D19A66;">1</span>) % danhSach.length;<br>
+&nbsp;&nbsp;<span style="color:#C678DD;">return</span> { tuoiMu, ...danhSach[index] };<br>
+}
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const DANH_SACH_VAN_NIEN = [
+      { ten: 'Long Đắc Vũ', loai: 'Đại Cát', nghia: 'Rồng gặp mưa - Cơ hội thỏa chí vẫy vùng, công danh tài lộc rực rỡ, thi thố đỗ đạt' },
+      { ten: 'Xà Can Tỉnh', loai: 'Hung Tinh', nghia: 'Rắn bị nhốt đáy giếng - Nên kiên nhẫn thủ thường, chờ thời cơ, tránh manh động' },
+      { ten: 'Hổ Nhập Nội', loai: 'Bình Hòa', nghia: 'Hổ về đồng bằng - Cần mềm mỏng khiêm nhường để giữ hòa khí, tránh tranh đoạt' },
+      { ten: 'Thỏ Khổng Nguyệt', loai: 'Tiểu Cát', nghia: 'Thỏ ngắm trăng - Cuộc sống an nhàn, thanh cảnh, thảnh thơi ít biến động' },
+      { ten: 'Long Ngộ Vân', loai: 'Đại Cát', nghia: 'Rồng gặp mây - Mở rộng việc làm ăn, thi thố công danh hanh thông, quý nhân phù trợ' },
+      { ten: 'Xà Đầu Tỉnh', loai: 'Tiểu Cát', nghia: 'Rắn ngóc đầu giếng - Bắt đầu le lói hy vọng, có cơ hội chuyển mình tích cực' },
+      { ten: 'Mã Bị Đao', loai: 'Hung Tinh', nghia: 'Ngựa chiến bị thương - Chớ nên tranh chấp hơn thua, giữ gìn tài sản và hòa khí' },
+      { ten: 'Dương Hồi Ngạn', loai: 'Cát Tinh', nghia: 'Dê về bờ cỏ - No đủ ấm êm, tài lộc đều đặn, gia đình sum họp hạnh phúc' },
+      { ten: 'Thử Quy Điền', loai: 'Đại Cát', nghia: 'Chuột về ruộng lúa - Gặp môi trường thuận lợi, tiền bạc tích lũy dồi dào, phát tài' },
+      { ten: 'Trư Phùng Hỏa', loai: 'Đại Hung', nghia: 'Heo gặp lửa quay - Nhiều biến cố trắc trở, cần bình tâm tu dưỡng đức hạnh, cẩn trọng tiền nong' }
+    ];
+
+    const CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+    const CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+
+    function getCanChiStr(nam) {
+      return CAN[(nam - 4) % 10] + ' ' + CHI[(nam - 4) % 12];
+    }
+
+    function tinhVanNienNhanh() {
+      const namSinh = parseInt(document.getElementById('inpNamSinh').value, 10);
+      const namXem = parseInt(document.getElementById('selNamXem').value, 10);
+      if (!namSinh || !namXem) return;
+
+      const tuoiMu = namXem - namSinh + 1;
+      const idx = (tuoiMu - 1) % DANH_SACH_VAN_NIEN.length;
+      const vn = DANH_SACH_VAN_NIEN[idx];
+
+      const canChiSinh = getCanChiStr(namSinh);
+      const canChiXem = getCanChiStr(namXem);
+
+      let tagClass = 'tag-cat';
+      if (vn.loai.indexOf('Hung') >= 0) tagClass = 'tag-hung';
+      else if (vn.loai.indexOf('Bình') >= 0) tagClass = 'tag-binh';
+
+      document.getElementById('boxResultCalc').innerHTML = `
+        <div><strong>Tuổi:</strong> ${canChiSinh} (${namSinh}) &nbsp;|&nbsp; <strong>Năm Xem:</strong> ${canChiXem} (${namXem}) &nbsp;|&nbsp; <strong>Tuổi Mụ:</strong> ${tuoiMu} Tuổi</div>
+        <div style="margin-top:6px;"><strong>Vận Niên:</strong> <span style="color:#D60000; font-weight:bold; font-size:16px;">${vn.ten}</span> &nbsp;<span class="${tagClass}">${vn.loai}</span></div>
+        <div style="margin-top:4px; color:#444;"><strong>Ý Nghĩa Cốt Lõi:</strong> ${vn.nghia}.</div>
+        <div style="margin-top:4px; font-size:12.5px; color:#888;"><em>* Công thức tính: (Tuổi Mụ ${tuoiMu} - 1) % 10 = Dư ${idx} → Vận Niên "${vn.ten}".</em></div>
+      `;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      tinhVanNienNhanh();
+    });
+  </script>
+</body>
+</html>

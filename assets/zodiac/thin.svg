@@ -1,0 +1,38 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Dragon Antlers & Mane -->
+  <path d="M33,26 C31,18 36,18 38,24 M47,26 C49,18 44,18 42,24" stroke="#DFBA73" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M22,34 C25,27 33,30 33,34 M58,34 C55,27 47,30 47,34" stroke="#ECC67C" stroke-width="2" stroke-linecap="round"/>
+  <!-- Serpent Body Swirl -->
+  <path d="M27,56 C24,44 40,36 40,33 C40,43 56,48 53,58 C50,68 30,66 27,56 Z" fill="#8B1E1E"/>
+  <!-- Head -->
+  <ellipse cx="40" cy="35" rx="11" ry="9" fill="#7A1414"/>
+  <!-- Glowing Eyes -->
+  <circle cx="35" cy="33" r="2.2" fill="#FFE6AA"/>
+  <circle cx="45" cy="33" r="2.2" fill="#FFE6AA"/>
+  <circle cx="35" cy="33" r="1" fill="#7A1414"/>
+  <circle cx="45" cy="33" r="1" fill="#7A1414"/>
+  <!-- Moustache / Barbels -->
+  <path d="M36,39 C30,42 24,37 20,40" fill="none" stroke="#DFBA73" stroke-width="1.5" stroke-linecap="round"/>
+  <path d="M44,39 C50,42 56,37 60,40" fill="none" stroke="#DFBA73" stroke-width="1.5" stroke-linecap="round"/>
+  <!-- Pearl of Wisdom -->
+  <circle cx="40" cy="51" r="5.5" fill="#FFE6AA" stroke="#B87314" stroke-width="1.5"/>
+  <circle cx="38" cy="49" r="1.5" fill="#FFF"/>
+</svg>

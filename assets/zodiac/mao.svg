@@ -1,0 +1,42 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Cat Pointed Ears -->
+  <polygon points="24,35 30,19 37,30" fill="#8B1E1E" stroke="#DFBA73" stroke-width="1"/>
+  <polygon points="27,32 31,23 35,29" fill="#DFBA73"/>
+  <polygon points="56,35 50,19 43,30" fill="#8B1E1E" stroke="#DFBA73" stroke-width="1"/>
+  <polygon points="53,32 49,23 45,29" fill="#DFBA73"/>
+  <!-- Head & Body -->
+  <ellipse cx="40" cy="48" rx="15" ry="16" fill="#8B1E1E"/>
+  <ellipse cx="40" cy="41" rx="14" ry="12" fill="#991B1B"/>
+  <ellipse cx="40" cy="51" rx="9" ry="11" fill="#FFF4DE"/>
+  <!-- Eyes -->
+  <ellipse cx="33" cy="39" rx="2.5" ry="3" fill="#DFBA73"/>
+  <ellipse cx="33" cy="39" rx="1" ry="2.5" fill="#3D0000"/>
+  <ellipse cx="47" cy="39" rx="2.5" ry="3" fill="#DFBA73"/>
+  <ellipse cx="47" cy="39" rx="1" ry="2.5" fill="#3D0000"/>
+  <!-- Nose & Whiskers -->
+  <polygon points="38.5,43 41.5,43 40,45" fill="#DFBA73"/>
+  <line x1="33" y1="44" x2="20" y2="43" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="33" y1="46" x2="19" y2="47" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="47" y1="44" x2="60" y2="43" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="47" y1="46" x2="61" y2="47" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Bell -->
+  <circle cx="40" cy="53" r="3" fill="#DFBA73" stroke="#B87314" stroke-width="1"/>
+</svg>

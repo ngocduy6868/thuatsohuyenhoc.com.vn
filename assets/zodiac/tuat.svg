@@ -1,0 +1,37 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Drooping Ears -->
+  <path d="M26,30 C20,33 21,45 26,43 C29,41 29,32 26,30 Z" fill="#5E0D0D"/>
+  <path d="M54,30 C60,33 59,45 54,43 C51,41 51,32 54,30 Z" fill="#5E0D0D"/>
+  <!-- Head & Body -->
+  <ellipse cx="40" cy="49" rx="15" ry="16" fill="#8B1E1E"/>
+  <ellipse cx="40" cy="38" rx="13" ry="12" fill="#7A1414"/>
+  <!-- Face Patch & Snout -->
+  <ellipse cx="40" cy="43" rx="7" ry="5.5" fill="#FFF4DE"/>
+  <ellipse cx="40" cy="41" rx="3.5" ry="2.2" fill="#3D0000"/>
+  <!-- Eyes -->
+  <circle cx="34" cy="35" r="2" fill="#FFE6AA"/>
+  <circle cx="34" cy="35" r="1.1" fill="#3D0000"/>
+  <circle cx="46" cy="35" r="2" fill="#FFE6AA"/>
+  <circle cx="46" cy="35" r="1.1" fill="#3D0000"/>
+  <!-- Collar with Gold Bell -->
+  <path d="M31,52 C35,55 45,55 49,52" stroke="#DFBA73" stroke-width="2.5" stroke-linecap="round"/>
+  <circle cx="40" cy="56" r="3" fill="#DFBA73" stroke="#B87314" stroke-width="1"/>
+</svg>

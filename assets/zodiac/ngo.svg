@@ -1,0 +1,34 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Horse Ears -->
+  <polygon points="32,23 36,15 38,23" fill="#8B1E1E"/>
+  <polygon points="41,23 44,16 46,23" fill="#8B1E1E"/>
+  <!-- Flowing Mane -->
+  <path d="M44,22 C49,20 54,26 53,34 C56,33 58,40 54,47" fill="none" stroke="#DFBA73" stroke-width="3" stroke-linecap="round"/>
+  <!-- Head & Neck -->
+  <path d="M33,24 C33,24 45,23 45,30 C45,34 38,35 34,44 C31,48 31,58 31,62 L48,62 C50,53 49,42 46,36 L44,24 Z" fill="#8B1E1E"/>
+  <path d="M30,35 C24,38 23,43 27,47 C33,48 35,42 34,36 Z" fill="#7A1414"/>
+  <!-- Eye -->
+  <ellipse cx="32" cy="34" rx="2" ry="1.5" fill="#FFE6AA"/>
+  <circle cx="32" cy="34" r="1" fill="#3D0000"/>
+  <!-- Bridle / Gold Ornament -->
+  <circle cx="28" cy="43" r="2.5" fill="#DFBA73"/>
+  <path d="M28,43 L34,36" stroke="#DFBA73" stroke-width="1.2"/>
+</svg>

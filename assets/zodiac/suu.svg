@@ -1,0 +1,36 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Ox Horns -->
+  <path d="M22,30 C20,18 35,21 38,28" fill="none" stroke="#DFBA73" stroke-width="4.5" stroke-linecap="round"/>
+  <path d="M58,30 C60,18 45,21 42,28" fill="none" stroke="#DFBA73" stroke-width="4.5" stroke-linecap="round"/>
+  <!-- Head & Ears -->
+  <ellipse cx="23" cy="36" rx="6" ry="3" transform="rotate(-20, 23, 36)" fill="#8B1E1E"/>
+  <ellipse cx="57" cy="36" rx="6" ry="3" transform="rotate(20, 57, 36)" fill="#8B1E1E"/>
+  <ellipse cx="40" cy="46" rx="16" ry="17" fill="#8B1E1E"/>
+  <ellipse cx="40" cy="38" rx="14" ry="12" fill="#7A1414"/>
+  <!-- Eyes -->
+  <circle cx="33" cy="35" r="2.2" fill="#FFE6AA"/>
+  <circle cx="47" cy="35" r="2.2" fill="#FFE6AA"/>
+  <!-- Snout -->
+  <ellipse cx="40" cy="47" rx="10" ry="7" fill="#FFF4DE" stroke="#B87314" stroke-width="1"/>
+  <circle cx="36" cy="47" r="2" fill="#5E0D0D"/>
+  <circle cx="44" cy="47" r="2" fill="#5E0D0D"/>
+  <circle cx="40" cy="53" r="3" fill="none" stroke="#DFBA73" stroke-width="1.5"/>
+</svg>

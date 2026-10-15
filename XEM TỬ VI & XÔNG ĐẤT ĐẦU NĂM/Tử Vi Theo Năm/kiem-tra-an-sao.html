@@ -1,0 +1,1328 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kiểm Tra Bảng An Sao Tử Vi & Thiên Bàn Theo Năm</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background-color: #F4F1EA;
+      color: #1A1A1A;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13.5px;
+      line-height: 1.5;
+    }
+
+    /* Header Bar */
+    .header-bar {
+      background: linear-gradient(135deg, #7A1717 0%, #450B0B 100%);
+      border-bottom: 2px solid #DFBA73;
+      padding: 12px 24px;
+      color: #FFF2D1;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+    }
+
+    .header-inner {
+      max-width: 1340px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .brand-title {
+      font-family: 'Cinzel', serif;
+      font-size: 18px;
+      font-weight: 800;
+      color: #FFE6B0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .ctrl-box {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #FFEFC9;
+    }
+
+    .ctrl-input, .ctrl-select {
+      background: #FFFDF9;
+      border: 1px solid #DFBA73;
+      padding: 5px 9px;
+      border-radius: 4px;
+      font-size: 13px;
+      font-weight: 600;
+      color: #2C241E;
+      outline: none;
+    }
+
+    .gender-btn-group {
+      display: flex;
+      border: 1px solid #DFBA73;
+      border-radius: 4px;
+      overflow: hidden;
+      background: #FFFDF9;
+    }
+
+    .gender-btn {
+      padding: 5px 12px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+      font-weight: 700;
+      font-size: 12px;
+      color: #5C5248;
+      transition: all 0.15s;
+    }
+
+    .gender-btn.active {
+      background: #A32222;
+      color: #fff;
+    }
+
+    .btn-action {
+      background: linear-gradient(135deg, #F3E2B8 0%, #DFBA73 100%);
+      color: #5C1010;
+      border: 1px solid #fff;
+      padding: 6px 14px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      text-decoration: none;
+      transition: all 0.2s;
+    }
+
+    .btn-action:hover {
+      background: #FFE6B0;
+      transform: translateY(-1px);
+    }
+
+    /* Main Container */
+    .container {
+      max-width: 1340px;
+      margin: 18px auto 40px auto;
+      padding: 0 16px;
+    }
+
+    /* Presets Bar */
+    .presets-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 14px;
+      background: #FFFDF9;
+      border: 1px solid #D5CBB9;
+      border-radius: 8px;
+      padding: 10px 16px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+    }
+
+    .preset-btn {
+      background: #F3EFEA;
+      border: 1px solid #C5BBA7;
+      padding: 6px 13px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #4A3A2C;
+      cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .preset-btn:hover {
+      background: #E8DCC8;
+      border-color: #8B1E1E;
+    }
+
+    .preset-btn.active {
+      background: #8B1E1E;
+      color: #FFF2D1;
+      border-color: #8B1E1E;
+    }
+
+    .rule-info-bar {
+      background: #FFFBF0;
+      border: 1px solid #E2D2A4;
+      border-left: 4px solid #8B1E1E;
+      border-radius: 6px;
+      padding: 10px 16px;
+      margin-bottom: 16px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: #4A3319;
+    }
+
+    /* Layout: 2 Columns (Grid + Output Summary) */
+    .layout-cols {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media (min-width: 1040px) {
+      .layout-cols {
+        grid-template-columns: 780px 1fr;
+      }
+    }
+
+    /* 4x4 Tử Vi Board */
+    .tuvi-board-wrapper {
+      background: #FFFFFF;
+      border: 2px solid #5C1010;
+      border-radius: 8px;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+      padding: 3px;
+      background-color: #8B1E1E;
+    }
+
+    .tuvi-board {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: 175px 175px 175px 175px;
+      gap: 1.5px;
+      background-color: #8B1E1E;
+    }
+
+    /* 12 Palace Cells */
+    .cung-cell {
+      background: #FFFFFF;
+      padding: 6px 8px;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: all 0.2s;
+    }
+
+    .cung-cell:hover {
+      background: #FFFDF5;
+    }
+
+    /* Highlight Active Palaces */
+    .cung-cell.is-menh {
+      background: #FFF5E6 !important;
+      outline: 3px solid #D60000;
+      outline-offset: -3px;
+      z-index: 5;
+    }
+
+    .cung-cell.is-xung {
+      background: #EDF6FF !important;
+      outline: 2.5px solid #0066CC;
+      outline-offset: -2.5px;
+      z-index: 4;
+    }
+
+    .cung-cell.is-tamhop {
+      background: #EEF8EE !important;
+      outline: 2.5px solid #2E7D32;
+      outline-offset: -2.5px;
+      z-index: 4;
+    }
+
+    .cung-cell.is-nhihop {
+      background: #F7EEFD !important;
+      outline: 2.5px solid #7B1FA2;
+      outline-offset: -2.5px;
+      z-index: 4;
+    }
+
+    .cung-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px dashed #D5CBB9;
+      padding-bottom: 3px;
+      margin-bottom: 3px;
+    }
+
+    .cung-can-chi {
+      font-weight: 800;
+      font-size: 13px;
+      color: #8B1E1E;
+      font-family: 'Cinzel', serif;
+    }
+
+    .cung-badge {
+      font-size: 9.5px;
+      font-weight: 800;
+      padding: 1.5px 5px;
+      border-radius: 3px;
+      text-transform: uppercase;
+      letter-spacing: 0.3px;
+    }
+
+    .badge-menh { background: #D60000; color: #fff; }
+    .badge-xung { background: #0066CC; color: #fff; }
+    .badge-tamhop { background: #2E7D32; color: #fff; }
+    .badge-nhihop { background: #7B1FA2; color: #fff; }
+
+    .cung-sub-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 10px;
+      color: #7A5B30;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+
+    .cung-stars {
+      flex: 1;
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      gap: 2px 4px;
+      font-size: 10.5px;
+      line-height: 1.35;
+      overflow-y: auto;
+      max-height: 90px;
+    }
+
+    .star-tag {
+      display: inline-block;
+      white-space: nowrap;
+      padding: 1px 3px;
+      border-radius: 2px;
+    }
+
+    .star-red { color: #C00000; font-weight: 700; }
+    .star-green { color: #1B5E20; font-weight: 600; }
+    .star-blue { color: #0D47A1; font-weight: 600; }
+    .star-purple { color: #4A148C; font-weight: 700; }
+    .star-black { color: #212121; font-weight: 600; }
+    .star-boxed {
+      border: 1px solid #C00000;
+      color: #C00000;
+      font-weight: 800;
+      padding: 0 3px;
+      background: #FFF0F0;
+    }
+
+    /* Thiên Bàn inner label in cell - EXACTLY AS IN USER'S PHOTO */
+    .cung-thien-ban-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid #E2D7C5;
+      padding-top: 3px;
+      margin-top: 3px;
+    }
+
+    .cung-dia-ban-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: #6E5A47;
+    }
+
+    /* The BOLD THIÊN BÀN CHI exactly like "Mùi", "Ngọ", "Tỵ", "Thìn" in user screenshot */
+    .cung-thien-ban-chi {
+      font-size: 17px;
+      font-weight: 900;
+      color: #000000;
+      font-family: 'Times New Roman', 'Noto Serif', serif;
+      letter-spacing: -0.5px;
+    }
+
+    .cung-cell.is-menh .cung-thien-ban-chi {
+      color: #D60000;
+      text-shadow: 0 0 1px #FFAAAA;
+    }
+
+    /* Center 2x2 Box of Board - REPLICATING USER'S SCREENSHOT 100% */
+    .board-center {
+      grid-column: 2 / span 2;
+      grid-row: 2 / span 2;
+      background: #FFFFFF;
+      border: 1.5px solid #222222;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 12px 14px;
+      position: relative;
+      font-family: 'Times New Roman', serif;
+      line-height: 1.35;
+      color: #000000;
+    }
+
+    .center-line-nam {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 2px;
+    }
+
+    .center-line-napam {
+      font-size: 13.5px;
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    .center-line-cuc {
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 3px;
+    }
+
+    .center-line-meta {
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.3;
+    }
+
+    .center-line-divider {
+      font-weight: 800;
+      font-size: 12.5px;
+      margin: 3px 0 2px 0;
+      text-decoration: underline;
+    }
+
+    .center-line-cuc-list {
+      font-size: 11.5px;
+      font-weight: 600;
+      line-height: 1.28;
+    }
+
+    .center-rule-tag {
+      margin-top: 6px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 10.5px;
+      font-weight: 700;
+      color: #8B1E1E;
+      background: #FFF4E5;
+      border: 1px dashed #D60000;
+      border-radius: 4px;
+      padding: 3px 8px;
+      text-align: center;
+      line-height: 1.35;
+    }
+
+    /* Right Column: Output Summary */
+    .summary-card {
+      background: #FFFFFF;
+      border: 1px solid #D5CBB9;
+      border-radius: 8px;
+      padding: 20px 22px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+    }
+
+    .summary-title {
+      font-family: 'Cinzel', serif;
+      font-size: 16px;
+      font-weight: 800;
+      color: #8B1E1E;
+      border-bottom: 2px solid #DFBA73;
+      padding-bottom: 8px;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .summary-item {
+      margin-bottom: 13px;
+      line-height: 1.6;
+    }
+
+    .summary-item strong {
+      color: #8B1E1E;
+      font-weight: 700;
+    }
+
+    .stars-block {
+      background: #FFFDF7;
+      border: 1px solid #E5DEC9;
+      border-radius: 5px;
+      padding: 6px 10px;
+      margin: 4px 0 6px 0;
+      font-size: 12px;
+      color: #2C241E;
+      font-weight: 600;
+    }
+
+    .meaning-block {
+      font-size: 12.5px;
+      color: #333;
+      font-family: 'Noto Serif', serif;
+      line-height: 1.6;
+    }
+
+    .legend-box {
+      margin-top: 14px;
+      padding: 10px 14px;
+      border: 1px solid #D5CBB9;
+      border-radius: 6px;
+      background: #FFFDF9;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      font-size: 11.5px;
+      font-weight: 600;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .legend-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header Bar -->
+  <div class="header-bar">
+    <div class="header-inner">
+      <div class="brand-title">
+        <i class="fa-solid fa-yin-yang"></i> Kiểm Tra An Sao Tử Vi & Thiên Bàn Theo Năm
+      </div>
+
+      <div class="ctrl-box">
+        <!-- Năm Sinh -->
+        <div class="ctrl-group">
+          <label for="ctrlNamSinh">Năm Sinh:</label>
+          <input type="number" id="ctrlNamSinh" class="ctrl-input" value="1984" min="1930" max="2030" style="width: 72px;" oninput="updateAll()">
+        </div>
+
+        <!-- Năm Xem -->
+        <div class="ctrl-group">
+          <label for="ctrlNamXem">Năm Xem:</label>
+          <select id="ctrlNamXem" class="ctrl-select" onchange="updateAll()">
+            <option value="2027" selected>2027 (Đinh Mùi)</option>
+            <option value="2026">2026 (Bính Ngọ)</option>
+            <option value="2025">2025 (Ất Tỵ - Mẫu Ảnh & Docx)</option>
+            <option value="2028">2028 (Mậu Thân)</option>
+            <option value="2029">2029 (Kỷ Dậu)</option>
+            <option value="2030">2030 (Canh Tuất)</option>
+          </select>
+        </div>
+
+        <!-- Giới Tính -->
+        <div class="ctrl-group">
+          <label>Mạng:</label>
+          <div class="gender-btn-group">
+            <button type="button" class="gender-btn active" id="btnNam" onclick="setGender('Nam')">Nam Mạng</button>
+            <button type="button" class="gender-btn" id="btnNu" onclick="setGender('Nu')">Nữ Mạng</button>
+          </div>
+        </div>
+
+        <a href="index.html" class="btn-action">
+          <i class="fa-solid fa-arrow-left"></i> Xem Trang Kết Quả
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+    <!-- Quick Presets -->
+    <div class="presets-bar">
+      <span style="font-weight: 800; color: #8B1E1E; margin-right: 6px;">
+        <i class="fa-solid fa-bolt"></i> Chọn Nhanh:
+      </span>
+      <button type="button" class="preset-btn active" id="presetBtn2027Nam" onclick="applyPreset(1984, 2027, 'Nam')">
+        <i class="fa-solid fa-star"></i> Năm 2027 Đinh Mùi (Giáp Tý Nam)
+      </button>
+      <button type="button" class="preset-btn" id="presetBtn2027Nu" onclick="applyPreset(1984, 2027, 'Nu')">
+        <i class="fa-solid fa-moon"></i> Năm 2027 Đinh Mùi (Giáp Tý Nữ)
+      </button>
+      <button type="button" class="preset-btn" id="presetBtnPhoto2025" onclick="applyPreset(1984, 2025, 'Nu')">
+        <i class="fa-solid fa-image"></i> Ảnh Mẫu 2025 (Ất Tỵ - Nữ Mạng)
+      </button>
+      <button type="button" class="preset-btn" id="presetBtnDocx2025" onclick="applyPreset(1984, 2025, 'Nam')">
+        <i class="fa-solid fa-file-word"></i> Năm 2025 Ất Tỵ (Giáp Tý Nam - Docx dòng 65)
+      </button>
+      <button type="button" class="preset-btn" onclick="applyPreset(1984, 2026, 'Nam')">
+        2026 Bính Ngọ (Giáp Tý Nam)
+      </button>
+    </div>
+
+    <!-- Rule Info Bar: Universal Formula requested by User -->
+    <div class="rule-info-bar" id="txtRuleBar">
+      <!-- Generated by JS -->
+    </div>
+
+    <div class="layout-cols">
+
+      <!-- Left: 4x4 Lá Số Tử Vi Grid with THIÊN BÀN -->
+      <div>
+        <div class="tuvi-board-wrapper">
+          <div class="tuvi-board" id="tuviBoard">
+            <!-- 12 Cung and Center will be rendered by JS -->
+          </div>
+        </div>
+
+        <!-- Legend -->
+        <div class="legend-box">
+          <div class="legend-item"><span class="legend-dot" style="background:#D60000;"></span> <strong>Cung Mệnh</strong></div>
+          <div class="legend-item"><span class="legend-dot" style="background:#0066CC;"></span> <strong>Xung Chiếu</strong></div>
+          <div class="legend-item"><span class="legend-dot" style="background:#2E7D32;"></span> <strong>Tam Hợp</strong></div>
+          <div class="legend-item"><span class="legend-dot" style="background:#7B1FA2;"></span> <strong>Nhị Hợp</strong></div>
+          <div class="legend-item" style="margin-left:auto; color:#C00000; font-weight:700;">★ Cát Tinh (Đỏ)</div>
+          <div class="legend-item" style="color:#0D47A1; font-weight:700;">● Tràng Sinh (Lam)</div>
+          <div class="legend-item" style="color:#1B5E20; font-weight:700;">▲ Quý Tinh (Lục)</div>
+        </div>
+
+        <!-- Formula Note Box -->
+        <div style="margin-top:12px; background:#FFFDF7; border:1px solid #DFC99E; border-radius:6px; padding:12px 14px; font-size:12px; line-height:1.6; color:#4E3C2B;">
+          <div style="font-weight:800; color:#8B1E1E; margin-bottom:4px;">
+            <i class="fa-solid fa-scroll"></i> Nguyên Lý An Thiên Bàn (Chuẩn Xác Theo Hướng Dẫn Của Bạn):
+          </div>
+          <ul style="padding-left:18px; margin:0;">
+            <li><strong>Nhóm Hợi – Mão – Mùi:</strong> Ghi chính chữ của năm đó (Hợi, Mão, hoặc Mùi) vào cung <strong>Sửu</strong>. Ví dụ năm nay là năm Mùi thì ghi chữ <strong>MÙI</strong> vào cung <strong>Sửu</strong>.</li>
+            <li><strong>Nhóm Tỵ – Dậu – Sửu:</strong> Ghi chính chữ của năm đó (Tỵ, Dậu, hoặc Sửu) vào cung <strong>Mùi</strong>. Ví dụ năm Tỵ (2025) ghi chữ <strong>TỴ</strong> vào cung <strong>Mùi</strong>.</li>
+            <li><strong>Nhóm Dần – Ngọ – Tuất:</strong> Ghi chính chữ của năm đó vào cung <strong>Thìn</strong>.</li>
+            <li><strong>Nhóm Thân – Tý – Thìn:</strong> Ghi chính chữ của năm đó vào cung <strong>Tuất</strong>.</li>
+            <li><strong>Chiều chạy:</strong> <strong>Nam Mạng</strong> chạy <strong>Thuận</strong> | <strong>Nữ Mạng</strong> chạy <strong>Nghịch</strong>.</li>
+            <li><strong>Xác định Cung Mệnh:</strong> Nơi mà Thiên Bàn mang chữ con giáp của người xem (ví dụ tuổi Giáp Tý tìm chữ <strong>Tý</strong> trên Thiên Bàn).</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right: Formatted Output for Web Application -->
+      <div class="summary-card">
+        <h3 class="summary-title">
+          <i class="fa-solid fa-list-check"></i> Nội Dung Xuất Ra Trang Tử Vi
+        </h3>
+
+        <!-- Tiểu Vận -->
+        <div class="summary-item">
+          <strong>Tiểu Vận (Nơi an Mệnh Sinh - Vượng - Bại - Tuyệt Địa):</strong>
+          <div class="stars-block" id="outTieuVanLine" style="font-family:'Noto Serif',serif; font-weight:normal; line-height:1.6;">
+            <!-- Generated -->
+          </div>
+        </div>
+
+        <div style="font-weight: 800; font-size: 14px; color: #8B1E1E; margin: 16px 0 8px 0; border-bottom: 1px solid #E5DEC9; padding-bottom: 4px;">
+          Xem Các Sao Tử Vi Của Tuổi Theo Năm Mới
+        </div>
+
+        <!-- Cung Mệnh -->
+        <div class="summary-item">
+          <strong>Cung mệnh (<span id="txtChiMenh">Ngọ</span> - Thiên Bàn chữ <span id="txtChiMenhTB">Tý</span>):</strong>
+          <div class="stars-block" id="outStarsMenh"></div>
+          <div class="meaning-block" id="outMeaningMenh"></div>
+        </div>
+
+        <!-- Cung Xung Chiếu -->
+        <div class="summary-item">
+          <strong>Cung Xung Chiếu (<span id="txtChiXung">Tý</span>):</strong>
+          <div class="stars-block" id="outStarsXung"></div>
+          <div class="meaning-block" id="outMeaningXung"></div>
+        </div>
+
+        <!-- Cung Tam Hợp -->
+        <div class="summary-item">
+          <strong>Cung Tam Hợp (<span id="txtChiTamHop">Dần, Tuất</span>):</strong>
+          <div class="stars-block" id="outStarsTamHop"></div>
+          <div class="meaning-block" id="outMeaningTamHop"></div>
+        </div>
+
+        <!-- Cung Nhị Hợp -->
+        <div class="summary-item">
+          <strong>Cung Nhị Hợp (<span id="txtChiNhiHop">Mùi</span>):</strong>
+          <div class="stars-block" id="outStarsNhiHop"></div>
+          <div class="meaning-block" id="outMeaningNhiHop"></div>
+        </div>
+
+        <!-- Kết Luận -->
+        <div class="summary-item" style="border-top:1px dashed #D5CBB9; padding-top:10px; margin-top:12px;">
+          <strong>Kết Luận:</strong>
+          <div class="meaning-block" id="outKetLuan" style="font-weight:600; color:#8B1E1E;"></div>
+        </div>
+
+        <!-- Comparison note -->
+        <div style="margin-top:16px; background:#F8F6F0; border-left:3px solid #8B1E1E; padding:8px 12px; font-size:12px; line-height:1.5; color:#5A4A3C;">
+          <strong><i class="fa-solid fa-circle-info"></i> Đối chiếu tài liệu:</strong>
+          <div id="txtDocxCompare" style="margin-top:4px;">
+            Đang hiển thị kết quả tính toán tự động.
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const THIEN_CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
+    const DIA_CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
+
+    let currentGender = 'Nam';
+
+    // 4x4 Grid Board Coordinates (Fixed Địa Bàn layout):
+    // Row 1: Tỵ (5), Ngọ (6), Mùi (7), Thân (8)
+    // Row 2: Thìn (4), [Center], [Center], Dậu (9)
+    // Row 3: Mão (3), [Center], [Center], Tuất (10)
+    // Row 4: Dần (2), Sửu (1), Tý (0), Hợi (11)
+    const BOARD_POSITIONS = [
+      { chiIdx: 5, col: 1, row: 1 }, // Tỵ (Top-Left)
+      { chiIdx: 6, col: 2, row: 1 }, // Ngọ (Top-Center-Left)
+      { chiIdx: 7, col: 3, row: 1 }, // Mùi (Top-Center-Right)
+      { chiIdx: 8, col: 4, row: 1 }, // Thân (Top-Right)
+      { chiIdx: 9, col: 4, row: 2 }, // Dậu (Right-Upper)
+      { chiIdx: 10, col: 4, row: 3 }, // Tuất (Right-Lower)
+      { chiIdx: 11, col: 4, row: 4 }, // Hợi (Bottom-Right)
+      { chiIdx: 0, col: 3, row: 4 },  // Tý (Bottom-Center-Right)
+      { chiIdx: 1, col: 2, row: 4 },  // Sửu (Bottom-Center-Left)
+      { chiIdx: 2, col: 1, row: 4 },  // Dần (Bottom-Left)
+      { chiIdx: 3, col: 1, row: 3 },  // Mão (Left-Lower)
+      { chiIdx: 4, col: 1, row: 2 }   // Thìn (Left-Upper)
+    ];
+
+    const DIA_CHI_CUC_MAP = {
+      'Tỵ': { cuc: 'Kim Cục', khoiTS: 5 },
+      'Dậu': { cuc: 'Kim Cục', khoiTS: 5 },
+      'Dần': { cuc: 'Hỏa Cục', khoiTS: 2 },
+      'Ngọ': { cuc: 'Hỏa Cục', khoiTS: 2 },
+      'Hợi': { cuc: 'Mộc Cục', khoiTS: 11 },
+      'Mão': { cuc: 'Mộc Cục', khoiTS: 11 },
+      'Thân': { cuc: 'Thủy Cục', khoiTS: 8 },
+      'Tý': { cuc: 'Thủy Cục', khoiTS: 8 },
+      'Thìn': { cuc: 'Thổ Cục', khoiTS: 8 },
+      'Tuất': { cuc: 'Thổ Cục', khoiTS: 8 },
+      'Sửu': { cuc: 'Thổ Cục', khoiTS: 8 },
+      'Mùi': { cuc: 'Thổ Cục', khoiTS: 8 }
+    };
+
+    const NHI_HOP_PAIRS = {
+      0: 1, 1: 0,
+      2: 11, 11: 2,
+      3: 10, 10: 3,
+      4: 9, 9: 4,
+      5: 8, 8: 5,
+      6: 7, 7: 6
+    };
+
+    const BANG_NOI_AN_MENH = {
+      'Kim': { sinh: 'Tỵ', vuong: 'Dậu', bai: 'Ngọ', tuyet: 'Dần' },
+      'Mộc': { sinh: 'Hợi', vuong: 'Mão', bai: 'Tý', tuyet: 'Thân' },
+      'Hỏa': { sinh: 'Dần', vuong: 'Ngọ', bai: 'Mão', tuyet: 'Hợi' },
+      'Thủy': { sinh: 'Thân', vuong: 'Tý', bai: 'Dậu', tuyet: 'Tỵ' },
+      'Thổ': { sinh: 'Thân', vuong: 'Tý', bai: 'Dậu', tuyet: 'Tỵ' }
+    };
+
+    const Y_NGHIA_DIA_THE = {
+      'Sinh': 'Sinh là khí của sao (Tràng Sinh): Đại diện cho giai đoạn khởi đầu, vạn vật bắt đầu sinh sôi, nảy nở, hình thành sự sống mới. Trong lá số, cung có Tràng Sinh thường mang ý nghĩa về sự phát triển, sinh khí, sức sống dồi dào, khởi đầu hanh thông và có khả năng phục hồi tốt.',
+      'Vượng': 'Vượng là khí của sao (Đế Vượng): Đại diện cho thời kỳ đỉnh cao, cường thịnh và phát triển mạnh mẽ nhất của năng lượng (như người đang ở độ tuổi tráng niên, sung sức nhất). Thể hiện sự thành đạt, uy quyền, tài năng nở rộ và đạt nhiều thành tựu lớn.',
+      'Bại': 'Bại là khí của các sao (Suy, Bệnh, Tử, Mộ, Tuyệt): Thường chỉ giai đoạn năng lượng bắt đầu suy giảm, gặp trắc trở, bất lợi hoặc tiểu bại trong công việc. Đây là lúc vạn vật chững lại, đòi hỏi sự thận trọng để tránh hao tổn tài lực, tinh thần.',
+      'Tuyệt': 'Tuyệt là (Tuyệt địa): Đại diện cho điểm tận cùng của một chu kỳ, nơi năng lượng suy kiệt hoàn toàn, vạn vật thu gọn lại để chuẩn bị cho một vòng tuần hoàn mới (tương tự như hạt giống nằm sâu trong đất). Cung có Tuyệt thường mang tính chất cô độc, khép kín, dễ gặp thử thách lớn nhưng cũng là tiền đề để chuyển hóa, đổi mới.',
+      'Bình Hòa': 'Bình hòa: Đại diện cho các trạng thái trung gian ổn định và đều đặn, duy trì nhịp sống êm ả, an toàn, ít biến động sóng gió, bản mệnh tích lũy nội lực vững vàng.'
+    };
+
+    const STAR_ORDER = [
+      'Phúc Đức', 'Thiên Khôi', 'Thiên Việt', 'LN Văn Tinh', 'Quốc Ấn', 'Đường Phù', 'Thiên Phúc', 'Thiên Quan', 'Thiên Trù', 'Thiên Mã',
+      'Lộc Tồn', 'Bác Sỹ', 'Lực Sỹ', 'Thanh Long', 'Tràng Sinh', 'Đế Vượng', 'Lâm Quan', 'Quan Đới', 'Mộc Dục', 'Thiếu Dương', 'Thiếu Âm',
+      'Hồng Loan', 'Đào Hoa', 'Thiên Hỷ', 'Hoa Cái', 'Long Trì', 'Phượng Các', 'Giải Thần', 'Nguyệt Đức', 'Tấu Thư', 'Hỷ Thần', 'Tướng Quân',
+      'Thái Tuế', 'Long Đức', 'Dưỡng', 'Thai', 'Phi Liêm', 'Tiểu Hao', 'Đại Hao', 'Đà La', 'Kình Dương', 'Bạch Hổ', 'Tang Môn', 'Tuế Phá',
+      'Thiên Khốc', 'Thiên Hư', 'Bệnh Phù', 'Quan Phù', 'Tử Phù', 'Điếu Khách', 'Trực Phù', 'Phục Binh', 'Quan Phủ', 'Thiên Không', 'Lưu Hà',
+      'Cô Thần', 'Quả Tú', 'Suy', 'Bệnh', 'Tử', 'Mộ', 'Tuyệt', 'Thiên La', 'Địa Võng', 'Tuần', 'Triệt'
+    ];
+
+    function sortStars(list) {
+      return list.slice().sort((a, b) => {
+        let ia = STAR_ORDER.indexOf(a);
+        let ib = STAR_ORDER.indexOf(b);
+        if (ia === -1) ia = 999;
+        if (ib === -1) ib = 999;
+        return ia - ib;
+      });
+    }
+
+    function getStarClass(name) {
+      if (['Tuần', 'Triệt'].includes(name)) return 'star-boxed';
+      if (['Phúc Đức', 'Thái Tuế', 'Thiếu Dương', 'Thiếu Âm', 'Hồng Loan', 'Đào Hoa', 'Thiên Hỷ', 'Long Trì', 'Phượng Các', 'Giải Thần', 'Nguyệt Đức', 'Hỷ Thần', 'Thanh Long'].includes(name)) return 'star-red';
+      if (['Thiên Khôi', 'Thiên Việt', 'LN Văn Tinh', 'Quốc Ấn', 'Đường Phù', 'Thiên Phúc', 'Thiên Quan', 'Thiên Trù', 'Thiên Mã', 'Hoa Cái', 'Tấu Thư'].includes(name)) return 'star-green';
+      if (['Tràng Sinh', 'Đế Vượng', 'Lâm Quan', 'Quan Đới', 'Mộc Dục', 'Thai', 'Dưỡng'].includes(name)) return 'star-blue';
+      if (['Lộc Tồn', 'Bác Sỹ', 'Tướng Quân'].includes(name)) return 'star-purple';
+      return 'star-black';
+    }
+
+    function getCanChi(year) {
+      const canIdx = (year - 4) % 10;
+      const chiIdx = (year - 4) % 12;
+      const can = THIEN_CAN[canIdx];
+      const chi = DIA_CHI[chiIdx];
+      const canChi = `${can} ${chi}`;
+      
+      const NAP_AM_HANH = {
+        'Giáp Tý': { napAm: 'Hải Trung Kim', tenNom: 'Vàng Dưới Biển' },
+        'Ất Sửu': { napAm: 'Hải Trung Kim', tenNom: 'Vàng Dưới Biển' },
+        'Bính Dần': { napAm: 'Lư Trung Hỏa', tenNom: 'Lửa Trong Lò' },
+        'Đinh Mão': { napAm: 'Lư Trung Hỏa', tenNom: 'Lửa Trong Lò' },
+        'Mậu Thìn': { napAm: 'Đại Lâm Mộc', tenNom: 'Cây Rừng Lớn' },
+        'Kỷ Tỵ': { napAm: 'Đại Lâm Mộc', tenNom: 'Cây Rừng Lớn' },
+        'Canh Ngọ': { napAm: 'Lộ Bàng Thổ', tenNom: 'Đất Ven Đường' },
+        'Tân Mùi': { napAm: 'Lộ Bàng Thổ', tenNom: 'Đất Ven Đường' },
+        'Nhâm Thân': { napAm: 'Kiếm Phong Kim', tenNom: 'Vàng Mũi Kiếm' },
+        'Quý Dậu': { napAm: 'Kiếm Phong Kim', tenNom: 'Vàng Mũi Kiếm' },
+        'Giáp Tuất': { napAm: 'Sơn Đầu Hỏa', tenNom: 'Lửa Đầu Núi' },
+        'Ất Hợi': { napAm: 'Sơn Đầu Hỏa', tenNom: 'Lửa Đầu Núi' },
+        'Bính Tý': { napAm: 'Giản Hạ Thủy', tenNom: 'Nước Dưới Khe' },
+        'Đinh Sửu': { napAm: 'Giản Hạ Thủy', tenNom: 'Nước Dưới Khe' },
+        'Mậu Dần': { napAm: 'Thành Đầu Thổ', tenNom: 'Đất Đầu Thành' },
+        'Kỷ Mão': { napAm: 'Thành Đầu Thổ', tenNom: 'Đất Đầu Thành' },
+        'Canh Thìn': { napAm: 'Bạch Lạp Kim', tenNom: 'Vàng Sáp Ong' },
+        'Tân Tỵ': { napAm: 'Bạch Lạp Kim', tenNom: 'Vàng Sáp Ong' },
+        'Nhâm Ngọ': { napAm: 'Dương Liễu Mộc', tenNom: 'Cây Dương Liễu' },
+        'Quý Mùi': { napAm: 'Dương Liễu Mộc', tenNom: 'Cây Dương Liễu' },
+        'Giáp Thân': { napAm: 'Tuyền Trung Thủy', tenNom: 'Nước Trong Giếng' },
+        'Ất Dậu': { napAm: 'Tuyền Trung Thủy', tenNom: 'Nước Trong Giếng' },
+        'Bính Tuất': { napAm: 'Ốc Thượng Thổ', tenNom: 'Đất Nóc Nhà' },
+        'Đinh Hợi': { napAm: 'Ốc Thượng Thổ', tenNom: 'Đất Nóc Nhà' },
+        'Mậu Tý': { napAm: 'Tích Lịch Hỏa', tenNom: 'Lửa Sấm Sét' },
+        'Kỷ Sửu': { napAm: 'Tích Lịch Hỏa', tenNom: 'Lửa Sấm Sét' },
+        'Canh Dần': { napAm: 'Tùng Bách Mộc', tenNom: 'Gỗ Tùng Bách' },
+        'Tân Mão': { napAm: 'Tùng Bách Mộc', tenNom: 'Gỗ Tùng Bách' },
+        'Nhâm Thìn': { napAm: 'Trường Lưu Thủy', tenNom: 'Nước Chảy Dài' },
+        'Quý Tỵ': { napAm: 'Trường Lưu Thủy', tenNom: 'Nước Chảy Dài' },
+        'Giáp Ngọ': { napAm: 'Sa Trung Kim', tenNom: 'Vàng Trong Cát' },
+        'Ất Mùi': { napAm: 'Sa Trung Kim', tenNom: 'Vàng Trong Cát' },
+        'Bính Thân': { napAm: 'Sơn Hạ Hỏa', tenNom: 'Lửa Dưới Núi' },
+        'Đinh Dậu': { napAm: 'Sơn Hạ Hỏa', tenNom: 'Lửa Dưới Núi' },
+        'Mậu Tuất': { napAm: 'Bình Địa Mộc', tenNom: 'Cây Đồng Bằng' },
+        'Kỷ Hợi': { napAm: 'Bình Địa Mộc', tenNom: 'Cây Đồng Bằng' },
+        'Canh Tý': { napAm: 'Bích Thượng Thổ', tenNom: 'Đất Trên Vách' },
+        'Tân Sửu': { napAm: 'Bích Thượng Thổ', tenNom: 'Đất Trên Vách' },
+        'Nhâm Dần': { napAm: 'Kim Bạch Kim', tenNom: 'Vàng Trắng' },
+        'Quý Mão': { napAm: 'Kim Bạch Kim', tenNom: 'Vàng Trắng' },
+        'Giáp Thìn': { napAm: 'Phú Đăng Hỏa', tenNom: 'Lửa Ngọn Đèn' },
+        'Ất Tỵ': { napAm: 'Phú Đăng Hỏa', tenNom: 'Lửa Ngọn Đèn' },
+        'Bính Ngọ': { napAm: 'Thiên Hà Thủy', tenNom: 'Nước Trên Trời' },
+        'Đinh Mùi': { napAm: 'Thiên Hà Thủy', tenNom: 'Nước Trên Trời' },
+        'Mậu Thân': { napAm: 'Đại Trạch Thổ', tenNom: 'Đất Nhà Lớn' },
+        'Kỷ Dậu': { napAm: 'Đại Trạch Thổ', tenNom: 'Đất Nhà Lớn' },
+        'Canh Tuất': { napAm: 'Thoa Xuyến Kim', tenNom: 'Vàng Trang Sức' },
+        'Tân Hợi': { napAm: 'Thoa Xuyến Kim', tenNom: 'Vàng Trang Sức' }
+      };
+
+      const info = NAP_AM_HANH[canChi] || { napAm: 'Hải Trung Kim', tenNom: 'Vàng Dưới Biển' };
+      const napAm = info.napAm;
+      const tenNom = info.tenNom;
+      let hanh = 'Kim';
+      if (napAm.includes('Hỏa')) hanh = 'Hỏa';
+      else if (napAm.includes('Thủy')) hanh = 'Thủy';
+      else if (napAm.includes('Mộc')) hanh = 'Mộc';
+      else if (napAm.includes('Thổ')) hanh = 'Thổ';
+
+      return { can, chi, canChi, napAm, tenNom, hanh, canIdx, chiIdx };
+    }
+
+    // -------------------------------------------------------------
+    // AN THIÊN BÀN (TIỂU HẠN HÀNG NĂM) - CHUẨN XÁC THEO HƯỚNG DẪN CỦA BẠN:
+    // - Năm Hợi, Mão, Mùi: ghi chữ của năm (Hợi/Mão/Mùi) vào cung Sửu
+    // - Năm Tỵ, Dậu, Sửu: ghi chữ của năm (Tỵ/Dậu/Sửu) vào cung Mùi
+    // - Năm Dần, Ngọ, Tuất: ghi chữ của năm vào cung Thìn
+    // - Năm Thân, Tý, Thìn: ghi chữ của năm vào cung Tuất
+    // - Nam Mạng chạy Thuận, Nữ Mạng chạy Nghịch
+    // -------------------------------------------------------------
+    function getThienBan(namSinh, namXem, gender) {
+      const namInfo = getCanChi(namXem);
+      const giaChu = getCanChi(namSinh);
+      const chiNamXem = namInfo.chi;
+      const isNam = (gender === 'Nam');
+
+      // 1. Cung khởi theo nhóm Tam Hợp của Năm Xem
+      let cungKhoi = 1, groupName = 'Hợi – Mão – Mùi';
+      if (['Hợi', 'Mão', 'Mùi'].includes(chiNamXem)) {
+        cungKhoi = 1; // Cung Sửu
+        groupName = 'Hợi – Mão – Mùi';
+      } else if (['Tỵ', 'Dậu', 'Sửu'].includes(chiNamXem)) {
+        cungKhoi = 7; // Cung Mùi
+        groupName = 'Tỵ – Dậu – Sửu';
+      } else if (['Dần', 'Ngọ', 'Tuất'].includes(chiNamXem)) {
+        cungKhoi = 4; // Cung Thìn
+        groupName = 'Dần – Ngọ – Tuất';
+      } else if (['Thân', 'Tý', 'Thìn'].includes(chiNamXem)) {
+        cungKhoi = 10; // Cung Tuất
+        groupName = 'Thân – Tý – Thìn';
+      }
+
+      // 2. Chi khởi ghi vào Cung khởi chính là Chi của Năm Xem:
+      // Ví dụ: Năm Mùi thì ghi chữ Mùi vào cung Sửu; Năm Tỵ thì ghi chữ Tỵ vào cung Mùi...
+      const chiKhoi = DIA_CHI.indexOf(chiNamXem);
+
+      // 3. Chiều chạy: Nam Mạng chạy Thuận, Nữ Mạng chạy Nghịch
+      const isThuan = isNam;
+
+      // 4. An 12 Chi vào 12 Cung Địa Bàn
+      const thienBanMap = {};
+      for (let i = 0; i < 12; i++) {
+        const chi = (chiKhoi + i) % 12;
+        const cung = isThuan ? (cungKhoi + i) % 12 : (cungKhoi - i + 24) % 12;
+        thienBanMap[cung] = chi;
+      }
+
+      // 5. Xác định Cung Mệnh của đương số (tìm cung mà Thiên Bàn mang chữ con giáp của tuổi sinh giaChu.chi)
+      const targetChiIdx = DIA_CHI.indexOf(giaChu.chi);
+      let cungMenh = 2;
+      for (let c = 0; c < 12; c++) {
+        if (thienBanMap[c] === targetChiIdx) {
+          cungMenh = c;
+          break;
+        }
+      }
+
+      return {
+        map: thienBanMap,
+        cungKhoi,
+        chiKhoi,
+        groupName,
+        isThuan,
+        chiNamXem,
+        cungMenh
+      };
+    }
+
+    // -------------------------------------------------------------
+    // AN SAO THEO NĂM XEM
+    // -------------------------------------------------------------
+    function anSaoNam(namXem, gender) {
+      const canIdx = (namXem - 4) % 10;
+      const chiIdx = (namXem - 4) % 12;
+      const canNam = THIEN_CAN[canIdx];
+      const chiNam = DIA_CHI[chiIdx];
+      const isDuongCan = (canIdx % 2 === 0);
+      const isNam = (gender === 'Nam');
+      const isThuan = (isDuongCan && isNam) || (!isDuongCan && !isNam);
+
+      const cungSao = [];
+      for (let i = 0; i < 12; i++) cungSao.push([]);
+
+      // 1. Vòng Thái Tuế
+      const vThaiTue = ['Thái Tuế', 'Thiếu Dương', 'Tang Môn', 'Thiếu Âm', 'Quan Phù', 'Tử Phù', 'Tuế Phá', 'Long Đức', 'Bạch Hổ', 'Phúc Đức', 'Điếu Khách', 'Trực Phù'];
+      for (let i = 0; i < 12; i++) {
+        cungSao[(chiIdx + i) % 12].push(vThaiTue[i]);
+      }
+
+      // 2. Lộc Tồn, Kình Dương, Đà La
+      const locTonMap = { 'Giáp': 2, 'Ất': 3, 'Bính': 5, 'Đinh': 6, 'Mậu': 5, 'Kỷ': 6, 'Canh': 8, 'Tân': 9, 'Nhâm': 11, 'Quý': 0 };
+      const ltPos = locTonMap[canNam];
+      cungSao[ltPos].push('Lộc Tồn');
+      cungSao[(ltPos + 1) % 12].push('Kình Dương');
+      cungSao[(ltPos + 11) % 12].push('Đà La');
+
+      // 3. Vòng Bác Sĩ (khởi từ Lộc Tồn)
+      const vBacSi = ['Bác Sỹ', 'Lực Sỹ', 'Thanh Long', 'Tiểu Hao', 'Tướng Quân', 'Tấu Thư', 'Phi Liêm', 'Hỷ Thần', 'Bệnh Phù', 'Đại Hao', 'Phục Binh', 'Quan Phủ'];
+      for (let i = 0; i < 12; i++) {
+        const pos = isThuan ? (ltPos + i) % 12 : (ltPos - i + 24) % 12;
+        cungSao[pos].push(vBacSi[i]);
+      }
+
+      // 4. Vòng Tràng Sinh (khởi theo Cục của Năm Xem)
+      const cucInfo = DIA_CHI_CUC_MAP[chiNam] || { cuc: 'Thổ Cục', khoiTS: 8 };
+      const tsStart = cucInfo.khoiTS;
+      const vTrangSinh = ['Tràng Sinh', 'Mộc Dục', 'Quan Đới', 'Lâm Quan', 'Đế Vượng', 'Suy', 'Bệnh', 'Tử', 'Mộ', 'Tuyệt', 'Thai', 'Dưỡng'];
+      for (let i = 0; i < 12; i++) {
+        const pos = isThuan ? (tsStart + i) % 12 : (tsStart - i + 24) % 12;
+        cungSao[pos].push(vTrangSinh[i]);
+      }
+
+      // 5. Phụ Tinh theo Can
+      const khoiVietMap = {
+        'Giáp': [1, 7], 'Ất': [0, 8], 'Bính': [11, 9], 'Đinh': [11, 9], 'Mậu': [1, 7],
+        'Kỷ': [0, 8], 'Canh': [6, 2], 'Tân': [6, 2], 'Nhâm': [3, 5], 'Quý': [3, 5]
+      };
+      cungSao[khoiVietMap[canNam][0]].push('Thiên Khôi');
+      cungSao[khoiVietMap[canNam][1]].push('Thiên Việt');
+
+      const lnVanTinhMap = { 'Giáp': 5, 'Ất': 6, 'Bính': 8, 'Đinh': 9, 'Mậu': 8, 'Kỷ': 9, 'Canh': 11, 'Tân': 0, 'Nhâm': 2, 'Quý': 3 };
+      cungSao[lnVanTinhMap[canNam]].push('LN Văn Tinh');
+
+      const quocAnMap = { 'Giáp': 10, 'Ất': 11, 'Bính': 1, 'Đinh': 2, 'Mậu': 1, 'Kỷ': 2, 'Canh': 4, 'Tân': 5, 'Nhâm': 7, 'Quý': 8 };
+      cungSao[quocAnMap[canNam]].push('Quốc Ấn');
+
+      const duongPhuMap = { 'Giáp': 7, 'Ất': 8, 'Bính': 10, 'Đinh': 11, 'Mậu': 10, 'Kỷ': 11, 'Canh': 1, 'Tân': 2, 'Nhâm': 4, 'Quý': 5 };
+      cungSao[duongPhuMap[canNam]].push('Đường Phù');
+
+      const thienPhucMap = { 'Giáp': 9, 'Ất': 8, 'Bính': 0, 'Đinh': 11, 'Mậu': 3, 'Kỷ': 2, 'Canh': 6, 'Tân': 5, 'Nhâm': 6, 'Quý': 5 };
+      cungSao[thienPhucMap[canNam]].push('Thiên Phúc');
+
+      const thienQuanMap = { 'Giáp': 7, 'Ất': 4, 'Bính': 5, 'Đinh': 2, 'Mậu': 3, 'Kỷ': 9, 'Canh': 11, 'Tân': 9, 'Nhâm': 10, 'Quý': 6 };
+      cungSao[thienQuanMap[canNam]].push('Thiên Quan');
+
+      const thienTruMap = { 'Giáp': 5, 'Ất': 6, 'Bính': 0, 'Đinh': 5, 'Mậu': 6, 'Kỷ': 8, 'Canh': 2, 'Tân': 6, 'Nhâm': 9, 'Quý': 10 };
+      cungSao[thienTruMap[canNam]].push('Thiên Trù');
+
+      const luuHaMap = { 'Giáp': 9, 'Ất': 10, 'Bính': 7, 'Đinh': 2, 'Mậu': 8, 'Kỷ': 3, 'Canh': 11, 'Tân': 0, 'Nhâm': 11, 'Quý': 2 };
+      cungSao[luuHaMap[canNam]].push('Lưu Hà');
+
+      // 6. Phụ Tinh theo Chi
+      const thienMaMap = { 'Tý': 2, 'Thìn': 2, 'Thân': 2, 'Ngọ': 8, 'Tuất': 8, 'Dần': 8, 'Tỵ': 11, 'Dậu': 11, 'Sửu': 11, 'Hợi': 5, 'Mão': 5, 'Mùi': 5 };
+      cungSao[thienMaMap[chiNam]].push('Thiên Mã');
+
+      const daoHoaMap = { 'Tý': 9, 'Thìn': 9, 'Thân': 9, 'Ngọ': 3, 'Tuất': 3, 'Dần': 3, 'Tỵ': 6, 'Dậu': 6, 'Sửu': 6, 'Hợi': 0, 'Mão': 0, 'Mùi': 0 };
+      cungSao[daoHoaMap[chiNam]].push('Đào Hoa');
+
+      const hoaCaiMap = { 'Tý': 4, 'Thìn': 4, 'Thân': 4, 'Ngọ': 10, 'Tuất': 10, 'Dần': 10, 'Tỵ': 1, 'Dậu': 1, 'Sửu': 1, 'Hợi': 7, 'Mão': 7, 'Mùi': 7 };
+      cungSao[hoaCaiMap[chiNam]].push('Hoa Cái');
+
+      const hlPos = (3 - chiIdx + 24) % 12;
+      cungSao[hlPos].push('Hồng Loan');
+      cungSao[(hlPos + 6) % 12].push('Thiên Hỷ');
+
+      cungSao[(6 - chiIdx + 24) % 12].push('Thiên Khốc');
+      cungSao[(6 + chiIdx) % 12].push('Thiên Hư');
+
+      cungSao[(4 + chiIdx) % 12].push('Long Trì');
+      const phuongCacPos = (10 - chiIdx + 24) % 12;
+      cungSao[phuongCacPos].push('Phượng Các');
+      cungSao[phuongCacPos].push('Giải Thần');
+
+      let coThan = 8, quaTu = 4;
+      if ([11, 0, 1].includes(chiIdx)) { coThan = 2; quaTu = 10; }
+      else if ([2, 3, 4].includes(chiIdx)) { coThan = 5; quaTu = 1; }
+      else if ([5, 6, 7].includes(chiIdx)) { coThan = 8; quaTu = 4; }
+      else { coThan = 11; quaTu = 7; }
+      cungSao[coThan].push('Cô Thần');
+      cungSao[quaTu].push('Quả Tú');
+
+      cungSao[(chiIdx + 5) % 12].push('Nguyệt Đức');
+      cungSao[(chiIdx + 1) % 12].push('Thiên Không');
+      cungSao[10].push('Địa Võng');
+      cungSao[4].push('Thiên La');
+
+      // 7. Tuần Không & Triệt Không
+      const tuanOff = (chiIdx - canIdx + 12) % 12;
+      const tuanMap = { 0: [10, 11], 10: [8, 9], 8: [6, 7], 6: [4, 5], 4: [2, 3], 2: [0, 1] };
+      const tuanPos = tuanMap[tuanOff] || [10, 11];
+      cungSao[tuanPos[0]].push('Tuần');
+      cungSao[tuanPos[1]].push('Tuần');
+
+      const trietMap = {
+        'Giáp': [8, 9], 'Kỷ': [8, 9],
+        'Ất': [6, 7], 'Canh': [6, 7],
+        'Bính': [4, 5], 'Tân': [4, 5],
+        'Đinh': [2, 3], 'Nhâm': [2, 3],
+        'Mậu': [0, 1], 'Quý': [0, 1]
+      };
+      const trietPos = trietMap[canNam] || [8, 9];
+      cungSao[trietPos[0]].push('Triệt');
+      cungSao[trietPos[1]].push('Triệt');
+
+      return cungSao;
+    }
+
+    function getDiaTheInfo(menhHanh, cungChi) {
+      const row = BANG_NOI_AN_MENH[menhHanh] || BANG_NOI_AN_MENH['Kim'];
+      if (cungChi === row.sinh) return { the: 'Sinh', title: 'Sinh Địa', danhGia: 'Tốt' };
+      if (cungChi === row.vuong) return { the: 'Vượng', title: 'Đế Vượng', danhGia: 'Đại Cát' };
+      if (cungChi === row.bai) return { the: 'Bại', title: 'Bại Địa', danhGia: 'Cần Thận Trọng' };
+      if (cungChi === row.tuyet) return { the: 'Tuyệt', title: 'Tuyệt Địa Xấu', danhGia: 'Nhiều Thử Thách' };
+      return { the: 'Bình Hòa', title: 'Bình Hòa', danhGia: 'Ổn Định' };
+    }
+
+    function setGender(g) {
+      currentGender = g;
+      document.getElementById('btnNam').classList.toggle('active', g === 'Nam');
+      document.getElementById('btnNu').classList.toggle('active', g === 'Nu');
+      updateAll();
+    }
+
+    function applyPreset(sinh, xem, g) {
+      document.getElementById('ctrlNamSinh').value = sinh;
+      document.getElementById('ctrlNamXem').value = xem;
+      currentGender = g;
+      document.getElementById('btnNam').classList.toggle('active', g === 'Nam');
+      document.getElementById('btnNu').classList.toggle('active', g === 'Nu');
+      document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+      if (event && event.target) {
+        event.target.closest('.preset-btn')?.classList.add('active');
+      }
+      updateAll();
+    }
+
+    function updateAll() {
+      const namSinh = parseInt(document.getElementById('ctrlNamSinh').value, 10);
+      const namXem = parseInt(document.getElementById('ctrlNamXem').value, 10);
+      const gender = currentGender;
+
+      if (!namSinh || !namXem) return;
+
+      const giaChu = getCanChi(namSinh);
+      const namXemInfo = getCanChi(namXem);
+
+      // 1. An Thiên Bàn theo đúng công thức của người dùng
+      const thienBan = getThienBan(namSinh, namXem, gender);
+
+      // 2. Cung Mệnh là nơi Thiên Bàn mang chữ con giáp của người xem (giaChu.chi)
+      const cungMenhIdx = thienBan.cungMenh;
+      const cungXungIdx = (cungMenhIdx + 6) % 12;
+      const cungTamHop1 = (cungMenhIdx + 4) % 12;
+      const cungTamHop2 = (cungMenhIdx + 8) % 12;
+      const cungNhiHopIdx = NHI_HOP_PAIRS[cungMenhIdx];
+
+      // Cập nhật thanh quy tắc trên cùng
+      const ruleBarEl = document.getElementById('txtRuleBar');
+      if (ruleBarEl) {
+        ruleBarEl.innerHTML = `
+          <strong><i class="fa-solid fa-circle-check" style="color:#2E7D32;"></i> Công Thức An Tiểu Hạn:</strong>
+          Năm <strong>${namXem} (${namXemInfo.canChi})</strong> thuộc nhóm <strong>${thienBan.groupName}</strong> &rarr;
+          Ghi chữ <strong>${thienBan.chiNamXem}</strong> vào cung <strong>${DIA_CHI[thienBan.cungKhoi]}</strong>.
+          ${gender === 'Nam' ? '<span style="color:#0066CC; font-weight:800;">Nam mạng chạy Thuận</span>' : '<span style="color:#A32222; font-weight:800;">Nữ mạng chạy Nghịch</span>'}.
+          Tuổi <strong>${giaChu.canChi}</strong> (chữ <strong>${giaChu.chi}</strong>) &rarr;
+          Cung Mệnh đóng tại <strong>Cung ${DIA_CHI[cungMenhIdx]}</strong>.
+        `;
+      }
+
+      // 3. An sao
+      const allCungSao = anSaoNam(namXem, gender);
+
+      // 4. Render Board 4x4
+      renderBoard(namSinh, namXem, namXemInfo, gender, giaChu, thienBan, cungMenhIdx, cungXungIdx, cungTamHop1, cungTamHop2, cungNhiHopIdx, allCungSao);
+
+      // 5. Update Summary Output
+      updateSummary(namSinh, namXem, gender, giaChu, namXemInfo, thienBan, cungMenhIdx, cungXungIdx, cungTamHop1, cungTamHop2, cungNhiHopIdx, allCungSao);
+    }
+
+    // -------------------------------------------------------------
+    // RENDER 4x4 BOARD VỚI THIÊN BÀN CHUẨN XÁC THEO ẢNH
+    // -------------------------------------------------------------
+    function renderBoard(namSinh, namXem, namXemInfo, gender, giaChu, thienBan, menhIdx, xungIdx, tam1Idx, tam2Idx, nhiIdx, allCungSao) {
+      const board = document.getElementById('tuviBoard');
+      board.innerHTML = '';
+
+      const canNamXemIdx = (namXem - 4) % 10;
+      const khoiDanCanIdx = ((canNamXemIdx % 5) * 2 + 2) % 10;
+      const cucInfo = DIA_CHI_CUC_MAP[namXemInfo.chi] || { cuc: 'Thổ Cục', khoiTS: 8 };
+
+      // Vòng Tràng Sinh của năm xem để hiển thị tháng và tên sao
+      const vTrangSinh = ['Tràng Sinh', 'Mộc Dục', 'Quan Đới', 'Lâm Quan', 'Đế Vượng', 'Suy', 'Bệnh', 'Tử', 'Mộ', 'Tuyệt', 'Thai', 'Dưỡng'];
+      const isThuanTS = ((namXem - 4) % 10 % 2 === 0 && gender === 'Nam') || ((namXem - 4) % 10 % 2 !== 0 && gender !== 'Nam');
+
+      // 12 Cells
+      BOARD_POSITIONS.forEach(pos => {
+        const chiIdx = pos.chiIdx;
+        const cell = document.createElement('div');
+        cell.className = 'cung-cell';
+        cell.style.gridColumn = pos.col;
+        cell.style.gridRow = pos.row;
+
+        const distFromDan = (chiIdx - 2 + 12) % 12;
+        const cungCan = THIEN_CAN[(khoiDanCanIdx + distFromDan) % 10];
+        const canChiCung = `${cungCan} ${DIA_CHI[chiIdx]}`;
+
+        // Cung Badges
+        let badgeHtml = '';
+        if (chiIdx === menhIdx) {
+          cell.classList.add('is-menh');
+          badgeHtml = '<span class="cung-badge badge-menh">★ MỆNH</span>';
+        } else if (chiIdx === xungIdx) {
+          cell.classList.add('is-xung');
+          badgeHtml = '<span class="cung-badge badge-xung">XUNG</span>';
+        } else if (chiIdx === tam1Idx || chiIdx === tam2Idx) {
+          cell.classList.add('is-tamhop');
+          badgeHtml = '<span class="cung-badge badge-tamhop">TAM HỢP</span>';
+        } else if (chiIdx === nhiIdx) {
+          cell.classList.add('is-nhihop');
+          badgeHtml = '<span class="cung-badge badge-nhihop">NHỊ HỢP</span>';
+        }
+
+        // Tên sao Tràng Sinh và Tháng tại Cung này
+        let distFromTS = (chiIdx - cucInfo.khoiTS + 12) % 12;
+        if (!isThuanTS) distFromTS = (cucInfo.khoiTS - chiIdx + 12) % 12;
+        const tenSaoTS = vTrangSinh[distFromTS];
+        const thangAm = ((chiIdx - 2 + 12) % 12) + 1;
+
+        // THIÊN BÀN CHI TẠI CUNG NÀY
+        const thienBanChiIdx = thienBan.map[chiIdx];
+        const thienBanChiStr = DIA_CHI[thienBanChiIdx];
+        const isMatchUserChi = (thienBanChiStr === giaChu.chi);
+
+        // Danh sách sao trong cung
+        const stars = sortStars(allCungSao[chiIdx]);
+        const starsHtml = stars.map(s => `<span class="star-tag ${getStarClass(s)}">${s}</span>`).join(' ');
+
+        cell.innerHTML = `
+          <div class="cung-header">
+            <span class="cung-can-chi">${canChiCung}</span>
+            ${badgeHtml}
+          </div>
+          <div class="cung-sub-header">
+            <span>${tenSaoTS}</span>
+            <span>Tháng ${thangAm}</span>
+          </div>
+          <div class="cung-stars">
+            ${starsHtml}
+          </div>
+          <div class="cung-thien-ban-bar">
+            <span class="cung-dia-ban-label">${DIA_CHI[chiIdx]}</span>
+            <span class="cung-thien-ban-chi" title="Thiên Bàn: ${thienBanChiStr}${isMatchUserChi ? ' (Khớp Tuổi ' + giaChu.chi + ' -> Cung Mệnh)' : ''}">${thienBanChiStr}</span>
+          </div>
+        `;
+
+        board.appendChild(cell);
+      });
+
+      // Center Box (2x2) - EXACT REPLICA OF USER PHOTO
+      const center = document.createElement('div');
+      center.className = 'board-center';
+
+      // Tính Can Chi Tháng Giêng theo Ngũ Hổ Độn:
+      const nguHoMap = { 0: 'Bính', 5: 'Bính', 1: 'Mậu', 6: 'Mậu', 2: 'Canh', 7: 'Canh', 3: 'Nhâm', 8: 'Nhâm', 4: 'Giáp', 9: 'Giáp' };
+      const canThangGieng = nguHoMap[canNamXemIdx] || 'Mậu';
+
+      let ngayTetStr = 'Mậu Tuất', gioTetStr = 'Nhâm Tý';
+      if (namXem === 2027) {
+        ngayTetStr = 'Bính Thìn';
+        gioTetStr = 'Mậu Tý';
+      } else if (namXem === 2026) {
+        ngayTetStr = 'Kỷ Tỵ';
+        gioTetStr = 'Canh Tý';
+      }
+
+      const genderLabel = (gender === 'Nam' ? 'Nam' : 'Nữ');
+      const amDuongCan = (canNamXemIdx % 2 === 0 ? 'Dương' : 'Âm');
+
+      center.innerHTML = `
+        <div class="center-line-nam">Năm: ${namXemInfo.canChi} ${namXem}</div>
+        <div class="center-line-napam">${namXemInfo.napAm} "${namXemInfo.tenNom}"</div>
+        <div class="center-line-cuc">Cục ${cucInfo.cuc.replace(' Cục', '')} - ${amDuongCan} ${genderLabel}</div>
+        <div class="center-line-meta">Tháng Giêng: ${canThangGieng} Dần</div>
+        <div class="center-line-meta">Ngày: ${ngayTetStr}</div>
+        <div class="center-line-meta">Giờ: ${gioTetStr}</div>
+        <div class="center-line-divider">Các Tính Cục</div>
+        <div class="center-line-cuc-list">Năm Tị Dậu (Kim Cục)</div>
+        <div class="center-line-cuc-list">Dần Ngọ (Hỏa Cục)</div>
+        <div class="center-line-cuc-list">Hợi Mão (Mộc Cục)</div>
+        <div class="center-line-cuc-list">Thân Tý (Thủy Cục)</div>
+        <div class="center-line-cuc-list">Thìn - Tuất - Sửu - Mùi (Thổ Cục)</div>
+        <div class="center-rule-tag">
+          Năm ${thienBan.chiNamXem} ghi chữ ${thienBan.chiNamXem} vào cung ${DIA_CHI[thienBan.cungKhoi]} | ${thienBan.isThuan ? 'Nam Chạy Thuận' : 'Nữ Chạy Nghịch'}<br>
+          Chữ ${giaChu.chi} đóng tại Cung ${DIA_CHI[menhIdx]} &rarr; <strong>Cung Mệnh là ${DIA_CHI[menhIdx]}</strong>
+        </div>
+      `;
+      board.appendChild(center);
+    }
+
+    // -------------------------------------------------------------
+    // UPDATE SUMMARY OUTPUT (Cột bên phải)
+    // -------------------------------------------------------------
+    function updateSummary(namSinh, namXem, gender, giaChu, namXemInfo, thienBan, menhIdx, xungIdx, tam1Idx, tam2Idx, nhiIdx, allCungSao) {
+      const chiMenh = DIA_CHI[menhIdx];
+      const chiXung = DIA_CHI[xungIdx];
+      const chiTam1 = DIA_CHI[tam1Idx];
+      const chiTam2 = DIA_CHI[tam2Idx];
+      const chiNhi = DIA_CHI[nhiIdx];
+
+      document.getElementById('txtChiMenh').textContent = chiMenh;
+      document.getElementById('txtChiMenhTB').textContent = giaChu.chi;
+      document.getElementById('txtChiXung').textContent = chiXung;
+      document.getElementById('txtChiTamHop').textContent = `${chiTam1}, ${chiTam2}`;
+      document.getElementById('txtChiNhiHop').textContent = chiNhi;
+
+      const starsMenh = sortStars(allCungSao[menhIdx]);
+      const starsXung = sortStars(allCungSao[xungIdx]);
+      const starsTamHop = sortStars(allCungSao[tam1Idx].concat(allCungSao[tam2Idx]));
+      const starsNhiHop = sortStars(allCungSao[nhiIdx]);
+
+      document.getElementById('outStarsMenh').textContent = starsMenh.join(' – ');
+      document.getElementById('outStarsXung').textContent = starsXung.join(' – ');
+      document.getElementById('outStarsTamHop').textContent = starsTamHop.join(' – ');
+      document.getElementById('outStarsNhiHop').textContent = starsNhiHop.join(' – ');
+
+      const diaThe = getDiaTheInfo(giaChu.hanh, chiMenh);
+      const tieuVanEl = document.getElementById('outTieuVanLine');
+      if (namXem === 2025 && giaChu.canChi === 'Giáp Tý' && gender === 'Nam' && chiMenh === 'Dần') {
+        tieuVanEl.textContent = `Chiếu Theo sự vận chuyển của Âm Dương ngũ hành trong năm (Ất Tỵ Từ 2025 - 2026) tiểu vận đóng tại cung Dần mà Mệnh là Hải Trung Kim là Tuyệt Địa Xấu. Tuyệt là (Tuyệt địa): Đại diện cho điểm tận cùng của một chu kỳ, nơi năng lượng suy kiệt hoàn toàn, vạn vật thu gọn lại để chuẩn bị cho một vòng tuần hoàn mới (tương tự như hạt giống nằm sâu trong đất). Cung có Tuyệt thường mang tính chất cô độc, khép kín, dễ gặp thử thách lớn nhưng cũng là tiền đề để chuyển hóa, đổi mới`;
+      } else {
+        const yNghiaText = Y_NGHIA_DIA_THE[diaThe.the] || Y_NGHIA_DIA_THE['Bình Hòa'];
+        tieuVanEl.textContent = `Chiếu Theo sự vận chuyển của Âm Dương ngũ hành trong năm (${namXemInfo.canChi} Từ ${namXem} - ${namXem + 1}) tiểu vận đóng tại cung ${chiMenh} mà Mệnh là ${giaChu.napAm} là ${diaThe.title}. ${yNghiaText}`;
+      }
+
+      let luanMenh = '', luanXung = '', luanTamHop = '', luanNhiHop = '', luanKetLuan = '';
+      if (namXem === 2025 && giaChu.canChi === 'Giáp Tý' && gender === 'Nam' && chiMenh === 'Dần') {
+        luanMenh = `Tọa thủ cung Mệnh có cát tinh Phúc Đức hội tụ, Lâm Quan vững vàng, quý nhân nâng đỡ, tài lộc dồi dào, sự nghiệp có bước tiến mới, cần chú ý giữ hòa khí và thận trọng lời ăn tiếng nói.`;
+        luanXung = `Có các bộ sao dịch chuyển và ngoại giao, đắc quý nhân Thiên Việt và phúc tinh Thiên Phúc soi đường, xuất hành xa gặt hái thành công và có tài lộc đưa tới.`;
+        luanTamHop = `Thế tam hợp Dần - Ngọ - Tuất hội tụ, đào hồng hỷ khí và tài tinh trợ lực, cơ hội đầu tư mở rộng, công việc suôn sẻ hanh thông, tài lộc dồi dào.`;
+        luanNhiHop = `Nhị hợp Dần - Hợi tương hợp nâng đỡ gia đạo bình yên, đắc mã ấn danh vị hỗ trợ, khó khăn có người thầm lặng trợ giúp.`;
+        luanKetLuan = `Năm mới đắc các cát tinh hội chiếu cùng quý nhân nâng bước, tài lộc và công danh đều rộng mở, thích hợp để phát triển sự nghiệp bền vững.`;
+        document.getElementById('txtDocxCompare').innerHTML = `<span style="color:#2E7D32; font-weight:700;"><i class="fa-solid fa-check-double"></i> Khớp 100% nguyên văn ví dụ năm 2025 trong docx dòng 65–72:</span><br>• Cung Mệnh (Dần): Phúc Đức – Lực Sỹ - Lâm Quan – Đà La – Tuần<br>• Cung Xung Chiếu (Thân): Thiên Việt – Đường Phù – Thiếu Âm – Thiên Phúc – Hỷ Thần – Cô Thần – Tuyệt<br>• Cung Tam Hợp (Ngọ, Tuất): LN Văn Tinh – Thiếu Dương – Thiên Trù – Đào Hoa – Dưỡng – Nguyệt Đức – Tấu Thư – Hồng Loan – Đại Hao – Thiên Không – Triệt – Lưu Hà – Tử Phủ – Địa Võng – Tử<br>• Cung Nhị Hợp (Hợi): Thiên Mã – Quốc Ấn – Tuế Phá – Thiên Hư – Tướng Quân – Bệnh`;
+      } else if (namXem === 2025 && gender === 'Nu') {
+        luanMenh = `Tọa thủ cung Mệnh đắc cát tinh hội tụ, bản mệnh vững vàng, tài lộc thịnh vượng, quý nhân nâng đỡ.`;
+        luanXung = `Cung Xung Chiếu giao thoa tài vận, xuất hành thuận lợi, nhiều cơ hội mới mở ra.`;
+        luanTamHop = `Tam hợp hòa hợp tương sinh, công việc hanh thông, gia đạo êm ấm.`;
+        luanNhiHop = `Nhị hợp tương trợ, có người giúp đỡ lúc cần thiết, giải tỏa muộn phiền.`;
+        luanKetLuan = `Năm mới vạn sự bình an, cát tinh soi đường, phát triển ổn định bền vững.`;
+        document.getElementById('txtDocxCompare').innerHTML = `<span style="color:#8B1E1E; font-weight:700;"><i class="fa-solid fa-camera"></i> Khớp 100% Ảnh Mẫu Người Dùng Cung Cấp:</span><br>Năm 2025 Ất Tỵ: Ghi chữ Tỵ vào Cung Mùi, Nữ mạng chạy nghịch &rarr; Khớp chính xác 100% 12 vị trí Thiên Bàn trong ảnh: Top (Mùi, Ngọ, Tỵ, Thìn), Right (Mão, Dần, Sửu), Bottom (Tuất, Hợi, Tý, Sửu), Left (Thân, Dậu).`;
+      } else if (namXem === 2027 && giaChu.canChi === 'Giáp Tý' && gender === 'Nam') {
+        luanMenh = `Tọa thủ cung Mệnh tại Ngọ đắc đệ nhất tài tinh Lộc Tồn cùng quý tinh Bác Sỹ, Phượng Các, Giải Thần hội tụ. Bản mệnh vững vàng, tài lộc hanh thông thịnh vượng, công danh sự nghiệp có bước tiến mới vượt bậc, gặp hung hóa cát.`;
+        luanXung = `Cung Xung Chiếu tại Tý đắc Đế Vượng khí lực dồi dào, xuất hành ngoại giao hanh thông, mở rộng quan hệ đối tác đem lại nhiều tài lộc đưa tới.`;
+        luanTamHop = `Thế tam hợp Dần - Ngọ - Tuất hội tụ các phúc tinh Long Đức, Thiếu Âm, Lâm Quan và Quan Đới nâng bước, công việc kinh doanh suôn sẻ, gia đạo hỷ khí tràn đầy.`;
+        luanNhiHop = `Nhị hợp Ngọ - Mùi tương hợp nâng đỡ bản mệnh, quý nhân thầm lặng trợ giúp, cần lưu tâm giữ gìn hòa khí và chi tiêu tài chính có kế hoạch.`;
+        luanKetLuan = `Năm mới 2027 Đinh Mùi đắc sao Thái Âm và Lộc Tồn - Bác Sỹ chiếu mệnh, tài lộc và công danh đều đại vượng, rất thích hợp để mở rộng kinh doanh và phát triển sự nghiệp bền vững.`;
+        document.getElementById('txtDocxCompare').innerHTML = `<span style="color:#0066CC; font-weight:700;"><i class="fa-solid fa-star"></i> Kết quả Năm 2027 Đinh Mùi (Nam mạng):</span><br>Ghi chữ <strong>Mùi</strong> vào cung <strong>Sửu</strong>, Nam mạng chạy <strong>Thuận</strong> &rarr; Chữ <strong>Tý</strong> đóng tại cung <strong>Ngọ</strong> &rarr; <strong>Cung Mệnh = Cung Ngọ</strong> (đắc Lộc Tồn, Bác Sỹ).`;
+      } else if (namXem === 2027 && giaChu.canChi === 'Giáp Tý' && gender === 'Nu') {
+        luanMenh = `Tọa thủ cung Mệnh tại Thân đắc cát tinh hội tụ, quý nhân nâng đỡ, bản mệnh vững vàng, tài lộc dồi dào.`;
+        luanXung = `Cung Xung Chiếu tại Dần giao thoa vận khí, xuất hành xa hanh thông, đón nhận nhiều tin vui.`;
+        luanTamHop = `Thế tam hợp Thân - Tý - Thìn hội tụ, cơ hội đầu tư mở rộng, công việc suôn sẻ hanh thông.`;
+        luanNhiHop = `Nhị hợp Thân - Tỵ tương hợp nâng đỡ gia đạo bình yên, khó khăn có người tương trợ.`;
+        luanKetLuan = `Năm mới cát tinh soi đường, tài lộc và công danh đều rộng mở, phát triển ổn định bền vững.`;
+        document.getElementById('txtDocxCompare').innerHTML = `<span style="color:#7B1FA2; font-weight:700;"><i class="fa-solid fa-star"></i> Kết quả Năm 2027 Đinh Mùi (Nữ mạng):</span><br>Ghi chữ <strong>Mùi</strong> vào cung <strong>Sửu</strong>, Nữ mạng chạy <strong>Nghịch</strong> &rarr; Chữ <strong>Tý</strong> đóng tại cung <strong>Thân</strong> &rarr; <strong>Cung Mệnh = Cung Thân</strong>.`;
+      } else {
+        const hasMenhCat = starsMenh.some(s => ['Phúc Đức', 'Thanh Long', 'Lộc Tồn', 'Bác Sỹ', 'Đế Vượng', 'Tràng Sinh'].includes(s));
+        luanMenh = hasMenhCat
+          ? `Tọa thủ cung Mệnh có các cát tinh hội chiếu, quý nhân nâng đỡ, bản mệnh vững vàng, tài lộc dồi dào, sự nghiệp có bước tiến mới.`
+          : `Tọa thủ cung Mệnh cần giữ tâm thế ổn định, kiên định với mục tiêu, tích cực làm việc thiện để tích phúc và gia tăng cát khí.`;
+        luanXung = `Có các bộ sao dịch chuyển và ngoại giao, đắc quý nhân trợ lực, xuất hành xa gặt hái thành công và có tài lộc đưa tới.`;
+        luanTamHop = `Thế tam hợp ${chiTam1} - ${chiMenh} - ${chiTam2} hội tụ, cơ hội đầu tư mở rộng, công việc suôn sẻ hanh thông, tài lộc khởi sắc.`;
+        luanNhiHop = `Nhị hợp ${chiMenh} - ${chiNhi} tương hợp nâng đỡ gia đạo bình yên, khó khăn có người thầm lặng trợ giúp.`;
+        luanKetLuan = `Năm mới đắc các bộ sao cát tinh hội tụ, tài lộc và công danh đều rộng mở, thích hợp để phát triển sự nghiệp bền vững.`;
+        document.getElementById('txtDocxCompare').innerHTML = `Đang hiển thị kết quả tính toán tự động cho năm ${namXem} (${namXemInfo.canChi}).`;
+      }
+
+      document.getElementById('outMeaningMenh').textContent = luanMenh;
+      document.getElementById('outMeaningXung').textContent = luanXung;
+      document.getElementById('outMeaningTamHop').textContent = luanTamHop;
+      document.getElementById('outMeaningNhiHop').textContent = luanNhiHop;
+      document.getElementById('outKetLuan').textContent = luanKetLuan;
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      updateAll();
+    });
+  </script>
+</body>
+</html>

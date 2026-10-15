@@ -1,0 +1,41 @@
+﻿<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFFDF8"/>
+      <stop offset="70%" stop-color="#FDF3DE"/>
+      <stop offset="100%" stop-color="#EEDCB9"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ECC67C"/>
+      <stop offset="50%" stop-color="#B87314"/>
+      <stop offset="100%" stop-color="#7A1414"/>
+    </linearGradient>
+    <filter id="sh" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="1.5" stdDeviation="1" flood-color="#5E0D0D" flood-opacity="0.15"/>
+    </filter>
+  </defs>
+  <!-- Outer Gold Ring -->
+  <circle cx="40" cy="40" r="38" fill="url(#bg)" stroke="url(#gold)" stroke-width="2.5" filter="url(#sh)"/>
+  <circle cx="40" cy="40" r="34" fill="none" stroke="#DFBA73" stroke-width="1" stroke-dasharray="2,2"/>
+    <!-- Mouse -->
+  <circle cx="28" cy="27" r="9" fill="#8B1E1E"/>
+  <circle cx="28" cy="27" r="5" fill="#DFBA73"/>
+  <circle cx="52" cy="27" r="9" fill="#8B1E1E"/>
+  <circle cx="52" cy="27" r="5" fill="#DFBA73"/>
+  <ellipse cx="40" cy="45" rx="16" ry="18" fill="#8B1E1E"/>
+  <ellipse cx="40" cy="48" rx="10" ry="12" fill="#FFF4DE"/>
+  <!-- Head -->
+  <ellipse cx="40" cy="38" rx="13" ry="11" fill="#7A1414"/>
+  <circle cx="34" cy="36" r="2.2" fill="#FFE6AA"/>
+  <circle cx="46" cy="36" r="2.2" fill="#FFE6AA"/>
+  <ellipse cx="40" cy="41" rx="3.5" ry="2" fill="#3D0000"/>
+  <!-- Whiskers -->
+  <line x1="33" y1="41" x2="20" y2="40" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="33" y1="43" x2="19" y2="44" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="47" y1="41" x2="60" y2="40" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <line x1="47" y1="43" x2="61" y2="44" stroke="#B87314" stroke-width="1.2" stroke-linecap="round"/>
+  <!-- Gold Ingot -->
+  <path d="M34,55 C34,51 46,51 46,55 C48,60 32,60 34,55 Z" fill="#DFBA73" stroke="#B87314" stroke-width="1"/>
+  <!-- Tail -->
+  <path d="M54,58 C63,59 67,52 64,44" fill="none" stroke="#8B1E1E" stroke-width="2" stroke-linecap="round"/>
+</svg>
