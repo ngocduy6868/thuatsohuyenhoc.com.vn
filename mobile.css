@@ -1,0 +1,4101 @@
+/* ==========================================================================
+   THUẬT SỐ HUYỀN HỌC - GIAO DIỆN DI ĐỘNG (MOBILE RESPONSIVE STYLESHEET)
+   Bảo toàn 100% công thức thuật số, dữ liệu bài viết & hiển thị chuẩn PC
+   Chỉ áp dụng khi màn hình <= 900px
+   ========================================================================== */
+
+@media screen and (max-width: 900px) {
+
+  /* -------------------------------------------------------------------------
+     1. RESET KHUNG NHÌN & CONTAINER
+     ------------------------------------------------------------------------- */
+  html, body {
+    width: 100% !important;
+    max-width: 100vw !important;
+    min-width: 0 !important;
+    overflow-x: hidden !important;
+    zoom: 1 !important;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  .container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .page-wrapper {
+    padding: 10px 0 40px 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     2. THANH TOP BAR TRÊN CÙNG
+     ------------------------------------------------------------------------- */
+  .top-bar {
+    padding: 6px 0 !important;
+  }
+
+  .top-bar-inner {
+    flex-direction: column !important;
+    gap: 6px !important;
+    text-align: center !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .top-bar-left {
+    flex-direction: column !important;
+    gap: 4px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .top-slogan {
+    font-size: 11px !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .top-hotline {
+    font-size: 12px !important;
+    padding: 3px 10px !important;
+  }
+
+  .top-bar-right {
+    display: none !important; /* Ẩn bớt social ở topbar để gọn mobile */
+  }
+
+  /* -------------------------------------------------------------------------
+     3. HEADER THƯƠNG HIỆU & 6 NÚT TÍNH NĂNG NHANH
+     ------------------------------------------------------------------------- */
+  .main-header {
+    padding: 12px 0 14px 0 !important;
+  }
+
+  .header-inner {
+    flex-direction: column !important;
+    gap: 12px !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .brand-section {
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important;
+    width: 100% !important;
+  }
+
+  .brand-logo-wrap {
+    width: 58px !important;
+    height: 58px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .brand-text {
+    align-items: flex-start !important;
+    text-align: left !important;
+  }
+
+  .brand-badge {
+    font-size: 9px !important;
+    padding: 1px 6px !important;
+  }
+
+  .brand-title {
+    font-size: 20px !important;
+    white-space: normal !important;
+    line-height: 1.2 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  .brand-subtitle {
+    font-size: 10.5px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  /* Ẩn cột thư pháp 4 chữ dọc và ấn triện để nhường diện tích cho 6 nút tính năng */
+  .calligraphy-pillar {
+    display: none !important;
+  }
+
+  .header-right {
+    width: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .ancient-seal-wrap {
+    display: none !important;
+  }
+
+  /* 6 Nút tính năng nhanh: Xếp lưới 3 cột x 2 hàng to rõ */
+  .quick-category-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .quick-pill {
+    padding: 8px 4px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     4. THANH ĐIỀU HƯỚNG MENU TRƯỢT NGANG (HORIZONTAL SWIPE NAV)
+     ------------------------------------------------------------------------- */
+  .main-nav {
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 1000 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  .nav-inner,
+  .container.nav-inner {
+    padding: 0 !important;
+    margin: 0 !important;
+    overflow: hidden !important;
+    display: flex !important;
+    justify-content: flex-start !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-inner::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .nav-menu {
+    display: flex !important;
+    flex-direction: row !important;
+    flex-wrap: nowrap !important;
+    overflow-x: auto !important;
+    scroll-snap-type: x mandatory !important;
+    -webkit-overflow-scrolling: touch !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-menu::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
+
+  .nav-item {
+    flex: 0 0 25% !important;
+    width: 25% !important;
+    min-width: 25% !important;
+    max-width: 25% !important;
+    box-sizing: border-box !important;
+    scroll-snap-align: start !important;
+    text-align: center !important;
+  }
+
+  .nav-link {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    height: 100% !important;
+    padding: 11px 1px !important;
+    font-size: clamp(10.5px, 2.75vw, 11.5px) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.25px !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+    box-sizing: border-box !important;
+  }
+
+  .nav-item:first-child .nav-link {
+    border-left: none !important;
+  }
+
+  /* BẢNG MENU CON TRÊN MOBILE (BẤM VÀO THÌ HIỆN, BẤM RA CHỖ KHÁC TỰ ĐỘNG ẨN ĐI) */
+  .nav-submenu {
+    display: none !important;
+    position: fixed !important;
+    top: 45px !important;
+    left: 12px !important;
+    right: 12px !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-height: 65vh !important;
+    overflow-y: auto !important;
+    background: #6B0E0E !important;
+    border: 2px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.65) !important;
+    z-index: 999999 !important;
+    padding: 6px 0 !important;
+    animation: fadeInMenuMobile 0.2s ease-out forwards;
+  }
+
+  /* Khi có class mobile-open thì hiện ra chiếc bảng đỏ đúng như mong muốn */
+  .nav-item.mobile-open .nav-submenu {
+    display: block !important;
+  }
+
+  /* Tắt hover giả lập của PC trên mobile để tránh kẹt dính chuột */
+  .nav-item:hover .nav-submenu {
+    display: none;
+  }
+  .nav-item.mobile-open:hover .nav-submenu {
+    display: block !important;
+  }
+
+  @keyframes fadeInMenuMobile {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .nav-submenu li a {
+    display: block !important;
+    padding: 10px 16px !important;
+    color: #FFFDF8 !important;
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    border-bottom: 1px solid rgba(223, 186, 115, 0.15) !important;
+  }
+
+  .nav-submenu li:last-child a {
+    border-bottom: none !important;
+  }
+
+  .nav-submenu li a:hover,
+  .nav-submenu li a:active {
+    background: #4E0808 !important;
+    color: #DFBA73 !important;
+  }
+
+  .nav-search {
+    display: none !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     5. BỐ CỤC CHÍNH (MAIN LAYOUT)
+     ------------------------------------------------------------------------- */
+  .main-layout {
+    display: flex !important;
+    flex-direction: column !important;
+    width: 100% !important;
+    align-items: center !important;
+    gap: 16px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* BỐ CỤC NỘI DUNG VÀ SIDEBAR TRÊN MOBILE:
+     - Trên Trang Chủ: Đưa sidebar-stack (ảnh 2: danh mục tiện ích) lên trước Kho Tàng Thư Viện Tin Tức (#chuyenmuc).
+     - Trên các tab khác (Chuyên mục, Kinh dịch, Bói sim, Lịch vạn sự, Tứ trụ): Giữ nguyên thứ tự như cũ (nội dung tab ở trên, sidebar ở dưới).
+  */
+  .content-stack {
+    display: contents !important;
+  }
+
+  #tab-trangchu {
+    display: contents !important;
+  }
+
+  #tab-trangchu[style*="display: none"],
+  #tab-trangchu[style*="display:none"],
+  #tab-trangchu.hidden {
+    display: none !important;
+  }
+
+  /* Thứ tự hiển thị các khối trên Trang Chủ:
+     1. Hero Card (chân dung)
+     2. Form Lập lá số tử vi
+     3. Banner dịch vụ tử vi (nếu có)
+     10. Sidebar Stack (các widget tra cứu: Tử Vi, Xem Ngày, Xem Tuổi...) -> ĐỨNG TRƯỚC
+     20. Kho Tàng Thư Viện Tin Tức -> NẰM DƯỚI
+  */
+  .hero-card {
+    order: 1 !important;
+  }
+
+  .tuvi-section-card#tuvi,
+  .tuvi-section-card {
+    order: 2 !important;
+  }
+
+  .tuvi-service-promo-card {
+    order: 3 !important;
+  }
+
+  /* Cột Sidebar tiện ích tra cứu nhanh (Ảnh 2) */
+  .sidebar-stack {
+    width: 100% !important;
+    min-width: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 16px !important;
+    order: 10 !important;
+  }
+
+  /* ẨN CỘT TIỆN ÍCH SIDEBAR (ẢNH 2) KHI Ở MỤC BÀI VIẾT CHUYÊN MỤC (TỪ CHUYÊN MỤC TỚI DIỄN ĐÀN) TRÊN MOBILE */
+  body.is-tab-chuyenmuc .sidebar-stack,
+  .main-layout:has(#tab-chuyenmuc:not([style*="display: none"]):not([style*="display:none"])) .sidebar-stack {
+    display: none !important;
+  }
+
+  /* Khối Kho Tàng Thư Viện Tin Tức và các bài viết bên dưới trên Trang Chủ (Nằm ở dưới cùng) */
+  #tab-trangchu #chuyenmuc,
+  #chuyenmuc.articles-section {
+    order: 20 !important;
+    width: 100% !important;
+  }
+
+  #bottom-articles-row {
+    order: 25 !important;
+    width: 100% !important;
+  }
+
+  #bottom-articles-row[style*="display: none"],
+  #bottom-articles-row[style*="display:none"] {
+    display: none !important;
+  }
+
+  /* CÁC TAB KHÁC GIỮ NGUYÊN NHƯ CŨ (Nội dung tab ở trên - order 2, sidebar ở dưới - order 10) */
+  #tab-chuyenmuc,
+  #tab-kinhdich,
+  #tab-boisim,
+  #tab-lich,
+  #tab-lich-amduong,
+  #tab-lich-homnay,
+  #tab-lich-thang,
+  #tab-tutru {
+    order: 2 !important;
+    width: 100% !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     6. HERO CARD (CHÂN DUNG THẦY NGỌC DUY & ĐẶT LỊCH)
+     ------------------------------------------------------------------------- */
+  .hero-card {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    align-self: center !important;
+    flex-direction: column !important;
+    text-align: center !important;
+    padding: 16px 14px !important;
+    gap: 12px !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hero-master-portrait {
+    width: 90px !important;
+    height: 90px !important;
+    margin: 0 auto !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hero-content {
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    gap: 6px !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-main-title {
+    font-size: 19px !important;
+    line-height: 1.25 !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-highlight-cung {
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+    text-align: center !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-pricing-box {
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    align-items: center !important;
+    justify-content: center !important;
+    margin: 6px auto 0 auto !important;
+  }
+
+  .hero-price-badge {
+    font-size: 13px !important;
+    padding: 6px 14px !important;
+    margin: 0 auto !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .hero-cta-btn {
+    width: 100% !important;
+    max-width: 320px !important;
+    padding: 10px 16px !important;
+    font-size: 14px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     7. FORM LẬP LÁ SỐ TỬ VI TRÊN ĐIỆN THOẠI (CHUẨN GỌN GÀNG GIỐNG HỆT PC)
+     ------------------------------------------------------------------------- */
+  .tuvi-section-card {
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .tuvi-section-header {
+    padding: 10px 14px !important;
+  }
+
+  .tuvi-section-title {
+    font-size: 18px !important;
+    letter-spacing: 1px !important;
+  }
+
+  .tuvi-triptych-layout {
+    padding: 14px 6px !important;
+    gap: 0 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ẩn 2 câu đối dọc hai bên trên màn hình nhỏ để nhường trọn vẹn diện tích cho Form */
+  .couplet-scroll {
+    display: none !important;
+  }
+
+  .tuvi-form-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 12px 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  #tuvi-form {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+  }
+
+  /* GIỮ NGUYÊN CẤU TRÚC LƯỚI 2 CỘT CHUẨN ĐẸP CỦA PC */
+  .form-grid {
+    display: grid !important;
+    grid-template-columns: 74px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    row-gap: 12px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* CĂN LỀ TRÁI CHO CÁC NHÃN BẰNG NHAU THẲNG HÀNG */
+  .form-label {
+    text-align: left !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #5A1010 !important;
+    padding: 0 !important;
+    white-space: nowrap !important;
+    margin: 0 !important;
+  }
+
+  .form-field-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    min-width: 0 !important;
+    width: 100% !important;
+  }
+
+  .form-input-text {
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    height: 34px !important;
+    padding: 4px 8px !important;
+    font-size: 13.5px !important;
+    box-sizing: border-box !important;
+    border-radius: 4px !important;
+  }
+
+  .radio-group {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .radio-item {
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Hàng Năm - Tháng - Ngày: Nằm thẳng 1 hàng chuẩn như PC */
+  .select-inline-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+
+  .sub-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #5A1010 !important;
+    white-space: nowrap !important;
+    padding: 0 1px !important;
+    text-align: right !important;
+    width: auto !important;
+  }
+
+  .form-select {
+    height: 34px !important;
+    padding: 4px 2px !important;
+    font-size: 12px !important;
+    border-radius: 4px !important;
+    box-sizing: border-box !important;
+  }
+
+  .sel-year {
+    flex: 1.3 1 68px !important;
+    min-width: 64px !important;
+    max-width: 82px !important;
+  }
+
+  .sel-month {
+    flex: 1 1 45px !important;
+    min-width: 42px !important;
+    max-width: 54px !important;
+  }
+
+  .sel-day {
+    flex: 1 1 45px !important;
+    min-width: 42px !important;
+    max-width: 54px !important;
+  }
+
+  .sel-hour {
+    flex: 1.5 1 85px !important;
+    min-width: 80px !important;
+    max-width: 105px !important;
+  }
+
+  .sel-minute {
+    flex: 1 1 48px !important;
+    min-width: 44px !important;
+    max-width: 58px !important;
+  }
+
+  .sel-limit {
+    width: 100% !important;
+    max-width: 220px !important;
+    height: 34px !important;
+    font-size: 13px !important;
+  }
+
+  /* CĂN ĐỀU LỀ TRÁI PHẢI CHO NÚT "LẬP LÁ SỐ TỬ VI" NẰM CHÍNH GIỮA 100% */
+  .form-action-row {
+    margin-top: 18px !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .btn-generate-tuvi,
+  #btn-submit-tuvi {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    min-width: 200px !important;
+    max-width: 260px !important;
+    height: 42px !important;
+    padding: 8px 24px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(120, 20, 20, 0.35) !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     8. BÀI VIẾT CHUYÊN MỤC & KHÔNG BỊ ĐÈ CHỮ TIÊU ĐỀ "XEM TẤT CẢ"
+     ------------------------------------------------------------------------- */
+  #chuyenmuc {
+    height: auto !important;
+  }
+
+  /* Tiêu đề mục: Căn chỉnh 2 bên rõ ràng, chống đè chữ tuyệt đối */
+  .articles-section .section-head {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    position: relative !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 14px !important;
+    min-height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .articles-section .section-head-title {
+    width: auto !important;
+    flex: 1 1 auto !important;
+    text-align: left !important;
+    justify-content: flex-start !important;
+    font-size: 13.5px !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    gap: 4px !important;
+  }
+
+  .articles-section .section-head a,
+  .articles-section .section-head #tab-cm-view-all-link {
+    position: static !important;
+    flex-shrink: 0 !important;
+    margin-left: 8px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    right: auto !important;
+    top: auto !important;
+  }
+
+  .articles-grid {
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+  }
+
+  .featured-art-img-wrap {
+    height: 180px !important;
+  }
+
+  .featured-art-title {
+    font-size: 15px !important;
+  }
+
+  .side-art-thumb {
+    width: 70px !important;
+    height: 52px !important;
+  }
+
+  .side-art-title {
+    font-size: 12.5px !important;
+  }
+
+  /* 4 Bài viết chân trang: Chuyển sang 1 cột đọc mượt mà */
+  .bottom-articles-row {
+    grid-template-columns: 1fr !important;
+    grid-template-rows: auto !important;
+    height: auto !important;
+    gap: 12px !important;
+  }
+
+  .bottom-article-card {
+    height: auto !important;
+    min-height: 0 !important;
+  }
+
+  .bottom-art-img-wrap {
+    height: 150px !important;
+  }
+
+  .bottom-art-title {
+    font-size: 13.5px !important;
+    -webkit-line-clamp: 2 !important;
+  }
+
+  .bottom-art-desc {
+    font-size: 12px !important;
+    -webkit-line-clamp: 3 !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     9. TAB LỊCH VẠN SỰ & TRẠCH NHẬT (BỐ TRÍ ĐẦU TRANG CHUẨN ĐẸP NHƯ PC)
+     ------------------------------------------------------------------------- */
+  /* BANNER TIÊU ĐỀ LỊCH VẠN SỰ & TRẠCH NHẬT: TRẠCH NHẬT 1 DÒNG, CĂN GIỮA CẢ 2 ĐOẠN */
+  #tab-lich .lich-breadcrumb-bar {
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 6px 10px !important;
+  }
+
+  #tab-lich .lich-breadcrumb-bar span {
+    font-size: 0 !important;
+    line-height: 0 !important;
+    display: block !important;
+    text-align: center !important;
+    width: 100% !important;
+  }
+
+  #tab-lich .lich-breadcrumb-bar span::before {
+    content: "✦ CHUYÊN MỤC TRA CỨU LỊCH VẠN SỰ &\A TRẠCH NHẬT ✦" !important;
+    white-space: pre-line !important;
+    font-size: 12px !important;
+    color: #7A1414 !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.5px !important;
+    line-height: 1.5 !important;
+    display: block !important;
+    text-align: center !important;
+  }
+
+  /* KHUNG CHỌN NGÀY THÁNG: NẰM GỌN TRÊN 1 DÒNG NHƯ PC */
+  .lvs-picker-box {
+    padding: 10px 8px !important;
+    margin-bottom: 12px !important;
+    background: #FFFDF9 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+  }
+
+  .lvs-picker-topbar {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    margin-bottom: 8px !important;
+    flex-wrap: nowrap !important;
+  }
+
+  .lvs-radio-group {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    font-size: 12px !important;
+  }
+
+  .lvs-radio-label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    font-size: 12px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+  }
+
+  .lvs-quick-links {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+  }
+
+  .lvs-quick-btn {
+    padding: 3px 6px !important;
+    font-size: 11px !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
+  }
+
+  /* Hàng chọn Ngày - Tháng - Năm và Tra cứu: Nằm ngang 1 dòng gọn đẹp như PC */
+  .lvs-picker-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+
+  .lvs-pill-input {
+    position: relative !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: #FFFFFF !important;
+    border: 1.5px solid #DFBA73 !important;
+    border-radius: 18px !important;
+    padding: 6px 8px !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+    overflow: hidden !important;
+  }
+
+  .lvs-pill-tag {
+    background: transparent !important;
+    color: #7A2020 !important;
+    font-size: 13px !important;
+    font-weight: 800 !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    white-space: nowrap !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 3px !important;
+    pointer-events: none !important;
+  }
+
+  .lvs-pill-tag svg {
+    display: none !important;
+  }
+
+  /* Mũi tên trỏ xuống bên cạnh nhãn */
+  .lvs-pill-tag::after {
+    content: "▾" !important;
+    font-size: 12px !important;
+    color: #7A2020 !important;
+    margin-left: 2px !important;
+  }
+
+  /* Ẩn giá trị vào trong mũi tên: select phủ lên toàn bộ nút với opacity 0 */
+  .lvs-select {
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    opacity: 0 !important;
+    cursor: pointer !important;
+    z-index: 5 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    -webkit-appearance: menulist !important;
+  }
+
+  /* Ẩn bớt phần nhãn phụ trong ngoặc */
+  .lvs-pill-sublabel {
+    display: none !important;
+  }
+
+  .lvs-btn-search {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    padding: 6px 12px !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    border-radius: 18px !important;
+    flex-shrink: 0 !important;
+    white-space: nowrap !important;
+    background: linear-gradient(135deg, #A82424 0%, #7E1515 100%) !important;
+    color: #FFF !important;
+    border: 1px solid #DFBA73 !important;
+    cursor: pointer !important;
+    height: 32px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* TOP GRID: THÔNG TIN NGÀY & HÀNG 3 THẺ NGÀY - THÁNG - NĂM DÀN 3 CỘT NHƯ PC */
+  .lvs-top-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  .lvs-day-card {
+    border: 1.5px solid #E6D8C4 !important;
+    border-radius: 10px !important;
+    padding-bottom: 8px !important;
+  }
+
+  .lvs-big-lunar {
+    font-size: 34px !important;
+  }
+
+  /* Hàng 3 thẻ NGÀY - THÁNG - NĂM: Dàn 3 cột nằm ngang chuẩn như PC */
+  .lvs-col-cards-row {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  .lvs-col-card {
+    padding: 6px 2px !important;
+    border-radius: 8px !important;
+    gap: 2.5px !important;
+    box-sizing: border-box !important;
+  }
+
+  .lvs-col-card-header {
+    font-size: 10.5px !important;
+    padding: 1.5px 5px !important;
+    border-radius: 8px !important;
+    font-weight: 800 !important;
+  }
+
+  .lvs-col-card-num {
+    font-size: 20px !important;
+    font-weight: 900 !important;
+    line-height: 1.1 !important;
+    margin: 1px 0 !important;
+  }
+
+  .lvs-col-card-canchi {
+    font-size: 12px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+  }
+
+  .lvs-badge-pill {
+    font-size: 10px !important;
+    padding: 1.5px 4px !important;
+    white-space: nowrap !important;
+    line-height: 1.2 !important;
+  }
+
+  .lvs-tietkhi-card,
+  .lvs-saototxau-card {
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+    border-radius: 6px !important;
+  }
+
+  /* HUNG NIÊN (TRONG ẢNH): CĂN GIỮA TOÀN BỘ CÁC Ô, TÁCH 2 DÒNG */
+  .lvs-hung-nien-grid {
+    text-align: center !important;
+  }
+
+  .lvs-hung-nien-item {
+    text-align: center !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    line-height: 1.25 !important;
+  }
+
+  .lvs-hung-nien-item strong,
+  .lvs-hung-nien-item span {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* CÁT HUNG PHƯƠNG (TRONG ẢNH): CĂN GIỮA TOÀN BỘ CÁC Ô */
+  .lvs-phuong-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 6px !important;
+    text-align: center !important;
+  }
+
+  .lvs-phuong-col {
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .lvs-phuong-header,
+  .lvs-phuong-val {
+    text-align: center !important;
+  }
+
+  .lvs-tong-quan-card {
+    grid-template-columns: 1fr !important;
+    text-align: left !important;
+    gap: 7px !important;
+    padding: 8px 10px !important;
+  }
+
+  .lvs-tq-badge {
+    justify-self: center !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    width: fit-content !important;
+  }
+
+  .lvs-tq-content {
+    text-align: left !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    color: #3C3026 !important;
+  }
+
+  .lvs-tq-decor {
+    display: none !important;
+  }
+
+  /* BẢNG CHI TIẾT CÁC HÀNG (GIỜ TỐT, GIỜ XẤU, CAN CHI, KỴ TUỔI, NÊN LÀM...) */
+  .lvs-rows-container {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Thu gọn cột ô bên trái lại (86px), kéo rộng ô bên phải sang trái để to ra */
+  .lvs-attr-row {
+    display: grid !important;
+    grid-template-columns: 86px minmax(0, 1fr) !important;
+    column-gap: 6px !important;
+    align-items: stretch !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ô nhãn bên trái: Thu gọn vừa vặn, giữ đúng 2 chữ trên 1 dòng duy nhất không rớt dòng */
+  .lvs-badge-cell {
+    width: 86px !important;
+    min-width: 86px !important;
+    max-width: 86px !important;
+    padding: 4px 5px !important;
+    font-size: 11.5px !important;
+    font-weight: 800 !important;
+    white-space: nowrap !important;
+    border-radius: 6px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 2px !important;
+    box-sizing: border-box !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  .lvs-badge-icon {
+    width: 17px !important;
+    height: 17px !important;
+    margin-right: 3px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .lvs-badge-icon svg {
+    width: 11px !important;
+    height: 11px !important;
+  }
+
+  /* Ô nội dung bên phải: Kéo rộng sang bên trái, nở to ra thoải mái */
+  .lvs-content-cell {
+    padding: 6px 10px !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    color: #3C3026 !important;
+    border-radius: 6px !important;
+    text-align: left !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    box-sizing: border-box !important;
+  }
+
+  .lvs-content-inner,
+  .lvs-content-inner div,
+  .lvs-content-inner p,
+  .lvs-content-inner span {
+    text-align: left !important;
+    width: 100% !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    color: #3C3026 !important;
+  }
+
+  .lvs-content-cell strong,
+  .lvs-content-inner strong,
+  .lvs-content-inner b {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-weight: 700 !important;
+    color: #2C241E !important;
+  }
+
+  /* CĂN LỀ TRÁI CHO NỘI DUNG KHUNG GIỜ TỐT VÀ GIỜ XẤU THEO ĐÚNG YÊU CẦU */
+  .lvs-gio-hd-text,
+  .lvs-gio-hac-text {
+    text-align: left !important;
+    justify-content: flex-start !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+    line-height: 1.5 !important;
+    word-break: break-word !important;
+  }
+
+  /* CĂN GIỮA TOÀN BỘ KHỐI HUNG NIÊN & CÁT HUNG PHƯƠNG TRÊN MOBI */
+  .lvs-hung-nien-grid,
+  .lvs-hung-nien-item,
+  .lvs-hung-nien-item strong,
+  .lvs-hung-nien-item span,
+  .lvs-phuong-grid,
+  .lvs-phuong-col,
+  .lvs-phuong-header,
+  .lvs-phuong-val,
+  .lvs-content-inner.lvs-hung-nien-grid,
+  .lvs-content-inner.lvs-hung-nien-grid *,
+  .lvs-content-inner.lvs-phuong-grid,
+  .lvs-content-inner.lvs-phuong-grid * {
+    text-align: center !important;
+  }
+
+  .lvs-hung-nien-item {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .lvs-hung-nien-item strong,
+  .lvs-hung-nien-item span {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .lvs-phuong-col {
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+  }
+
+  .lvs-phuong-header,
+  .lvs-phuong-val {
+    display: block !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  /* Hình nền mờ watermark tinh gọn không che chữ */
+  .lvs-watermark {
+    width: 38px !important;
+    height: 38px !important;
+    right: 4px !important;
+    opacity: 0.12 !important;
+    pointer-events: none !important;
+  }
+
+  /* 1. Co chữ Đổng Công về ~0.95 để không bị đè viền */
+  .lvs-bg-dong-cong {
+    font-size: 10.5px !important;
+    letter-spacing: -0.3px !important;
+    padding: 4px 3px !important;
+  }
+  .lvs-bg-dong-cong .lvs-badge-icon {
+    margin-right: 2px !important;
+  }
+
+  /* 2. Cát Hung Phương: chữ Phương xuống dòng dưới và căn giữa */
+  .lvs-bg-cat-hung {
+    white-space: normal !important;
+    text-align: center !important;
+    justify-content: center !important;
+    align-items: center !important;
+    font-size: 10.5px !important;
+    line-height: 1.18 !important;
+    padding: 3px 2px !important;
+    letter-spacing: -0.2px !important;
+  }
+  .lvs-bg-cat-hung .lvs-badge-icon {
+    margin-right: 2px !important;
+  }
+
+  /* 3. Tam Sát: Năm 1 dòng, Tháng 1 dòng xuống dưới */
+  .lvs-tam-sat-row1 {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 3px !important;
+    width: 100% !important;
+    margin-bottom: 4px !important;
+    text-align: left !important;
+  }
+
+  .lvs-tam-sat-row1 > span {
+    display: block !important;
+    width: 100% !important;
+    text-align: left !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+  }
+
+  .lvs-tam-sat-toi-ky {
+    text-align: left !important;
+    line-height: 1.45 !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+  }
+
+  .trachnhat-table {
+    display: block !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    font-size: 12px !important;
+  }
+
+  .lt-table-responsive {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    width: 100% !important;
+  }
+
+  .lt-day-cell {
+    height: 56px !important;
+  }
+
+  .lt-cell-inner {
+    min-height: 50px !important;
+    padding: 2px !important;
+  }
+
+  .lt-day-num {
+    font-size: 13px !important;
+  }
+
+  .lt-lunar-num {
+    font-size: 9.5px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     10. TAB KINH DỊCH & BÓI SIM & TỨ TRỤ
+     ------------------------------------------------------------------------- */
+  .kd-hao-row {
+    padding: 8px 6px !important;
+    font-size: 12.5px !important;
+  }
+
+  .kd-action-btn-main {
+    width: 100% !important;
+    padding: 12px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  #kd-reopen-modal-bar button,
+  .kd-btn-reopen-modal {
+    font-size: 1.1rem !important;
+    padding: 10px 16px !important;
+    width: 100% !important;
+    white-space: normal !important;
+  }
+
+  .dichquai-export-board {
+    padding: 10px !important;
+    overflow-x: auto !important;
+  }
+
+  .dq-header {
+    flex-direction: column !important;
+    text-align: center !important;
+    gap: 8px !important;
+  }
+
+  .dq-cards-row {
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     10. TAB TỨ TRỤ - BỐ TRÍ ĐỒNG BỘ CHUẨN ĐẸP NHƯ TAB TỬ VI
+     ------------------------------------------------------------------------- */
+  #tab-tutru {
+    width: 100% !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .tutru-breadcrumb-bar {
+    margin-bottom: 12px !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .tutru-breadcrumb-bar span {
+    font-size: clamp(10.5px, 3.1vw, 13px) !important;
+    letter-spacing: normal !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+  }
+
+  .tutru-form-card {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+    padding: 12px 8px !important;
+    box-sizing: border-box !important;
+    background: #FFFDF9 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(122, 20, 20, 0.06) !important;
+  }
+
+  .tutru-form-header {
+    border-bottom: 1.5px solid #E8DEC8 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+    display: block !important;
+  }
+
+  .tutru-form-title {
+    justify-content: center !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #7A1414 !important;
+    margin: 0 !important;
+  }
+
+  .tutru-form-desc {
+    text-align: center !important;
+    font-size: 11.5px !important;
+    color: #6B5E52 !important;
+    margin-top: 4px !important;
+  }
+
+  #tutru-input-form {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+  }
+
+  .tutru-form-rows {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* Khối thông tin Họ tên, Giới tính, Loại lịch */
+  .tutru-row-info {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  /* Cấu trúc lưới 2 cột: Cột nhãn 76px lề trái, cột dữ liệu bên phải chuẩn như Tử Vi */
+  .tutru-field-group {
+    display: grid !important;
+    grid-template-columns: 76px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Căn lề trái thẳng hàng cho các nhãn bằng nhau chuẩn như Tử Vi */
+  .tutru-field-label {
+    text-align: left !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    color: #5A1010 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    white-space: nowrap !important;
+    width: 76px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ô nhập họ tên */
+  .tutru-input {
+    width: 100% !important;
+    height: 34px !important;
+    padding: 4px 8px !important;
+    font-size: 13px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 4px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+    color: #2C241E !important;
+  }
+
+  /* Nhóm radio Giới tính và Loại lịch */
+  .tutru-radio-group {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .tutru-radio-item {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+  }
+
+  /* Khối Ngày sinh & Giờ sinh: Phẳng, không lồng khung viền, chuẩn như Tử Vi */
+  .tutru-row-datetime {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    background: transparent !important;
+    border: none !important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hàng Ngày - Tháng - Năm sinh nằm thẳng hàng ngang 1 dòng */
+  .tutru-datetime-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+
+  /* Hàng Giờ - Phút sinh nằm thẳng hàng ngang 1 dòng */
+  .tutru-time-row {
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    flex-wrap: nowrap !important;
+    width: 100% !important;
+  }
+
+  .tutru-select {
+    height: 34px !important;
+    padding: 4px 4px !important;
+    font-size: 12.5px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 4px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+    flex: 1 1 auto !important;
+    min-width: 0 !important;
+    color: #2C241E !important;
+  }
+
+  /* Khối năm xem hạn */
+  .tutru-row-sub {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .tutru-field-namxem-wrap {
+    width: 100% !important;
+  }
+
+  #tt-namxem {
+    width: 100% !important;
+    max-width: 220px !important;
+    height: 34px !important;
+    padding: 4px 8px !important;
+    font-size: 13px !important;
+  }
+
+  /* NÚT THAO TÁC CĂN CHÍNH GIỮA 100% ĐỒNG BỘ VỚI TỬ VI */
+  .tutru-form-actions {
+    margin-top: 18px !important;
+    padding: 0 !important;
+    border-top: none !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .tutru-btn-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    min-width: 200px !important;
+    max-width: 260px !important;
+    height: 42px !important;
+    padding: 8px 24px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #FFE6AA !important;
+    background: linear-gradient(135deg, #7A1414 0%, #580B0B 100%) !important;
+    border: 1.5px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(120, 20, 20, 0.35) !important;
+    box-sizing: border-box !important;
+  }
+
+  .tutru-btn-reset {
+    background: transparent !important;
+    color: #8C6239 !important;
+    border: none !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    padding: 4px 10px !important;
+    cursor: pointer !important;
+    text-decoration: underline !important;
+  }
+
+  #tutru-output-container {
+    width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  #tutru-output-container:empty {
+    display: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     10.2 TAB BÓI SIM PHONG THỦY - BỐ TRÍ ĐỒNG BỘ CHUẨN ĐẸP NHƯ TỬ VI & TỨ TRỤ
+     ------------------------------------------------------------------------- */
+  #tab-boisim {
+    width: 100% !important;
+    padding-bottom: 0 !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  .boisim-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .boisim-section-card {
+    max-width: 380px !important;
+    margin: 0 auto !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(122, 20, 20, 0.06) !important;
+    overflow: hidden !important;
+  }
+
+  .boisim-section-header {
+    padding: 12px 10px !important;
+    text-align: center !important;
+  }
+
+  .boisim-header-badge {
+    font-size: 11px !important;
+    padding: 2px 8px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .boisim-section-title {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #FFF !important;
+    margin: 0 !important;
+  }
+
+  .boisim-form-container {
+    background: #FFFDF9 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    padding: 12px 8px !important;
+    margin: 8px auto !important;
+    max-width: 380px !important;
+    box-sizing: border-box !important;
+    box-shadow: none !important;
+  }
+
+  .boisim-form-title {
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    color: #7A1414 !important;
+    text-align: center !important;
+    justify-content: center !important;
+    margin-bottom: 3px !important;
+  }
+
+  .boisim-form-desc {
+    font-size: 11px !important;
+    text-align: center !important;
+    margin-bottom: 12px !important;
+    line-height: 1.4 !important;
+    color: #6B5E52 !important;
+  }
+
+  /* Cấu trúc lưới 4 cột: Cột 1 nhãn (82px), Cột 2-3-4 cho điều khiển và Ngày/Tháng/Năm */
+  .boisim-form-grid {
+    display: grid !important;
+    grid-template-columns: 82px 1fr 1.25fr 1.15fr !important;
+    column-gap: 5px !important;
+    row-gap: 12px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* Nhãn chung: Cố định 82px, căn lề trái thẳng hàng dọc như Tử Vi & Tứ Trụ */
+  .boisim-field-label {
+    text-align: left !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #5A1010 !important;
+    line-height: 1.25 !important;
+    width: 82px !important;
+    min-width: 82px !important;
+    max-width: 82px !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 1. Số điện thoại: Trải dài toàn bộ chiều rộng */
+  .boisim-field-group:nth-child(1) {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .boisim-input-text {
+    width: 100% !important;
+    height: 34px !important;
+    padding: 4px 8px !important;
+    font-size: 14px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 4px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 2. Giới tính: Trải dài toàn bộ chiều rộng */
+  .boisim-field-group:nth-child(2) {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  .boisim-gender-toggle {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 14px !important;
+    height: auto !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .boisim-gender-label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 5px !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+    color: #374151 !important;
+    cursor: pointer !important;
+  }
+
+  /* 3. Giờ sinh: Trải dài toàn bộ chiều rộng */
+  .boisim-field-group:nth-child(3) {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* 4, 5, 6. Ngày sinh - Tháng sinh - Năm sinh: NẰM THẲNG 1 HÀNG NGANG CHUẨN TỬ VI */
+  .boisim-field-group:nth-child(4) {
+    grid-column: 1 / 3 !important;
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .boisim-field-group:nth-child(5) {
+    grid-column: 3 / 4 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .boisim-field-group:nth-child(5) .boisim-field-label {
+    display: none !important;
+  }
+
+  .boisim-field-group:nth-child(6) {
+    grid-column: 4 / 5 !important;
+    display: flex !important;
+    align-items: center !important;
+    width: 100% !important;
+    margin: 0 !important;
+  }
+
+  .boisim-field-group:nth-child(6) .boisim-field-label {
+    display: none !important;
+  }
+
+  .boisim-select {
+    height: 34px !important;
+    padding: 4px 4px !important;
+    font-size: 12px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 4px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+    color: #2C241E !important;
+  }
+
+  /* 7. Gợi ý xem sim: Trải dài toàn bộ chiều rộng */
+  .boisim-field-goiy {
+    grid-column: 1 / -1 !important;
+    display: grid !important;
+    grid-template-columns: 82px minmax(0, 1fr) !important;
+    column-gap: 8px !important;
+    align-items: center !important;
+    width: 100% !important;
+  }
+
+  /* 8. Nút Bình Giải Sim căn chính giữa 100% đồng bộ chuẩn */
+  .boisim-field-submit {
+    grid-column: 1 / -1 !important;
+    margin-top: 10px !important;
+    padding: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    text-align: center !important;
+  }
+
+  .boisim-btn-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: auto !important;
+    min-width: 200px !important;
+    max-width: 260px !important;
+    height: 42px !important;
+    padding: 8px 24px !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #FFE6AA !important;
+    background: linear-gradient(135deg, #7A1414 0%, #580B0B 100%) !important;
+    border: 1.5px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    margin: 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(120, 20, 20, 0.35) !important;
+    box-sizing: border-box !important;
+  }
+
+  .boisim-result-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     10.3 TAB KINH DỊCH - BỐ TRÍ ĐỒNG BỘ CHUẨN ĐẸP DỄ NHÌN NHƯ TỬ VI & TỨ TRỤ
+     ------------------------------------------------------------------------- */
+  #tab-kinhdich {
+    width: 100% !important;
+    padding-bottom: 24px !important;
+    box-sizing: border-box !important;
+  }
+
+  #tab-kinhdich .lich-breadcrumb-bar {
+    max-width: 100% !important;
+    margin: 0 auto 10px auto !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  #tab-kinhdich .lich-breadcrumb-bar span {
+    font-size: clamp(10.5px, 3.1vw, 13px) !important;
+    letter-spacing: normal !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Đồng bộ toàn bộ thanh Breadcrumb Chuyên mục (Nhân Tướng Học, Tử Vi, Lịch...) luôn nằm trên đúng 1 dòng */
+  .chuyenmuc-breadcrumb-bar,
+  .lich-breadcrumb-bar {
+    max-width: 100% !important;
+    margin: 0 auto 10px auto !important;
+    padding: 6px 10px !important;
+    font-size: 12px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    box-sizing: border-box !important;
+    width: 100% !important;
+  }
+
+  .chuyenmuc-breadcrumb-bar span,
+  .lich-breadcrumb-bar span,
+  #tab-cm-breadcrumb-title {
+    font-size: clamp(10px, 3vw, 13px) !important;
+    letter-spacing: normal !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    text-align: center !important;
+    line-height: 1.3 !important;
+  }
+
+  /* Khung Card chính của Kinh Dịch trên Mobile */
+  #tab-kinhdich .lich-section-card {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto 16px auto !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 4px 15px rgba(122, 20, 20, 0.06) !important;
+    overflow: hidden !important;
+    background: #FFFDF9 !important;
+    box-sizing: border-box !important;
+  }
+
+  #tab-kinhdich .lich-section-header {
+    background: linear-gradient(135deg, #580B0B 0%, #7A1414 50%, #580B0B 100%) !important;
+    padding: 12px 10px 8px 10px !important;
+    text-align: center !important;
+    border-bottom: 2px solid #DFBA73 !important;
+  }
+
+  #tab-kinhdich .lich-header-badge {
+    color: #DFBA73 !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    letter-spacing: 1.5px !important;
+    display: inline-block !important;
+  }
+
+  #tab-kinhdich .lich-section-title {
+    font-size: 16px !important;
+    font-weight: 800 !important;
+    color: #FFFFFF !important;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6) !important;
+    text-align: center !important;
+    margin: 4px 0 !important;
+    letter-spacing: 0.5px !important;
+  }
+
+  #tab-kinhdich .lich-section-subtitle {
+    font-size: 11.5px !important;
+    color: #FDF3DF !important;
+    text-align: center !important;
+    margin: 0 !important;
+    line-height: 1.4 !important;
+  }
+
+  #tab-kinhdich .lich-section-body {
+    padding: 10px 8px !important;
+    box-sizing: border-box !important;
+  }
+
+  #kd-hinh-1-container {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto !important;
+  }
+
+  /* Khối Form Kinh Dịch (.kd-form-box) */
+  .kd-form-box {
+    width: 100% !important;
+    max-width: 380px !important;
+    margin: 0 auto 12px auto !important;
+    padding: 12px 8px !important;
+    box-sizing: border-box !important;
+    background: #FFFDF9 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    box-shadow: 0 2px 8px rgba(120, 20, 20, 0.04) !important;
+  }
+
+  /* Header từng hộp: Căn giữa, không bị chèn ép chữ */
+  .kd-box-header {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center !important;
+    gap: 4px !important;
+    border-bottom: 1.5px solid #E8DEC8 !important;
+    padding-bottom: 8px !important;
+    margin-bottom: 10px !important;
+  }
+
+  .kd-box-title {
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    color: #7A1414 !important;
+    text-align: center !important;
+    margin: 0 !important;
+  }
+
+  .kd-box-desc {
+    font-size: 11px !important;
+    color: #6B5E52 !important;
+    text-align: center !important;
+    margin: 2px 0 0 0 !important;
+    line-height: 1.35 !important;
+  }
+
+  .kd-badge-tag {
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    padding: 2px 8px !important;
+    border-radius: 10px !important;
+    align-self: center !important;
+    margin-top: 2px !important;
+  }
+
+  /* Grid 2 cột chuyển thành dạng cột xếp thẳng hàng chuẩn Tử Vi */
+  .kd-form-box div[style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+  }
+
+  /* Label chuẩn như Tử Vi & Tứ Trụ */
+  .kd-field-label {
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    color: #5A1010 !important;
+    margin-bottom: 4px !important;
+    text-align: left !important;
+  }
+
+  /* Ô nhập Chiêm Sự */
+  .kd-input-text {
+    width: 100% !important;
+    height: 36px !important;
+    padding: 6px 36px 6px 10px !important;
+    font-size: 12.5px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Gợi ý nhanh dạng pill buttons gọn gàng */
+  .kd-quick-questions {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    align-items: center !important;
+    gap: 4px !important;
+    margin-top: 6px !important;
+  }
+
+  .kd-quick-btn {
+    font-size: 10.5px !important;
+    font-weight: 600 !important;
+    padding: 3px 7px !important;
+    border-radius: 12px !important;
+    white-space: nowrap !important;
+    border: 1px solid #DFBA73 !important;
+    background: #FFF !important;
+    color: #7A1414 !important;
+  }
+
+  /* Khung Dụng Thần Chiêm Bốc */
+  #kd-dungthan-select {
+    width: 100% !important;
+    height: 36px !important;
+    padding: 6px 8px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Phương pháp tính toán: Chia đều 2 cột, không gãy từ */
+  .kd-form-box div[style*="display: flex; gap: 20px;"] {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 6px !important;
+    padding: 6px 8px !important;
+    background: #FFF !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  .kd-form-box div[style*="display: flex; gap: 20px;"] label {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    font-size: 11.5px !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+  }
+
+  /* Thanh Subtabs (1. Quẻ Mai Hoa | 2. Quẻ Lục Hào | 3. Gieo Đồng Xu | 4. Hướng Dẫn) */
+  .kd-subtabs-nav {
+    margin-bottom: 12px !important;
+    width: 100% !important;
+  }
+
+  .kd-subtabs-group {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 5px !important;
+    overflow-x: visible !important;
+    padding: 2px 0 6px 0 !important;
+    border-bottom: 2px solid #DFBA73 !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .kd-subtabs-group::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .kd-subtab-btn {
+    flex: none !important;
+    width: 100% !important;
+    padding: 7px 2px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    white-space: nowrap !important;
+    border: 1px solid #D8CCB7 !important;
+    background: #FAF7F2 !important;
+    color: #4A3E31 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 4px !important;
+    box-sizing: border-box !important;
+    text-align: center !important;
+  }
+
+  .kd-subtab-btn i {
+    font-size: 11px !important;
+  }
+
+  #kd-subtab-btn-huongdan {
+    grid-column: 1 / -1 !important;
+    padding: 6px 10px !important;
+    margin-top: 3px !important;
+    font-size: 11.5px !important;
+  }
+
+  .kd-subtab-btn.active {
+    background: linear-gradient(135deg, #7A1414 0%, #580B0B 100%) !important;
+    color: #FFF !important;
+    border-color: #DFBA73 !important;
+    box-shadow: 0 2px 6px rgba(122, 20, 20, 0.2) !important;
+  }
+
+  /* Khung Chọn loại lịch (Dương lịch / Âm lịch): Cân đối, không gãy chữ */
+  .kd-form-box div[style*="display: flex; align-items: center; gap: 20px;"] {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-around !important;
+    gap: 8px !important;
+    background: #FFF !important;
+    padding: 8px 10px !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    margin-bottom: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .kd-form-box div[style*="display: flex; align-items: center; gap: 20px;"] span {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #4A3E31 !important;
+    white-space: nowrap !important;
+  }
+
+  .kd-form-box div[style*="display: flex; align-items: center; gap: 20px;"] label {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
+    white-space: nowrap !important;
+    color: #7A1414 !important;
+    cursor: pointer !important;
+  }
+
+  /* KHỐI THỜI GIAN GIEO QUẺ DƯƠNG LỊCH: ĐỐI XỨNG HOÀN HẢO CHUẨN TỬ VI & TỨ TRỤ */
+  #maihoa-duonglich-box {
+    background: #FFF !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    padding: 10px 8px !important;
+    margin-bottom: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  #maihoa-duonglich-box > div:first-child {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #4A3E31 !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+  }
+
+  /* Lưới 6 cột: Hàng 1 (Năm, Tháng, Ngày span 2) - Hàng 2 (Giờ, Phút span 3) */
+  #maihoa-duonglich-box > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  #maihoa-duonglich-box > div:last-child > div:nth-child(1) { grid-column: span 2 !important; }
+  #maihoa-duonglich-box > div:last-child > div:nth-child(2) { grid-column: span 2 !important; }
+  #maihoa-duonglich-box > div:last-child > div:nth-child(3) { grid-column: span 2 !important; }
+  #maihoa-duonglich-box > div:last-child > div:nth-child(4) { grid-column: span 3 !important; }
+  #maihoa-duonglich-box > div:last-child > div:nth-child(5) { grid-column: span 3 !important; }
+
+  #maihoa-duonglich-box select,
+  #maihoa-amlich-box select {
+    width: 100% !important;
+    height: 34px !important;
+    padding: 4px 4px !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 4px !important;
+    background: #FFF !important;
+    box-sizing: border-box !important;
+    color: #2C241E !important;
+  }
+
+  #maihoa-duonglich-box label,
+  #maihoa-amlich-box label {
+    display: block !important;
+    font-size: 10.5px !important;
+    font-weight: 700 !important;
+    color: #6B5E52 !important;
+    margin-bottom: 2px !important;
+    text-align: center !important;
+  }
+
+  /* KHỐI THỜI GIAN GIEO QUẺ ÂM LỊCH: ĐỐI XỨNG */
+  #maihoa-amlich-box {
+    background: #FFF !important;
+    border: 1px solid #DFBA73 !important;
+    border-radius: 6px !important;
+    padding: 10px 8px !important;
+    margin-bottom: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  #maihoa-amlich-box > div:first-child {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    color: #4A3E31 !important;
+    margin-bottom: 8px !important;
+    text-align: center !important;
+  }
+
+  /* Lưới 6 cột Âm lịch: Hàng 1 (Can Năm, Chi Năm span 3) - Hàng 2 (Tháng, Ngày, Giờ Âm span 2) */
+  #maihoa-amlich-box > div:last-child {
+    display: grid !important;
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 6px !important;
+  }
+
+  #maihoa-amlich-box > div:last-child > div:nth-child(1) { grid-column: span 3 !important; }
+  #maihoa-amlich-box > div:last-child > div:nth-child(2) { grid-column: span 3 !important; }
+  #maihoa-amlich-box > div:last-child > div:nth-child(3) { grid-column: span 2 !important; }
+  #maihoa-amlich-box > div:last-child > div:nth-child(4) { grid-column: span 2 !important; }
+  #maihoa-amlich-box > div:last-child > div:nth-child(5) { grid-column: span 2 !important; }
+
+  /* Tiện ích đồng bộ thời gian & 3 số tâm khởi: 2 nút đều nhau */
+  #btn-sync-maihoa-now,
+  #btn-toggle-number-box {
+    flex: 1 1 calc(50% - 6px) !important;
+    height: 36px !important;
+    padding: 6px 4px !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    box-sizing: border-box !important;
+  }
+
+  #btn-sync-maihoa-now {
+    border: 1px solid #DFBA73 !important;
+    color: #7A1414 !important;
+    background: #FFFDF9 !important;
+  }
+
+  #btn-toggle-number-box {
+    border: 1px solid #D8CCB7 !important;
+    color: #4A3E31 !important;
+    background: #FAF7F2 !important;
+  }
+
+  /* NÚT THỰC THI LẬP QUẺ CHÍNH (.kd-action-btn-main): ĐỒNG BỘ CHUẨN TỬ VI & TỨ TRỤ */
+  .kd-action-btn-main {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 42px !important;
+    padding: 8px 16px !important;
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+    color: #FFE6AA !important;
+    background: linear-gradient(135deg, #7A1414 0%, #580B0B 100%) !important;
+    border: 1.5px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    margin: 12px auto 0 auto !important;
+    cursor: pointer !important;
+    box-shadow: 0 4px 14px rgba(120, 20, 20, 0.35) !important;
+    box-sizing: border-box !important;
+    letter-spacing: 0.3px !important;
+    text-align: center !important;
+  }
+
+  #btn-reopen-kinhdich-modal {
+    width: 100% !important;
+    max-width: 320px !important;
+    height: 42px !important;
+    font-size: 13.5px !important;
+    padding: 8px 16px !important;
+  }
+
+  /* View 2: Lục Hào - Bố cục 6 hào & văn khấn */
+  #view-luc-hao div[style*="grid-template-columns: repeat(auto-fit, minmax(320px, 1fr))"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .kd-hao-row {
+    padding: 6px 8px !important;
+  }
+
+  .kd-hao-row span {
+    font-size: 12px !important;
+    width: 60px !important;
+  }
+
+  .kd-hao-row label {
+    font-size: 11.5px !important;
+  }
+
+  /* View 3: Gieo đồng xu trên mobile */
+  #view-dong-xu div[style*="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr))"] {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 12px !important;
+  }
+
+  .kd-coin-col {
+    padding: 4px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     11. HỘP THOẠI POPUP & MODAL BẢN ĐỒ LÁ SỐ
+     ------------------------------------------------------------------------- */
+  .tuvi-modal-overlay {
+    padding: 6px !important;
+    box-sizing: border-box !important;
+  }
+
+  #tuvi-modal .tuvi-modal-dialog,
+  #tutru-modal .tuvi-modal-dialog,
+  #kinhdich-modal .tuvi-modal-dialog {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    height: 94vh !important;
+    max-height: 94vh !important;
+    padding: 6px 8px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .article-reader-dialog {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    height: 94vh !important;
+    max-height: 94vh !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .tuvi-modal-header {
+    padding: 4px 6px !important;
+    margin-bottom: 4px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tuvi-modal-header-left {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    min-width: 0 !important;
+    flex: 1 1 auto !important;
+    overflow: hidden !important;
+  }
+
+  .tuvi-modal-seal {
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 11px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tuvi-modal-title {
+    font-size: clamp(12px, 3.4vw, 14.5px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+  }
+
+  .tuvi-modal-subtitle {
+    font-size: clamp(10px, 2.7vw, 11.5px) !important;
+    line-height: 1.3 !important;
+    margin: 1px 0 0 0 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Khóa cứng Header Bản Đồ Quẻ Dịch Chuẩn Truyền Thống ĐÚNG 3 DÒNG DUY NHẤT */
+  #kinhdich-modal .tuvi-modal-title {
+    font-size: clamp(11.5px, 3.3vw, 14px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+  }
+
+  #kinhdich-modal #kinhdich-modal-subtitle {
+    font-size: clamp(9.5px, 2.6vw, 11.5px) !important;
+    white-space: nowrap !important;
+    line-height: 1.35 !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    display: block !important;
+    margin: 2px 0 0 0 !important;
+  }
+
+  #kinhdich-modal #kinhdich-modal-subtitle span {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-top: 1px !important;
+  }
+
+  /* Modal Body: Giữ ảnh lá số luôn ở giữa, ôm sát và co giãn tỷ lệ 100% giống cửa sổ to */
+  .tuvi-modal-body,
+  #kinhdich-modal .tuvi-modal-body,
+  #tutru-modal .tuvi-modal-body,
+  #tuvi-modal .tuvi-modal-body {
+    width: 100% !important;
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 2px !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+  }
+
+  .tuvi-board-img,
+  #tuvi-image-view img,
+  #tutru-image-view img,
+  #kinhdich-image-view img,
+  #kinhdich-board-img {
+    max-width: 100% !important;
+    max-height: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+    display: block !important;
+    margin: auto !important;
+  }
+
+  /* Modal Footer: Nằm gọn gàng 1 dòng, không phình to chèn ép thân lá số */
+  .tuvi-modal-footer {
+    padding: 4px 2px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .tuvi-modal-actions {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    gap: 3px !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    width: 100% !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+  }
+
+  .tuvi-modal-actions::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  .tuvi-action-btn {
+    flex: 1 1 0 !important;
+    padding: 6px 2px !important;
+    font-size: clamp(9px, 2.6vw, 11px) !important;
+    font-weight: 700 !important;
+    border-radius: 5px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 3px !important;
+    white-space: nowrap !important;
+    box-sizing: border-box !important;
+    cursor: pointer !important;
+  }
+
+  .tuvi-action-btn i {
+    font-size: 10.5px !important;
+  }
+
+  /* Nổi bật nút Sao chép ảnh trên Mobile */
+  #btn-copy-tuvi,
+  #btn-copy-tutru,
+  #btn-copy-kinhdich {
+    background: linear-gradient(135deg, #FFFDF9 0%, #F5EFE6 100%) !important;
+    border: 1.5px solid #C5A059 !important;
+    color: #7A1414 !important;
+    box-shadow: 0 1px 4px rgba(122, 20, 20, 0.15) !important;
+  }
+
+  /* Đảm bảo hình ảnh đồ bản Tử Vi, Tứ Trụ, Kinh Dịch trên mobile cho phép chạm giữ (long-press) để sao chép / lưu ảnh */
+  .tuvi-board-img,
+  #tuvi-image-view img,
+  #tutru-image-view img,
+  #kinhdich-image-view img,
+  #kinhdich-board-img {
+    -webkit-touch-callout: default !important;
+    -webkit-user-select: auto !important;
+    user-select: auto !important;
+    pointer-events: auto !important;
+    cursor: pointer !important;
+  }
+
+  /* Modal Đọc Toàn Văn Bài Viết */
+  .article-reader-modal {
+    padding: 8px !important;
+  }
+
+  .article-reader-dialog {
+    width: 98vw !important;
+    max-width: 98vw !important;
+    height: 94vh !important;
+    max-height: 94vh !important;
+    border-radius: 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .article-reader-header {
+    padding: 10px 14px !important;
+  }
+
+  .article-reader-body {
+    padding: 14px 12px !important;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+    color: #2C241E !important;
+  }
+
+  .article-reader-body:has(.doc-sheet),
+  #subpage-modal-body:has(.doc-sheet),
+  .article-reader-body:has(.doc-page-wrapper),
+  #subpage-modal-body:has(.doc-page-wrapper) {
+    padding: 0 !important;
+  }
+
+  #modal-post-title {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+  }
+
+  #modal-post-content p,
+  .article-reader-body p,
+  #nav-modal-content p {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 10px !important;
+    color: #2C241E !important;
+  }
+
+  #modal-post-content li,
+  .article-reader-body li,
+  #nav-modal-content li,
+  #modal-post-content .article-list-item,
+  .article-reader-body .article-list-item,
+  #nav-modal-content .article-list-item {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14.5px !important;
+    line-height: 1.48 !important;
+    margin-bottom: 4px !important;
+    color: #2C241E !important;
+  }
+
+  #modal-post-content h1,
+  #modal-post-content h2,
+  #modal-post-content h3,
+  .article-reader-body h1,
+  .article-reader-body h2,
+  .article-reader-body h3 {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+  }
+
+  #modal-post-content span,
+  #modal-post-content font,
+  .article-reader-body span,
+  .article-reader-body font {
+    font-size: inherit !important;
+    line-height: inherit !important;
+  }
+
+  #modal-post-content h4,
+  #modal-post-content h5,
+  #modal-post-content h6,
+  .article-reader-body h4,
+  .article-reader-body h5,
+  .article-reader-body h6,
+  #nav-modal-content h4,
+  #nav-modal-content h5,
+  #nav-modal-content h6 {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14.5px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+  }
+
+  /* Modal Phóng To Ảnh */
+  .tuvi-zoom-dialog {
+    max-width: 98vw !important;
+    max-height: 96vh !important;
+  }
+
+  /* Modal Zalo */
+  #modal-booking-zalo > div {
+    max-width: 94vw !important;
+    padding: 16px 12px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     12. FOOTER CHÂN TRANG - XẾP DỌC TỪNG MỤC THÔNG THOÁNG TRÊN MOBILE
+     ------------------------------------------------------------------------- */
+  .main-footer {
+    padding: 24px 0 16px 0 !important;
+  }
+
+  .footer-grid {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 22px !important;
+    margin-bottom: 20px !important;
+    padding: 0 14px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Mục 1: Thuật Số Huyền Học & Hotline */
+  .footer-brand-col {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 10px !important;
+    text-align: left !important;
+  }
+
+  .footer-brand-title {
+    font-size: 17.5px !important;
+    color: #DFBA73 !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    border-bottom: 1.5px solid rgba(223, 186, 115, 0.35) !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 4px !important;
+  }
+
+  .footer-desc {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    color: #D2BA98 !important;
+    text-align: justify !important;
+    margin: 0 !important;
+  }
+
+  .footer-hotline-box {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    background: rgba(223, 186, 115, 0.15) !important;
+    border: 1px solid #DFBA73 !important;
+    padding: 8px 14px !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    color: #FFF !important;
+    width: fit-content !important;
+    margin-top: 4px !important;
+  }
+
+  /* Các tiêu đề cột: Chuyên Mục, Dịch Vụ, Chủ Nhiệm Học Thuật */
+  .footer-col-title {
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    color: #DFBA73 !important;
+    text-transform: uppercase !important;
+    border-bottom: 1.5px solid rgba(223, 186, 115, 0.3) !important;
+    padding-bottom: 6px !important;
+    margin-bottom: 10px !important;
+    text-align: left !important;
+  }
+
+  .footer-links-list {
+    display: flex !important;
+    flex-direction: column !important;
+    gap: 9px !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    list-style: none !important;
+  }
+
+  .footer-link {
+    font-size: 13.5px !important;
+    color: #D2BA98 !important;
+    text-decoration: none !important;
+    display: inline-block !important;
+    padding: 2px 0 !important;
+  }
+
+  .footer-link:hover {
+    color: #DFBA73 !important;
+    text-decoration: underline !important;
+  }
+
+  /* Mục Chủ Nhiệm Học Thuật & Mạng Xã Hội */
+  .social-links {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 12px !important;
+    margin-top: 10px !important;
+  }
+
+  .social-icon-btn {
+    width: 36px !important;
+    height: 36px !important;
+  }
+
+  /* Dòng bản quyền chân trang */
+  .footer-bottom {
+    border-top: 1px solid rgba(223, 186, 115, 0.25) !important;
+    padding-top: 14px !important;
+    margin-top: 12px !important;
+    font-size: 11.5px !important;
+    color: #B39B82 !important;
+    text-align: center !important;
+    line-height: 1.55 !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     16. GIAO DIỆN TRANG PHỤ (XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM) TO RÕ, ĐẸP MẮT
+     ------------------------------------------------------------------------- */
+  .main-nav .nav-inner {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  /* Riêng thanh điều hướng trang phụ (tiêu đề dài như "Xông Đất Đầu Năm 2026"): giữ độ rộng chữ tự nhiên cuộn mượt */
+  #nav-item-tuvi,
+  #nav-item-xongdat,
+  #nav-item-tuvithang,
+  #nav-item-tuvingay,
+  #nav-item-canxuong {
+    flex: 0 0 auto !important;
+    width: auto !important;
+    min-width: 0 !important;
+    max-width: none !important;
+    scroll-snap-align: none !important;
+  }
+
+  #nav-item-tuvi .nav-link,
+  #nav-item-xongdat .nav-link,
+  #nav-item-tuvithang .nav-link,
+  #nav-item-tuvingay .nav-link,
+  #nav-item-canxuong .nav-link {
+    width: auto !important;
+    padding: 11px 12px !important;
+    font-size: 12.5px !important;
+    white-space: nowrap !important;
+  }
+
+  .xd-hero-banner {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: center !important;
+    padding: 16px 14px !important;
+    gap: 12px !important;
+    margin-bottom: 16px !important;
+    max-width: 100% !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 10px !important;
+  }
+
+  .xd-hero-title {
+    font-size: 20px !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .xd-hero-sub {
+    font-size: 13.5px !important;
+    line-height: 1.5 !important;
+    text-align: center !important;
+  }
+
+  .btn-back-home {
+    width: 100% !important;
+    justify-content: center !important;
+    padding: 10px 14px !important;
+    font-size: 14px !important;
+    box-sizing: border-box !important;
+    border-radius: 6px !important;
+  }
+
+  .xd-layout-grid,
+  .xd-layout-grid.view-tuvi,
+  .xd-layout-grid.view-xongdat,
+  .xd-layout-grid.view-canxuong,
+  .xd-layout-grid.view-all {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    margin-bottom: 20px !important;
+    box-sizing: border-box !important;
+  }
+
+  #col-tu-vi,
+  #col-xong-dat,
+  #col-can-xuong {
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .xd-card {
+    padding: 16px 14px !important;
+    margin-bottom: 16px !important;
+    border-radius: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .xd-card-header {
+    margin-bottom: 14px !important;
+    flex-wrap: wrap !important;
+    gap: 8px !important;
+  }
+
+  .xd-card-title {
+    font-size: 16.5px !important;
+  }
+
+  /* Thanh chọn Năm Xem & Giới tính */
+  .bang-tra-controls-bar {
+    display: flex !important;
+    flex-wrap: wrap !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    gap: 10px !important;
+    margin-bottom: 16px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .bang-tra-nam-group {
+    display: flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+  }
+
+  .bang-tra-label {
+    font-size: 14px !important;
+  }
+
+  .bang-tra-select {
+    font-size: 14px !important;
+    padding: 5px 10px !important;
+  }
+
+  .bang-tra-gender-pill {
+    padding: 4px 14px !important;
+    gap: 14px !important;
+  }
+
+  .bang-tra-radio-item {
+    font-size: 14px !important;
+    gap: 6px !important;
+  }
+
+  /* Lưới 12 Con Giáp to rõ, chuẩn cảm ứng 3 cột x 4 hàng */
+  .xd-zodiac-grid,
+  .xd-layout-grid.view-tuvi .xd-zodiac-grid {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 8px !important;
+    margin-bottom: 18px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .xd-zodiac-btn {
+    padding: 10px 4px !important;
+    border-radius: 8px !important;
+    min-height: 80px !important;
+    box-sizing: border-box !important;
+  }
+
+  .xd-zodiac-icon {
+    width: 40px !important;
+    height: 40px !important;
+  }
+
+  .xd-zodiac-btn span {
+    font-size: 14.5px !important;
+    font-weight: 800 !important;
+  }
+
+  .xd-zodiac-btn small {
+    font-size: 11.5px !important;
+  }
+
+  .xd-zodiac-dropdown {
+    width: 100% !important;
+    min-width: 140px !important;
+    font-size: 12.5px !important;
+  }
+
+  /* Bài viết chuyên mục & Luận giải link phụ: Đồng bộ 100% phông chữ Inter và cỡ chữ như trang chính */
+  .article-guide-card,
+  .article-guide-card * {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+  }
+
+  .article-guide-card {
+    padding: 16px 12px !important;
+    margin: 16px auto !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    border-radius: 8px !important;
+  }
+
+  .article-guide-card h2,
+  #thang-tuvi-thang-title,
+  #ngay-tuvi-ngay-title,
+  #tuvi-xongdat-title {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 16.5px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+    line-height: 1.4 !important;
+    margin-bottom: 8px !important;
+  }
+
+  .article-guide-card h3,
+  #thang-tuvi-thang-content h3,
+  #ngay-tuvi-ngay-content h3,
+  #tuvi-xongdat-content h3 {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    color: #7A1414 !important;
+    line-height: 1.45 !important;
+    margin-top: 18px !important;
+    margin-bottom: 8px !important;
+  }
+
+  .article-guide-card p,
+  .article-guide-card li,
+  #thang-tuvi-thang-content p,
+  #ngay-tuvi-ngay-content p,
+  #tuvi-xongdat-content p {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 13.5px !important;
+    line-height: 1.65 !important;
+    color: #2C241E !important;
+    text-align: justify !important;
+    margin-bottom: 12px !important;
+  }
+
+  .article-guide-card span[id$="-badge"] {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 11px !important;
+    font-weight: 700 !important;
+    padding: 3px 10px !important;
+  }
+
+  #btn-article-bottom-action {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+    padding: 7px 14px !important;
+  }
+
+  .xd-hero-banner {
+    padding: 14px 14px !important;
+    gap: 10px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+
+  .xd-hero-title {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 18px !important;
+    font-weight: 800 !important;
+  }
+
+  .xd-hero-sub {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12.5px !important;
+    line-height: 1.45 !important;
+  }
+
+  .btn-back-home {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 12px !important;
+    padding: 6px 14px !important;
+  }
+
+  .xd-card-title,
+  #bang-tra-banner-title {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+  }
+
+  .xd-zodiac-btn span {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 14px !important;
+    font-weight: 700 !important;
+  }
+
+  .xd-zodiac-btn small {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+    font-size: 11px !important;
+  }
+
+  #tuvi-xongdat-img,
+  #thang-tuvi-thang-img,
+  #ngay-tuvi-ngay-img {
+    max-width: 100% !important;
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 6px !important;
+  }
+
+  /* Khung văn bản tài liệu mẫu */
+  .doc-page-wrapper {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding: 0 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Khung văn bản tài liệu mẫu lá số tử vi: Đồng nhất 100% cùng 1 phông chữ và cỡ chữ */
+  .doc-sheet,
+  .doc-sheet * {
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-sheet {
+    padding: 16px 8px !important;
+    min-height: auto !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+  }
+
+  .article-reader-body .doc-sheet {
+    border: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    padding: 16px 10px !important;
+  }
+
+  .article-reader-body .doc-month-line,
+  .doc-month-line {
+    white-space: normal !important;
+    overflow: visible !important;
+    text-overflow: clip !important;
+    word-break: break-word !important;
+    line-height: 1.55 !important;
+    margin-bottom: 8px !important;
+    font-size: 14.5px !important;
+  }
+
+  /* TIÊU ĐỀ: Đồng nhất cùng 1 cỡ chữ (15px) */
+  .doc-main-title {
+    font-size: 15px !important;
+    font-weight: bold !important;
+    line-height: 1.4 !important;
+    margin-bottom: 12px !important;
+    text-align: center !important;
+    text-transform: uppercase !important;
+  }
+
+  /* Tiêu đề mục đỏ: Giữ nguyên 1 dòng duy nhất trước và sau khi thu nhỏ cửa sổ */
+  .doc-sec-title-red {
+    font-size: 14.5px !important;
+    font-weight: bold !important;
+    line-height: 1.45 !important;
+    color: #D60000 !important;
+    margin-top: 14px !important;
+    margin-bottom: 6px !important;
+    text-align: center !important;
+    white-space: nowrap !important;
+  }
+
+  /* Khối 3 cột đầu trang: Cột trái (Con Dấu 42px) - Cột giữa (Thông Tin 1 dòng) - Cột phải (Ảnh Sao 42px) */
+  .doc-header-three-col {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 2px !important;
+    max-width: 100% !important;
+    margin: 0 auto 12px auto !important;
+    padding: 0 2px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .doc-col-left {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .doc-zodiac-seal {
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  .doc-col-right {
+    width: 44px !important;
+    min-width: 44px !important;
+    max-width: 44px !important;
+    flex-shrink: 0 !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+
+  .doc-star-img {
+    width: 42px !important;
+    height: 42px !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* NỘI DUNG KHỐI TRÊN & DƯỚI: Cột giữa thông tin căn giữa, hiển thị trên 1 dòng chuẩn không bị đè chữ */
+  .doc-col-center {
+    flex: 1 !important;
+    min-width: 0 !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    text-align: center !important;
+    padding: 0 2px !important;
+    line-height: 1.45 !important;
+    box-sizing: border-box !important;
+  }
+
+  .doc-col-center .center-title {
+    font-size: clamp(13px, 3.8vw, 14.5px) !important;
+    font-weight: bold !important;
+    margin-bottom: 2px !important;
+    line-height: 1.35 !important;
+    white-space: nowrap !important;
+  }
+
+  .doc-col-center .center-age {
+    font-size: clamp(12px, 3.5vw, 13.5px) !important;
+    font-weight: bold !important;
+    margin-bottom: 2px !important;
+    line-height: 1.4 !important;
+    white-space: nowrap !important;
+  }
+
+  .doc-col-center .center-dates,
+  .doc-col-center .center-napam,
+  .doc-col-center .center-condong {
+    font-size: clamp(11.5px, 3.3vw, 13px) !important;
+    line-height: 1.4 !important;
+    margin-bottom: 2px !important;
+    white-space: nowrap !important;
+    word-break: keep-all !important;
+  }
+
+  .doc-col-center .center-condong {
+    font-weight: bold !important;
+    color: #000 !important;
+    margin-top: 2px !important;
+  }
+
+  /* NỘI DUNG VĂN BẢN KHỐI DƯỚI: Đồng bộ chuẩn 14.5px theo Ảnh 2 */
+  .doc-line {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    margin-bottom: 5px !important;
+    color: #111 !important;
+    text-align: justify !important;
+    word-break: break-word !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  /* Giữ nguyên cấu trúc 100% như PC khi thu nhỏ cửa sổ: 1 dòng trước sau như một */
+  .xuathan-pc-view {
+    display: block !important;
+  }
+  .xuathan-mobile-view {
+    display: none !important;
+  }
+  .mobile-break {
+    display: none !important;
+  }
+  .pc-space {
+    display: inline !important;
+  }
+
+  .doc-xuathan-title,
+  #outXuatHanhTitle {
+    text-align: center !important;
+    font-weight: bold !important;
+    margin-top: 8px !important;
+    margin-bottom: 6px !important;
+    white-space: nowrap !important;
+  }
+
+  #outSec4Title ~ .doc-line,
+  .doc-month-line {
+    white-space: nowrap !important;
+  }
+
+  .doc-line strong {
+    font-size: 14.5px !important;
+    font-weight: bold !important;
+    color: #000 !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-line span {
+    font-size: 14.5px !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-line-indent {
+    font-size: 14.5px !important;
+    line-height: 1.65 !important;
+    padding-left: 18px !important;
+    text-indent: -18px !important;
+    margin-bottom: 4px !important;
+    text-align: justify !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-line-indent * {
+    font-size: 14.5px !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-bottom-centered {
+    font-size: 14.5px !important;
+    line-height: 1.8 !important;
+    text-align: center !important;
+    margin-top: 18px !important;
+    padding-top: 12px !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-bottom-centered > div {
+    white-space: nowrap !important;
+    margin-bottom: 2px !important;
+  }
+
+  .doc-bottom-centered * {
+    font-size: 14.5px !important;
+    font-family: 'Times New Roman', Times, 'Noto Serif', serif !important;
+  }
+
+  .doc-sheet .nh-thuy,
+  .doc-sheet .nh-hoa,
+  .doc-sheet .nh-moc,
+  .doc-sheet .nh-tho,
+  .doc-sheet .nh-kim {
+    font-size: inherit !important;
+    font-family: inherit !important;
+  }
+
+  /* Biểu mẫu tra cứu tuổi xông đất & Cân xương */
+  .xd-form-vertical {
+    gap: 12px !important;
+  }
+
+  .xd-birth-gender-container {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 10px !important;
+  }
+
+  .xd-birth-field {
+    width: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  .xd-input-pill {
+    flex: 1 !important;
+    margin: 0 8px !important;
+    font-size: 14px !important;
+    padding: 7px 12px !important;
+  }
+
+  .xd-gender-group {
+    justify-content: center !important;
+  }
+
+  .xd-select {
+    width: 100% !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+    box-sizing: border-box !important;
+  }
+
+  .xd-btn-submit {
+    width: 100% !important;
+    font-size: clamp(11.5px, 3.2vw, 13px) !important;
+    padding: 12px 6px !important;
+    white-space: nowrap !important;
+    letter-spacing: -0.2px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+  }
+
+  /* BẢNG TRA CỨU TỬ VI THEO THÁNG & THEO NGÀY: LOẠI BỎ THEAD BỊ CO NGHẼN, BỐ TRÍ FORM GỌN ĐẸP */
+  .table-tool-card {
+    padding: 14px 10px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Ẩn hàng thead bị dính chữ co nghẽn (vì mỗi ô td bên dưới đã có nhãn tiêu đề đầy đủ) */
+  .input-grid-table thead {
+    display: none !important;
+  }
+
+  .input-grid-table {
+    display: block !important;
+    width: 100% !important;
+    border: 1.5px solid #DFBA73 !important;
+    border-radius: 8px !important;
+    background: #FFFDF9 !important;
+    padding: 12px 10px !important;
+    box-sizing: border-box !important;
+    margin-bottom: 16px !important;
+    overflow: visible !important;
+  }
+
+  .input-grid-table tbody {
+    display: block !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-grid-table tbody tr {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    column-gap: 12px !important;
+    row-gap: 8px !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+  }
+
+  /* Cột 1 (Năm sinh) và Cột 2 (Giới tính) cùng nằm trên 1 hàng ngang */
+  .input-grid-table td:nth-child(1) {
+    grid-column: 1 / 2 !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 2px 0 10px 0 !important;
+    border: none !important;
+    border-bottom: 1px dashed rgba(223, 186, 115, 0.45) !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-grid-table td:nth-child(2) {
+    grid-column: 2 / 3 !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 2px 0 10px 0 !important;
+    border: none !important;
+    border-bottom: 1px dashed rgba(223, 186, 115, 0.45) !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-grid-table td:nth-child(2) .gender-radio-group {
+    display: flex !important;
+    gap: 14px !important;
+    align-items: center !important;
+    height: 38px !important;
+  }
+
+  /* Cột 3 (Thời gian xem & Nút) và Cột 4 (Chọn nội dung) mở rộng full-width */
+  .input-grid-table td:nth-child(3) {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 6px 0 10px 0 !important;
+    border: none !important;
+    border-bottom: 1px dashed rgba(223, 186, 115, 0.45) !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-grid-table td:nth-child(4) {
+    grid-column: 1 / -1 !important;
+    display: block !important;
+    width: 100% !important;
+    padding: 6px 0 0 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-sizing: border-box !important;
+  }
+
+  .input-grid-table label {
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #500E0E !important;
+    margin-bottom: 5px !important;
+    display: block !important;
+  }
+
+  .input-grid-table .form-control,
+  .input-grid-table .topic-list-select {
+    width: 100% !important;
+    font-size: 14px !important;
+    padding: 8px 10px !important;
+    border-radius: 6px !important;
+    border: 1.5px solid #DFBA73 !important;
+    box-sizing: border-box !important;
+    background: #FFFFFF !important;
+  }
+
+  .input-grid-table .btn-submit-action {
+    width: 100% !important;
+    padding: 12px 14px !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    border-radius: 6px !important;
+    margin-top: 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important;
+  }
+
+  .gender-radio-group {
+    display: flex !important;
+    gap: 20px !important;
+    align-items: center !important;
+  }
+
+  .gender-radio-item {
+    font-size: 14px !important;
+    font-weight: 700 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+  }
+
+  /* -------------------------------------------------------------------------
+     MODAL XÔNG ĐẤT ĐẦU NĂM (CHUẨN MOBILE)
+     - Tiêu đề kết quả căn giữa 2 dòng
+     - Thẻ tuổi xông đất căn chỉnh gọn gàng, giới hạn chuẩn 2 dòng, không rớt dòng 3
+     ------------------------------------------------------------------------- */
+  #subpage-modal-body h2 {
+    text-align: center !important;
+  }
+
+  .xd-tuoi-card {
+    padding: 10px 10px !important;
+  }
+
+  .xd-tuoi-card > div:nth-child(2) > div {
+    font-size: 12.8px !important;
+    line-height: 1.48 !important;
+    letter-spacing: -0.15px !important;
+    word-break: normal !important;
+    margin-bottom: 3px !important;
+  }
+
+  /* BẢN MỆNH GIA CHỦ & NĂM CẦN XÔNG ĐẤT: NẰM CHÍNH GIỮA Ô HOÀN TOÀN */
+  .xd-gia-chu-badge {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    text-align: center !important;
+    gap: 10px !important;
+  }
+
+  .xd-gia-chu-badge > div {
+    width: 100% !important;
+    text-align: center !important;
+  }
+
+  .xd-gia-chu-badge strong,
+  .xd-gia-chu-badge span {
+    text-align: center !important;
+  }
+
+  .xd-tuoi-card > div:first-child {
+    text-align: center !important;
+  }
+
+  /* TIÊU ĐỀ TOP CÁC TUỔI XÔNG ĐẤT: ĐỂ 1 DÒNG DUY NHẤT (CHUẨN ẢNH 1) */
+  .xd-top-tuoi-title,
+  #xd-block-top-tuoi h3,
+  #subpage-modal-body h3:has(.fa-award) {
+    white-space: nowrap !important;
+    font-size: clamp(11.5px, 3.1vw, 15px) !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* CÁC TUỔI TUYỆT ĐỐI KIÊNG KỴ: XUỐNG DÒNG "KHÔNG NÊN CHỌN", CĂN GIỮA, KÍCH THƯỚC CHỮ BAN ĐẦU (CHUẨN ẢNH 2) */
+  .xd-danger-title {
+    display: block !important;
+    text-align: center !important;
+    font-size: 14.5px !important;
+    line-height: 1.45 !important;
+    white-space: normal !important;
+    width: 100% !important;
+    margin-bottom: 8px !important;
+  }
+
+  /* GIỜ HOÀNG ĐẠO & HƯỚNG XUẤT HÀNH: CĂN GIỮA DÒNG */
+  .xd-huong-box h4,
+  h4:has(.fa-clock) {
+    text-align: center !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 6px !important;
+    width: 100% !important;
+  }
+
+  /* BÓI SIM: DÒNG NGŨ HÀNH SINH KHẮC CĂN LỀ TRÁI TRÊN MOBILE (CHUẨN ẢNH 1) */
+  .boisim-score-line.boisim-score-line-nguhanh {
+    display: block !important;
+    text-align: left !important;
+    margin-bottom: 12px !important;
+  }
+
+  .boisim-score-line.boisim-score-line-nguhanh .boisim-score-label-nguhanh {
+    display: block !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .boisim-score-line.boisim-score-line-nguhanh .boisim-part-title {
+    display: block !important;
+    text-align: left !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+    margin-bottom: 4px !important;
+  }
+
+  .boisim-score-line.boisim-score-line-nguhanh .boisim-part-sub {
+    display: block !important;
+    text-align: left !important;
+    font-size: 15.5px !important;
+    font-weight: 700 !important;
+  }
+
+  .boisim-score-line.boisim-score-line-nguhanh .boisim-word-giua {
+    text-transform: capitalize !important;
+  }
+
+  .boisim-score-line.boisim-score-line-nguhanh .boisim-score-pill-inline {
+    display: inline !important;
+    margin-left: 6px !important;
+    color: #BC0000 !important;
+    font-weight: 800 !important;
+    font-size: 16px !important;
+  }
+
+  /* BÓI SIM: CÁC BẢNG CUỘN NGANG DỄ KÉO SANG PHẢI (CHUẨN ẢNH 2) */
+  .boisim-nguhanh-table-wrap,
+  .boisim-noitai-wrap,
+  .boisim-bokhuyet-wrap,
+  .boisim-dayso-table-wrap {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    touch-action: pan-x pan-y !important;
+    overscroll-behavior-x: contain !important;
+    padding-bottom: 10px !important;
+    margin: 10px 0 16px 0 !important;
+    scrollbar-width: thin !important;
+    scrollbar-color: #8A1818 #F5EADB !important;
+  }
+
+  /* THANH CUỘN RÕ RÀNG, DỄ KÉO CHO TẤT CẢ CÁC BẢNG */
+  .boisim-nguhanh-table-wrap::-webkit-scrollbar,
+  .boisim-noitai-wrap::-webkit-scrollbar,
+  .boisim-bokhuyet-wrap::-webkit-scrollbar,
+  .boisim-dayso-table-wrap::-webkit-scrollbar {
+    height: 10px !important;
+    display: block !important;
+  }
+
+  .boisim-nguhanh-table-wrap::-webkit-scrollbar-track,
+  .boisim-noitai-wrap::-webkit-scrollbar-track,
+  .boisim-bokhuyet-wrap::-webkit-scrollbar-track,
+  .boisim-dayso-table-wrap::-webkit-scrollbar-track {
+    background: #F5EADB !important;
+    border-radius: 6px !important;
+    border: 1px solid #DFBA73 !important;
+  }
+
+  .boisim-nguhanh-table-wrap::-webkit-scrollbar-thumb,
+  .boisim-noitai-wrap::-webkit-scrollbar-thumb,
+  .boisim-bokhuyet-wrap::-webkit-scrollbar-thumb,
+  .boisim-dayso-table-wrap::-webkit-scrollbar-thumb {
+    background: #8A1818 !important;
+    border-radius: 6px !important;
+    border: 1.5px solid #F5EADB !important;
+    cursor: pointer !important;
+  }
+
+  .boisim-nguhanh-table-wrap::-webkit-scrollbar-thumb:hover,
+  .boisim-noitai-wrap::-webkit-scrollbar-thumb:hover,
+  .boisim-bokhuyet-wrap::-webkit-scrollbar-thumb:hover,
+  .boisim-dayso-table-wrap::-webkit-scrollbar-thumb:hover {
+    background: #B91C1C !important;
+  }
+
+  /* ĐẢM BẢO CHIỀU RỘNG TỐI THIỂU CHO CÁC BẢNG ĐỂ DỄ KÉO SANG PHẢI XEM ĐẦY ĐỦ CÁC CỘT */
+  .boisim-nguhanh-table {
+    min-width: 640px !important;
+    width: 640px !important;
+  }
+
+  .boisim-noitai-table {
+    min-width: 580px !important;
+    width: 580px !important;
+  }
+
+  .boisim-bokhuyet-wrap table {
+    min-width: 480px !important;
+  }
+
+  .boisim-dayso-table-wrap table {
+    min-width: 520px !important;
+  }
+
+  /* BÓI SIM: DÒNG SINH KHẮC NỘI TẠI HIỂN THỊ 1 DÒNG DUY NHẤT (CHUẨN ẢNH 1) */
+  .boisim-score-line.boisim-score-line-noitai {
+    display: flex !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    font-size: clamp(12.5px, 3.8vw, 15.5px) !important;
+    text-align: left !important;
+    margin-bottom: 8px !important;
+  }
+
+  .boisim-score-line.boisim-score-line-noitai .boisim-score-label {
+    white-space: nowrap !important;
+    font-size: inherit !important;
+  }
+
+  .boisim-score-line.boisim-score-line-noitai .boisim-score-pill-inline {
+    display: inline !important;
+    margin-left: 6px !important;
+    color: #BC0000 !important;
+    font-weight: 800 !important;
+    font-size: inherit !important;
+    white-space: nowrap !important;
+  }
+
+  /* BÓI SIM: DÒNG BỔ KHUYẾT TỨ TRỤ MỆNH XUỐNG DÒNG CHỮ "THEO" TRƯỚC "CAN" (CHUẨN ẢNH 2) */
+  .boisim-score-line.boisim-score-line-bokhuyet {
+    display: block !important;
+    text-align: left !important;
+    margin-bottom: 8px !important;
+  }
+
+  .boisim-score-line.boisim-score-line-bokhuyet .boisim-score-label-bokhuyet {
+    display: block !important;
+    text-align: left !important;
+    width: 100% !important;
+  }
+
+  .boisim-score-line.boisim-score-line-bokhuyet .boisim-bk-title-top {
+    display: block !important;
+    text-align: left !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    margin-bottom: 3px !important;
+  }
+
+  .boisim-score-line.boisim-score-line-bokhuyet .boisim-bk-title-sub {
+    display: block !important;
+    text-align: left !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+  }
+
+  .boisim-score-line.boisim-score-line-bokhuyet .boisim-word-theo {
+    text-transform: capitalize !important;
+  }
+
+  .boisim-score-line.boisim-score-line-bokhuyet .boisim-score-pill-inline {
+    display: inline !important;
+    margin-left: 6px !important;
+    color: #BC0000 !important;
+    font-weight: 800 !important;
+    font-size: 15px !important;
+  }
+
+  /* BÓI SIM: TIÊU ĐỀ ĐỒ HÌNH SINH KHẮC BẢN MỆNH & SIM HIỂN THỊ TRỌN VẸN 1 DÒNG (CHUẨN ẢNH 1) */
+  .boisim-diagram-box {
+    padding: 12px 6px !important;
+  }
+
+  .boisim-diagram-box > div:first-child {
+    white-space: nowrap !important;
+    font-size: clamp(11.5px, 3.4vw, 13.5px) !important;
+    text-align: center !important;
+    width: 100% !important;
+    letter-spacing: -0.2px !important;
+    box-sizing: border-box !important;
+  }
+
+  /* BÓI SIM: CÁC TIÊU ĐỀ CHỮ TO ĐỎ SẪM (NGŨ HÀNH TƯƠNG SINH, CÂN BẰNG ÂM DƯƠNG...) CĂN LỀ GIỮA TRÊN MOBILE (CHUẨN ẢNH 2) */
+  .boisim-block-title,
+  .boisim-owner-details h4 {
+    text-align: center !important;
+  }
+
+  /* TỬ VI 12 THÁNG TRÊN MOBILE: NỘI DUNG NỐI TIẾP NGAY SAU THÁNG TRÊN 1 DÒNG DUY NHẤT */
+  #outSec4Title ~ .doc-line,
+  .doc-month-line {
+    display: block !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    font-size: 13.5px !important;
+    line-height: 1.55 !important;
+    margin-bottom: 3.5px !important;
+    text-align: left !important;
+  }
+  #outSec4Title ~ .doc-line strong,
+  .doc-month-line strong,
+  #outSec4Title ~ .doc-line strong span,
+  .doc-month-line strong span,
+  #outSec4Title ~ .doc-line > span,
+  .doc-month-line > span {
+    display: inline !important;
+    white-space: nowrap !important;
+  }
+
+  /* KHỐI XUẤT HÀNH: XÓA DẤU GẠCH NGANG ĐƠN ĐỘC VÀ DÒNG THỪA */
+  .trach-p1 {
+    display: inline !important;
+  }
+  .trach-p2 {
+    display: inline !important;
+  }
+  .trach-p2::before {
+    content: "" !important;
+  }
+
+  /* ==========================================================================
+     TỐI ƯU LỊCH ÂM DƯƠNG TRÊN MOBILE CHUẨN ẢNH 2 (GỌN GÀNG, KHÔNG BỊ TRÀN CHỮ)
+     ========================================================================== */
+  .lad-search-banner {
+    font-size: 13.5px !important;
+    padding: 8px 10px !important;
+  }
+  .lad-search-body {
+    padding: 12px 10px !important;
+  }
+  .lad-search-row-selects {
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+  }
+  .lad-search-select {
+    height: 36px !important;
+    font-size: 13px !important;
+    padding: 4px 8px !important;
+  }
+  .lad-search-row-actions {
+    gap: 10px !important;
+    justify-content: space-between !important;
+  }
+  .lad-search-radios {
+    gap: 12px !important;
+  }
+  .lad-radio-label {
+    font-size: 13px !important;
+  }
+  .btn-lad-ketqua {
+    padding: 7px 22px !important;
+    font-size: 13px !important;
+  }
+
+  /* Khung Song Lịch Dương - Âm trên Mobile: ĐỐI XỨNG CĂN GIỮA CHUẨN 100% NHƯ HÌNH 1 */
+  .lad-dual-box {
+    position: relative !important;
+    padding: 10px 8px 8px !important;
+    gap: 2px !important;
+    box-sizing: border-box !important;
+  }
+  /* Hai nút mũi tên đặt cố định sát viền trái và viền phải, hoàn toàn không đè lên số 6 hay chữ */
+  .lad-nav-btn {
+    position: absolute !important;
+    top: 38px !important;
+    width: 22px !important;
+    height: 22px !important;
+    font-size: 14px !important;
+    line-height: 20px !important;
+    z-index: 10 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  .lad-prev-btn {
+    left: 2px !important;
+  }
+  .lad-next-btn {
+    right: 2px !important;
+  }
+  .lad-col {
+    padding: 0 4px !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+  }
+  /* Cột Dương Lịch: Toàn bộ căn giữa chuẩn */
+  .lad-solar-col,
+  .lad-solar-col * {
+    text-align: center !important;
+  }
+  /* Cột Âm Lịch: Chuẩn 100% như Hình 1 (ÂM LỊCH - 6 - Tháng năm - Can Chi - Thẻ Hắc Đạo căn giữa) */
+  .lad-lunar-col,
+  .lad-lunar-col * {
+    text-align: center !important;
+  }
+  .lad-col-label {
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+    letter-spacing: 0.5px !important;
+  }
+  .lad-big-number {
+    font-size: 46px !important;
+    margin: 1px 0 3px !important;
+    line-height: 1 !important;
+  }
+  /* THÁNG 9 NĂM BÍNH NGỌ: CHỮ NGỌ CÙNG HÀNG VỚI BÍNH, KHÔNG BỊ XUỐNG DÒNG */
+  .lad-sub-date {
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    margin-bottom: 2px !important;
+    white-space: nowrap !important;
+    line-height: 1.3 !important;
+  }
+  .lad-day-of-week {
+    font-size: 11.5px !important;
+  }
+  /* DÒNG 2 CAN CHI: HIỂN THỊ ĐẦY ĐỦ TRỌN VẸN CHỮ TUẤT TRÊN 1 DÒNG DUY NHẤT */
+  .lad-canchi-line {
+    font-size: clamp(8px, 2.2vw, 9.2px) !important;
+    line-height: 1.35 !important;
+    margin: 2px 0 4px !important;
+    white-space: nowrap !important;
+    letter-spacing: -0.35px !important;
+  }
+  /* Huy hiệu Hắc Đạo / Hoàng Đạo căn giữa trung tâm */
+  .lad-divider {
+    padding: 0 2px !important;
+    flex-shrink: 0 !important;
+    align-self: center !important;
+    margin: 0 !important;
+  }
+  .lad-divider::before {
+    display: none !important;
+  }
+  .lad-divider-badge {
+    font-size: 9.5px !important;
+    padding: 3px 5px !important;
+    white-space: nowrap !important;
+  }
+  /* DÒNG 3 THẺ HOÀNG ĐẠO / HẮC ĐẠO: CHIA ĐÚNG 2 DÒNG (DÒNG 1: NGÀY HOÀNG/HẮC ĐẠO, DÒNG 2: TÊN SAO) */
+  .lad-status-tag {
+    display: inline-block !important;
+    float: none !important;
+    margin: 3px auto 0 !important;
+    padding: 3px 8px !important;
+    border-radius: 4px !important;
+    text-align: center !important;
+    box-sizing: border-box !important;
+    max-width: 100% !important;
+  }
+  .lad-tag-title {
+    display: block !important;
+    font-size: 9.5px !important;
+    font-weight: 700 !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+  }
+  .lad-tag-desc {
+    display: block !important;
+    font-size: 8.8px !important;
+    line-height: 1.3 !important;
+    white-space: nowrap !important;
+    text-align: center !important;
+    letter-spacing: -0.2px !important;
+  }
+
+  /* Thanh nút chuyển nhanh Hôm trước - Hôm nay - Hôm sau */
+  .lad-quick-actions {
+    padding: 8px 10px !important;
+    gap: 6px !important;
+    justify-content: center !important;
+  }
+  .lad-action-btn {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+  }
+
+  /* Khối chi tiết Mệnh ngày, Tiết khí, Giờ hoàng đạo */
+  .lad-info-card {
+    padding: 10px 12px !important;
+  }
+  .lad-info-row {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 4px !important;
+    padding: 6px 0 !important;
+  }
+  .lad-info-label {
+    width: auto !important;
+    font-size: 13.5px !important;
+  }
+  .lad-info-value {
+    width: 100% !important;
+    font-size: 13px !important;
+  }
+  .lad-menh-detail-card {
+    padding: 8px 10px !important;
+    margin-top: 6px !important;
+    font-size: 12.5px !important;
+  }
+
+  /* ==========================================================================
+     TỐI ƯU LỊCH THÁNG TRÊN MOBILE CHUẨN GỌN GÀNG
+     ========================================================================== */
+  .lt-header-bar {
+    padding: 8px 10px !important;
+    gap: 8px !important;
+    flex-direction: column !important;
+    align-items: center !important;
+  }
+  .lt-header-left {
+    gap: 8px !important;
+  }
+  .lt-title-text {
+    font-size: 15px !important;
+  }
+  .lt-header-right {
+    gap: 6px !important;
+    justify-content: center !important;
+  }
+  .lt-header-select {
+    padding: 4px 6px !important;
+    font-size: 12px !important;
+  }
+  .lt-btn-view,
+  .lt-btn-current {
+    padding: 4px 8px !important;
+    font-size: 11.5px !important;
+  }
+  .lt-grid-table th {
+    padding: 6px 2px !important;
+    font-size: 12px !important;
+  }
+  .lt-grid-table td {
+    padding: 4px 1px !important;
+  }
+  .lt-solar-day {
+    font-size: 14px !important;
+  }
+  .lt-lunar-day {
+    font-size: 10px !important;
+  }
+  /* Hiển thị viết tắt T.Hai ... C.Nhật và N.Tuất trên Mobile */
+  .lt-header-full,
+  .lt-subtext-full {
+    display: none !important;
+  }
+  .lt-header-short,
+  .lt-subtext-short {
+    display: inline !important;
+  }
+  .lt-calendar-table th {
+    padding: 6px 1px !important;
+    font-size: 11px !important;
+    white-space: nowrap !important;
+  }
+  .lt-cell-bottom {
+    font-size: 9.5px !important;
+    letter-spacing: -0.2px !important;
+  }
+  .lt-cell-inner {
+    padding: 3px 2px !important;
+  }
+  .lt-legend-bar {
+    padding: 8px 10px !important;
+    font-size: 11.5px !important;
+    gap: 8px !important;
+    justify-content: center !important;
+    flex-wrap: wrap !important;
+  }
+}
+
+
+

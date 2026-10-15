@@ -1,0 +1,801 @@
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
+/* ==========================================================================
+   CSS CHO BỘ CÔNG CỤ XEM BÓI SIM PHONG THỦY (CHUẨN PHONG THỦY SỐ & HOÀNG GIA)
+   ========================================================================== */
+
+.boisim-wrapper {
+  margin-bottom: 30px;
+  font-family: var(--font-sans, 'Inter', sans-serif);
+}
+
+/* Breadcrumb Bar */
+.boisim-breadcrumb-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  background: linear-gradient(135deg, #FFF9F0 0%, #F5EFE6 100%);
+  border: 1px solid #DFBA73;
+  border-radius: 8px;
+  padding: 10px 18px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 6px rgba(120, 20, 20, 0.06);
+}
+
+.boisim-btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #7A1414;
+  background: #FFF;
+  padding: 7px 18px;
+  border: 1px solid #7A1414;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06);
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.boisim-btn-back:hover {
+  background: #7A1414;
+  color: #FFF;
+}
+
+/* Card Header Section */
+.boisim-section-card {
+  background: #FFF;
+  border: 1px solid #E5D5BC;
+  border-radius: 8px;
+  box-shadow: 0 4px 14px rgba(74, 18, 18, 0.08);
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+
+.boisim-section-header {
+  background: linear-gradient(135deg, #7A1414 0%, #540808 100%);
+  color: #FFF;
+  padding: 18px 24px;
+  text-align: center;
+  position: relative;
+  border-bottom: 2px solid #DFBA73;
+}
+
+.boisim-header-badge {
+  display: inline-block;
+  background: rgba(223, 186, 115, 0.2);
+  border: 1px solid #DFBA73;
+  color: #FFE6AA;
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  padding: 3px 12px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+}
+
+.boisim-section-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: clamp(20px, 2.2vw, 26px);
+  font-weight: 900;
+  color: #FFF;
+  margin: 0 0 6px 0;
+  letter-spacing: 0.5px;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+}
+
+.boisim-section-subtitle {
+  font-size: 13.5px;
+  color: #EBD3AB;
+  margin: 0;
+  line-height: 1.5;
+}
+
+/* Form Styling */
+.boisim-form-container {
+  background: linear-gradient(180deg, #FAF7F2 0%, #F5EFE6 100%);
+  border: 1px solid #DFBA73;
+  border-radius: 8px;
+  padding: 20px;
+  margin: 18px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.boisim-form-title {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 16px;
+  font-weight: 800;
+  color: #7A1414;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.boisim-form-desc {
+  font-size: 12.5px;
+  color: #7B6858;
+  margin-bottom: 16px;
+  font-style: italic;
+}
+
+.boisim-form-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  align-items: flex-end;
+}
+
+.boisim-field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.boisim-field-goiy {
+  grid-column: 1 / -1;
+}
+
+.boisim-field-submit {
+  grid-column: 1;
+  max-width: 260px;
+}
+
+@media (max-width: 640px) {
+  .boisim-field-submit {
+    max-width: 100%;
+  }
+}
+
+.boisim-field-label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #55483C;
+}
+
+.boisim-input-text,
+.boisim-select {
+  padding: 9px 12px;
+  border: 1px solid #C8B99F;
+  border-radius: 5px;
+  font-size: 13.5px;
+  background: #FFF;
+  color: #2C241E;
+  outline: none;
+  transition: all 0.2s;
+  width: 100%;
+}
+
+.boisim-input-text:focus,
+.boisim-select:focus {
+  border-color: #7A1414;
+  box-shadow: 0 0 0 3px rgba(122, 20, 20, 0.12);
+}
+
+.boisim-gender-toggle {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  height: 40px;
+}
+
+.boisim-gender-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #4A3E31;
+}
+
+.boisim-btn-submit {
+  background: linear-gradient(135deg, #8A1818 0%, #600B0B 100%);
+  color: #FFF;
+  border: 1.5px solid #DFBA73;
+  padding: 11px 24px;
+  font-size: 14.5px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 4px 10px rgba(120, 20, 20, 0.25);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+}
+
+.boisim-btn-submit:hover {
+  background: linear-gradient(135deg, #A82020 0%, #7A1414 100%);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(120, 20, 20, 0.35);
+}
+
+/* KẾT QUẢ CHẤM ĐIỂM (THEO CHUẨN ẢNH 2) */
+.boisim-result-wrap {
+  padding: 0 18px 24px 18px;
+}
+
+.boisim-result-wrap:empty {
+  display: none !important;
+  padding: 0 !important;
+}
+
+.boisim-result-banner-title {
+  background: linear-gradient(135deg, #7A1414 0%, #540808 100%);
+  color: #FFF;
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 18px;
+  font-weight: 800;
+  text-align: center;
+  padding: 12px 16px;
+  border-radius: 6px 6px 0 0;
+  border-bottom: 2px solid #DFBA73;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.boisim-result-body {
+  background: #FFF;
+  border: 1px solid #E5D5BC;
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+}
+
+/* Thẻ Thông tin thân chủ */
+.boisim-overview-card {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 20px;
+  background: linear-gradient(135deg, #FAF7F2 0%, #F5EFE6 100%);
+  border: 1px solid #DFBA73;
+  border-radius: 8px;
+  padding: 18px;
+  margin-bottom: 24px;
+}
+
+@media (max-width: 768px) {
+  .boisim-overview-card {
+    grid-template-columns: 1fr;
+  }
+}
+
+.boisim-sim-badge-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-right: 1px dashed #DFBA73;
+  padding-right: 16px;
+}
+
+@media (max-width: 768px) {
+  .boisim-sim-badge-box {
+    border-right: none;
+    border-bottom: 1px dashed #DFBA73;
+    padding-bottom: 14px;
+  }
+}
+
+.boisim-batquai-icon {
+  width: 75px;
+  height: 75px;
+  margin-bottom: 10px;
+  filter: drop-shadow(0 2px 5px rgba(0,0,0,0.15));
+}
+
+.boisim-phone-large {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 22px;
+  font-weight: 900;
+  color: #7A1414;
+  letter-spacing: 1px;
+}
+
+.boisim-owner-tag {
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #55483C;
+  margin-top: 2px;
+}
+
+.boisim-gender-tag {
+  display: inline-block;
+  background: #7A1414;
+  color: #FFF;
+  font-size: 11.5px;
+  font-weight: 700;
+  padding: 2px 10px;
+  border-radius: 12px;
+  margin-top: 4px;
+}
+
+.boisim-owner-details h4 {
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 16.5px;
+  font-weight: 800;
+  color: #7A1414;
+  margin: 0 0 10px 0;
+  border-bottom: 1px solid #DFBA73;
+  padding-bottom: 6px;
+}
+
+.boisim-owner-details p {
+  font-size: 13.5px;
+  line-height: 1.6;
+  margin: 0 0 6px 0;
+  color: #3B3026;
+}
+
+.boisim-owner-details p span {
+  font-weight: 700;
+  color: #7A1414;
+}
+
+/* Các Mục Luận Giải: Cân bằng âm dương, Ngũ hành, Kinh dịch... */
+.boisim-block {
+  margin-bottom: 26px;
+  border-bottom: 1px dashed #DFBA73;
+  padding-bottom: 20px;
+}
+
+.boisim-block:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+
+.boisim-block-title {
+  font-family: 'Cinzel', 'Noto Serif', serif;
+  font-size: 18.5px;
+  font-weight: 800;
+  color: #7A1414;
+  text-transform: uppercase;
+  margin: 22px 0 14px 0;
+  line-height: 1.35;
+  letter-spacing: 0.5px;
+  display: block;
+  border-bottom: 1.5px solid #DFBA73;
+  padding-bottom: 8px;
+}
+
+.boisim-block-title i {
+  color: #7A1414;
+  font-size: 18px;
+  margin-right: 8px;
+}
+
+.boisim-score-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1F2937;
+  margin-bottom: 8px;
+}
+
+.boisim-score-line .taiji-icon {
+  font-size: 18px;
+  color: #111;
+  vertical-align: middle;
+}
+
+.boisim-score-pill {
+  color: #BC0000;
+  font-weight: 800;
+  font-size: 16.5px;
+  margin-left: 20px;
+}
+
+.boisim-intro-italic {
+  font-size: 14.5px;
+  font-style: italic;
+  color: #374151;
+  line-height: 1.65;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.boisim-explain-text {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: #1F2937;
+  margin-bottom: 14px;
+  text-align: justify;
+}
+
+/* BẢNG XÁC ĐỊNH NGŨ HÀNH SIM (CHUẨN ẢNH 2) */
+.boisim-table-heading {
+  font-weight: 700;
+  color: #374151;
+  font-size: 15px;
+  margin: 12px 0 8px 0;
+}
+
+.boisim-nguhanh-table-wrap {
+  margin: 12px 0 16px 0;
+  overflow-x: auto;
+}
+
+.boisim-nguhanh-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 14px;
+  background: #A35F0F;
+  color: #FFF;
+  border: 1px solid #FFF;
+}
+
+.boisim-nguhanh-table thead th {
+  background: #A35F0F;
+  color: #FEEBC8;
+  font-family: inherit;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  padding: 8px 12px;
+  border: 1px solid #FFF;
+  text-align: center;
+}
+
+.boisim-nguhanh-table tbody td {
+  padding: 8px 10px;
+  border: 1px solid #FFF;
+  vertical-align: middle;
+  background: #A35F0F;
+  color: #FFF;
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.boisim-nguhanh-table tbody tr td:first-child {
+  background: #A35F0F;
+  color: #FFF;
+  font-weight: 800;
+  width: 110px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  text-align: center;
+}
+
+.boisim-sub-highlight {
+  border-left: 5px solid #BC0000;
+  padding-left: 12px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #1F2937;
+  margin: 16px 0;
+  line-height: 1.6;
+}
+
+/* Sơ đồ Ngũ hành tương sinh tương khắc */
+.boisim-diagram-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 18px 0;
+  padding: 14px;
+  background: #FAF7F2;
+  border: 1px dashed #DFBA73;
+  border-radius: 8px;
+}
+
+.boisim-diagram-svg {
+  max-width: 280px;
+  height: auto;
+}
+
+/* Bảng Sinh Khắc Nội Tại 10 Số */
+.boisim-noitai-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  margin: 14px 0;
+  border: 1px solid #DFBA73;
+}
+
+.boisim-noitai-table td {
+  padding: 8px 4px;
+  border: 1px solid #E2D7C5;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.boisim-noitai-digits td {
+  background: #FAF7F2;
+  color: #7A1414;
+  font-family: var(--font-serif, 'Playfair Display', serif);
+  font-size: 18px;
+}
+
+.boisim-noitai-elements td {
+  background: #FFF;
+  font-size: 11.5px;
+}
+
+.boisim-noitai-icon {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 3px;
+  color: #FFF;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+.boisim-rel-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 4px;
+  border-radius: 3px;
+}
+
+.boisim-rel-sinh {
+  background: #E8F5E9;
+  color: #1B5E20;
+  border: 1px solid #A5D6A7;
+}
+
+.boisim-rel-khac {
+  background: #FFEBEE;
+  color: #B71C1C;
+  border: 1px solid #FFCDD2;
+}
+
+.boisim-rel-hoa {
+  background: #FFF8E1;
+  color: #F57F17;
+  border: 1px solid #FFE082;
+}
+
+/* Bổ khuyết Tứ trụ */
+.boisim-bokhuyet-table {
+  width: 100%;
+  max-width: 480px;
+  margin: 12px 0;
+  border-collapse: collapse;
+  text-align: center;
+  border: 1px solid #DFBA73;
+}
+
+.boisim-bokhuyet-table th {
+  background: #7A1414;
+  color: #FFF;
+  padding: 6px;
+  font-size: 12.5px;
+}
+
+.boisim-bokhuyet-table td {
+  padding: 8px;
+  border: 1px solid #E2D7C5;
+  font-size: 14px;
+  font-weight: 700;
+  background: #FFF;
+}
+
+/* Kinh Dịch 2 Cột Quẻ */
+.boisim-que-grid {
+  display: grid;
+  grid-template-columns: 1fr 180px;
+  gap: 16px;
+  background: #FAF7F2;
+  border: 1px solid #DFBA73;
+  border-radius: 6px;
+  padding: 16px;
+  margin: 12px 0;
+}
+
+@media (max-width: 680px) {
+  .boisim-que-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.boisim-que-side {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border-left: 1px dashed #DFBA73;
+  padding-left: 14px;
+}
+
+@media (max-width: 680px) {
+  .boisim-que-side {
+    border-left: none;
+    border-top: 1px dashed #DFBA73;
+    padding-top: 12px;
+    padding-left: 0;
+  }
+}
+
+.boisim-que-draw {
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 4px;
+  margin: 10px 0;
+}
+
+.boisim-hao-duong {
+  width: 70px;
+  height: 8px;
+  background: #7A1414;
+  border-radius: 2px;
+}
+
+.boisim-hao-am {
+  width: 70px;
+  height: 8px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.boisim-hao-am span {
+  width: 31px;
+  height: 8px;
+  background: #7A1414;
+  border-radius: 2px;
+}
+
+/* Khối Tổng Kết 3 Cột */
+.boisim-summary-card {
+  background: #FFFDF9;
+  border: 2px solid #A35F0F;
+  border-radius: 10px;
+  padding: 24px;
+  margin-top: 24px;
+  box-shadow: 0 4px 16px rgba(163, 95, 15, 0.08);
+}
+
+.boisim-summary-title {
+  text-align: center;
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-size: 24px;
+  font-weight: 800;
+  color: #A35F0F;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.boisim-summary-3cols {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.boisim-col-box {
+  background: #FAF7F2;
+  border-radius: 6px;
+  padding: 16px 14px;
+  border: 1px solid #E2D7C5;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+}
+
+.boisim-col-header {
+  font-size: 15px;
+  font-weight: 800;
+  text-align: center;
+  padding-bottom: 8px;
+  margin-bottom: 12px;
+  border-bottom: 2px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.boisim-col-tot .boisim-col-header {
+  color: #15803D;
+  border-color: #22C55E;
+}
+
+.boisim-col-xau .boisim-col-header {
+  color: #B91C1C;
+  border-color: #EF4444;
+}
+
+.boisim-col-binh .boisim-col-header {
+  color: #A35F0F;
+  border-color: #A35F0F;
+}
+
+.boisim-col-item {
+  font-size: 13.5px;
+  line-height: 1.55;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.boisim-col-tot .boisim-col-item {
+  color: #14532D;
+}
+
+.boisim-col-xau .boisim-col-item {
+  color: #7F1D1D;
+}
+
+.boisim-col-binh .boisim-col-item {
+  color: #78350F;
+}
+
+/* Banner Điểm Số Cuối */
+.boisim-final-score-box {
+  background: #A35F0F;
+  color: #FFF;
+  border: 1px solid #824703;
+  border-radius: 18px;
+  text-align: center;
+  padding: 18px 20px;
+  box-shadow: 0 4px 14px rgba(163, 95, 15, 0.25);
+  margin-bottom: 18px;
+}
+
+.boisim-final-score-number {
+  font-family: var(--font-serif, 'Playfair Display', Georgia, serif);
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFF;
+  margin: 0 0 4px 0;
+  letter-spacing: 0.5px;
+}
+
+.boisim-final-verdict {
+  font-size: 14.5px;
+  color: #FFFDF9;
+  font-style: italic;
+  margin: 0;
+}
+
+/* Tư vấn Hotline / Zalo */
+.boisim-cta-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  background: #FFF;
+  border: 1px dashed #DFBA73;
+  border-radius: 6px;
+  padding: 12px 18px;
+  text-align: center;
+}
+
+.boisim-cta-text {
+  font-size: 14px;
+  font-weight: 700;
+  color: #7A1414;
+}
+
+.boisim-cta-btn {
+  background: #0284C7;
+  color: #FFF;
+  font-size: 13.5px;
+  font-weight: 700;
+  padding: 7px 18px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background 0.2s;
+}
+
+.boisim-cta-btn:hover {
+  background: #0369A1;
+}
