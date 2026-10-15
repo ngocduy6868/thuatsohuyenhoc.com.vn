@@ -2304,9 +2304,6 @@ function initEventHandlers() {
 
     const unwantedPostIds = new Set([
       "bai-kham-thien-thien-tuong",
-      "bai-kham-thien-thien-luong",
-      "bai-kham-thien-that-sat",
-      "bai-kham-thien-pha-quan",
       "sao-that-sat-trong-tu-vi-dau-so",
       "sao-pha-quan-trong-tu-vi-dau-so",
       "sao-tham-lang-trong-tu-vi-dau-so",
@@ -2547,7 +2544,7 @@ function initEventHandlers() {
         // Tự động nâng cấp nếu bản chuẩn vật lý trên PC dài hơn bản cookie/localStorage của máy
         if (backupMapAll[p.id]) {
           const bRef = backupMapAll[p.id];
-          if (bRef.noiDung && (!p.noiDung || bRef.noiDung.length > (p.noiDung.length + 300) || p.id === "bai-pha-quan-dan-than")) {
+          if (bRef.noiDung && (!p.noiDung || bRef.noiDung.length > (p.noiDung.length + 100) || p.id === "bai-pha-quan-dan-than")) {
             p.noiDung = bRef.noiDung;
             p.tomTat = bRef.tomTat || p.tomTat;
             p.tieuDe = bRef.tieuDe || p.tieuDe;
@@ -3151,7 +3148,7 @@ function initEventHandlers() {
       if (cleanBackup && cleanBackup.noiDung) {
         const curLen = (post.noiDung || "").length;
         const bLen = cleanBackup.noiDung.length;
-        if (isCorrupted || (bLen > curLen + 300) || (post.id === "bai-pha-quan-dan-than" && curLen < 4000)) {
+        if (isCorrupted || (bLen > curLen + 100) || (post.id === "bai-pha-quan-dan-than" && curLen < 4000)) {
           post = Object.assign({}, cleanBackup);
         }
       }
