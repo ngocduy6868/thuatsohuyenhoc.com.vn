@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Thuật Số Huyền Học - Tri Thức Cổ Xưa, Ứng Dụng Hiện Đại</title>
   <meta name="description" content="Nền tảng tra cứu và lập lá số Tử Vi, Kinh Dịch, Phong Thủy, Lịch Vạn Niên và Huyền Học Á Đông chuẩn xác và uy tín.">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   
   <!-- Google Fonts: Playfair Display, Cinzel, Noto Serif, Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -2949,11 +2952,11 @@
   <script src="js/tamlinh_lenghi_data.js"></script>
   <script src="js/trachnhat_data.js"></script>
   <script src="js/bai_viet_data.js"></script>
-  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v4"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v5"></script>
   <script src="js/kinhdich_tuonghoc_data.js"></script>
   <script src="js/kinhdich_engine.js"></script>
   <script src="js/boisim_engine.js"></script>
-  <script src="js/main.js?v=20261016_v4"></script>
+  <script src="js/main.js?v=20261016_v5"></script>
         <!-- SYNC CHUYEN MUC SCRIPT CLEAN -->
   <script>
     (function() {
@@ -3922,6 +3925,19 @@
         } catch(e) {}
       });
 
+      // Cơ chế nạp kép (Dual Layer): Tự động nạp từ kho lưu trữ vật lý chuẩn nếu thiết bị/trình duyệt chưa có localStorage
+      if (customList.length === 0) {
+        var fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+        if (fallbackMaster) {
+          storages.forEach(function(k) {
+            var fbList = fallbackMaster[k];
+            if (Array.isArray(fbList)) {
+              customList = customList.concat(fbList);
+            }
+          });
+        }
+      }
+
       var customMap = {};
       customList.forEach(function(p) {
         if (p && p.id) {
@@ -4038,18 +4054,34 @@
           });
         }
       } else if (c2.indexOf("trọn đời") !== -1 || c2.indexOf("tron doi") !== -1) {
-        // TỬ VI TRỌN ĐỜI
+        // TỬ VI TRỌN ĐỜI: Ưu tiên mở đúng bài "Tử Vi Trọn Đời 12 Con Giáp" giống hệt trên PC
         target = customPosts.find(function(p) {
           if (!p) return false;
           var pid = (p.id || "").toLowerCase();
-          var cm = (p.chuyenMuc || "").toLowerCase();
-          return pid === "tuvi-tron-doi-thien-menh" || pid === "tuvi-tron-doi-giai-ma-menh-than" || pid.indexOf("tron-doi") !== -1 || ((cm.indexOf("tử vi") !== -1 || cm.indexOf("tu vi") !== -1) && cm.indexOf("trọn đời") !== -1);
+          var tt = (p.tieuDe || "").toLowerCase();
+          return pid === "post-tu-vi-tron-doi-12-con-giap-1699" || pid === "post-tu-vi-tron-doi-12-con-giap" || (pid.indexOf("tron-doi") !== -1 && (tt.indexOf("12 con giáp") !== -1 || tt.indexOf("12 con giap") !== -1));
         });
+        if (!target) {
+          target = customPosts.find(function(p) {
+            if (!p) return false;
+            var pid = (p.id || "").toLowerCase();
+            return pid === "tuvi-tron-doi-thien-menh" || pid === "tuvi-tron-doi-giai-ma-menh-than" || pid.indexOf("tron-doi") !== -1;
+          });
+        }
+        if (!target) {
+          var fbMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+          if (fbMaster) {
+            var allFb = (fbMaster["TUVI_BAI_VIET_CUSTOM"] || []).concat(fbMaster["BAI_VIET_CHUYEN_MUC_CUSTOM"] || []);
+            target = allFb.find(function(p) {
+              return p && (p.id === "post-tu-vi-tron-doi-12-con-giap-1699" || p.id === "post-tu-vi-tron-doi-12-con-giap");
+            });
+          }
+        }
         if (!target) {
           target = defPosts.find(function(p) {
             if (!p) return false;
             var pid = (p.id || "").toLowerCase();
-            return pid === "tuvi-tron-doi-thien-menh" || pid === "tuvi-tron-doi-giai-ma-menh-than" || pid.indexOf("tron-doi") !== -1;
+            return pid === "post-tu-vi-tron-doi-12-con-giap-1699" || pid === "post-tu-vi-tron-doi-12-con-giap" || pid === "tuvi-tron-doi-thien-menh" || pid === "tuvi-tron-doi-giai-ma-menh-than" || pid.indexOf("tron-doi") !== -1;
           });
         }
       } else if (c2.indexOf("vận hạn") !== -1 || c2.indexOf("van han") !== -1) {
