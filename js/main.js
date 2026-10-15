@@ -2514,6 +2514,18 @@ function initEventHandlers() {
     }
     window.resolveArticleImageHelper = resolveImg;
 
+    const backupMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+    const backupMapAll = {};
+    if (backupMaster) {
+      ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(k => {
+        const bData = backupMaster[k];
+        const list = (bData && (bData.value || (Array.isArray(bData) ? bData : []))) || [];
+        list.forEach(item => {
+          if (item && item.id) backupMapAll[item.id] = item;
+        });
+      });
+    }
+
     const customMap = {};
     customPosts.forEach(p => {
       if (p && p.id) {
@@ -2531,6 +2543,17 @@ function initEventHandlers() {
             (p.id.indexOf("trach-nhat") !== -1 && ((p.tieuDe || "").indexOf("?") !== -1 || (p.tieuDe || "").indexOf("\uFFFD") !== -1))) {
           return;
         }
+
+        // Tự động nâng cấp nếu bản chuẩn vật lý trên PC dài hơn bản cookie/localStorage của máy
+        if (backupMapAll[p.id]) {
+          const bRef = backupMapAll[p.id];
+          if (bRef.noiDung && (!p.noiDung || bRef.noiDung.length > (p.noiDung.length + 300) || p.id === "bai-pha-quan-dan-than")) {
+            p.noiDung = bRef.noiDung;
+            p.tomTat = bRef.tomTat || p.tomTat;
+            p.tieuDe = bRef.tieuDe || p.tieuDe;
+          }
+        }
+
         p.hinhAnh = resolveImg(p);
         if (!customMap[p.id] || (Number(p.updatedAt) || 0) >= (Number(customMap[p.id].updatedAt) || 0)) {
           if (!isRealImg(p.hinhAnh) && customMap[p.id] && isRealImg(customMap[p.id].hinhAnh)) {
@@ -3106,13 +3129,13 @@ function initEventHandlers() {
     }
     if (!post) return;
 
-    // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t từ cache cũ
+    // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t hoặc bị lưu bản rút gọn trong cookie/storage
     const fullText = (post.tieuDe || "") + " " + (post.noiDung || "") + " " + (post.tomTat || "");
     const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || 
                         fullText.indexOf("Tr?ch Nh?t") !== -1 || 
                         /[a-zA-Z\u00C0-\u024F]\?[a-zA-Z\u00C0-\u024F]/.test(fullText);
     const backupMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
-    if (isCorrupted && backupMaster) {
+    if (backupMaster && post && post.id) {
       let cleanBackup = null;
       const backupKeys = [
         "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
@@ -3122,11 +3145,15 @@ function initEventHandlers() {
       for (let bk of backupKeys) {
         const bData = backupMaster[bk];
         const list = (bData && (bData.value || (Array.isArray(bData) ? bData : []))) || [];
-        cleanBackup = list.find(p => p.id === post.id || (post.id && p.id && (p.id === "xem-ngay-tot-tong-quan" && post.id.indexOf("trach-nhat") !== -1)));
+        cleanBackup = list.find(p => p && (p.id === post.id || (post.id && p.id && (p.id === "xem-ngay-tot-tong-quan" && post.id.indexOf("trach-nhat") !== -1))));
         if (cleanBackup) break;
       }
-      if (cleanBackup) {
-        post = Object.assign({}, cleanBackup);
+      if (cleanBackup && cleanBackup.noiDung) {
+        const curLen = (post.noiDung || "").length;
+        const bLen = cleanBackup.noiDung.length;
+        if (isCorrupted || (bLen > curLen + 300) || (post.id === "bai-pha-quan-dan-than" && curLen < 4000)) {
+          post = Object.assign({}, cleanBackup);
+        }
       }
     }
 
