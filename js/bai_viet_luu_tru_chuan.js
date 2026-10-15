@@ -1,4 +1,4 @@
-/**
+﻿/**
  * =======================================================================================
  * Dá»® LIá»†U Báº¢O Vá»† Cá»T LÃ•I & LÆ¯U TRá»® Váº¬T LÃ CHUáº¨N Cá»¦A Dá»° ÃN (DUAL-LAYER STORAGE)
  * =======================================================================================
@@ -870,7 +870,7 @@ window.DEFAULT_RECOVERED_ARTICLES_FALLBACK = {
   }
 
   // Phiên bản dữ liệu chuẩn vật lý từ PC
-  var CURRENT_SYNC_VERSION = "20261016_SYNC_V5";
+  var CURRENT_SYNC_VERSION = "20261016_SYNC_V8";
   var lastSyncedVersion = localStorage.getItem("MASTER_ARTICLES_SYNC_VERSION");
   var isNewVersion = (lastSyncedVersion !== CURRENT_SYNC_VERSION);
 
