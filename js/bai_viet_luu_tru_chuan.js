@@ -828,3 +828,100 @@ window.DEFAULT_RECOVERED_ARTICLES_FALLBACK = {
                                        }
                                    ]
 };
+
+window.ORIGINAL_RECOVERED_ARTICLES_BACKUP = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+
+// =========================================================================
+// Tá»° Äá»˜NG Äá»’NG Bá»˜ DUAL-LAYER & Báº¢O Vá»† TUYá»†T Äá»I BÃ€I VIáº¾T TÃ™Y CHá»ˆNH (DATA HEALER & MOBILE LOADER)
+// =========================================================================
+(function() {
+  if (typeof window === "undefined" || !window.localStorage) return;
+  var backup = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+  if (!backup) return;
+
+  var keys = [
+    "TUVI_BAI_VIET_CUSTOM",
+    "TUONGSO_BAI_VIET_CUSTOM",
+    "XEMNGAY_BAI_VIET_CUSTOM",
+    "XEMTUOI_BAI_VIET_CUSTOM",
+    "TAMLINH_BAI_VIET_CUSTOM",
+    "PHONGTHUY_BAI_VIET_CUSTOM",
+    "KIENTHUC_BAI_VIET_CUSTOM",
+    "BAI_VIET_CHUYEN_MUC_CUSTOM"
+  ];
+
+  var deletedIds = [
+    "bai-kham-thien-thien-tuong",
+    "bai-kham-thien-thien-luong",
+    "bai-kham-thien-that-sat",
+    "bai-kham-thien-pha-quan",
+    "bai-luc-thap-tinh-he-tu-vi",
+    "bai-thien-dong-cu-mon-suu-mui",
+    "bai-menh-thien-dong-thai-am",
+    "bai-dau-so-cot-tuy-phu"
+  ];
+
+  function hasFontCorruption(str) {
+    if (!str) return false;
+    if (str.indexOf('\uFFFD') !== -1) return true;
+    return /[\p{L}]\?+[\p{L}]/u.test(str);
+  }
+
+  keys.forEach(function(key) {
+    try {
+      var raw = localStorage.getItem(key);
+      var backupList = backup[key] || [];
+
+      // Khi má»Ÿ trÃªn Ä‘iá»‡n thoáº¡i hoáº·c thiáº¿t bá»‹ má»›i mÃ  localStorage chÆ°a cÃ³ dá»¯ liá»‡u bÃ i viáº¿t
+      if (!raw || raw === "[]" || raw === "null") {
+        if (Array.isArray(backupList) && backupList.length > 0) {
+          localStorage.setItem(key, JSON.stringify(backupList));
+        }
+        return;
+      }
+
+      var currentList = JSON.parse(raw);
+      if (!Array.isArray(currentList)) {
+        if (Array.isArray(backupList) && backupList.length > 0) {
+          localStorage.setItem(key, JSON.stringify(backupList));
+        }
+        return;
+      }
+
+      var backupMap = {};
+      if (Array.isArray(backupList)) {
+        backupList.forEach(function(b) { if (b && b.id) backupMap[b.id] = b; });
+      }
+
+      var changed = false;
+      var filtered = currentList.filter(function(item) {
+        if (!item || !item.id) return false;
+        if (deletedIds.indexOf(item.id) !== -1) {
+          changed = true;
+          return false;
+        }
+        return true;
+      });
+
+      var healedList = filtered.map(function(item) {
+        var bRef = backupMap[item.id];
+        if (!bRef) return item;
+
+        var isCorrupted = hasFontCorruption(item.tieuDe) || hasFontCorruption(item.tomTat) || hasFontCorruption(item.noiDung);
+        if (item.id === "post-a-diem-bao-tu-dong-vat-mum4nerx" && item.noiDung && item.noiDung.length > 5000) {
+          isCorrupted = true;
+        }
+
+        if (isCorrupted) {
+          changed = true;
+          return bRef;
+        }
+        return item;
+      });
+
+      if (changed) {
+        localStorage.setItem(key, JSON.stringify(healedList));
+      }
+    } catch(e) {}
+  });
+})();

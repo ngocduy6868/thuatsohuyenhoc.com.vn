@@ -5203,7 +5203,18 @@
 
       // Thêm bài tùy chỉnh (lấy bản mới nhất theo updatedAt)
       const customMap = {};
-      [...customCM, ...customXN, ...customXT, ...customTuVi, ...customTL, ...customPT, ...customKT, ...customTS].forEach(p => {
+      let customAll = [...customCM, ...customXN, ...customXT, ...customTuVi, ...customTL, ...customPT, ...customKT, ...customTS];
+      if (customAll.length === 0) {
+        const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+        if (fallbackMaster) {
+          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+            if (Array.isArray(fallbackMaster[k])) {
+              customAll = customAll.concat(fallbackMaster[k]);
+            }
+          });
+        }
+      }
+      customAll.forEach(p => {
         if (p && p.id && !unwantedPostIds.has(p.id)) {
           if (p.id === "tuvi-ngay-12-con-giap") {
             const cm = (p.chuyenMuc || "").toLowerCase();

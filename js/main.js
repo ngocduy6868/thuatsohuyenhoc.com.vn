@@ -2226,6 +2226,19 @@ function initEventHandlers() {
       if (storedTS) customPosts = customPosts.concat(JSON.parse(storedTS));
     } catch (e) {}
 
+    // Cơ chế Fallback dự phòng cho Điện thoại / Thiết bị mới khi localStorage chưa có dữ liệu bài viết
+    if (customPosts.length === 0) {
+      const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+      if (fallbackMaster) {
+        ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+          var fbList = fallbackMaster[k];
+          if (Array.isArray(fbList)) {
+            customPosts = customPosts.concat(fbList);
+          }
+        });
+      }
+    }
+
     // Đồng bộ tác giả bài viết trong localStorage về Thầy Duy Tâm Phúc
     ["BAI_VIET_CHUYEN_MUC_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM"].forEach(function(k) {
       try {
@@ -3059,6 +3072,17 @@ function initEventHandlers() {
           if (Array.isArray(list)) customList = customList.concat(list);
         } catch(e) {}
       }
+      if (customList.length === 0) {
+        const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+        if (fallbackMaster) {
+          for (const k of storages) {
+            var fbList = fallbackMaster[k];
+            if (Array.isArray(fbList)) {
+              customList = customList.concat(fbList);
+            }
+          }
+        }
+      }
       customList.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
       post = customList.find(p => p && p.id === postId);
       if (!post && (postId === "tuvi-can-xuong-tinh-cot" || (postId && postId.includes("can-xuong")))) {
@@ -3087,7 +3111,8 @@ function initEventHandlers() {
     const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || 
                         fullText.indexOf("Tr?ch Nh?t") !== -1 || 
                         /[a-zA-Z\u00C0-\u024F]\?[a-zA-Z\u00C0-\u024F]/.test(fullText);
-    if (isCorrupted && window.ORIGINAL_RECOVERED_ARTICLES_BACKUP) {
+    const backupMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+    if (isCorrupted && backupMaster) {
       let cleanBackup = null;
       const backupKeys = [
         "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
@@ -3095,7 +3120,7 @@ function initEventHandlers() {
         "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"
       ];
       for (let bk of backupKeys) {
-        const bData = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP[bk];
+        const bData = backupMaster[bk];
         const list = (bData && (bData.value || (Array.isArray(bData) ? bData : []))) || [];
         cleanBackup = list.find(p => p.id === post.id || (post.id && p.id && (p.id === "xem-ngay-tot-tong-quan" && post.id.indexOf("trach-nhat") !== -1)));
         if (cleanBackup) break;
