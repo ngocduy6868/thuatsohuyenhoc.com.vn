@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Xuất Dữ Liệu Bài Viết Chuẩn PC</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #1a1a1a;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 20px;
+    }
+    .card {
+      background: #2a2a2a;
+      padding: 30px;
+      border-radius: 12px;
+      border: 2px solid #dfba73;
+      max-width: 500px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+    h1 { color: #dfba73; font-size: 22px; margin-bottom: 15px; }
+    p { font-size: 15px; line-height: 1.5; color: #ddd; margin-bottom: 25px; }
+    button {
+      background: #7a1414;
+      color: #fff;
+      border: 2px solid #dfba73;
+      padding: 15px 30px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    button:hover {
+      background: #9c1a1a;
+      transform: scale(1.05);
+    }
+    #status {
+      margin-top: 20px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #4cd137;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>XUẤT DỮ LIỆU BÀI VIẾT CHUẨN PC</h1>
+    <p>Trang này sẽ trích xuất 100% toàn bộ dữ liệu bài viết chuẩn từ trình duyệt Chrome của bạn để đồng bộ sang Cốc Cốc và Điện Thoại.</p>
+    <button id="btnExport" onclick="exportData()">📥 BẤM VÀO ĐÂY ĐỂ TẢI FILE (1 CLICK)</button>
+    <div id="status"></div>
+  </div>
+
+  <script>
+    function exportData() {
+      try {
+        const data = {};
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+          data[key] = localStorage.getItem(key);
+        }
+        const totalKeys = Object.keys(data).length;
+        if (totalKeys === 0) {
+          document.getElementById('status').innerText = "⚠️ Chưa tìm thấy dữ liệu trong bộ nhớ!";
+          document.getElementById('status').style.color = "#e74c3c";
+          return;
+        }
+        const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = 'pc_chuan_master.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        document.getElementById('status').innerText = "✅ ĐÃ TẢI XONG FILE pc_chuan_master.json! Bạn hãy quay lại Antigravity nhắn 'Đã tải xong' nhé!";
+        document.getElementById('status').style.color = "#4cd137";
+      } catch (err) {
+        document.getElementById('status').innerText = "Lỗi: " + err.message;
+        document.getElementById('status').style.color = "#e74c3c";
+      }
+    }
+
+    // Tự động tải sau 1 giây khi mở trang
+    window.onload = function() {
+      setTimeout(exportData, 800);
+    };
+  </script>
+</body>
+</html>
