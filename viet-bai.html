@@ -2017,6 +2017,9 @@
               <span id="save-status-indicator" style="display: none; font-weight: 700; font-size: 13px; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 4px; box-shadow: 0 2px 6px rgba(0,0,0,0.08);"></span>
             </div>
             <div>
+              <button type="button" onclick="downloadDataJsonFile()" class="tb-btn" style="padding: 9px 15px; font-size: 13px; background: #E6F7FF; color: #0050B3; border: 1.5px solid #91D5FF; margin-right: 8px; font-weight: 700;" title="Tải tệp data-baiviet.json chuẩn hóa để đưa trực tiếp lên hosting/máy chủ">
+                📥 Xuất Tệp data-baiviet.json
+              </button>
               <button type="button" onclick="downloadBackupFile()" class="tb-btn" style="padding: 9px 15px; font-size: 13px; background: #FAF3E8; color: #7A1414; border: 1px solid #DFBA73; margin-right: 8px;" title="Tải về tệp dự phòng lưu trên ổ cứng máy tính để phòng ngừa khi gỡ phần mềm 360 hoặc dọn rác trình duyệt">
                 💾 Tải Tệp Sao Lưu Về Máy
               </button>
@@ -6713,6 +6716,36 @@
       URL.revokeObjectURL(a.href);
       showToast("Đã tải tệp sao lưu dữ liệu (.js) về máy thành công!");
     }
+
+    function downloadDataJsonFile() {
+      const storages = [
+        "XEMTUOI_BAI_VIET_CUSTOM",
+        "TUONGSO_BAI_VIET_CUSTOM",
+        "TAMLINH_BAI_VIET_CUSTOM",
+        "BAI_VIET_CHUYEN_MUC_CUSTOM",
+        "TUVI_BAI_VIET_CUSTOM",
+        "XEMNGAY_BAI_VIET_CUSTOM",
+        "PHONGTHUY_BAI_VIET_CUSTOM",
+        "KIENTHUC_BAI_VIET_CUSTOM",
+        "BAI_VIET_HIDDEN_IDS"
+      ];
+      const payload = {};
+      storages.forEach(k => {
+        const val = localStorage.getItem(k);
+        if (val) payload[k] = val;
+      });
+      const code = JSON.stringify(payload, null, 2);
+      const blob = new Blob([code], { type: "application/json;charset=utf-8" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "data-baiviet.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(a.href);
+      showToast("Đã tải tệp data-baiviet.json thành công!");
+    }
+    window.downloadDataJsonFile = downloadDataJsonFile;
 
     // ========================================================
     // CƠ CHẾ GIÁM SÁT DUNG LƯỢNG BỘ NHỚ WEB & CẢNH BÁO TRƯỚC 5MB

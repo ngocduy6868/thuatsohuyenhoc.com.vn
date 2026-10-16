@@ -447,33 +447,20 @@ window.XEMNGAY_BAI_VIET_DATA = [
   },
   {
     "id": "xem-ngay-an-tang-dao-hieu",
-    "tieuDe": "Xem Ngày An Táng: Đạo Hiếu Trạch Nhật Cổ Truyền, Tránh Trùng Tang - Tuyệt Tự",
-    "chuyenMuc": "Xem ngày an táng",
+    "tieuDe": "Cải Táng Theo Quan Niệm Dân Gian",
+    "chuyenMuc": "XEM NGÀY TỐT",
     "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "09/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày An Táng.png",
+    "ngayDang": "16/10/2026",
+    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt An Táng.jpeg",
     "noiBat": true,
-    "uuTienFeed": 14,
-    "tomTat": "Thuật trạch nhật tang lễ chuẩn cổ truyền: Cách tính ngày giờ mất tránh Trùng Tang, Tam Tang; chọn ngày hạ huyệt ấm cúng để người đã khuất yên nghỉ thanh thản.",
+    "uuTienFeed": 1,
+    "tomTat": "Cải táng, còn được gọi là bốc mộ hoặc sang cát, là một phong tục mai táng truyền thống đã tồn tại lâu đời trong văn hóa của người Việt, thể hiện đạo hiếu và sự tôn kính tổ tiên.",
     "noiDung": `
-      <h3>1. Nghĩa tử nghĩa tận và đạo hiếu truyền thống</h3>
-      <p>Trong văn hóa ngàn đời của dân tộc ta, việc lo liệu tang ma chu tất cho người thân đã khuất là bổn phận thiêng liêng nhất của con cháu. Chọn ngày giờ an táng chuẩn xác không chỉ giúp linh hồn người mất được yên nghỉ nơi suối vàng mà còn giữ gìn vượng khí, bình an và đạo hiếu cho các thế hệ cháu con.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày An Táng.png" alt="Xem ngày an táng đạo hiếu" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Kiểm tra ngày giờ mất và cách tính Trùng Tang</h3>
-      <p>Khi có người thân qua đời, việc đầu tiên cần đối chiếu giờ, ngày, tháng, năm mất xem có phạm phải Trùng Tang, Trùng Phục hoặc Tam Tang hay không. Nếu phạm phải những thời khắc này, cần nhờ các bậc đại đức cao tăng hoặc chuyên gia thuật số làm lễ cầu siêu, hóa giải hung sát.</p>
-
-      <h3>3. Tiêu chí chọn ngày hạ huyệt nhập thổ</h3>
-      <ul>
-        <li><strong>Tránh ngày xung sát:</strong> Tuyệt đối tránh ngày tương xung với tuổi của người đã khuất và tuổi của người con trai trưởng.</li>
-        <li><strong>Chọn ngày Hoàng Đạo ôn hòa:</strong> Ưu tiên các ngày có sao Nguyệt Đức, Thiên Đức Hợp, mang tính chất trầm tĩnh, thanh tịnh.</li>
-        <li><strong>Hướng mộ hợp long mạch:</strong> Vị trí đặt huyệt mộ cần tránh phương vị phạm Tam Sát trong năm để trường khí mộ phần được ấm áp, con cháu đời sau hưng vượng.</li>
-      </ul>
-
-      <h3>4. Lời khuyên giữ lòng thành kính</h3>
-      <p>Điều cốt lõi nhất trong tang lễ là lòng thành kính, sự tiếc thương chân thành và những việc thiện nguyện hồi hướng công đức cho người đã khuất. Lòng hiếu thảo và sự đoàn kết giữa con cháu chính là phong thủy tốt nhất cho dòng họ muôn đời.</p>
-    `
+      <h3>1. Ý nghĩa của phong tục cải táng</h3>
+      <p>Cải táng, còn được gọi là bốc mộ hoặc sang cát, là một phong tục mai táng truyền thống đã tồn tại lâu đời trong văn hóa của người Việt. Đây không chỉ là việc quy tập hài cốt người thân về nơi an nghỉ vĩnh hằng mà còn là dịp để con cháu bày tỏ lòng hiếu kính, tri ấn cội nguồn tổ tiên.</p>
+      <h3>2. Thời điểm và trạch nhật cải táng</h3>
+      <p>Thời điểm cải táng thường được tiến hành vào những tháng cuối năm (từ tháng 9 đến tháng Chạp Âm lịch), khi thời tiết hanh khô, mát mẻ. Việc chọn ngày giờ bốc mộ cần hết sức cẩn trọng, tránh những ngày giờ phạm Trùng Tang, Tam Tang, Thụ Tử hoặc xung khắc với tuổi của người mất và trưởng nam.</p>
+    `,
+    "updatedAt": 1795200000000
   }
 ];

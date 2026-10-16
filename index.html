@@ -3091,7 +3091,7 @@
           } catch(e) {}
         });
 
-        // TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU BÀI VIẾT TỪ MÁY CHỦ HOSTING (CẬP NHẬT TỨC THÌ CHO ĐIỆN THOẠI & CỐC CỐC)
+        // TỰ ĐỘNG ĐỒNG BỘ THÔNG MINH DỮ LIỆU BÀI VIẾT (BẢO TOÀN 100% BÀI MỚI SỬA CỦA NGƯỜI DÙNG)
         (function autoSyncFromCloud() {
           try {
             fetch('data-baiviet.json?v=' + Date.now())
@@ -3101,18 +3101,63 @@
                   var hasChange = false;
                   for (var k in data) {
                     if (data.hasOwnProperty(k)) {
-                      var remoteVal = typeof data[k] === 'string' ? data[k] : JSON.stringify(data[k]);
+                      var remoteRaw = data[k];
+                      var remoteArr = [];
+                      try {
+                        remoteArr = typeof remoteRaw === 'string' ? JSON.parse(remoteRaw) : remoteRaw;
+                        if (!Array.isArray(remoteArr)) remoteArr = [];
+                      } catch(e) { remoteArr = []; }
+
                       var localVal = localStorage.getItem(k);
-                      if (localVal !== remoteVal) {
-                        localStorage.setItem(k, remoteVal);
+                      var localArr = [];
+                      try {
+                        if (localVal) localArr = JSON.parse(localVal);
+                        if (!Array.isArray(localArr)) localArr = [];
+                      } catch(e) { localArr = []; }
+
+                      if (localArr.length === 0 && remoteArr.length > 0) {
+                        localStorage.setItem(k, JSON.stringify(remoteArr));
                         hasChange = true;
+                      } else if (remoteArr.length > 0) {
+                        // SMART MERGE: Duyệt từng bài viết, bài nào có updatedAt lớn hơn thì giữ bài đó
+                        var localMap = {};
+                        localArr.forEach(function(lp) { if (lp && lp.id) localMap[lp.id] = lp; });
+
+                        var mergedArr = localArr.slice();
+                        var keyChanged = false;
+
+                        remoteArr.forEach(function(rp) {
+                          if (!rp || !rp.id) return;
+                          var lp = localMap[rp.id];
+                          if (!lp) {
+                            // Bài mới trên máy chủ mà máy này chưa có -> Thêm vào
+                            mergedArr.push(rp);
+                            keyChanged = true;
+                          } else {
+                            // Cả 2 đều có: CHỈ CẬP NHẬT nếu máy chủ thực sự MỚI HƠN máy này
+                            var rUp = Number(rp.updatedAt) || 0;
+                            var lUp = Number(lp.updatedAt) || 0;
+                            if (rUp > lUp) {
+                              var idx = mergedArr.findIndex(function(x) { return x && x.id === rp.id; });
+                              if (idx !== -1) {
+                                mergedArr[idx] = rp;
+                                keyChanged = true;
+                              }
+                            }
+                          }
+                        });
+
+                        if (keyChanged) {
+                          localStorage.setItem(k, JSON.stringify(mergedArr));
+                          hasChange = true;
+                        }
                       }
                     }
                   }
                   if (hasChange) {
-                    console.log("☁️ Đã cập nhật bài viết mới nhất từ máy chủ!");
-                    if (typeof capNhatKhoTangTinTuc === 'function') {
-                      setTimeout(capNhatKhoTangTinTuc, 50);
+                    console.log("☁️ Đã đồng bộ thông minh bài viết mới nhất từ máy chủ!");
+                    if (typeof window.syncChuyenMuc === 'function') {
+                      setTimeout(window.syncChuyenMuc, 50);
                     }
                   }
                 }

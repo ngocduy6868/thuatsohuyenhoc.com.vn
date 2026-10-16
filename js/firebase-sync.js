@@ -103,24 +103,50 @@
       const database = await initFirebase();
       if (!database) return false;
 
-      const batch = database.batch();
+      let successCount = 0;
       let hasData = false;
 
-      SYNC_KEYS.forEach(key => {
+      // Thử dùng Batch trước để tối ưu tốc độ
+      try {
+        const batch = database.batch();
+        SYNC_KEYS.forEach(key => {
+          const val = localStorage.getItem(key);
+          if (val) {
+            const docRef = database.collection("articles_sync").doc(key);
+            batch.set(docRef, {
+              data: val,
+              updatedAt: Date.now()
+            });
+            hasData = true;
+          }
+        });
+        if (hasData) {
+          await batch.commit();
+          console.log("☁️ ĐÃ ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN CLOUD THÀNH CÔNG (BATCH)!");
+          return true;
+        }
+      } catch(batchErr) {
+        console.warn("Batch commit gặp trục trặc, tự động chuyển sang đẩy từng chuyên mục:", batchErr);
+      }
+
+      // Fallback: Đẩy từng document độc lập nếu Batch quá tải
+      for (const key of SYNC_KEYS) {
         const val = localStorage.getItem(key);
         if (val) {
-          const docRef = database.collection("articles_sync").doc(key);
-          batch.set(docRef, {
-            data: val,
-            updatedAt: Date.now()
-          });
-          hasData = true;
+          try {
+            await database.collection("articles_sync").doc(key).set({
+              data: val,
+              updatedAt: Date.now()
+            });
+            successCount++;
+          } catch(docErr) {
+            console.warn("Lỗi đẩy key:", key, docErr);
+          }
         }
-      });
+      }
 
-      if (hasData) {
-        await batch.commit();
-        console.log("☁️ ĐÃ ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN CLOUD!");
+      if (successCount > 0) {
+        console.log("☁️ ĐÃ ĐỒNG BỘ THÀNH CÔNG " + successCount + " CHUYÊN MỤC LÊN CLOUD!");
         return true;
       }
       return false;
@@ -128,6 +154,74 @@
       console.error("Lỗi pushAllToCloud:", err);
       return false;
     }
+  }
+
+  // HÀM HỢP NHẤT THÔNG MINH (SMART MERGE): Giữ nguyên 100% bài có updatedAt mới hơn
+  function smartMergeCategoryData(key, cloudRaw) {
+    if (!cloudRaw) return false;
+    const localVal = localStorage.getItem(key);
+    if (!localVal) {
+      localStorage.setItem(key, cloudRaw);
+      return true;
+    }
+
+    if (key === "BAI_VIET_HIDDEN_IDS") {
+      try {
+        const localH = JSON.parse(localVal || "[]");
+        const cloudH = JSON.parse(cloudRaw || "[]");
+        const mergedH = Array.from(new Set([...localH, ...cloudH]));
+        if (mergedH.length !== localH.length) {
+          localStorage.setItem(key, JSON.stringify(mergedH));
+          return true;
+        }
+      } catch(e) {}
+      return false;
+    }
+
+    try {
+      const localArr = JSON.parse(localVal);
+      const cloudArr = JSON.parse(cloudRaw);
+      if (!Array.isArray(cloudArr) || cloudArr.length === 0) return false;
+      if (!Array.isArray(localArr) || localArr.length === 0) {
+        localStorage.setItem(key, cloudRaw);
+        return true;
+      }
+
+      const localMap = {};
+      localArr.forEach(p => { if (p && p.id) localMap[p.id] = p; });
+
+      const mergedArr = localArr.slice();
+      let hasChange = false;
+
+      cloudArr.forEach(cp => {
+        if (!cp || !cp.id) return;
+        const lp = localMap[cp.id];
+        if (!lp) {
+          // Bài mới từ Cloud chưa có trong máy -> Thêm vào
+          mergedArr.push(cp);
+          hasChange = true;
+        } else {
+          // Cả 2 đều có: CHỈ CẬP NHẬT nếu Cloud có updatedAt MỚI HƠN bản trong máy
+          const cUp = Number(cp.updatedAt) || 0;
+          const lUp = Number(lp.updatedAt) || 0;
+          if (cUp > lUp) {
+            const idx = mergedArr.findIndex(x => x && x.id === cp.id);
+            if (idx !== -1) {
+              mergedArr[idx] = cp;
+              hasChange = true;
+            }
+          }
+        }
+      });
+
+      if (hasChange) {
+        localStorage.setItem(key, JSON.stringify(mergedArr));
+        return true;
+      }
+    } catch(e) {
+      console.warn("Lỗi smartMergeCategoryData:", e);
+    }
+    return false;
   }
 
   // Tải dữ liệu mới nhất từ Firebase Cloud về máy
@@ -149,17 +243,14 @@
         const key = doc.id;
         const cloudDoc = doc.data();
         if (cloudDoc && cloudDoc.data) {
-          const localVal = localStorage.getItem(key);
-          // Nếu cục bộ chưa có hoặc dữ liệu khác nhau, nạp bản Cloud
-          if (!localVal || localVal !== cloudDoc.data) {
-            localStorage.setItem(key, cloudDoc.data);
+          if (smartMergeCategoryData(key, cloudDoc.data)) {
             hasChanges = true;
           }
         }
       });
 
       if (hasChanges || forceRefresh) {
-        console.log("☁️ Dữ liệu từ Firebase Cloud đã được cập nhật vào máy!");
+        console.log("☁️ Dữ liệu từ Firebase Cloud đã được cập nhật thông minh vào máy!");
         triggerUIRefresh();
         return true;
       }
@@ -183,9 +274,7 @@
             const key = change.doc.id;
             const cloudDoc = change.doc.data();
             if (cloudDoc && cloudDoc.data) {
-              const localVal = localStorage.getItem(key);
-              if (localVal !== cloudDoc.data) {
-                localStorage.setItem(key, cloudDoc.data);
+              if (smartMergeCategoryData(key, cloudDoc.data)) {
                 changed = true;
               }
             }
