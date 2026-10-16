@@ -3100,55 +3100,40 @@ function initEventHandlers() {
       modalImgSrc = window.resolveArticleImageHelper(post);
     }
 
-    const img = document.getElementById("modal-post-img");
-    if (img) {
-      img.onerror = function() {
-        this.onerror = null;
-        this.style.display = "none";
-        if (this.parentElement) this.parentElement.style.display = "none";
-      };
-      if (modalImgSrc) {
-        img.src = modalImgSrc;
-        img.style.display = "block";
-        img.style.width = "100%";
-        img.style.maxWidth = "100%";
-        img.style.height = "auto";
-        img.style.margin = "0 auto 20px auto";
-        img.style.borderRadius = "8px";
-        img.style.border = "none";
-        img.style.boxShadow = "0 4px 15px rgba(0,0,0,0.12)";
-        img.style.imageRendering = "auto";
-        if (img.parentElement) {
-          img.parentElement.style.display = "block";
-          img.parentElement.style.textAlign = "center";
-          img.parentElement.style.border = "none";
-          img.parentElement.style.background = "transparent";
-          img.parentElement.style.padding = "0";
-          img.parentElement.style.marginBottom = "20px";
-          img.parentElement.style.boxShadow = "none";
-        }
+    const imgWrap = document.getElementById("modal-post-img-wrap");
+    if (imgWrap) {
+      if (modalImgSrc && typeof modalImgSrc === 'string' && modalImgSrc.trim() !== '') {
         const _cm = (dispCat || "").trim().toLowerCase();
         const _pid = (post.id || "").trim().toLowerCase();
+        let cursorStyle = "default";
+        let titleAttr = "";
+        let clickHandler = null;
         if (_cm.includes("tuần") || _pid.includes("tuan")) {
-          img.style.cursor = "pointer";
-          img.title = "Bấm để sang tra cứu tử vi theo tháng / tuần";
-          img.onclick = function() {
-            window.location.href = "XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM/tu-vi-theo-thang.html?from=tuan";
-          };
+          cursorStyle = "pointer";
+          titleAttr = "Bấm để sang tra cứu tử vi theo tháng / tuần";
+          clickHandler = function() { window.location.href = "XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM/tu-vi-theo-thang.html?from=tuan"; };
         } else if (_cm.includes("tháng") || _pid.includes("thang")) {
-          img.style.cursor = "pointer";
-          img.title = "Bấm để sang tra cứu tử vi theo tháng";
-          img.onclick = function() {
-            window.location.href = "XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM/tu-vi-theo-thang.html";
+          cursorStyle = "pointer";
+          titleAttr = "Bấm để sang tra cứu tử vi theo tháng";
+          clickHandler = function() { window.location.href = "XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM/tu-vi-theo-thang.html"; };
+        }
+
+        imgWrap.innerHTML = '<img id="modal-post-img" src="' + modalImgSrc.trim() + '" alt="" style="width: 100%; max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.12); cursor: ' + cursorStyle + ';"' + (titleAttr ? ' title="' + titleAttr + '"' : '') + '>';
+        imgWrap.style.display = "block";
+        imgWrap.style.textAlign = "center";
+        imgWrap.style.margin = "0 auto 20px auto";
+        const newImg = document.getElementById("modal-post-img");
+        if (newImg) {
+          if (clickHandler) newImg.onclick = clickHandler;
+          newImg.onerror = function() {
+            this.onerror = null;
+            imgWrap.innerHTML = "";
+            imgWrap.style.display = "none";
           };
-        } else {
-          img.style.cursor = "default";
-          img.title = "";
-          img.onclick = null;
         }
       } else {
-        img.style.display = "none";
-        if (img.parentElement) img.parentElement.style.display = "none";
+        imgWrap.innerHTML = "";
+        imgWrap.style.display = "none";
       }
     }
 

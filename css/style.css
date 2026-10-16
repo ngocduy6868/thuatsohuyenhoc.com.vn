@@ -3347,7 +3347,6 @@ ul {
   padding: 0 !important;
   height: auto !important;
   max-height: none !important;
-  display: block !important;
 }
 
 #modal-post-img,
@@ -3357,7 +3356,6 @@ ul {
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
-  display: block !important;
   margin: 0 auto 20px auto !important;
   border: none !important;
   box-shadow: 0 4px 15px rgba(0,0,0,0.12) !important;

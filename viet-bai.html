@@ -9,6 +9,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261015_v5">
+  <script src="js/dulieu-baiviet.js?v=20261016"></script>
   <style>
     :root {
       --primary-red: #7A1414;
@@ -5161,6 +5162,15 @@
       ];
       const hiddenSet = new Set(hiddenIds.filter(id => !coreWidgetIds.includes(id)));
 
+      const unwantedPostIds = new Set([
+        "bai-kham-thien-thien-tuong",
+        "sao-that-sat-trong-tu-vi-dau-so",
+        "sao-pha-quan-trong-tu-vi-dau-so",
+        "sao-tham-lang-trong-tu-vi-dau-so",
+        "bai-viet-moi-cua-ban",
+        "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
+      ]);
+
       const combined = [];
       const ids = new Set();
 
@@ -5208,7 +5218,9 @@
       Object.keys(customMap).forEach(k => {
         const p = customMap[k];
         if (p && !hiddenSet.has(p.id) && !unwantedPostIds.has(p.id)) {
-          if (HD_IMAGE_MAP[p.id]) {
+          if (p.hinhAnh === "" || (typeof p.hinhAnh === "string" && p.hinhAnh.trim() === "")) {
+            p.hinhAnh = "";
+          } else if (HD_IMAGE_MAP[p.id]) {
             p.hinhAnh = HD_IMAGE_MAP[p.id];
           } else if ((!p.hinhAnh || p.hinhAnh.startsWith("data:image/") || p.hinhAnh.includes("phongthuy_coxua")) && defaultImgMap[p.id]) {
             p.hinhAnh = defaultImgMap[p.id];
@@ -5655,6 +5667,13 @@
         const successMsg = isUpdatingExisting ? `Đã cập nhật bài viết thành công lúc ${timeStr}!` : `Đã lưu bài viết thành công lúc ${timeStr}!`;
         showToast(successMsg);
 
+        // ĐỒNG BỘ TỰ ĐỘNG LÊN MÁY CHỦ HOSTING (CẬP NHẬT TỨC THÌ CHO ĐIỆN THOẠI & CỐC CỐC)
+        try {
+          syncAllPostsToHostingServer();
+        } catch(errSync) {
+          console.warn("Lỗi đồng bộ máy chủ:", errSync);
+        }
+
         if (statusEl) {
           statusEl.style.display = "none";
         }
@@ -5923,6 +5942,42 @@
         localStorage.setItem(historyKey, JSON.stringify(list));
       } catch(e) {
         console.warn("Lỗi lưu snapshot phiên bản:", e);
+      }
+    }
+
+    // TỰ ĐỘNG ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN MÁY CHỦ HOSTING (thuatsohuyenhoc.com.vn)
+    function syncAllPostsToHostingServer() {
+      try {
+        const storages = [
+          "TUVI_BAI_VIET_CUSTOM",
+          "XEMNGAY_BAI_VIET_CUSTOM",
+          "XEMTUOI_BAI_VIET_CUSTOM",
+          "TAMLINH_BAI_VIET_CUSTOM",
+          "PHONGTHUY_BAI_VIET_CUSTOM",
+          "KIENTHUC_BAI_VIET_CUSTOM",
+          "TUONGSO_BAI_VIET_CUSTOM",
+          "BAI_VIET_CHUYEN_MUC_CUSTOM"
+        ];
+        const payload = {};
+        storages.forEach(k => {
+          const v = localStorage.getItem(k);
+          if (v) payload[k] = v;
+        });
+        fetch('api-baiviet.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        }).then(res => {
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          return res.json();
+        }).then(data => {
+          console.log("Đã đồng bộ tự động lên máy chủ hosting:", data);
+          showToast("☁️ ĐÃ ĐỒNG BỘ LÊN MÁY CHỦ! Mọi thiết bị (Điện thoại, Cốc Cốc) đều đã cập nhật bài mới.");
+        }).catch(err => {
+          console.log("Lưu ý: api-baiviet.php chỉ hoạt động khi chạy trên Hosting (HTTP/HTTPS):", err);
+        });
+      } catch(e) {
+        console.warn("Lỗi syncAllPostsToHostingServer:", e);
       }
     }
 
