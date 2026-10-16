@@ -870,11 +870,17 @@ window.DEFAULT_RECOVERED_ARTICLES_FALLBACK = {
   }
 
   // Phiên bản dữ liệu chuẩn vật lý từ PC
-  var CURRENT_SYNC_VERSION = "20261016_SYNC_V8";
+  var CURRENT_SYNC_VERSION = "20261016_FORCE_V9";
   var lastSyncedVersion = localStorage.getItem("MASTER_ARTICLES_SYNC_VERSION");
   var isNewVersion = (lastSyncedVersion !== CURRENT_SYNC_VERSION);
 
-  keys.forEach(function(key) {
+    keys.forEach(function(key) {
+    try {
+      var backupList = backup[key] || [];
+      if (isNewVersion && Array.isArray(backupList) && backupList.length > 0) {
+        localStorage.setItem(key, JSON.stringify(backupList));
+        return;
+      }
     try {
       var raw = localStorage.getItem(key);
       var backupList = backup[key] || [];
