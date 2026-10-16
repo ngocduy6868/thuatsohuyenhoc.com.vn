@@ -31,8 +31,8 @@
       }
     })();
   </script>
-  <script src="js/dulieu-baiviet.js?v=20261016_v2"></script>
-  <script src="js/firebase-sync.js?v=20261016_v2"></script>
+  <script src="js/dulieu-baiviet.js?v=20261016_modal_fix"></script>
+  <script src="js/firebase-sync.js?v=20261016_modal_fix"></script>
   <!-- AUTO-FIT VIEWPORT: Co giãn vừa khít màn hình khi thu nhỏ cửa sổ (Giữ nguyên toàn bộ cấu trúc & giao diện trang chuẩn) -->
   <script>
     // Kiểm tra ngay khi tải trang: Nếu vừa bấm F5 / Reload thì xóa ngay hash để về Trang Chủ
@@ -706,22 +706,22 @@
 
           <div class="articles-grid">
             <!-- Featured Article (Left) -->
-            <article class="featured-article-card">
-              <div class="featured-art-img-wrap">
-                <img src="assets/phongthuy_coxua.jpg" alt="Phá Quân độc tọa" class="featured-art-img">
-                <span class="article-category-tag">Tử Vi - Cách Cục Luận</span>
+            <article class="featured-article-card" onclick="openArticleModal('tuvi-post-ban-ve-sao-khong-kiep-mvary3y7')" style="cursor: pointer;">
+              <div class="featured-art-img-wrap" onclick="openArticleModal('tuvi-post-ban-ve-sao-khong-kiep-mvary3y7')" style="cursor: pointer;">
+                <img src="Ảnh Bài Viết Khung 16-9/Sao Địa Không - Địa Kiếp.jpeg" alt="Bàn Về Sao Không Kiếp" class="featured-art-img" style="cursor: pointer;">
+                <span class="article-category-tag">Tử Vi Đẩu Số</span>
               </div>
               <div class="featured-art-body">
                 <h4 class="featured-art-title">
-                  <a href="#">Phá Quân độc tọa ở hai cung Dần hoặc Thân</a>
+                  <a href="#" onclick="openArticleModal('tuvi-post-ban-ve-sao-khong-kiep-mvary3y7'); return false;">Bàn Về Sao Không Kiếp</a>
                 </h4>
                 <div class="featured-art-meta">
-                  <span>Phong Thủy Thăng Long</span>
+                  <span>Thầy Duy Tâm Phúc</span>
                   <span>•</span>
-                  <span>06/10/2026</span>
+                  <span>16/10/2026</span>
                 </div>
                 <p class="featured-art-desc">
-                  Phá Quân độc tọa hai cung Dần hoặc Thân; đối cung là "Vũ Khúc, Thiên Tướng"; cung tam phương là Thất Sát độc tọa. Cung Dần hoặc Thân là miếu địa của Phá Quân, chủ về sự khai sáng anh dũng phi thường, kiến lập sự nghiệp lớn...
+                  Trong Tử Vi Đẩu Số, Không Kiếp là cách gọi chung của hai sát tinh Địa Không và Địa Kiếp. Đây là hai ngôi sao mang tính chất biến động mạnh, thường gắn với sự phá cách, thăng trầm, bất ngờ và những bước ngoặt lớn trong cuộc đời con người...
                 </p>
               </div>
             </article>
@@ -2972,11 +2972,11 @@
   <script src="js/tamlinh_lenghi_data.js"></script>
   <script src="js/trachnhat_data.js"></script>
   <script src="js/bai_viet_data.js"></script>
-  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_restore_kk"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_modal_fix"></script>
   <script src="js/kinhdich_tuonghoc_data.js"></script>
   <script src="js/kinhdich_engine.js"></script>
   <script src="js/boisim_engine.js"></script>
-  <script src="js/main.js?v=20261016_restore_kk"></script>
+  <script src="js/main.js?v=20261016_modal_fix"></script>
         <!-- SYNC CHUYEN MUC SCRIPT CLEAN -->
   <script>
     (function() {
@@ -3357,12 +3357,12 @@
 
         var html = '<article class="featured-article-card" onclick="openArticleModal(\'' + (main.id || '') + '\')" style="cursor: pointer;">' +
           (hasMainImg ? (
-            '<div class="featured-art-img-wrap">' +
-              '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img">' +
+            '<div class="featured-art-img-wrap" onclick="openArticleModal(\'' + (main.id || '') + '\')" style="cursor: pointer;">' +
+              '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img" style="cursor: pointer;">' +
               '<span class="article-category-tag">' + (main.chuyenMuc || '') + '</span>' +
             '</div>'
           ) : (
-            '<div style="padding: 16px 20px 0 20px;">' +
+            '<div style="padding: 16px 20px 0 20px; cursor: pointer;" onclick="openArticleModal(\'' + (main.id || '') + '\')">' +
               '<span class="article-category-tag" style="position: static; display: inline-block;">' + (main.chuyenMuc || '') + '</span>' +
             '</div>'
           )) +
@@ -3378,7 +3378,7 @@
           var sImg = resolveArticleImage(s);
           var hasSImg = Boolean(sImg && sImg.trim());
           html += '<article class="side-article-item" onclick="openArticleModal(\'' + (s.id || '') + '\')" style="cursor: pointer;">' +
-            (hasSImg ? '<div class="side-art-thumb"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '"></div>' : '') +
+            (hasSImg ? '<div class="side-art-thumb" onclick="openArticleModal(\'' + (s.id || '') + '\')" style="cursor: pointer;"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '" style="cursor: pointer;"></div>' : '') +
             '<div class="side-art-content"' + (!hasSImg ? ' style="padding-left: 0;"' : '') + '>' +
               '<h5 class="side-art-title"><a href="#" onclick="openArticleModal(\'' + (s.id || '') + '\'); return false;">' + (s.tieuDe || '') + '</a></h5>' +
               '<span class="side-art-date">' + (s.ngayDang || '') + '</span>' +
@@ -3395,14 +3395,14 @@
           bottomPosts.forEach(function(b) {
             var bImg = resolveArticleImage(b);
             var hasBImg = Boolean(bImg && bImg.trim());
-            bHtml += '<article class="bottom-article-card" onclick="openArticleModal(\'' + (b.id || '') + '\')">' +
+            bHtml += '<article class="bottom-article-card" onclick="openArticleModal(\'' + (b.id || '') + '\')" style="cursor: pointer;">' +
               (hasBImg ? (
-                '<div class="bottom-art-img-wrap">' +
-                  '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img">' +
+                '<div class="bottom-art-img-wrap" onclick="openArticleModal(\'' + (b.id || '') + '\')" style="cursor: pointer;">' +
+                  '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img" style="cursor: pointer;">' +
                   (b.chuyenMuc ? '<span class="bottom-art-tag">' + b.chuyenMuc + '</span>' : '') +
                 '</div>'
               ) : (
-                '<div style="padding: 12px 14px 0 14px;">' +
+                '<div style="padding: 12px 14px 0 14px; cursor: pointer;" onclick="openArticleModal(\'' + (b.id || '') + '\')">' +
                   (b.chuyenMuc ? '<span class="bottom-art-tag" style="position: static; display: inline-block;">' + b.chuyenMuc + '</span>' : '') +
                 '</div>'
               )) +

@@ -3022,6 +3022,8 @@ function initEventHandlers() {
             let list = fb[k];
             if (typeof list === 'string') {
               try { list = JSON.parse(list); } catch(e) { list = []; }
+            } else if (list && list.value) {
+              list = list.value;
             }
             if (Array.isArray(list)) {
               post = list.find(p => p && (p.id === postId || (postId && p.id && (p.id.includes(postId) || postId.includes(p.id)))));
@@ -3032,6 +3034,25 @@ function initEventHandlers() {
         }
       }
     }
+
+    if (!post && postId) {
+      // Tìm kiếm tương đối theo ID hoặc tiêu đề
+      const allStorages = [window.DEFAULT_RECOVERED_ARTICLES_FALLBACK, window.DULIEU_CHUYENMUC_MASTER, window.ORIGINAL_RECOVERED_ARTICLES_BACKUP];
+      for (const src of allStorages) {
+        if (!src) continue;
+        for (const k in src) {
+          let list = src[k];
+          if (typeof list === 'string') { try { list = JSON.parse(list); } catch(e) { list = []; } }
+          else if (list && list.value) { list = list.value; }
+          if (Array.isArray(list)) {
+            post = list.find(p => p && (p.id === postId || (p.id && (p.id.indexOf(postId) !== -1 || postId.indexOf(p.id) !== -1))));
+            if (post) break;
+          }
+        }
+        if (post) break;
+      }
+    }
+
     if (!post) return;
 
     // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t hoặc bị lưu bản rút gọn trong cookie/storage
@@ -3049,7 +3070,14 @@ function initEventHandlers() {
       ];
       for (let bk of backupKeys) {
         const bData = backupMaster[bk];
-        const list = (bData && (bData.value || (Array.isArray(bData) ? bData : []))) || [];
+        let list = [];
+        if (typeof bData === 'string') {
+          try { list = JSON.parse(bData); } catch(e) { list = []; }
+        } else if (bData && bData.value) {
+          list = bData.value;
+        } else if (Array.isArray(bData)) {
+          list = bData;
+        }
         cleanBackup = list.find(p => p && (p.id === post.id || (post.id && p.id && (p.id === "xem-ngay-tot-tong-quan" && post.id.indexOf("trach-nhat") !== -1))));
         if (cleanBackup) break;
       }
@@ -3154,7 +3182,12 @@ function initEventHandlers() {
       content.style.lineHeight = "1.65";
       content.style.color = "#2C241E";
       content.style.textAlign = "justify";
-      content.innerHTML = formatArticleContentForModal(dispContent);
+      try {
+        content.innerHTML = formatArticleContentForModal(dispContent);
+      } catch(errFmt) {
+        console.warn("Lỗi định dạng nội dung modal:", errFmt);
+        content.innerHTML = dispContent || "<p>Nội dung đang được cập nhật...</p>";
+      }
 
       // Tự động loại bỏ ảnh bên trong nội dung nếu đã hiển thị ở ảnh bìa trên cùng (tránh trùng lặp 2 ảnh)
       try {
@@ -3240,6 +3273,24 @@ function initEventHandlers() {
     if (actionBtn) actionBtn.style.display = "none";
     document.body.style.overflow = "";
   };
+
+  // Đảm bảo mọi cú click vào bài viết (ảnh, tiêu đề, thẻ) đều mở modal đọc bài mượt mà
+  document.addEventListener("click", function(e) {
+    const card = e.target.closest(".featured-article-card, .side-article-item, .bottom-article-card, .article-card-item, [data-post-id]");
+    if (card && typeof window.openArticleModal === "function") {
+      const onclickAttr = card.getAttribute("onclick") || "";
+      const match = onclickAttr.match(/openArticleModal\(['"]([^'"]+)['"]\)/);
+      const postId = (card.getAttribute("data-post-id") || (match ? match[1] : "")).trim();
+      if (postId) {
+        // Chỉ ngăn chặn khi click vào các link a nội bộ không có href khác
+        const aTag = e.target.closest("a");
+        if (aTag && (aTag.getAttribute("href") === "#" || !aTag.getAttribute("href"))) {
+          e.preventDefault();
+        }
+        window.openArticleModal(postId);
+      }
+    }
+  });
 
   function isArticleInCurrentCategory(p, currentCat, currentSub) {
     if (!p) return false;
