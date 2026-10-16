@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261015_v5">
   <script src="js/dulieu-baiviet.js?v=20261016"></script>
+  <script src="js/firebase-sync.js?v=20261016"></script>
   <style>
     :root {
       --primary-red: #7A1414;
@@ -1083,6 +1084,9 @@
           </button>
           <button type="button" onclick="editPost('tuvi-tron-doi-giai-ma-menh-than')" style="background: #FFE6AA; border: 1.5px solid #DFBA73; padding: 5px 14px; border-radius: 4px; font-size: 13px; font-weight: 800; color: #7A1414; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);" title="Bấm để tải ngay bài Tử Vi Trọn Đời lên khung soạn thảo">
             ✏️ Sửa Bài Tử Vi Trọn Đời
+          </button>
+          <button type="button" onclick="if (window.FirebaseSync) { window.FirebaseSync.pushAll().then(ok => { if (ok) alert('☁️ ĐÃ ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN CLOUD FIREBASE!'); else alert('⚠️ Đang kết nối hoặc kiểm tra lại mạng!'); }); }" style="background: #0D5CB6; border: 1.5px solid #DFBA73; padding: 5px 14px; border-radius: 4px; font-size: 13px; font-weight: 800; color: #FFF; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);" title="Bấm để đồng bộ toàn bộ bài viết lên Cloud Firebase">
+            ☁️ Đồng Bộ Cloud
           </button>
           <button type="button" onclick="resetFormToNew()" style="background: #FAF3E8; border: 1px solid #DFBA73; padding: 5px 12px; border-radius: 4px; font-size: 12.5px; font-weight: 700; color: #7A1414; cursor: pointer;">
             + Viết Bài Mới
@@ -5948,8 +5952,23 @@
       }
     }
 
-    // TỰ ĐỘNG ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN MÁY CHỦ HOSTING (thuatsohuyenhoc.com.vn)
+    // TỰ ĐỘNG ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN MÁY CHỦ HOSTING & FIREBASE CLOUD (thuatsohuyenhoc.com.vn)
     function syncAllPostsToHostingServer() {
+      // 1. Đồng bộ đám mây trực tiếp qua Firebase Cloud Firestore (Tức thì mọi thiết bị)
+      try {
+        if (window.FirebaseSync && typeof window.FirebaseSync.pushAll === "function") {
+          window.FirebaseSync.pushAll().then(ok => {
+            if (ok) {
+              console.log("☁️ Đồng bộ thành công lên Firebase Cloud Firestore!");
+              showToast("☁️ ĐÃ ĐỒNG BỘ LÊN ĐÁM MÂY (FIREBASE)! Mọi máy tính & điện thoại đều đã nhận bài mới.");
+            }
+          });
+        }
+      } catch(eFirebase) {
+        console.warn("Lỗi Firebase pushAll:", eFirebase);
+      }
+
+      // 2. Dự phòng máy chủ Hosting PHP (nếu có hỗ trợ)
       try {
         const storages = [
           "TUVI_BAI_VIET_CUSTOM",
@@ -5975,7 +5994,6 @@
           return res.json();
         }).then(data => {
           console.log("Đã đồng bộ tự động lên máy chủ hosting:", data);
-          showToast("☁️ ĐÃ ĐỒNG BỘ LÊN MÁY CHỦ! Mọi thiết bị (Điện thoại, Cốc Cốc) đều đã cập nhật bài mới.");
         }).catch(err => {
           console.log("Lưu ý: api-baiviet.php chỉ hoạt động khi chạy trên Hosting (HTTP/HTTPS):", err);
         });
@@ -6189,9 +6207,10 @@
         resetFormToNew();
       }
 
-      // Kích hoạt tín hiệu đồng bộ tức thì cho các tab khác & trang chủ
+      // Kích hoạt tín hiệu đồng bộ tức thì cho các tab khác, trang chủ & Firebase Cloud
       try {
         localStorage.setItem("BAI_VIET_SYNC_TRIGGER", String(Date.now()));
+        syncAllPostsToHostingServer();
       } catch (e) {}
 
       showToast("Đã xóa bài viết thành công!");
@@ -6203,6 +6222,7 @@
       ['XEMNGAY_HIDDEN_IDS', 'XEMTUOI_HIDDEN_IDS', 'TUVI_HIDDEN_IDS', 'TAMLINH_HIDDEN_IDS', 'PHONGTHUY_HIDDEN_IDS', 'KIENTHUC_HIDDEN_IDS', 'TUONGSO_HIDDEN_IDS', 'BAI_VIET_HIDDEN_IDS'].forEach(k => {
         try { localStorage.removeItem(k); } catch (e) {}
       });
+      try { syncAllPostsToHostingServer(); } catch(e) {}
       showToast("Đã khôi phục toàn bộ bài viết mặc định!");
       renderExistingPosts();
       updateStorageMonitorUI();
