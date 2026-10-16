@@ -15,7 +15,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css?v=20261015">
   <link rel="stylesheet" href="css/boisim.css">
-  <link rel="stylesheet" href="css/mobile.css?v=20261015_10">
+  <script>
+    (function() {
+      var ua = navigator.userAgent || '';
+      var isDesktop = /Windows NT|Macintosh|X11|Linux x86/i.test(ua);
+      var isRealMobile = !isDesktop && (/Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) || ('ontouchstart' in window && screen.width <= 900));
+      if (isRealMobile) {
+        document.documentElement.classList.add('is-mobile-device');
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = 'css/mobile.css?v=' + Date.now();
+        document.head.appendChild(l);
+      } else {
+        document.documentElement.classList.add('is-desktop-pc');
+      }
+    })();
+  </script>
   <script src="js/dulieu-baiviet.js?v=20261016"></script>
   <!-- AUTO-FIT VIEWPORT: Co giÃ£n vá»«a khÃ­t mÃ n hÃ¬nh khi thu nhá»  cá»­a sá»• (Giá»¯ nguyÃªn toÃ n bá»™ cáº¥u trÃºc & giao diá»‡n trang chuáº©n) -->
   <script>
@@ -58,10 +73,10 @@
         html.style.overflowY = 'auto';
         body.style.overflowY = 'auto';
 
-        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || 
-          (window.matchMedia && window.matchMedia('(pointer: coarse)').matches && ('ontouchstart' in window) && Math.min(screen.width, screen.height) <= 850);
+        var ua = navigator.userAgent || '';
+        var isRealMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) && !/Windows NT|Macintosh|X11/i.test(ua);
 
-        if (isMobile && clientWidth > 0 && clientWidth <= 900) {
+        if (isRealMobile && clientWidth > 0 && clientWidth <= 900) {
           // CHẾ ĐỘ MOBILE ĐIỆN THOẠI THẬT: Kích hoạt giao diện Responsive CSS di động
           html.style.overflowX = 'hidden';
           body.style.overflowX = 'hidden';

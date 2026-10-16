@@ -7474,9 +7474,32 @@ ul {
   opacity: 0.95;
 }
 
-
-
-
-
-
-
+/* ==========================================================================
+   KHÓA 100% BỐ CỤC PC KHI THU NHỎ CỬA SỔ TRÊN MÁY TÍNH
+   Tuyệt đối giữ nguyên thanh bên, câu đối và lưới bố cục chuẩn PC
+   ========================================================================== */
+html.is-desktop-pc body,
+body.is-desktop-pc {
+  min-width: 1240px !important;
+}
+html.is-desktop-pc .calligraphy-pillar {
+  display: flex !important;
+  visibility: visible !important;
+}
+html.is-desktop-pc .couplet-scroll {
+  display: flex !important;
+  visibility: visible !important;
+}
+html.is-desktop-pc .main-layout {
+  display: grid !important;
+  grid-template-columns: minmax(0, 1fr) 280px !important;
+}
+html.is-desktop-pc .sidebar-stack {
+  display: flex !important;
+  visibility: visible !important;
+}
+html.is-desktop-pc .mobile-nav-toggle,
+html.is-desktop-pc .mobile-top-bar,
+html.is-desktop-pc .mobile-quick-nav {
+  display: none !important;
+}
