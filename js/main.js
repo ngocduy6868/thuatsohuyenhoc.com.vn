@@ -2192,52 +2192,40 @@ function initEventHandlers() {
       }
     } catch(e) {}
 
-    let customPosts = [];
-    try {
-      const stored = localStorage.getItem("BAI_VIET_CHUYEN_MUC_CUSTOM");
-      if (stored) customPosts = customPosts.concat(JSON.parse(stored));
-    } catch (e) {}
-    try {
-      const storedXN = localStorage.getItem("XEMNGAY_BAI_VIET_CUSTOM");
-      if (storedXN) customPosts = customPosts.concat(JSON.parse(storedXN));
-    } catch (e) {}
-    try {
-      const storedTV = localStorage.getItem("TUVI_BAI_VIET_CUSTOM");
-      if (storedTV) customPosts = customPosts.concat(JSON.parse(storedTV));
-    } catch (e) {}
-    try {
-      const storedXT = localStorage.getItem("XEMTUOI_BAI_VIET_CUSTOM");
-      if (storedXT) customPosts = customPosts.concat(JSON.parse(storedXT));
-    } catch (e) {}
-    try {
-      const storedTL = localStorage.getItem("TAMLINH_BAI_VIET_CUSTOM");
-      if (storedTL) customPosts = customPosts.concat(JSON.parse(storedTL));
-    } catch (e) {}
-    try {
-      const storedPT = localStorage.getItem("PHONGTHUY_BAI_VIET_CUSTOM");
-      if (storedPT) customPosts = customPosts.concat(JSON.parse(storedPT));
-    } catch (e) {}
-    try {
-      const storedKT = localStorage.getItem("KIENTHUC_BAI_VIET_CUSTOM");
-      if (storedKT) customPosts = customPosts.concat(JSON.parse(storedKT));
-    } catch (e) {}
-    try {
-      const storedTS = localStorage.getItem("TUONGSO_BAI_VIET_CUSTOM");
-      if (storedTS) customPosts = customPosts.concat(JSON.parse(storedTS));
-    } catch (e) {}
-
-    // Cơ chế Fallback dự phòng cho Điện thoại / Thiết bị mới khi localStorage chưa có dữ liệu bài viết
-    if (customPosts.length === 0) {
-      const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
-      if (fallbackMaster) {
-        ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
-          var fbList = fallbackMaster[k];
-          if (Array.isArray(fbList)) {
-            customPosts = customPosts.concat(fbList);
-          }
-        });
-      }
+    // LUÔN NẠP TRỌN VẸN TOÀN BỘ KHO GỐC TRƯỚC (ĐẢM BẢO 100% ĐẦY ĐỦ TẤT CẢ CHUYÊN MỤC VÀ KHÔNG BỊ MẤT BÀI)
+    const masterMap = {};
+    const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+    if (fallbackMaster) {
+      ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+        var fbList = fallbackMaster[k];
+        if (Array.isArray(fbList)) {
+          fbList.forEach(p => {
+            if (p && p.id) masterMap[p.id] = p;
+          });
+        }
+      });
     }
+
+    // SAU ĐÓ GHI ĐÈ BẤT KỲ BÀI VIẾT NÀO ĐÃ ĐƯỢC CHỈNH SỬA / LƯU MỚI TỪ LOCALSTORAGE
+    ["BAI_VIET_CHUYEN_MUC_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM"].forEach(function(k) {
+      try {
+        var stored = localStorage.getItem(k);
+        if (stored) {
+          var list = JSON.parse(stored);
+          if (Array.isArray(list)) {
+            list.forEach(p => {
+              if (p && p.id) {
+                if (!masterMap[p.id] || (Number(p.updatedAt) || 0) >= (Number(masterMap[p.id].updatedAt) || 0)) {
+                  masterMap[p.id] = p;
+                }
+              }
+            });
+          }
+        }
+      } catch(e) {}
+    });
+
+    let customPosts = Object.values(masterMap);
 
     // Đồng bộ tác giả bài viết trong localStorage về Thầy Duy Tâm Phúc
     ["BAI_VIET_CHUYEN_MUC_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM"].forEach(function(k) {

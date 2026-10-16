@@ -5174,19 +5174,22 @@
       const combined = [];
       const ids = new Set();
 
-      // Thêm bài tùy chỉnh (lấy bản mới nhất theo updatedAt)
+      // Thêm bài tùy chỉnh (luôn nạp đầy đủ kho gốc chuẩn trước, sau đó ghi đè bài mới từ localStorage)
       const customMap = {};
-      let customAll = [...customCM, ...customXN, ...customXT, ...customTuVi, ...customTL, ...customPT, ...customKT, ...customTS];
-      if (customAll.length === 0) {
-        const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
-        if (fallbackMaster) {
-          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
-            if (Array.isArray(fallbackMaster[k])) {
-              customAll = customAll.concat(fallbackMaster[k]);
-            }
-          });
-        }
+      const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+      if (fallbackMaster) {
+        ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+          if (Array.isArray(fallbackMaster[k])) {
+            fallbackMaster[k].forEach(p => {
+              if (p && p.id && !unwantedPostIds.has(p.id)) {
+                customMap[p.id] = p;
+              }
+            });
+          }
+        });
       }
+
+      let customAll = [...customCM, ...customXN, ...customXT, ...customTuVi, ...customTL, ...customPT, ...customKT, ...customTS];
       customAll.forEach(p => {
         if (p && p.id && !unwantedPostIds.has(p.id)) {
           if (p.id === "tuvi-ngay-12-con-giap") {
@@ -5680,7 +5683,7 @@
 
         // Đặt bộ lọc danh mục về Tất cả để đảm bảo bài viết vừa lưu hiện ngay lập tức
         currentFilterCategory = "all";
-        const allFilterBtns = document.querySelectorAll(".composer-card .cat-selector-bar .cat-pill-btn[data-filter]");
+        const allFilterBtns = document.querySelectorAll(".cat-selector-bar .cat-pill-btn[data-filter]");
         allFilterBtns.forEach(b => {
           if (b.getAttribute("data-filter") === "all") b.classList.add("active");
           else b.classList.remove("active");

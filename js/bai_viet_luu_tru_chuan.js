@@ -9,7 +9,7 @@ window.DEFAULT_RECOVERED_ARTICLES_FALLBACK = {
                                      "timestamp":  1792143478469,
                                      "timeFormatted":  "16/10/2026 - 16:37:58",
                                      "id":  "tuvi-post-ban-ve-sao-khong-kiep-mvary3y7",
-                                     "tieuDe":  "Bàn Về Sao Không Kiếp",
+                                     "tieuDe":  "Sao Địa Không - Địa Kiếp",
                                      "chuyenMuc":  "Xem tử vi hàng ngày",
                                      "tacGia":  "Thầy Duy Tâm Phúc",
                                      "ngayDang":  "16/10/2026",
