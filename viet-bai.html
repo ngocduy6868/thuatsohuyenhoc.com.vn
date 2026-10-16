@@ -1742,13 +1742,13 @@
               <img id="img-preview" src="" alt="Xem trước ảnh" class="img-preview-box">
               <div style="flex: 1; min-width: 240px;">
                 <div style="display: flex; gap: 8px; margin-bottom: 8px;">
-                  <input type="text" id="inp-image" class="form-control" style="font-size: 12.5px;" value="assets/images/phongthuy_coxua.jpg" oninput="onManualUrlInput()" placeholder="Đường dẫn URL ảnh hoặc mã ảnh Base64...">
+                  <input type="text" id="inp-image" class="form-control" style="font-size: 12.5px;" value="" oninput="onManualUrlInput()" placeholder="Đường dẫn URL ảnh hoặc mã ảnh Base64 (để trống nếu không dùng ảnh)...">
                 </div>
                 <div style="display: flex; gap: 6px; flex-wrap: wrap;">
                   <button type="button" onclick="insertUploadedImageToContent()" class="tb-btn" style="font-size: 11px; background: #7A1414; color: #FFE6AA; border: 1px solid #DFBA73; font-weight: 700;" title="Đưa ngay ảnh này vào nội dung bài viết theo kích thước chuẩn"><i class="fa-solid fa-file-image"></i> ➕ Đưa Vào Bài Viết (Chuẩn 680x380)</button>
                   <button type="button" onclick="sampleImg('assets/images/phongthuy_coxua.jpg')" class="tb-btn" style="font-size: 11px;">Mẫu: Phong Thủy Cổ</button>
                   <button type="button" onclick="sampleImg('assets/images/sao_tuvi_thienphu.jpg')" class="tb-btn" style="font-size: 11px;">Mẫu: Tử Vi Hoàng Gia</button>
-                  <button type="button" onclick="resetDefaultImage()" class="tb-btn" style="font-size: 11px; color: #7A1414;">Đặt lại mặc định</button>
+                  <button type="button" onclick="resetDefaultImage()" class="tb-btn" style="font-size: 11px; color: #7A1414;">Xóa ảnh bìa</button>
                 </div>
               </div>
             </div>
@@ -2174,7 +2174,7 @@
   <script src="js/tamlinh_lenghi_data.js?v=20261015"></script>
   <script src="js/kinhdich_tuonghoc_data.js?v=20261015"></script>
   <script src="js/bai_viet_data.js?v=20261015"></script>
-  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v2"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_45clean"></script>
 
   <script>
     let currentFilterCategory = "all";
@@ -2753,11 +2753,11 @@
     }
 
     function resetDefaultImage(silent = false) {
-      document.getElementById("inp-image").value = "assets/images/phongthuy_coxua.jpg";
+      document.getElementById("inp-image").value = "";
       document.getElementById("inp-file-upload").value = "";
       onManualUrlInput();
       if (!silent) {
-        showToast("Đã đặt lại ảnh mặc định.");
+        showToast("Đã xóa ảnh bìa bài viết.");
       }
     }
 
@@ -3286,11 +3286,15 @@
       const inpUrl = document.getElementById("inp-content-modal-url");
       const preview = document.getElementById("content-modal-img-preview");
       if (inpUrl && !inpUrl.value.trim()) {
-        inpUrl.value = "assets/images/phongthuy_coxua.jpg";
+        inpUrl.value = "";
       }
-      if (preview && inpUrl && inpUrl.value) {
-        preview.src = inpUrl.value;
-        preview.style.display = "block";
+      if (preview) {
+        if (inpUrl && inpUrl.value.trim()) {
+          preview.src = inpUrl.value.trim();
+          preview.style.display = "block";
+        } else {
+          preview.style.display = "none";
+        }
       }
     }
 
@@ -4798,14 +4802,7 @@
     }
 
     function getFallbackImageForCategory(cat) {
-      const norm = (cat || "").toLowerCase();
-      if (norm.includes("tướng") || norm.includes("tuong") || norm.includes("diện") || norm.includes("chỉ tay") || norm.includes("nốt ruồi")) return "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png";
-      if (norm.includes("tử vi") || norm.includes("tu vi")) return "assets/images/banner_tuvi_tron_doi_12_con_giap.png";
-      if (norm.includes("xuất hành")) return "assets/images/banner_xem_ngay_xuat_hanh.png";
-      if (norm.includes("ngày") || norm.includes("ngay")) return "assets/images/banner_xem_ngay_tot.png";
-      if (norm.includes("tuổi") || norm.includes("tuoi")) return "assets/images/banner_xem_tuoi_hop_hon_nhan.png";
-      if (norm.includes("phong thủy") || norm.includes("phong thuy")) return "assets/images/phongthuy_coxua.jpg";
-      return "assets/images/phongthuy_coxua.jpg";
+      return "";
     }
 
     // Bảo toàn dữ liệu và tối ưu hóa bộ nhớ an toàn (không bao giờ tự ý thay đổi ảnh đại diện bài viết)
@@ -5058,7 +5055,7 @@
                 p.hinhAnh = targetHD;
                 changed = true;
               }
-            } else if (!p.hinhAnh || p.hinhAnh.includes("phongthuy_coxua") || p.hinhAnh.startsWith("data:image/")) {
+            } else if (p.hinhAnh && (p.hinhAnh.includes("phongthuy_coxua") || p.hinhAnh.startsWith("data:image/"))) {
               for (const mapId in HD_IMAGE_MAP) {
                 if (p.tieuDe && (p.tieuDe.includes(mapId) || mapId.includes(p.id))) {
                   p.hinhAnh = HD_IMAGE_MAP[mapId];
@@ -5147,47 +5144,13 @@
         if (h8) hiddenIds = hiddenIds.concat(JSON.parse(h8));
       } catch (e) {}
 
-      const defXN = window.XEMNGAY_BAI_VIET_DATA || [];
-      const defXT = window.XEMTUOI_BAI_VIET_DATA || [];
-      const defTuVi = window.TUVI_BAI_VIET_DATA || [];
-      const defTL = window.TAMLINH_LENGHI_DATA || [];
-      const defCM = []; // Khóa vĩnh viễn: Không nạp bài cũ từ js/bai_viet_data.js
-
-      const unwantedPostIds = new Set([
-        "bai-kham-thien-thien-tuong",
-        "bai-kham-thien-thien-luong",
-        "bai-kham-thien-that-sat",
-        "bai-kham-thien-pha-quan",
-        "sao-that-sat-trong-tu-vi-dau-so",
-        "sao-pha-quan-trong-tu-vi-dau-so",
-        "sao-tham-lang-trong-tu-vi-dau-so"
-      ]);
-
+      const defXN = [];
+      const defXT = [];
+      const defTuVi = [];
+      const defTL = [];
+      const defCM = [];
       let defTuongHoc = [];
-      if (window.TUONG_HOC_ARTICLES && Array.isArray(window.TUONG_HOC_ARTICLES)) {
-        defTuongHoc = window.TUONG_HOC_ARTICLES.map(art => {
-          let cat = "Tướng Số (" + art.category + ")";
-          if (art.category === "Diện Tướng") cat = "Diện Tướng";
-          else if (art.category === "Vận Trình") cat = "Tướng Mạo & Tam Đình";
-          else if (art.category === "Cốt Cách") cat = "Tướng Đi & Thanh Âm";
-          else if (art.category === "Dân Gian") cat = "Ca Dao Tục Ngữ Xem Tướng";
-          else if (art.category === "Chỉ Tay") cat = "Xem Tướng Chỉ Tay";
-          else if (art.category === "Khí Sắc") cat = "Xem Tướng Nốt Ruồi";
 
-          return {
-            id: "tuong-so-" + art.id,
-            tieuDe: art.title,
-            chuyenMuc: cat,
-            tacGia: "Tướng Thuật Cổ Truyền",
-            ngayDang: "02/09/2026",
-            hinhAnh: "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png",
-            noiBat: false,
-            uuTienFeed: 10,
-            tomTat: art.summary,
-            noiDung: art.content
-          };
-        });
-      }
 
       // Tập hợp các ID bài viết bị ẩn (đã bị người dùng bấm Xóa)
       // Chỉ loại trừ các widget hệ thống cốt lõi cố định trên trang chủ nếu có
@@ -5319,7 +5282,7 @@
         let cat = document.getElementById("inp-selected-cat").value.trim() || "XEM NGÀY TỐT";
         const author = document.getElementById("inp-author").value.trim() || "Thầy Duy Tâm Phúc";
         const date = document.getElementById("inp-date").value.trim() || getTodayStringVN();
-        let image = document.getElementById("inp-image").value.trim() || "assets/images/phongthuy_coxua.jpg";
+        let image = document.getElementById("inp-image").value.trim();
         let summary = document.getElementById("inp-summary").value.trim();
 
         // Lấy nội dung chi tiết
@@ -5862,7 +5825,7 @@
 
       document.getElementById("inp-author").value = p.tacGia || "Thầy Duy Tâm Phúc";
       document.getElementById("inp-date").value = p.ngayDang || getTodayStringVN();
-      document.getElementById("inp-image").value = p.hinhAnh || "assets/images/phongthuy_coxua.jpg";
+      document.getElementById("inp-image").value = p.hinhAnh || "";
       document.getElementById("inp-summary").value = p.tomTat || "";
       setEditorContent(p.noiDung || "");
 
@@ -6058,7 +6021,7 @@
       selectPostCategory(targetVer.chuyenMuc || "XEM NGÀY TỐT");
       document.getElementById("inp-author").value = targetVer.tacGia || "Thầy Duy Tâm Phúc";
       document.getElementById("inp-date").value = targetVer.ngayDang || getTodayStringVN();
-      document.getElementById("inp-image").value = targetVer.hinhAnh || "assets/images/phongthuy_coxua.jpg";
+      document.getElementById("inp-image").value = targetVer.hinhAnh || "";
       document.getElementById("inp-summary").value = targetVer.tomTat || "";
       setEditorContent(targetVer.noiDung || "");
       onManualUrlInput();
@@ -6573,7 +6536,7 @@
 
       let html = "";
       filtered.forEach(p => {
-        const thumbSrc = p.hinhAnh || "assets/images/phongthuy_coxua.jpg";
+        const hasImg = Boolean(p.hinhAnh && p.hinhAnh.trim());
         const isUpdated = Boolean(p.updatedAt);
         const updatedTimeStr = isUpdated ? new Date(p.updatedAt).toLocaleTimeString('vi-VN', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) + ' (' + new Date(p.updatedAt).toLocaleDateString('vi-VN') + ')' : '';
         const rawContent = p.noiDung ? p.noiDung.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ') : '';
@@ -6581,7 +6544,7 @@
 
         html += `
           <div class="post-item-card" id="post-card-${p.id}" style="${isUpdated ? 'border-left: 4px solid #1890FF; background: #FAFCFF;' : ''}">
-            <img src="${thumbSrc}" alt="${p.tieuDe}" class="post-item-thumb" onerror="this.src='assets/images/phongthuy_coxua.jpg'">
+            ${hasImg ? `<img src="${p.hinhAnh}" alt="${p.tieuDe}" class="post-item-thumb" onerror="this.style.display='none'">` : ''}
             <div style="flex: 1; min-width: 0;">
               <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-bottom: 4px;">
                 <span style="background: #FAF3E8; color: #7A1414; padding: 2px 7px; border-radius: 3px; font-weight: 700; border: 1px solid #DFBA73; font-size: 11px;">${p.chuyenMuc}</span>
@@ -7166,11 +7129,11 @@
 
         <!-- Khung xem trước & URL & Chú thích -->
         <div style="display: flex; align-items: flex-start; gap: 14px; margin-top: 14px; flex-wrap: wrap;">
-          <img id="content-modal-img-preview" src="assets/images/phongthuy_coxua.jpg" alt="Xem trước ảnh" class="img-preview-box" style="display: block; width: 175px; height: 105px; max-width: 175px; max-height: 105px; object-fit: contain; background: #1C1612; border-radius: 6px; border: 1.5px solid #DFBA73; margin-top: 2px;">
+          <img id="content-modal-img-preview" src="" alt="Xem trước ảnh" class="img-preview-box" style="display: none; width: 175px; height: 105px; max-width: 175px; max-height: 105px; object-fit: contain; background: #1C1612; border-radius: 6px; border: 1.5px solid #DFBA73; margin-top: 2px;">
           <div style="flex: 1; min-width: 250px;">
             <div style="margin-bottom: 8px;">
               <label style="font-size: 12px; font-weight: 700; color: #580B0B; display: block; margin-bottom: 3px;">Đường dẫn URL ảnh hoặc mã Base64:</label>
-              <input type="text" id="inp-content-modal-url" class="form-control" style="font-size: 12px; padding: 6px 10px;" value="assets/images/phongthuy_coxua.jpg" placeholder="Đường dẫn URL ảnh hoặc mã Base64..." oninput="onContentModalUrlInput()">
+              <input type="text" id="inp-content-modal-url" class="form-control" style="font-size: 12px; padding: 6px 10px;" value="" placeholder="Đường dẫn URL ảnh hoặc mã Base64 (để trống nếu không chèn ảnh)..." oninput="onContentModalUrlInput()">
             </div>
             <div style="margin-bottom: 8px;">
               <label style="font-size: 12px; font-weight: 700; color: #580B0B; display: block; margin-bottom: 3px;">Mô tả / Chú thích ảnh (Alt Text):</label>

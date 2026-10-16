@@ -2311,44 +2311,8 @@ function initEventHandlers() {
       "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
     ]);
 
-    let defaultPosts = []; // Khóa vĩnh viễn: Không nạp bài cũ từ window.BAI_VIET_CHUYEN_MUC (đồng bộ với viet-bai.html)
-    if (window.XEMNGAY_BAI_VIET_DATA) {
-      defaultPosts = defaultPosts.concat(window.XEMNGAY_BAI_VIET_DATA);
-    }
-    if (window.XEMTUOI_BAI_VIET_DATA) {
-      defaultPosts = defaultPosts.concat(window.XEMTUOI_BAI_VIET_DATA);
-    }
-    if (window.TUVI_BAI_VIET_DATA) {
-      defaultPosts = defaultPosts.concat(window.TUVI_BAI_VIET_DATA);
-    }
-    if (window.TAMLINH_LENGHI_DATA) {
-      defaultPosts = defaultPosts.concat(window.TAMLINH_LENGHI_DATA);
-    }
-    if (window.TUONG_HOC_ARTICLES && Array.isArray(window.TUONG_HOC_ARTICLES)) {
-      const tuongHocAsPosts = window.TUONG_HOC_ARTICLES.map(art => {
-        let cat = "Tướng Số (" + art.category + ")";
-        if (art.category === "Diện Tướng") cat = "Diện Tướng";
-        else if (art.category === "Vận Trình") cat = "Tướng Mạo & Tam Đình";
-        else if (art.category === "Cốt Cách") cat = "Tướng Đi & Thanh Âm";
-        else if (art.category === "Dân Gian") cat = "Ca Dao Tục Ngữ Xem Tướng";
-        else if (art.category === "Chỉ Tay") cat = "Xem Tướng Chỉ Tay";
-        else if (art.category === "Khí Sắc") cat = "Xem Tướng Nốt Ruồi";
+    let defaultPosts = []; // Đã hợp nhất trọn vẹn 45 bài chuẩn vào window.ORIGINAL_RECOVERED_ARTICLES_BACKUP
 
-        return {
-          id: "tuong-so-" + art.id,
-          tieuDe: art.title,
-          chuyenMuc: cat,
-          tacGia: "Thầy Duy Tâm Phúc",
-          ngayDang: "02/09/2026",
-          hinhAnh: "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png",
-          noiBat: false,
-          uuTienFeed: 10,
-          tomTat: art.summary,
-          noiDung: art.content
-        };
-      });
-      defaultPosts = defaultPosts.concat(tuongHocAsPosts);
-    }
 
     const hiddenSet = new Set(hiddenIds.filter(id => !["tuvi-ngay-12-con-giap", "tuvi-thang-nguyet-lenh", "xem-ngay-xuat-hanh-hanh-thong", "xem-ngay-xuat-hanh"].includes(id)));
     const combined = [];
@@ -2418,10 +2382,21 @@ function initEventHandlers() {
     });
 
     function resolveImg(post) {
-      if (!post) return 'assets/images/banner_tuvi_tron_doi_12_con_giap.png';
+      if (!post) return '';
+
+      // 1. Nếu bài viết không có ảnh, tuyệt đối không ép ảnh mặc định
+      if (post.hinhAnh === "" || (typeof post.hinhAnh === 'string' && post.hinhAnh.trim() === '')) {
+        return '';
+      }
+
+      // 2. ƯU TIÊN SỐ 1 TUYỆT ĐỐI: Ảnh do người dùng tự lưu/cập nhật từ trang viết bài
       const img = (post.hinhAnh || '').trim();
       if (img && img.length > 3 && isRealImg(img)) return img;
+
+      // 3. Tra cứu theo ID nếu bài viết chuẩn đã có ảnh hợp lệ trong kho
       if (post.id && realImgById[post.id]) return realImgById[post.id];
+
+      // 4. Tra cứu theo tiêu đề chính xác
       if (post.tieuDe) {
         const normT = post.tieuDe.trim().toLowerCase();
         if (realImgByTitle[normT]) return realImgByTitle[normT];
@@ -2429,85 +2404,8 @@ function initEventHandlers() {
           if (normT.includes(k) || k.includes(normT)) return realImgByTitle[k];
         }
       }
-      const pid = (post.id || '').toLowerCase();
-      const pTitle = (post.tieuDe || '').toLowerCase();
-      const pCat = (post.chuyenMuc || '').toLowerCase();
 
-      if (pid.includes("xuat-hanh") || pTitle.includes("xuất hành") || pCat.includes("xuất hành")) {
-        return "assets/images/banner_xem_ngay_xuat_hanh.png";
-      }
-      if (pid.includes("mua-xe") || pTitle.includes("mua xe") || pCat.includes("mua xe")) {
-        return "assets/images/banner_ngay_tot_mua_xe.png";
-      }
-      if (pid.includes("ket-hon") || pTitle.includes("kết hôn") || pCat.includes("kết hôn")) {
-        return "assets/images/banner_xem_ngay_tot_ket_hon.png";
-      }
-      if (pid.includes("hoang-dao") || pTitle.includes("hoàng đạo")) {
-        return "assets/images/banner_xem_ngay_hoang_dao.png";
-      }
-      if (pid.includes("dong-tho") || pTitle.includes("động thổ")) {
-        return "assets/images/banner_xem_ngay_dong_tho.png";
-      }
-      if (pid.includes("xay-dung") || pTitle.includes("xây dựng")) {
-        return "assets/images/banner_xem_ngay_tot_xay_dung.png";
-      }
-      if (pid.includes("do-tran") || pTitle.includes("đổ trần") || pTitle.includes("lợp mái")) {
-        return "assets/images/banner_xem_ngay_do_tran_lop_mai.png";
-      }
-      if (pid.includes("nhap-trach") || pTitle.includes("nhập trạch")) {
-        return "assets/images/banner_xem_ngay_nhap_trach.png";
-      }
-      if (pid.includes("nhan-chuc") || pTitle.includes("nhận chức")) {
-        return "assets/images/banner_xem_ngay_tot_nhan_chuc.png";
-      }
-      if (pid.includes("xong-dat") || pTitle.includes("xông đất")) {
-        return "assets/images/banner_xong_dat_dau_nam_16_9.png";
-      }
-      if (pid.includes("thien-luong") || pTitle.includes("thiên lương")) {
-        return "Ảnh Bài Viết Khung 16-9/Sao Thiên Lương.png";
-      }
-      if (pid.includes("that-sat") || pTitle.includes("thất sát")) {
-        return "assets/images/art_khamthien_thatsat.jpg";
-      }
-      if (pid.includes("luc-thap-tinh-he") || pTitle.includes("lý tính của sao") || pTitle.includes("sao tử vi")) {
-        return "Ảnh Bài Viết Khung 16-9/Sao Tử Vi.png";
-      }
-      if (pid.includes("can-xuong") || pTitle.includes("cân xương")) {
-        return "assets/images/banner_can_xuong_doan_so_16_9.png";
-      }
-      if (pid.includes("tron-doi") || pTitle.includes("trọn đời") || pTitle.includes("12 con giáp")) {
-        return "assets/images/banner_tuvi_tron_doi_12_con_giap.png";
-      }
-      if (pid.includes("van-han") || pTitle.includes("vận hạn")) {
-        return "assets/images/banner_xem_van_han_tu_vi.png";
-      }
-      if (pid.includes("tuan") || pTitle.includes("tuần")) {
-        return "assets/images/banner_tuvi_theo_tuan.png";
-      }
-      if (pid.includes("thang") || pTitle.includes("tháng")) {
-        return "assets/images/banner_tuvi_theo_thang_16_9.jpeg";
-      }
-      if (pid.includes("ngay-lanh") || pTitle.includes("ngày lành tháng tốt") || pid === "xem-ngay-tot-tong-quan" || pTitle.includes("ngày tốt")) {
-        return "assets/images/banner_xem_ngay_tot.png";
-      }
-      if (pid.includes("khai-truong") || pTitle.includes("khai trương")) {
-        return "assets/images/art_phongthuy_tyhuu.jpg";
-      }
-      if (pid.includes("vo-chong") || pTitle.includes("vợ chồng")) {
-        return "assets/images/banner_tuvi_dau_nam_16_9.png";
-      }
-      if (pid.includes("dau-nam") || pTitle.includes("đầu năm") || pid.includes("2026")) {
-        return "assets/images/banner_tu_vi_2026.png";
-      }
-      if (pid.includes("ngay") || pTitle.includes("hàng ngày") || pTitle.includes("hôm nay")) {
-        return "assets/images/banner_tuvi_hang_ngay_16_9.jpeg";
-      }
-      if (pid.includes("tuong") || pTitle.includes("tướng") || pCat.includes("tướng") || pTitle.includes("chỉ tay") || pTitle.includes("nốt ruồi") || pTitle.includes("ngũ quan") || pTitle.includes("tam đình")) {
-        return "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png";
-      }
-
-      if (img && isRealImg(img)) return img;
-      return 'assets/images/banner_tuvi_tron_doi_12_con_giap.png';
+      return '';
     }
     window.resolveArticleImageHelper = resolveImg;
 
@@ -3206,7 +3104,8 @@ function initEventHandlers() {
     if (img) {
       img.onerror = function() {
         this.onerror = null;
-        this.src = "assets/images/banner_tuvi_tron_doi_12_con_giap.png";
+        this.style.display = "none";
+        if (this.parentElement) this.parentElement.style.display = "none";
       };
       if (modalImgSrc) {
         img.src = modalImgSrc;
@@ -3783,12 +3682,17 @@ function initEventHandlers() {
     const leftContainer = document.getElementById("tab-cm-featured-wrap");
     if (leftContainer) {
       if (mainPost) {
+        const hasMainImg = Boolean(mainPost.hinhAnh && mainPost.hinhAnh.trim());
         leftContainer.innerHTML = `
           <article class="featured-article-card" onclick="openArticleModal('${mainPost.id || ''}')" style="cursor: pointer;">
+            ${hasMainImg ? `
             <div class="featured-art-img-wrap">
-              <img src="${mainPost.hinhAnh || 'assets/phongthuy_coxua.jpg'}" alt="${mainPost.tieuDe || ''}" class="featured-art-img">
+              <img src="${mainPost.hinhAnh}" alt="${mainPost.tieuDe || ''}" class="featured-art-img">
               <span class="article-category-tag">${mainPost.chuyenMuc || ''}</span>
-            </div>
+            </div>` : `
+            <div style="padding: 16px 20px 0 20px;">
+              <span class="article-category-tag" style="position: static; display: inline-block;">${mainPost.chuyenMuc || ''}</span>
+            </div>`}
             <div class="featured-art-body">
               <h4 class="featured-art-title">
                 <a href="#" onclick="openArticleModal('${mainPost.id || ''}'); return false;">${mainPost.tieuDe || ''}</a>
@@ -3827,12 +3731,14 @@ function initEventHandlers() {
         `;
       } else {
         sidePosts.forEach(post => {
+          const hasSideImg = Boolean(post.hinhAnh && post.hinhAnh.trim());
           sideHtml += `
             <article class="side-article-item" onclick="openArticleModal('${post.id || ''}')" style="cursor: pointer;">
+              ${hasSideImg ? `
               <div class="side-art-thumb">
-                <img src="${post.hinhAnh || 'assets/phongthuy_coxua.jpg'}" alt="${post.tieuDe || ''}">
-              </div>
-              <div class="side-art-content">
+                <img src="${post.hinhAnh}" alt="${post.tieuDe || ''}">
+              </div>` : ''}
+              <div class="side-art-content"${!hasSideImg ? ' style="padding-left: 0;"' : ''}>
                 <h5 class="side-art-title">
                   <a href="#" onclick="openArticleModal('${post.id || ''}'); return false;">${post.tieuDe || ''}</a>
                 </h5>
@@ -3926,17 +3832,22 @@ function initEventHandlers() {
       else if (cm) shortCat = cm.length > 14 ? cm.substring(0, 12) + ".." : cm;
       else shortCat = "Tử Vi";
 
-      let imgPath = p.hinhAnh || "assets/images/sao_tuvi_thienphu.jpg";
-      if (imgPath.startsWith("assets/") && !imgPath.startsWith("assets/images/") && !imgPath.includes("extracted") && !imgPath.endsWith(".png")) {
+      const hasCardImg = Boolean(p.hinhAnh && p.hinhAnh.trim());
+      let imgPath = hasCardImg ? p.hinhAnh.trim() : "";
+      if (imgPath && imgPath.startsWith("assets/") && !imgPath.startsWith("assets/images/") && !imgPath.includes("extracted") && !imgPath.endsWith(".png")) {
         imgPath = imgPath.replace("assets/", "assets/images/");
       }
 
       html += `
         <article class="article-card-item" onclick="openArticleModal('${p.id}')">
+          ${hasCardImg ? `
           <div class="article-card-thumb-wrap">
-            <img src="${imgPath}" alt="${p.tieuDe}" class="article-card-thumb-img" onerror="this.onerror=null; this.src='assets/images/sao_tuvi_thienphu.jpg';">
+            <img src="${imgPath}" alt="${p.tieuDe}" class="article-card-thumb-img" onerror="this.onerror=null; this.parentElement.style.display='none';">
             <span class="article-card-cat-badge">${shortCat}</span>
-          </div>
+          </div>` : `
+          <div style="padding: 12px 14px 0 14px;">
+            <span class="article-card-cat-badge" style="position: static; display: inline-block;">${shortCat}</span>
+          </div>`}
           <div class="article-card-content">
             <h4 class="article-card-title">${p.tieuDe}</h4>
             <div class="article-card-meta">

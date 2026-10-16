@@ -2952,11 +2952,11 @@
   <script src="js/tamlinh_lenghi_data.js"></script>
   <script src="js/trachnhat_data.js"></script>
   <script src="js/bai_viet_data.js"></script>
-  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v9"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_45clean"></script>
   <script src="js/kinhdich_tuonghoc_data.js"></script>
   <script src="js/kinhdich_engine.js"></script>
   <script src="js/boisim_engine.js"></script>
-  <script src="js/main.js?v=20261016_v9"></script>
+  <script src="js/main.js?v=20261016_45clean"></script>
         <!-- SYNC CHUYEN MUC SCRIPT CLEAN -->
   <script>
     (function() {
@@ -3113,18 +3113,23 @@
         });
 
         function resolveArticleImage(post) {
-          if (!post) return 'assets/images/banner_tuvi_tron_doi_12_con_giap.png';
+          if (!post) return '';
 
-          // 1. ƯU TIÊN SỐ 1 TUYỆT ĐỐI: Ảnh do người dùng tự lưu/cập nhật từ trang viết bài
+          // 1. Nếu bài viết không có ảnh, tuyệt đối không ép ảnh mặc định
+          if (post.hinhAnh === "" || (typeof post.hinhAnh === 'string' && post.hinhAnh.trim() === '')) {
+            return '';
+          }
+
+          // 2. ƯU TIÊN SỐ 1 TUYỆT ĐỐI: Ảnh do người dùng tự lưu/cập nhật từ trang viết bài
           var img = (post.hinhAnh || '').trim();
           if (img && img.length > 3 && isRealImage(img)) return img;
 
-          // 2. Tra cứu theo ID nếu bài viết đã có ảnh hợp lệ trong kho
+          // 3. Tra cứu theo ID nếu bài viết chuẩn đã có ảnh hợp lệ trong kho
           if (post.id && realImgById[post.id]) {
             return realImgById[post.id];
           }
 
-          // 3. Tra cứu theo tiêu đề chính xác
+          // 4. Tra cứu theo tiêu đề chính xác
           if (post.tieuDe) {
             var normT = post.tieuDe.trim().toLowerCase();
             if (realImgByTitle[normT]) {
@@ -3138,85 +3143,7 @@
             }
           }
 
-          // 4. DỰ PHÒNG CHUYÊN SÂU THEO CHỦ ĐỀ: Chỉ chạy khi bài viết THỰC SỰ KHÔNG CÓ ẢNH
-          var pid = (post.id || '').toLowerCase();
-          var pTitle = (post.tieuDe || '').toLowerCase();
-          var pCat = (post.chuyenMuc || '').toLowerCase();
-
-          if (pid.indexOf("thien-luong") !== -1 || pTitle.indexOf("thiên lương") !== -1) {
-            return "Ảnh Bài Viết Khung 16-9/Sao Thiên Lương.png";
-          }
-          if (pid.indexOf("luc-thap-tinh-he") !== -1 || pid.indexOf("sao-tu-vi") !== -1 || pTitle.indexOf("lý tính của sao tử vi") !== -1 || pTitle.indexOf("sao tử vi") !== -1) {
-            return "Ảnh Bài Viết Khung 16-9/Sao Tử Vi.png";
-          }
-          if (pid.indexOf("tuong-mat") !== -1 || pTitle.indexOf("tướng mặt") !== -1 || pCat.indexOf("tướng mặt") !== -1) {
-            return "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png";
-          }
-          if (pid.indexOf("xuat-hanh") !== -1 || pTitle.indexOf("xuất hành") !== -1 || pCat.indexOf("xuất hành") !== -1) {
-            return "assets/images/banner_xem_ngay_xuat_hanh.png";
-          }
-          if (pid.indexOf("mua-xe") !== -1 || pTitle.indexOf("mua xe") !== -1 || pCat.indexOf("mua xe") !== -1) {
-            return "assets/images/banner_ngay_tot_mua_xe.png";
-          }
-          if (pid.indexOf("ket-hon") !== -1 || pTitle.indexOf("kết hôn") !== -1 || pCat.indexOf("kết hôn") !== -1) {
-            return "assets/images/banner_xem_ngay_tot_ket_hon.png";
-          }
-          if (pid.indexOf("hoang-dao") !== -1 || pTitle.indexOf("hoàng đạo") !== -1) {
-            return "assets/images/banner_xem_ngay_hoang_dao.png";
-          }
-          if (pid.indexOf("dong-tho") !== -1 || pTitle.indexOf("động thổ") !== -1) {
-            return "assets/images/banner_xem_ngay_dong_tho.png";
-          }
-          if (pid.indexOf("xay-dung") !== -1 || pTitle.indexOf("xây dựng") !== -1) {
-            return "assets/images/banner_xem_ngay_tot_xay_dung.png";
-          }
-          if (pid.indexOf("do-tran") !== -1 || pTitle.indexOf("đổ trần") !== -1 || pTitle.indexOf("lợp mái") !== -1) {
-            return "assets/images/banner_xem_ngay_do_tran_lop_mai.png";
-          }
-          if (pid.indexOf("nhap-trach") !== -1 || pTitle.indexOf("nhập trạch") !== -1) {
-            return "assets/images/banner_xem_ngay_nhap_trach.png";
-          }
-          if (pid.indexOf("nhan-chuc") !== -1 || pTitle.indexOf("nhận chức") !== -1) {
-            return "assets/images/banner_xem_ngay_tot_nhan_chuc.png";
-          }
-          if (pid.indexOf("xong-dat") !== -1 || pTitle.indexOf("xông đất") !== -1) {
-            return "assets/images/banner_xong_dat_dau_nam_16_9.png";
-          }
-          if (pid.indexOf("can-xuong") !== -1 || pTitle.indexOf("cân xương") !== -1) {
-            return "assets/images/banner_can_xuong_doan_so_16_9.png";
-          }
-          if (pid.indexOf("tron-doi") !== -1 || pTitle.indexOf("trọn đời") !== -1 || pTitle.indexOf("12 con giáp") !== -1) {
-            return "assets/images/banner_tuvi_tron_doi_12_con_giap.png";
-          }
-          if (pid.indexOf("van-han") !== -1 || pTitle.indexOf("vận hạn") !== -1) {
-            return "assets/images/banner_xem_van_han_tu_vi.png";
-          }
-          if (pid.indexOf("tuan") !== -1 || pTitle.indexOf("tuần") !== -1) {
-            return "assets/images/banner_tuvi_theo_tuan.png";
-          }
-          if (pid.indexOf("thang") !== -1 || pTitle.indexOf("tháng") !== -1) {
-            return "assets/images/banner_tuvi_theo_thang_16_9.jpeg";
-          }
-          if (pid.indexOf("ngay-lanh") !== -1 || pTitle.indexOf("ngày lành tháng tốt") !== -1 || pid === "xem-ngay-tot-tong-quan" || pTitle.indexOf("ngày tốt") !== -1) {
-            return "assets/images/banner_xem_ngay_tot.png";
-          }
-          if (pid.indexOf("khai-truong") !== -1 || pTitle.indexOf("khai trương") !== -1) {
-            return "assets/images/art_phongthuy_tyhuu.jpg";
-          }
-          if (pid.indexOf("vo-chong") !== -1 || pTitle.indexOf("vợ chồng") !== -1) {
-            return "assets/images/banner_tuvi_dau_nam_16_9.png";
-          }
-          if (pid.indexOf("dau-nam") !== -1 || pTitle.indexOf("đầu năm") !== -1 || pid.indexOf("2026") !== -1) {
-            return "assets/images/banner_tu_vi_2026.png";
-          }
-          if (pid.indexOf("ngay") !== -1 || pTitle.indexOf("hàng ngày") !== -1 || pTitle.indexOf("hôm nay") !== -1) {
-            return "assets/images/banner_tuvi_hang_ngay_16_9.jpeg";
-          }
-          if (pid.indexOf("tuong") !== -1 || pTitle.indexOf("tướng") !== -1 || pCat.indexOf("tướng") !== -1 || pTitle.indexOf("chỉ tay") !== -1 || pTitle.indexOf("nốt ruồi") !== -1 || pTitle.indexOf("ngũ quan") !== -1 || pTitle.indexOf("tam đình") !== -1) {
-            return "Ảnh Bài Viết Khung 16-9/Xem Tướng Mặt.png";
-          }
-
-          return 'assets/images/banner_tuvi_tron_doi_12_con_giap.png';
+          return '';
         }
 
         var tuongHocPosts = [];
@@ -3343,6 +3270,7 @@
 
         var main = all[0];
         main.hinhAnh = resolveArticleImage(main);
+        var hasMainImg = Boolean(main.hinhAnh && main.hinhAnh.trim());
         var sides = all.slice(1, 6);
         var bottomPosts = all.slice(6, 14);
         if (bottomPosts.length < 8) {
@@ -3354,10 +3282,16 @@
         }
 
         var html = '<article class="featured-article-card" onclick="openArticleModal(\'' + (main.id || '') + '\')" style="cursor: pointer;">' +
-          '<div class="featured-art-img-wrap">' +
-            '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img">' +
-            '<span class="article-category-tag">' + (main.chuyenMuc || '') + '</span>' +
-          '</div>' +
+          (hasMainImg ? (
+            '<div class="featured-art-img-wrap">' +
+              '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img">' +
+              '<span class="article-category-tag">' + (main.chuyenMuc || '') + '</span>' +
+            '</div>'
+          ) : (
+            '<div style="padding: 16px 20px 0 20px;">' +
+              '<span class="article-category-tag" style="position: static; display: inline-block;">' + (main.chuyenMuc || '') + '</span>' +
+            '</div>'
+          )) +
           '<div class="featured-art-body">' +
             '<h4 class="featured-art-title"><a href="#" onclick="openArticleModal(\'' + (main.id || '') + '\'); return false;">' + (main.tieuDe || '') + '</a></h4>' +
             '<div class="featured-art-meta"><span>' + (main.tacGia || '') + '</span> &bull; <span>' + (main.ngayDang || '') + '</span></div>' +
@@ -3368,9 +3302,10 @@
 
         sides.forEach(function(s) {
           var sImg = resolveArticleImage(s);
+          var hasSImg = Boolean(sImg && sImg.trim());
           html += '<article class="side-article-item" onclick="openArticleModal(\'' + (s.id || '') + '\')" style="cursor: pointer;">' +
-            '<div class="side-art-thumb"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '"></div>' +
-            '<div class="side-art-content">' +
+            (hasSImg ? '<div class="side-art-thumb"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '"></div>' : '') +
+            '<div class="side-art-content"' + (!hasSImg ? ' style="padding-left: 0;"' : '') + '>' +
               '<h5 class="side-art-title"><a href="#" onclick="openArticleModal(\'' + (s.id || '') + '\'); return false;">' + (s.tieuDe || '') + '</a></h5>' +
               '<span class="side-art-date">' + (s.ngayDang || '') + '</span>' +
             '</div>' +
@@ -3385,11 +3320,18 @@
           var bHtml = '';
           bottomPosts.forEach(function(b) {
             var bImg = resolveArticleImage(b);
+            var hasBImg = Boolean(bImg && bImg.trim());
             bHtml += '<article class="bottom-article-card" onclick="openArticleModal(\'' + (b.id || '') + '\')">' +
-              '<div class="bottom-art-img-wrap">' +
-                '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img">' +
-                (b.chuyenMuc ? '<span class="bottom-art-tag">' + b.chuyenMuc + '</span>' : '') +
-              '</div>' +
+              (hasBImg ? (
+                '<div class="bottom-art-img-wrap">' +
+                  '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img">' +
+                  (b.chuyenMuc ? '<span class="bottom-art-tag">' + b.chuyenMuc + '</span>' : '') +
+                '</div>'
+              ) : (
+                '<div style="padding: 12px 14px 0 14px;">' +
+                  (b.chuyenMuc ? '<span class="bottom-art-tag" style="position: static; display: inline-block;">' + b.chuyenMuc + '</span>' : '') +
+                '</div>'
+              )) +
               '<div class="bottom-art-body">' +
                 '<h5 class="bottom-art-title"><a href="#" onclick="openArticleModal(\'' + (b.id || '') + '\'); return false;">' + (b.tieuDe || '') + '</a></h5>' +
                 '<p class="bottom-art-desc">' + (b.tomTat || '') + '</p>' +
@@ -3670,8 +3612,8 @@
           <span>📅 Ngày đăng: <strong id="modal-post-date" style="color: #4A3E31;">14/09/2026</strong></span>
         </div>
 
-        <div id="modal-post-img-wrap" style="margin-bottom: 20px; text-align: center;">
-          <img id="modal-post-img" src="assets/images/banner_tuvi_tron_doi_12_con_giap.png" alt="Ảnh bài viết" onerror="this.onerror=null; this.src='assets/images/banner_tuvi_tron_doi_12_con_giap.png';" style="width: 100%; max-width: 100%; height: auto; display: block; margin: 0 auto 20px auto; border-radius: 8px;">
+        <div id="modal-post-img-wrap" style="margin-bottom: 20px; text-align: center; display: none;">
+          <img id="modal-post-img" src="" alt="Ảnh bài viết" onerror="this.onerror=null; this.style.display='none'; if(this.parentElement)this.parentElement.style.display='none';" style="width: 100%; max-width: 100%; height: auto; display: none; margin: 0 auto 20px auto; border-radius: 8px;">
         </div>
 
         <div id="modal-post-content" style="font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; font-size: 15.5px; line-height: 1.65; color: #2C241E; text-align: justify;">
