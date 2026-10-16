@@ -3347,6 +3347,7 @@ ul {
   padding: 0 !important;
   height: auto !important;
   max-height: none !important;
+  display: block !important;
 }
 
 #modal-post-img,
@@ -3356,6 +3357,7 @@ ul {
   width: 100% !important;
   max-width: 100% !important;
   height: auto !important;
+  display: block !important;
   margin: 0 auto 20px auto !important;
   border: none !important;
   box-shadow: 0 4px 15px rgba(0,0,0,0.12) !important;
@@ -7474,33 +7476,9 @@ ul {
   opacity: 0.95;
 }
 
-/* ==========================================================================
-   KHÓA 100% BỐ CỤC PC KHI THU NHỎ CỬA SỔ TRÊN MÁY TÍNH
-   Tuyệt đối giữ nguyên thanh bên, câu đối và lưới bố cục chuẩn PC
-   ========================================================================== */
-html.is-desktop-pc body,
-body.is-desktop-pc {
-  width: 1240px;
-  max-width: 100%;
-}
-html.is-desktop-pc .calligraphy-pillar {
-  display: flex !important;
-  visibility: visible !important;
-}
-html.is-desktop-pc .couplet-scroll {
-  display: flex !important;
-  visibility: visible !important;
-}
-html.is-desktop-pc .main-layout {
-  display: grid !important;
-  grid-template-columns: minmax(0, 1fr) 280px !important;
-}
-html.is-desktop-pc .sidebar-stack {
-  display: flex !important;
-  visibility: visible !important;
-}
-html.is-desktop-pc .mobile-nav-toggle,
-html.is-desktop-pc .mobile-top-bar,
-html.is-desktop-pc .mobile-quick-nav {
-  display: none !important;
-}
+
+
+
+
+
+

@@ -77,8 +77,8 @@
         var ua = navigator.userAgent || '';
         var isRealMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) && !/Windows NT|Macintosh|X11/i.test(ua);
 
-        if (isRealMobile && clientWidth > 0 && clientWidth <= 900) {
-          // CHẾ ĐỘ MOBILE ĐIỆN THOẠI THẬT: Kích hoạt giao diện Responsive CSS di động
+        if (clientWidth > 0 && clientWidth <= 900) {
+          // CHẾ ĐỘ MOBILE ĐIỆN THOẠI: Kích hoạt giao diện Responsive CSS native, không ép zoom PC
           html.style.overflowX = 'hidden';
           body.style.overflowX = 'hidden';
           body.style.width = '100%';
@@ -89,27 +89,31 @@
           for (var i = 0; i < overlays.length; i++) {
             overlays[i].style.zoom = '1';
           }
-        } else {
-          // CHẾ ĐỘ PC / MÁY TÍNH: Tự động co giãn theo tỷ lệ (Auto-scale zoom) khi thu nhỏ cửa sổ, giữ trọn 100% dữ liệu không mất bên phải
-          var scale = 1;
-          if (clientWidth > 0 && clientWidth < baseWidth) {
-            scale = clientWidth / baseWidth;
-            body.style.zoom = scale;
-            body.style.width = baseWidth + 'px';
-            body.style.minWidth = baseWidth + 'px';
-            html.style.overflowX = 'hidden';
-            body.style.overflowX = 'hidden';
-          } else {
-            body.style.zoom = '1';
-            body.style.width = '100%';
-            body.style.minWidth = baseWidth + 'px';
-            html.style.overflowX = 'auto';
-            body.style.overflowX = 'auto';
-          }
-          document.documentElement.style.setProperty('--modal-zoom', scale);
+        } else if (clientWidth > 900 && clientWidth < baseWidth) {
+          // CHẾ ĐỘ PC / MÁY TÍNH THU NHỎ CỬA SỔ: Giữ nguyên 100% tỷ lệ chuẩn PC
+          var scale = clientWidth / baseWidth;
+          html.style.overflowX = 'hidden';
+          body.style.overflowX = 'hidden';
+          body.style.width = baseWidth + 'px';
+          body.style.minWidth = baseWidth + 'px';
+          body.style.zoom = scale;
+          var invZoom = 1 / scale;
+          document.documentElement.style.setProperty('--modal-zoom', invZoom);
           var overlays = document.querySelectorAll('.tuvi-modal-overlay');
           for (var i = 0; i < overlays.length; i++) {
-            overlays[i].style.zoom = scale;
+            overlays[i].style.zoom = invZoom;
+          }
+        } else {
+          // CHẾ ĐỘ PC ĐẦY ĐỦ (>= 1240px): Giữ nguyên 100% tỷ lệ chuẩn PC
+          html.style.overflowX = 'hidden';
+          body.style.overflowX = 'hidden';
+          body.style.width = '100%';
+          body.style.minWidth = baseWidth + 'px';
+          body.style.zoom = '1';
+          document.documentElement.style.setProperty('--modal-zoom', '1');
+          var overlays = document.querySelectorAll('.tuvi-modal-overlay');
+          for (var i = 0; i < overlays.length; i++) {
+            overlays[i].style.zoom = '1';
           }
         }
         if (typeof window.canChinhChanBaiViet === 'function') {
