@@ -9,8 +9,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261015_v5">
-  <script src="js/dulieu-baiviet.js?v=20261016_v2"></script>
-  <script src="js/firebase-sync.js?v=20261016_v2"></script>
+  <script src="js/dulieu-baiviet.js?v=20261016_v3"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v3"></script>
+  <script src="js/firebase-sync.js?v=20261016_v3"></script>
   <style>
     :root {
       --primary-red: #7A1414;
@@ -5186,8 +5187,9 @@
       const fallbackMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
       if (fallbackMaster) {
         ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
-          if (Array.isArray(fallbackMaster[k])) {
-            fallbackMaster[k].forEach(p => {
+          const list = Array.isArray(fallbackMaster[k]) ? fallbackMaster[k] : (fallbackMaster[k] && Array.isArray(fallbackMaster[k].value) ? fallbackMaster[k].value : null);
+          if (list) {
+            list.forEach(p => {
               if (p && p.id && !unwantedPostIds.has(p.id)) {
                 customMap[p.id] = p;
               }
@@ -5677,7 +5679,23 @@
         const successMsg = isUpdatingExisting ? `Đã cập nhật bài viết thành công lúc ${timeStr}!` : `Đã lưu bài viết thành công lúc ${timeStr}!`;
         showToast(successMsg);
 
-        // ĐỒNG BỘ TỰ ĐỘNG LÊN MÁY CHỦ HOSTING (CẬP NHẬT TỨC THÌ CHO ĐIỆN THOẠI & CỐC CỐC)
+        // ĐỒNG BỘ TỰ ĐỘNG LÊN MÁY CHỦ HOSTING & FIREBASE CLOUD (CẬP NHẬT TỨC THÌ CHO ĐIỆN THOẠI & CỐC CỐC)
+        try {
+          if (window.FirebaseSync && typeof window.FirebaseSync.pushCategory === "function") {
+            const targetKey = isXemNgay ? "XEMNGAY_BAI_VIET_CUSTOM" :
+                              isXemTuoi ? "XEMTUOI_BAI_VIET_CUSTOM" :
+                              isTuVi ? "TUVI_BAI_VIET_CUSTOM" :
+                              isPhongThuy ? "PHONGTHUY_BAI_VIET_CUSTOM" :
+                              isTamLinh ? "TAMLINH_BAI_VIET_CUSTOM" :
+                              isKienThuc ? "KIENTHUC_BAI_VIET_CUSTOM" :
+                              isTuongSo ? "TUONGSO_BAI_VIET_CUSTOM" : "BAI_VIET_CHUYEN_MUC_CUSTOM";
+            window.FirebaseSync.pushCategory(targetKey, localStorage.getItem(targetKey));
+            window.FirebaseSync.pushCategory("BAI_VIET_HIDDEN_IDS", localStorage.getItem("BAI_VIET_HIDDEN_IDS") || "[]");
+          }
+        } catch(eFb) {
+          console.warn("Lỗi push Firebase trực tiếp:", eFb);
+        }
+
         try {
           syncAllPostsToHostingServer();
         } catch(errSync) {
@@ -6240,9 +6258,14 @@
 
     function restoreAllHiddenPosts() {
       ['XEMNGAY_HIDDEN_IDS', 'XEMTUOI_HIDDEN_IDS', 'TUVI_HIDDEN_IDS', 'TAMLINH_HIDDEN_IDS', 'PHONGTHUY_HIDDEN_IDS', 'KIENTHUC_HIDDEN_IDS', 'TUONGSO_HIDDEN_IDS', 'BAI_VIET_HIDDEN_IDS'].forEach(k => {
-        try { localStorage.removeItem(k); } catch (e) {}
+        try { localStorage.setItem(k, "[]"); } catch (e) {}
       });
-      try { syncAllPostsToHostingServer(); } catch(e) {}
+      try {
+        if (window.FirebaseSync && typeof window.FirebaseSync.pushCategory === "function") {
+          window.FirebaseSync.pushCategory("BAI_VIET_HIDDEN_IDS", "[]");
+        }
+        syncAllPostsToHostingServer();
+      } catch(e) {}
       showToast("Đã khôi phục toàn bộ bài viết mặc định!");
       renderExistingPosts();
       updateStorageMonitorUI();
@@ -7134,8 +7157,8 @@
     }
 
     function syncPhysicalMasterArticlesToLocalStorage() {
-      if (!window.ORIGINAL_RECOVERED_ARTICLES_BACKUP) return;
-      const backup = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP;
+      const backup = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+      if (!backup) return;
 
       const allKeys = [
         "TUVI_BAI_VIET_CUSTOM",

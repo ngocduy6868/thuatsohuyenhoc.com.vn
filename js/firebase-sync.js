@@ -110,15 +110,13 @@
       try {
         const batch = database.batch();
         SYNC_KEYS.forEach(key => {
-          const val = localStorage.getItem(key);
-          if (val) {
-            const docRef = database.collection("articles_sync").doc(key);
-            batch.set(docRef, {
-              data: val,
-              updatedAt: Date.now()
-            });
-            hasData = true;
-          }
+          const val = localStorage.getItem(key) || "[]";
+          const docRef = database.collection("articles_sync").doc(key);
+          batch.set(docRef, {
+            data: val,
+            updatedAt: Date.now()
+          });
+          hasData = true;
         });
         if (hasData) {
           await batch.commit();
@@ -131,17 +129,15 @@
 
       // Fallback: Đẩy từng document độc lập nếu Batch quá tải
       for (const key of SYNC_KEYS) {
-        const val = localStorage.getItem(key);
-        if (val) {
-          try {
-            await database.collection("articles_sync").doc(key).set({
-              data: val,
-              updatedAt: Date.now()
-            });
-            successCount++;
-          } catch(docErr) {
-            console.warn("Lỗi đẩy key:", key, docErr);
-          }
+        const val = localStorage.getItem(key) || "[]";
+        try {
+          await database.collection("articles_sync").doc(key).set({
+            data: val,
+            updatedAt: Date.now()
+          });
+          successCount++;
+        } catch(docErr) {
+          console.warn("Lỗi đẩy key:", key, docErr);
         }
       }
 
@@ -167,12 +163,13 @@
 
     if (key === "BAI_VIET_HIDDEN_IDS") {
       try {
-        const localH = JSON.parse(localVal || "[]");
         const cloudH = JSON.parse(cloudRaw || "[]");
-        const mergedH = Array.from(new Set([...localH, ...cloudH]));
-        if (mergedH.length !== localH.length) {
-          localStorage.setItem(key, JSON.stringify(mergedH));
-          return true;
+        if (Array.isArray(cloudH)) {
+          const localH = JSON.parse(localVal || "[]");
+          if (JSON.stringify(cloudH) !== JSON.stringify(localH)) {
+            localStorage.setItem(key, JSON.stringify(cloudH));
+            return true;
+          }
         }
       } catch(e) {}
       return false;
@@ -220,6 +217,15 @@
       let hasChange = false;
       let hasLocalNewer = false;
       const nowMax = Date.now() + 60000;
+
+      // Kiểm tra nếu local có bài mới tạo mà Cloud chưa có
+      const cloudMap = {};
+      cloudArr.forEach(p => { if (p && p.id) cloudMap[p.id] = p; });
+      localArr.forEach(lp => {
+        if (lp && lp.id && !cloudMap[lp.id]) {
+          hasLocalNewer = true;
+        }
+      });
 
       cloudArr.forEach(cp => {
         if (!cp || !cp.id || hiddenSet.has(cp.id)) return;

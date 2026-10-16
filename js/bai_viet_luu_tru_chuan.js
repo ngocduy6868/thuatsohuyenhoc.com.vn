@@ -886,4 +886,14 @@
                                                 ],
                                       "Count":  2
                                   }
-}; })();
+};
+  try {
+    Object.keys(window.DEFAULT_RECOVERED_ARTICLES_FALLBACK).forEach(function(k) {
+      var item = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK[k];
+      if (item && item.value && Array.isArray(item.value)) {
+        window.DEFAULT_RECOVERED_ARTICLES_FALLBACK[k] = item.value;
+      }
+    });
+    window.ORIGINAL_RECOVERED_ARTICLES_BACKUP = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+  } catch(e) {}
+})();
