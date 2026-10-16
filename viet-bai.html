@@ -5724,8 +5724,25 @@
           `;
         }
 
-        // TỰ ĐỘNG CHUYỂN TOÀN BỘ FORM SOẠN THẢO VỀ FORM MỚI TRẮNG SẠCH ĐỂ SẴN SÀNG VIẾT BÀI TIẾP
-        resetFormToNew();
+        // NẾU LÀ CẬP NHẬT BÀI CŨ: Giữ nguyên dữ liệu vừa cập nhật trong form & trên URL để bảo toàn 100% khi F5
+        // NẾU LÀ ĐĂNG BÀI MỚI: Reset form trắng sạch để sẵn sàng viết bài tiếp
+        if (isUpdatingExisting) {
+          try {
+            sessionStorage.setItem("VIET_BAI_CURRENT_EDITING_ID", targetId);
+            const url = new URL(window.location.href);
+            url.searchParams.set("edit", targetId);
+            window.history.replaceState(null, "", url.toString());
+            document.getElementById("editing-post-id").value = targetId;
+            document.getElementById("editing-post-name").innerText = title;
+            document.getElementById("editing-alert").classList.add("active");
+            document.getElementById("btn-submit-text").innerText = "CẬP NHẬT BÀI VIẾT";
+            document.getElementById("form-panel-title").innerText = "CHỈNH SỬA BÀI VIẾT";
+            const btnSaveNew = document.getElementById("btn-save-as-new");
+            if (btnSaveNew) btnSaveNew.style.display = "inline-flex";
+          } catch(e) {}
+        } else {
+          resetFormToNew();
+        }
 
         // Tự động cuộn mượt đến ngay bài viết vừa lưu ở danh sách bên dưới & bật viền highlight nổi bật
         const targetCard = document.getElementById("post-card-" + targetId);
@@ -5896,7 +5913,7 @@
         const p = all.find(item => item && item.id === postId);
         if (p) {
           const baseline = [{
-            timestamp: p.updatedAt || 1794999940000,
+            timestamp: p.updatedAt || 1792020983905,
             timeFormatted: "15/10/2026 - 13:45:00 (Bản chuẩn hoàn thiện đã chốt)",
             id: p.id,
             tieuDe: p.tieuDe,
@@ -5908,7 +5925,7 @@
             noiDung: p.noiDung,
             noiBat: p.noiBat,
             uuTienFeed: p.uuTienFeed,
-            updatedAt: p.updatedAt || 1794999940000
+            updatedAt: p.updatedAt || 1792020983905
           }];
           localStorage.setItem("POST_HISTORY_" + postId, JSON.stringify(baseline));
           return baseline;
@@ -7189,18 +7206,20 @@
       upgradeAllCustomStorageToHDImages();
       syncPhysicalMasterArticlesToLocalStorage();
 
-      // Khi bấm F5 hoặc tải lại trang:
-      // Luôn xóa trạng thái đang sửa dở để giao diện soạn thảo phía trên quay về form mới sạch sẽ (Ảnh 3)
+      // Khi bấm F5 hoặc tải lại trang: BẢO TOÀN NGUYÊN VẸN TRẠNG THÁI ĐANG SOẠN HOẶC ĐANG SỬA
+      let isRestoredOnLoad = false;
       try {
-        sessionStorage.removeItem("VIET_BAI_CURRENT_EDITING_ID");
-        const cleanUrl = new URL(window.location.href);
-        if (cleanUrl.searchParams.has("edit")) {
-          cleanUrl.searchParams.delete("edit");
-          window.history.replaceState(null, "", cleanUrl.toString());
+        const urlParams = new URLSearchParams(window.location.search);
+        const editId = urlParams.get("edit") || sessionStorage.getItem("VIET_BAI_CURRENT_EDITING_ID");
+        if (editId) {
+          editPost(editId);
+          isRestoredOnLoad = true;
         }
       } catch(e) {}
 
-      resetFormToNew();
+      if (!isRestoredOnLoad) {
+        checkDraftOnLoad();
+      }
 
       // Giữ nguyên 100% danh sách bài viết bên dưới với dữ liệu và hình ảnh mới nhất
       renderExistingPosts();

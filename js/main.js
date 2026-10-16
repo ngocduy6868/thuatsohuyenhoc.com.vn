@@ -2428,9 +2428,11 @@ function initEventHandlers() {
         }
 
         // Tự động nâng cấp nếu bản chuẩn vật lý trên PC dài hơn bản cookie/localStorage của máy
+        // TUYỆT ĐỐI KHÔNG GHI ĐÈ nếu bài viết đã được người dùng chỉnh sửa (updatedAt > 1792020983905)
         if (backupMapAll[p.id]) {
           const bRef = backupMapAll[p.id];
-          if (bRef.noiDung && (!p.noiDung || bRef.noiDung.length > (p.noiDung.length + 100) || p.id === "bai-pha-quan-dan-than")) {
+          const isUserEdited = (Number(p.updatedAt) || 0) > 1792020983905;
+          if (!isUserEdited && bRef.noiDung && (!p.noiDung || bRef.noiDung.length > (p.noiDung.length + 100))) {
             p.noiDung = bRef.noiDung;
             p.tomTat = bRef.tomTat || p.tomTat;
             p.tieuDe = bRef.tieuDe || p.tieuDe;
@@ -3084,7 +3086,8 @@ function initEventHandlers() {
       if (cleanBackup && cleanBackup.noiDung) {
         const curLen = (post.noiDung || "").length;
         const bLen = cleanBackup.noiDung.length;
-        if (isCorrupted || (bLen > curLen + 100) || (post.id === "bai-pha-quan-dan-than" && curLen < 4000)) {
+        const isUserEdited = (Number(post.updatedAt) || 0) > 1792020983905;
+        if (isCorrupted || (!isUserEdited && bLen > curLen + 100)) {
           post = Object.assign({}, cleanBackup);
         }
       }

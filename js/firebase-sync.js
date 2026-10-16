@@ -180,11 +180,37 @@
 
     try {
       const localArr = JSON.parse(localVal);
-      const cloudArr = JSON.parse(cloudRaw);
+      let cloudArr = JSON.parse(cloudRaw);
       if (!Array.isArray(cloudArr) || cloudArr.length === 0) return false;
       if (!Array.isArray(localArr) || localArr.length === 0) {
         localStorage.setItem(key, cloudRaw);
         return true;
+      }
+
+      // Danh sách các ID bài viết đã bị người dùng xóa
+      const hiddenSet = new Set();
+      ["BAI_VIET_HIDDEN_IDS", "XEMNGAY_HIDDEN_IDS", "XEMTUOI_HIDDEN_IDS", "TUVI_HIDDEN_IDS", "TAMLINH_HIDDEN_IDS", "PHONGTHUY_HIDDEN_IDS", "KIENTHUC_HIDDEN_IDS", "TUONGSO_HIDDEN_IDS"].forEach(hk => {
+        try {
+          const arr = JSON.parse(localStorage.getItem(hk) || "[]");
+          if (Array.isArray(arr)) arr.forEach(id => hiddenSet.add(id));
+        } catch(e) {}
+      });
+
+      // Đối với kho Chuyên mục tổng hợp: bỏ qua các bài đã thuộc kho chuyên mục cụ thể
+      if (key === "BAI_VIET_CHUYEN_MUC_CUSTOM") {
+        const specificKeys = [
+          "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM",
+          "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM",
+          "TUONGSO_BAI_VIET_CUSTOM"
+        ];
+        const specificIds = new Set();
+        specificKeys.forEach(sk => {
+          try {
+            const arr = JSON.parse(localStorage.getItem(sk) || "[]");
+            if (Array.isArray(arr)) arr.forEach(item => { if (item && item.id) specificIds.add(item.id); });
+          } catch(e) {}
+        });
+        cloudArr = cloudArr.filter(cp => cp && cp.id && !specificIds.has(cp.id));
       }
 
       const localMap = {};
@@ -192,9 +218,11 @@
 
       const mergedArr = localArr.slice();
       let hasChange = false;
+      let hasLocalNewer = false;
+      const nowMax = Date.now() + 60000;
 
       cloudArr.forEach(cp => {
-        if (!cp || !cp.id) return;
+        if (!cp || !cp.id || hiddenSet.has(cp.id)) return;
         const lp = localMap[cp.id];
         if (!lp) {
           // Bài mới từ Cloud chưa có trong máy -> Thêm vào
@@ -202,22 +230,35 @@
           hasChange = true;
         } else {
           // Cả 2 đều có: CHỈ CẬP NHẬT nếu Cloud có updatedAt MỚI HƠN bản trong máy
-          const cUp = Number(cp.updatedAt) || 0;
-          const lUp = Number(lp.updatedAt) || 0;
+          let cUp = Number(cp.updatedAt) || 0;
+          let lUp = Number(lp.updatedAt) || 0;
+          if (cUp > nowMax) cUp = 0;
+          if (lUp > nowMax) lUp = 0;
+
           if (cUp > lUp) {
             const idx = mergedArr.findIndex(x => x && x.id === cp.id);
             if (idx !== -1) {
               mergedArr[idx] = cp;
               hasChange = true;
             }
+          } else if (lUp > cUp) {
+            hasLocalNewer = true;
           }
         }
       });
 
       if (hasChange) {
         localStorage.setItem(key, JSON.stringify(mergedArr));
-        return true;
       }
+
+      // Nếu bản nội bộ trong máy mới hơn Cloud -> Tự động đẩy bản mới lên Cloud
+      if (hasLocalNewer) {
+        setTimeout(() => {
+          pushCategoryToCloud(key, localStorage.getItem(key));
+        }, 1500);
+      }
+
+      return hasChange;
     } catch(e) {
       console.warn("Lỗi smartMergeCategoryData:", e);
     }
