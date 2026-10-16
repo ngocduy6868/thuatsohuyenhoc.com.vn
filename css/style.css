@@ -7480,7 +7480,8 @@ ul {
    ========================================================================== */
 html.is-desktop-pc body,
 body.is-desktop-pc {
-  min-width: 1240px !important;
+  width: 1240px;
+  max-width: 100%;
 }
 html.is-desktop-pc .calligraphy-pillar {
   display: flex !important;

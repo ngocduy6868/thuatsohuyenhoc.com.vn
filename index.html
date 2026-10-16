@@ -90,16 +90,26 @@
             overlays[i].style.zoom = '1';
           }
         } else {
-          // CHẾ ĐỘ PC / MÁY TÍNH (DÙ CỬA SỔ TO HAY THU HẸP ĐỀU GIỮ 100% GIAO DIỆN PC CHUẨN)
-          html.style.overflowX = 'auto';
-          body.style.overflowX = 'auto';
-          body.style.width = '100%';
-          body.style.minWidth = baseWidth + 'px';
-          body.style.zoom = '1';
-          document.documentElement.style.setProperty('--modal-zoom', '1');
+          // CHẾ ĐỘ PC / MÁY TÍNH: Tự động co giãn theo tỷ lệ (Auto-scale zoom) khi thu nhỏ cửa sổ, giữ trọn 100% dữ liệu không mất bên phải
+          var scale = 1;
+          if (clientWidth > 0 && clientWidth < baseWidth) {
+            scale = clientWidth / baseWidth;
+            body.style.zoom = scale;
+            body.style.width = baseWidth + 'px';
+            body.style.minWidth = baseWidth + 'px';
+            html.style.overflowX = 'hidden';
+            body.style.overflowX = 'hidden';
+          } else {
+            body.style.zoom = '1';
+            body.style.width = '100%';
+            body.style.minWidth = baseWidth + 'px';
+            html.style.overflowX = 'auto';
+            body.style.overflowX = 'auto';
+          }
+          document.documentElement.style.setProperty('--modal-zoom', scale);
           var overlays = document.querySelectorAll('.tuvi-modal-overlay');
           for (var i = 0; i < overlays.length; i++) {
-            overlays[i].style.zoom = '1';
+            overlays[i].style.zoom = scale;
           }
         }
         if (typeof window.canChinhChanBaiViet === 'function') {
