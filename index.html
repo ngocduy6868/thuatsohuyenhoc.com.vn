@@ -3059,13 +3059,34 @@
         storages.forEach(function(k) {
           try {
             var val = localStorage.getItem(k);
-            if (!val && window.DULIEU_CHUYENMUC_MASTER && window.DULIEU_CHUYENMUC_MASTER[k]) {
-              val = window.DULIEU_CHUYENMUC_MASTER[k];
-              try { localStorage.setItem(k, typeof val === 'string' ? val : JSON.stringify(val)); } catch(e) {}
-            }
+            var localArr = [];
             if (val) {
-              var arr = (typeof val === 'string') ? JSON.parse(val) : val;
-              if (Array.isArray(arr)) custom = custom.concat(arr);
+              localArr = (typeof val === 'string') ? JSON.parse(val) : val;
+              if (!Array.isArray(localArr)) localArr = [];
+            }
+            if (window.DULIEU_CHUYENMUC_MASTER && window.DULIEU_CHUYENMUC_MASTER[k]) {
+              var masterArr = window.DULIEU_CHUYENMUC_MASTER[k];
+              if (typeof masterArr === 'string') {
+                try { masterArr = JSON.parse(masterArr); } catch(e) { masterArr = []; }
+              }
+              if (Array.isArray(masterArr)) {
+                var localIdMap = {};
+                localArr.forEach(function(p) { if (p && p.id) localIdMap[p.id] = true; });
+                var changed = false;
+                masterArr.forEach(function(mp) {
+                  if (mp && mp.id && !localIdMap[mp.id]) {
+                    localArr.push(mp);
+                    localIdMap[mp.id] = true;
+                    changed = true;
+                  }
+                });
+                if (changed || !val) {
+                  try { localStorage.setItem(k, JSON.stringify(localArr)); } catch(e) {}
+                }
+              }
+            }
+            if (localArr.length > 0) {
+              custom = custom.concat(localArr);
             }
           } catch(e) {}
         });
@@ -3090,6 +3111,9 @@
                   }
                   if (hasChange) {
                     console.log("☁️ Đã cập nhật bài viết mới nhất từ máy chủ!");
+                    if (typeof capNhatKhoTangTinTuc === 'function') {
+                      setTimeout(capNhatKhoTangTinTuc, 50);
+                    }
                   }
                 }
               }).catch(function() {});

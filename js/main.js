@@ -3010,6 +3010,28 @@ function initEventHandlers() {
              (window.TAMLINH_LENGHI_DATA && window.TAMLINH_LENGHI_DATA.find(p => p.id === postId)) ||
              (window.BAI_VIET_CHUYEN_MUC && window.BAI_VIET_CHUYEN_MUC.find(p => p.id === postId));
     }
+    if (!post) {
+      const fbSources = [window.ORIGINAL_RECOVERED_ARTICLES_BACKUP, window.DEFAULT_RECOVERED_ARTICLES_FALLBACK, window.DULIEU_CHUYENMUC_MASTER];
+      for (const fb of fbSources) {
+        if (!fb) continue;
+        if (Array.isArray(fb)) {
+          post = fb.find(p => p && p.id === postId);
+          if (post) break;
+        } else if (typeof fb === 'object') {
+          for (const k in fb) {
+            let list = fb[k];
+            if (typeof list === 'string') {
+              try { list = JSON.parse(list); } catch(e) { list = []; }
+            }
+            if (Array.isArray(list)) {
+              post = list.find(p => p && (p.id === postId || (postId && p.id && (p.id.includes(postId) || postId.includes(p.id)))));
+              if (post) break;
+            }
+          }
+          if (post) break;
+        }
+      }
+    }
     if (!post) return;
 
     // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t hoặc bị lưu bản rút gọn trong cookie/storage
