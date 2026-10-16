@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="css/style.css?v=20261015">
   <link rel="stylesheet" href="css/boisim.css">
   <link rel="stylesheet" href="css/mobile.css?v=20261015_10">
+  <script src="js/dulieu-baiviet.js?v=20261016"></script>
   <!-- AUTO-FIT VIEWPORT: Co giÃ£n vá»«a khÃ­t mÃ n hÃ¬nh khi thu nhá»  cá»­a sá»• (Giá»¯ nguyÃªn toÃ n bá»™ cáº¥u trÃºc & giao diá»‡n trang chuáº©n) -->
   <script>
     // Kiểm tra ngay khi tải trang: Nếu vừa bấm F5 / Reload thì xóa ngay hash để về Trang Chủ
@@ -3039,12 +3040,42 @@
         storages.forEach(function(k) {
           try {
             var val = localStorage.getItem(k);
+            if (!val && window.DULIEU_CHUYENMUC_MASTER && window.DULIEU_CHUYENMUC_MASTER[k]) {
+              val = window.DULIEU_CHUYENMUC_MASTER[k];
+              try { localStorage.setItem(k, typeof val === 'string' ? val : JSON.stringify(val)); } catch(e) {}
+            }
             if (val) {
-              var arr = JSON.parse(val);
+              var arr = (typeof val === 'string') ? JSON.parse(val) : val;
               if (Array.isArray(arr)) custom = custom.concat(arr);
             }
           } catch(e) {}
         });
+
+        // TỰ ĐỘNG ĐỒNG BỘ DỮ LIỆU BÀI VIẾT TỪ MÁY CHỦ HOSTING (CẬP NHẬT TỨC THÌ CHO ĐIỆN THOẠI & CỐC CỐC)
+        (function autoSyncFromCloud() {
+          try {
+            fetch('data-baiviet.json?v=' + Date.now())
+              .then(function(res) { if (res.ok) return res.json(); })
+              .then(function(data) {
+                if (data && typeof data === 'object') {
+                  var hasChange = false;
+                  for (var k in data) {
+                    if (data.hasOwnProperty(k)) {
+                      var remoteVal = typeof data[k] === 'string' ? data[k] : JSON.stringify(data[k]);
+                      var localVal = localStorage.getItem(k);
+                      if (localVal !== remoteVal) {
+                        localStorage.setItem(k, remoteVal);
+                        hasChange = true;
+                      }
+                    }
+                  }
+                  if (hasChange) {
+                    console.log("☁️ Đã cập nhật bài viết mới nhất từ máy chủ!");
+                  }
+                }
+              }).catch(function() {});
+          } catch(e) {}
+        })();
 
         // Gom toàn bộ ảnh thực tế từ các bài viết (ưu tiên ảnh Base64, ảnh banner, ảnh art do người dùng lưu/cập nhật)
         var realImgById = {};
