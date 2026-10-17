@@ -1180,26 +1180,7 @@
       </div>
     `;
 
-    // Đưa ngay đồ bản Lá Số Tứ Trụ hoàn chỉnh vào Modal để hiển thị sắc nét tức thì, không bị trễ hay màn hình trắng
-    const modalView = document.getElementById('tutru-image-view');
-    if (modalView) {
-      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
-      if (modalBody) {
-        modalBody.style.overflowY = 'auto';
-        modalBody.style.display = 'block';
-        modalBody.scrollTop = 0;
-      }
-      modalView.style.overflow = 'visible';
-      modalView.style.height = 'auto';
-      modalView.style.display = 'block';
-      modalView.style.padding = '12px 10px 24px';
-      const cardEl = container ? container.querySelector('.tt-laso-card') : null;
-      if (cardEl) {
-        modalView.innerHTML = '<div class="tt-laso-wrapper-direct" style="width: 100%; max-width: 1060px; margin: 0 auto; box-sizing: border-box; overflow-x: auto; -webkit-overflow-scrolling: touch;">' + cardEl.outerHTML + '</div>';
-      }
-    }
-
-    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào bộ nhớ đệm
+    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào #tutru-modal
     if (typeof window.renderTuTruBoardToImage === 'function') {
       window.renderTuTruBoardToImage();
     }
@@ -1323,8 +1304,35 @@
    * Giữ nguyên 100% cấu trúc, tự động co ảnh vừa vặn mọi kích thước màn hình
    */
   async function renderTuTruBoardToImage() {
-    const cardEl = document.querySelector('#tutru-modal .tt-laso-card') || document.querySelector('#tutru-output-container .tt-laso-card');
-    if (!cardEl || typeof html2canvas !== 'function') return;
+    const view = document.getElementById('tutru-image-view');
+    const staging = document.getElementById('tutru-render-staging');
+    const sheet = staging && (staging.querySelector('.tt-laso-card') || staging.firstElementChild);
+    if (!view || !staging || !sheet) return;
+
+    const fallbackToLiveBoard = (note) => {
+      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
+      if (modalBody) {
+        modalBody.style.overflowY = 'auto';
+        modalBody.style.display = 'block';
+      }
+      staging.removeAttribute('aria-hidden');
+      staging.id = 'tutru-live-board';
+      staging.style.position = 'relative';
+      staging.style.left = 'auto';
+      staging.style.top = 'auto';
+      staging.style.opacity = '1';
+      staging.style.pointerEvents = 'auto';
+      staging.style.width = '100%';
+      staging.style.maxWidth = '1060px';
+      staging.style.margin = '0 auto';
+      view.innerHTML = note ? `<p style="margin-bottom: 12px; font-size: 13px; color: #B45309; text-align: center;">${note}</p>` : '';
+      view.appendChild(staging);
+    };
+
+    if (typeof html2canvas !== 'function') {
+      fallbackToLiveBoard();
+      return;
+    }
 
     try {
       if (document.fonts && document.fonts.ready) {
@@ -1332,17 +1340,79 @@
       }
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-      const canvas = await html2canvas(cardEl, {
+      const targetWidth = 1060;
+      const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1450;
+
+      const canvas = await html2canvas(sheet, {
         scale: 2,
         useCORS: true,
         backgroundColor: '#FFFDF9',
-        logging: false
+        logging: false,
+        scrollX: 0,
+        scrollY: 0,
+        x: 0,
+        y: 0,
+        width: targetWidth,
+        height: targetHeight,
+        windowWidth: 1180,
+        windowHeight: Math.max(targetHeight + 200, 2000),
+        onclone: (clonedDoc) => {
+          if (clonedDoc.body) {
+            clonedDoc.body.style.zoom = '1';
+            clonedDoc.body.style.transform = 'none';
+          }
+          if (clonedDoc.documentElement) {
+            clonedDoc.documentElement.style.zoom = '1';
+            clonedDoc.documentElement.style.transform = 'none';
+          }
+          const s = clonedDoc.getElementById('tutru-render-staging');
+          if (s) {
+            s.style.position = 'static';
+            s.style.left = '0';
+            s.style.top = '0';
+            s.style.opacity = '1';
+            s.style.width = '1060px';
+            s.style.maxWidth = '1060px';
+            s.style.margin = '0';
+          }
+          const card = clonedDoc.querySelector('.tt-laso-card');
+          if (card) {
+            card.style.width = '1060px';
+            card.style.maxWidth = '1060px';
+            card.style.margin = '0';
+            card.style.overflow = 'visible';
+          }
+          const daivan = clonedDoc.querySelector('.tt-daivan-wrapper');
+          if (daivan) {
+            daivan.style.overflow = 'visible';
+            daivan.style.width = '100%';
+            daivan.style.maxWidth = '100%';
+          }
+          const luunien = clonedDoc.querySelector('.tt-luunien-container');
+          if (luunien) {
+            luunien.style.overflow = 'visible';
+            luunien.style.width = '100%';
+            luunien.style.maxWidth = '100%';
+          }
+          const luunienTable = clonedDoc.querySelector('.tt-luunien-table');
+          if (luunienTable) {
+            luunienTable.style.width = '100%';
+            luunienTable.style.maxWidth = '100%';
+            luunienTable.style.tableLayout = 'fixed';
+          }
+        }
       });
 
       cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
+
+      view.innerHTML = `<img src="${cachedTuTruDataUrl}" alt="Bản đồ Lá Số Tứ Trụ" class="tuvi-board-img">`;
+      view.scrollTop = 0;
+      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
+      if (modalBody) modalBody.scrollTop = 0;
     } catch (err) {
-      console.warn('Lỗi khi chuẩn bị ảnh Tứ Trụ:', err);
+      console.error('Lỗi khi xuất ảnh Lá Số Tứ Trụ:', err);
+      fallbackToLiveBoard();
     }
   }
 
@@ -1350,19 +1420,6 @@
    * Tải ảnh Lá Số Tứ Trụ về máy tính (PNG)
    */
   async function downloadTuTruImage() {
-    if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
-      const cardEl = document.querySelector('#tutru-modal .tt-laso-card') || document.querySelector('#tutru-output-container .tt-laso-card');
-      if (cardEl && typeof html2canvas === 'function') {
-        try {
-          if (typeof showToast === 'function') showToast('Đang kết xuất ảnh PNG để tải về...');
-          const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, backgroundColor: '#FFFDF9' });
-          cachedTuTruDataUrl = canvas.toDataURL('image/png');
-          canvas.toBlob((b) => { cachedTuTruBlob = b; }, 'image/png');
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
     if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
       if (typeof showToast === 'function') showToast('Chưa có ảnh lá số để tải về!');
       else alert('Chưa có ảnh lá số để tải về!');
@@ -1411,19 +1468,6 @@
     if (typeof showToast === 'function') showToast('Đang sao chép hình ảnh Lá Số...');
     const hoTen = (cachedTuTruHoTen || document.getElementById('tt-hoten')?.value || 'Thân_Chủ').trim();
     const fileName = `La_So_Tu_Tru_${hoTen.replace(/\s+/g, '_')}.png`;
-
-    if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
-      const cardEl = document.querySelector('#tutru-modal .tt-laso-card') || document.querySelector('#tutru-output-container .tt-laso-card');
-      if (cardEl && typeof html2canvas === 'function') {
-        try {
-          const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, backgroundColor: '#FFFDF9' });
-          cachedTuTruDataUrl = canvas.toDataURL('image/png');
-          canvas.toBlob((b) => { cachedTuTruBlob = b; }, 'image/png');
-        } catch (e) {
-          console.error(e);
-        }
-      }
-    }
 
     let blob = cachedTuTruBlob;
     if (!blob && cachedTuTruDataUrl) {
@@ -1545,22 +1589,11 @@
     if (modal) modal.classList.add('hidden');
   };
 
-  window.openTuTruImageZoomModal = async function () {
+  window.openTuTruImageZoomModal = function () {
     const zoomModal = document.getElementById('modal-image-zoom');
     const zoomImg = document.getElementById('modal-zoom-img');
     const zoomTitle = document.getElementById('modal-zoom-title');
     if (!zoomModal || !zoomImg) return;
-
-    if (!cachedTuTruDataUrl) {
-      const cardEl = document.querySelector('#tutru-modal .tt-laso-card') || document.querySelector('#tutru-output-container .tt-laso-card');
-      if (cardEl && typeof html2canvas === 'function') {
-        try {
-          const canvas = await html2canvas(cardEl, { scale: 2, useCORS: true, backgroundColor: '#FFFDF9' });
-          cachedTuTruDataUrl = canvas.toDataURL('image/png');
-          canvas.toBlob((b) => { cachedTuTruBlob = b; }, 'image/png');
-        } catch (e) {}
-      }
-    }
 
     if (cachedTuTruDataUrl) {
       zoomImg.src = cachedTuTruDataUrl;
