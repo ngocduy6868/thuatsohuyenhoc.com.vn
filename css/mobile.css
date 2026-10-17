@@ -134,6 +134,18 @@
     display: none !important;
   }
 
+  .quick-category-container {
+    width: 100% !important;
+  }
+
+  .header-social-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6px !important;
+    width: 100% !important;
+    margin-top: 0 !important;
+    margin-bottom: 4px !important;
+  }
+
   /* 6 Nút tính năng nhanh: Xếp lưới 3 cột x 2 hàng to rõ */
   .quick-category-grid {
     grid-template-columns: repeat(3, 1fr) !important;
