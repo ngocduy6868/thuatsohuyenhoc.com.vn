@@ -2478,29 +2478,47 @@
 
     // Chọn chuyên mục trên form soạn thảo
     function selectPostCategory(catName) {
-      document.getElementById("inp-selected-cat").value = catName;
-      const normTarget = (catName || "").normalize("NFC").trim().toLowerCase();
+      if (!catName) catName = "";
+      const normTarget = catName.normalize("NFC").trim().toLowerCase();
       const btns = document.querySelectorAll(".cat-selector-bar .cat-pill-btn[data-cat]");
-      let found = false;
+      let matchedBtn = null;
+
+      // 1. So khớp chính xác tuyệt đối
       btns.forEach(b => {
         const bCat = (b.getAttribute("data-cat") || "").normalize("NFC").trim().toLowerCase();
         if (bCat === normTarget) {
-          b.classList.add("active");
-          found = true;
-        } else {
-          b.classList.remove("active");
+          matchedBtn = b;
         }
       });
-      if (!found && normTarget) {
-        for (let i = 0; i < btns.length; i++) {
-          const b = btns[i];
-          const bCat = (b.getAttribute("data-cat") || "").normalize("NFC").trim().toLowerCase();
-          if (bCat === normTarget) {
-            b.classList.add("active");
-            found = true;
-            break;
-          }
+
+      // 2. So khớp mềm alias cho các chuyên mục có gắn năm hoặc biến thể tên
+      if (!matchedBtn && normTarget) {
+        if (normTarget.includes("xông đất") || normTarget.includes("xong dat")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("xông đất"));
+        } else if ((normTarget.includes("tử vi") || normTarget.includes("tu vi")) && (normTarget.includes("đầu năm") || normTarget.includes("202"))) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("tử vi đầu năm"));
+        } else if (normTarget.includes("hàng ngày") || normTarget.includes("hang ngay")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("hàng ngày"));
+        } else if (normTarget.includes("hàng tuần") || normTarget.includes("hang tuan")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("hàng tuần"));
+        } else if (normTarget.includes("hàng tháng") || normTarget.includes("hang thang")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("hàng tháng"));
+        } else if (normTarget.includes("vận hạn") || normTarget.includes("van han")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("vận hạn"));
+        } else if (normTarget.includes("trọn đời") || normTarget.includes("tron doi")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("trọn đời"));
+        } else if (normTarget.includes("cân xương") || normTarget.includes("can xuong")) {
+          matchedBtn = Array.from(btns).find(b => (b.getAttribute("data-cat") || "").toLowerCase().includes("cân xương"));
         }
+      }
+
+      if (matchedBtn) {
+        btns.forEach(b => b.classList.remove("active"));
+        matchedBtn.classList.add("active");
+        document.getElementById("inp-selected-cat").value = matchedBtn.getAttribute("data-cat");
+      } else {
+        btns.forEach(b => b.classList.remove("active"));
+        document.getElementById("inp-selected-cat").value = catName;
       }
     }
 
@@ -5946,7 +5964,7 @@
       
       const normPcm = (p.chuyenMuc || "").normalize("NFC").trim().toLowerCase();
 
-      if (normPcm.includes("tử vi") || normPcm.includes("tu vi") || TUVI_SUB_CATS.some(x => (x || "").normalize("NFC").trim().toLowerCase() === normPcm)) {
+      if (normPcm.includes("tử vi") || normPcm.includes("tu vi") || normPcm.includes("xông đất") || normPcm.includes("xong dat") || normPcm.includes("cân xương") || normPcm.includes("can xuong") || TUVI_SUB_CATS.some(x => (x || "").normalize("NFC").trim().toLowerCase() === normPcm)) {
         switchCategoryTab("tuvi");
       } else if (TUONGSO_SUB_CATS.some(x => (x || "").normalize("NFC").trim().toLowerCase() === normPcm) || normPcm.includes("tướng") || normPcm.includes("tuong")) {
         switchCategoryTab("tuongso");

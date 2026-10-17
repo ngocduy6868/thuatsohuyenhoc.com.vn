@@ -2728,6 +2728,14 @@ function initEventHandlers() {
       }
     });
 
+    // 1c. Tự động loại bỏ dòng tiêu đề thô từ file Word như "PHẦN 1: TỬ VI 2026", "PHẦN 10: XÔNG ĐẤT ĐẦU NĂM"
+    tempDiv.querySelectorAll("p, div, h1, h2, h3, h4, h5, h6").forEach(el => {
+      const t = el.textContent.trim();
+      if (/^PHẦN\s+\d+[:\s]/i.test(t)) {
+        el.remove();
+      }
+    });
+
     // 2. Gộp các thẻ p/div danh sách liên tiếp để khoảng cách dãn dòng liền mạch (KHÔNG gộp tiêu đề phần 18px)
     const allBlocks = Array.from(tempDiv.querySelectorAll("p, div"));
     for (let i = 0; i < allBlocks.length; i++) {
@@ -2809,6 +2817,36 @@ function initEventHandlers() {
     });
 
     tempDiv.querySelectorAll("h1, h2, h3").forEach(h => {
+      const hTxt = h.textContent.trim();
+      if (hTxt.length > 55) {
+        // Tự động phân tách tiêu đề mục ngắn và đoạn văn bản nếu bị dính chùm vào thẻ h3 từ bản Word
+        let titlePart = "";
+        let bodyPart = "";
+        const m = hTxt.match(/^(\d+\.\s*[^\.\n:]{3,45}(?:[:\.]|\s(?=[A-ZÀ-Ỹa-zà-ỹ])))(.*)$/);
+        if (m && m[1] && m[2] && m[2].trim().length > 15) {
+          titlePart = m[1].trim();
+          bodyPart = m[2].trim();
+        } else {
+          const dotIdx = hTxt.indexOf('.');
+          const secondDot = hTxt.indexOf('.', dotIdx + 1);
+          if (secondDot > 0 && secondDot < 50) {
+            titlePart = hTxt.substring(0, secondDot).trim();
+            bodyPart = hTxt.substring(secondDot + 1).trim();
+          }
+        }
+        if (titlePart && bodyPart) {
+          const newH3 = document.createElement("h3");
+          newH3.textContent = titlePart;
+          const newP = document.createElement("p");
+          newP.textContent = bodyPart;
+          if (h.parentNode) {
+            h.parentNode.insertBefore(newH3, h);
+            h.parentNode.insertBefore(newP, h);
+            h.remove();
+            h = newH3;
+          }
+        }
+      }
       h.style.fontSize = "18px";
       h.style.fontWeight = "700";
       h.style.fontFamily = "'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
