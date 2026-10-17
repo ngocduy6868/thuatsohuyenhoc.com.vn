@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if (!is_dir(__DIR__ . '/js')) {
                 mkdir(__DIR__ . '/js', 0755, true);
             }
-            $jsContent = "(function() {\n  var masterData = " . json_encode($data, JSON_UNESCAPED_UNICODE) . ";\n  window.DULIEU_CHUYENMUC_MASTER = masterData;\n  try {\n    for (var k in masterData) {\n      if (masterData.hasOwnProperty(k)) {\n        var existing = localStorage.getItem(k);\n        if (!existing || existing === '[]' || existing === 'null') {\n          localStorage.setItem(k, typeof masterData[k] === 'string' ? masterData[k] : JSON.stringify(masterData[k]));\n        }\n      }\n    }\n  } catch(e) {}\n})();";
+            $jsContent = "(function() {\n  var masterData = " . json_encode($data, JSON_UNESCAPED_UNICODE) . ";\n  window.DULIEU_CHUYENMUC_MASTER = masterData;\n  try {\n    for (var k in masterData) {\n      if (masterData.hasOwnProperty(k)) {\n        if (k === 'BAI_VIET_HIDDEN_IDS') {\n          var curH = [];\n          try { curH = JSON.parse(localStorage.getItem(k) || '[]'); } catch(e){}\n          var srvH = typeof masterData[k] === 'string' ? JSON.parse(masterData[k] || '[]') : (masterData[k] || []);\n          var mergedH = Array.from(new Set(curH.concat(srvH)));\n          localStorage.setItem(k, JSON.stringify(mergedH));\n        } else {\n          var existing = localStorage.getItem(k);\n          if (!existing || existing === '[]' || existing === 'null') {\n            localStorage.setItem(k, typeof masterData[k] === 'string' ? masterData[k] : JSON.stringify(masterData[k]));\n          }\n        }\n      }\n    }\n  } catch(e) {}\n})();";
             file_put_contents($jsFile, $jsContent);
 
             echo json_encode([
