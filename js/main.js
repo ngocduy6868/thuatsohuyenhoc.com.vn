@@ -2215,7 +2215,12 @@ function initEventHandlers() {
           if (Array.isArray(list)) {
             list.forEach(p => {
               if (p && p.id) {
-                if (!masterMap[p.id] || (Number(p.updatedAt) || 0) >= (Number(masterMap[p.id].updatedAt) || 0)) {
+                var nowMax = Date.now() + 60000;
+                var pUp = Number(p.updatedAt) || 0;
+                var mUp = Number(masterMap[p.id] ? masterMap[p.id].updatedAt : 0) || 0;
+                if (pUp > nowMax) pUp = 0;
+                if (mUp > nowMax) mUp = 0;
+                if (!masterMap[p.id] || pUp >= mUp) {
                   masterMap[p.id] = p;
                 }
               }

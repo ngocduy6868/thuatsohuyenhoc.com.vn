@@ -4971,6 +4971,26 @@
           }
         } catch(e) {}
       });
+
+      // Tự động quét và chuẩn hóa toàn bộ mốc thời gian cập nhật không để mốc tương lai chặn bản mới
+      const nowMax = Date.now() + 60000;
+      ["XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+        try {
+          var arr = JSON.parse(localStorage.getItem(k) || "[]");
+          if (Array.isArray(arr) && arr.length > 0) {
+            var changed = false;
+            arr.forEach(function(item) {
+              if (item && Number(item.updatedAt) > nowMax) {
+                item.updatedAt = 1792020983905;
+                changed = true;
+              }
+            });
+            if (changed) {
+              localStorage.setItem(k, JSON.stringify(arr));
+            }
+          }
+        } catch(e) {}
+      });
     }
     try { sanitizeAllStorage(); } catch(e) {}
 
@@ -5265,9 +5285,12 @@
 
       // SẮP XẾP BÀI VIẾT:
       // BÀI NÀO VỪA ĐƯỢC NGƯỜI DÙNG CẬP NHẬT HOẶC LƯU MỚI (CÓ updatedAt GẦN NHẤT) LUÔN NẰM NGAY ĐẦU TIÊN
+      const nowMax = Date.now() + 60000;
       combined.sort((a, b) => {
-        const upA = Number(a.updatedAt) || 0;
-        const upB = Number(b.updatedAt) || 0;
+        let upA = Number(a.updatedAt) || 0;
+        let upB = Number(b.updatedAt) || 0;
+        if (upA > nowMax) upA = 0;
+        if (upB > nowMax) upB = 0;
         if (upA && upB && upA !== upB) return upB - upA;
         if (upA && !upB) return -1;
         if (!upA && upB) return 1;
@@ -5294,10 +5317,15 @@
         const textarea = document.getElementById("inp-content");
         const inpTitle = document.getElementById("inp-title");
 
-        // Đảm bảo tiêu đề được đồng bộ nếu ô tiêu đề còn trống
+        // Đảm bảo đồng bộ 2 chiều nếu đang mở khung xem trước trực tiếp
         if (prevPanel && prevPanel.classList.contains("active")) {
-          if (prevTitle && prevTitle.innerText.trim() && inpTitle && !inpTitle.value.trim()) {
-            inpTitle.value = prevTitle.innerText.trim();
+          if (prevContent && prevContent.innerHTML.trim() && prevContent.innerHTML.trim() !== "<br>" && prevContent.innerHTML.trim() !== "<p><br></p>") {
+            const pVal = prevContent.innerHTML.trim();
+            if (richEditor) richEditor.innerHTML = pVal;
+            if (textarea) textarea.value = pVal;
+          }
+          if (prevTitle && prevTitle.innerText.trim()) {
+            if (inpTitle) inpTitle.value = prevTitle.innerText.trim();
           }
         }
 
@@ -5312,7 +5340,7 @@
         // Lấy nội dung chi tiết
         let content = "";
         if (isWordMode && richEditor) {
-          const rHtml = richEditor.innerHTML.trim();
+          const rHtml = (getCleanEditorHTML() || richEditor.innerHTML || "").trim();
           if (rHtml && rHtml !== "<br>" && rHtml !== "<p><br></p>") {
             content = rHtml;
             if (textarea) textarea.value = content;
@@ -5336,15 +5364,13 @@
           }
         }
 
-        // 2. Tự động trích xuất tóm tắt ngắn từ nội dung nếu người dùng để trống
-        if (!summary) {
-          const plainText = (richEditor ? (richEditor.innerText || richEditor.textContent || "") : "").trim();
-          if (plainText) {
-            const lines = plainText.split("\n").map(l => l.trim()).filter(Boolean);
-            let candidate = lines.length > 1 ? lines.slice(1).join(" ") : lines[0];
-            summary = candidate.substring(0, 180) + (candidate.length > 180 ? "..." : "");
-            document.getElementById("inp-summary").value = summary;
-          }
+        // 2. Tự động trích xuất tóm tắt ngắn từ nội dung mới nhất nếu người dùng để trống
+        const plainText = (richEditor ? (richEditor.innerText || richEditor.textContent || "") : "").trim();
+        if (!summary && plainText) {
+          const lines = plainText.split("\n").map(l => l.trim()).filter(Boolean);
+          let candidate = lines.length > 1 ? lines.slice(1).join(" ") : lines[0];
+          summary = candidate.substring(0, 180) + (candidate.length > 180 ? "..." : "");
+          document.getElementById("inp-summary").value = summary;
         }
 
         // Kiểm tra hợp lệ

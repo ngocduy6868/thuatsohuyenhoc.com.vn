@@ -3299,9 +3299,12 @@
                             mergedArr.push(rp);
                             keyChanged = true;
                           } else {
-                            // Cả 2 đều có: CHỈ CẬP NHẬT nếu máy chủ thực sự MỚI HƠN máy này
+                            // Cả 2 đều có: CHỈ CẬP NHẬT nếu máy chủ thực sự MỚI HƠN máy này (và không phải mốc tương lai)
+                            var nowMax = Date.now() + 60000;
                             var rUp = Number(rp.updatedAt) || 0;
                             var lUp = Number(lp.updatedAt) || 0;
+                            if (rUp > nowMax) rUp = 0;
+                            if (lUp > nowMax) lUp = 0;
                             if (rUp > lUp) {
                               var idx = mergedArr.findIndex(function(x) { return x && x.id === rp.id; });
                               if (idx !== -1) {
@@ -4000,8 +4003,13 @@
         } catch(e) {}
       });
 
+      var nowMaxXN = Date.now() + 60000;
       customPosts.sort(function(a, b) {
-        return (Number(b.updatedAt) || 0) - (Number(a.updatedAt) || 0);
+        var upA = Number(a.updatedAt) || 0;
+        var upB = Number(b.updatedAt) || 0;
+        if (upA > nowMaxXN) upA = 0;
+        if (upB > nowMaxXN) upB = 0;
+        return upB - upA;
       });
 
       var defPosts = (window.XEMNGAY_BAI_VIET_DATA || []);
