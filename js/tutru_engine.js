@@ -1181,21 +1181,21 @@
     `;
 
     // Đưa ngay đồ bản Lá Số Tứ Trụ hoàn chỉnh vào Modal để hiển thị sắc nét tức thì, không bị trễ hay màn hình trắng
-    const modalView = document.getElementById('tutru-image-view');
-    if (modalView) {
+    const modalViewDirect = document.getElementById('tutru-image-view');
+    if (modalViewDirect) {
       const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
       if (modalBody) {
         modalBody.style.overflowY = 'auto';
         modalBody.style.display = 'block';
         modalBody.scrollTop = 0;
       }
-      modalView.style.overflow = 'visible';
-      modalView.style.height = 'auto';
-      modalView.style.display = 'block';
-      modalView.style.padding = '12px 10px 24px';
+      modalViewDirect.style.overflow = 'visible';
+      modalViewDirect.style.height = 'auto';
+      modalViewDirect.style.display = 'block';
+      modalViewDirect.style.padding = '12px 10px 24px';
       const cardEl = container ? container.querySelector('.tt-laso-card') : null;
       if (cardEl) {
-        modalView.innerHTML = '<div class="tt-laso-wrapper-direct" style="width: 100%; max-width: 1060px; margin: 0 auto; box-sizing: border-box; overflow-x: auto; -webkit-overflow-scrolling: touch;">' + cardEl.outerHTML + '</div>';
+        modalViewDirect.innerHTML = '<div class="tt-laso-wrapper-direct" style="width: 100%; max-width: 1060px; margin: 0 auto; box-sizing: border-box; overflow-x: auto; -webkit-overflow-scrolling: touch;">' + cardEl.outerHTML + '</div>';
       }
     }
 

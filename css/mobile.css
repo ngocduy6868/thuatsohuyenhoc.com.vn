@@ -1327,20 +1327,34 @@
     white-space: normal !important;
   }
 
-  .dichquai-export-board {
-    padding: 10px !important;
+  /* BẢNG XUẤT QUẺ DỊCH TRÊN MOBILE: Giữ nguyên vẹn 100% bố cục chuẩn như trên PC */
+  .dq-export-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
     overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+    box-sizing: border-box !important;
+  }
+
+  .dichquai-export-board {
+    width: 1150px !important;
+    min-width: 1050px !important;
+    max-width: 1150px !important;
+    margin: 0 auto !important;
+    box-sizing: border-box !important;
+    padding: 12px 18px 14px !important;
   }
 
   .dq-header {
-    flex-direction: column !important;
-    text-align: center !important;
-    gap: 8px !important;
+    flex-direction: row !important;
+    text-align: left !important;
+    gap: 10px !important;
   }
 
   .dq-cards-row {
-    flex-direction: column !important;
-    gap: 10px !important;
+    flex-direction: row !important;
+    gap: 32px !important;
+    flex-wrap: nowrap !important;
   }
 
   /* -------------------------------------------------------------------------
