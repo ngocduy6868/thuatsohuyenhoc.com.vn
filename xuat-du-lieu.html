@@ -58,6 +58,8 @@
     <div id="status"></div>
   </div>
 
+  <script src="js/force_sync_word_10.js?v=20261017_sync10"></script>
+  <script src="js/dulieu-baiviet.js?v=20261017_sync10"></script>
   <script>
     function exportData() {
       try {
@@ -66,6 +68,20 @@
           const key = localStorage.key(i);
           data[key] = localStorage.getItem(key);
         }
+        
+        // Nếu localStorage chưa có các kho bài viết, tự động lấy từ kho lưu trữ chuẩn vật lý
+        const fallback = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
+        if (fallback) {
+          const keys = ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"];
+          keys.forEach(k => {
+            if (!data[k] && fallback[k]) {
+              const val = Array.isArray(fallback[k]) ? fallback[k] : (fallback[k].value || []);
+              data[k] = JSON.stringify(val);
+              try { localStorage.setItem(k, data[k]); } catch(e) {}
+            }
+          });
+        }
+
         const totalKeys = Object.keys(data).length;
         if (totalKeys === 0) {
           document.getElementById('status').innerText = "⚠️ Chưa tìm thấy dữ liệu trong bộ nhớ!";
@@ -79,7 +95,7 @@
         document.body.appendChild(a);
         a.click();
         document.body.removeChild(a);
-        document.getElementById('status').innerText = "✅ ĐÃ TẢI XONG FILE pc_chuan_master.json! Bạn hãy quay lại Antigravity nhắn 'Đã tải xong' nhé!";
+        document.getElementById('status').innerText = "✅ ĐÃ TẢI XONG FILE pc_chuan_master.json! Đầy đủ 100% dữ liệu bài viết mới nhất.";
         document.getElementById('status').style.color = "#4cd137";
       } catch (err) {
         document.getElementById('status').innerText = "Lỗi: " + err.message;

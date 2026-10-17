@@ -15,9 +15,10 @@
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css?v=20261015_v5">
-  <script src="js/dulieu-baiviet.js?v=20261016_v3"></script>
-  <script src="js/bai_viet_luu_tru_chuan.js?v=20261016_v3"></script>
-  <script src="js/firebase-sync.js?v=20261016_v3"></script>
+  <script src="js/force_sync_word_10.js?v=20261017_sync10"></script>
+  <script src="js/dulieu-baiviet.js?v=20261017_sync10"></script>
+  <script src="js/bai_viet_luu_tru_chuan.js?v=20261017_sync10"></script>
+  <script src="js/firebase-sync.js?v=20261017_sync10"></script>
   <style>
     :root {
       --primary-red: #7A1414;
@@ -2121,6 +2122,9 @@
           <span>📚</span>
           <span>DANH SÁCH BÀI VIẾT (CHỌN BÀI ĐỂ CHỈNH SỬA)</span>
         </h1>
+                                <button type="button" id="btn-force-sync-word" onclick="triggerManualSyncWord10(false)" style="background: linear-gradient(135deg, #1677FF, #0958D9); color: #FFF; font-weight: 700; font-size: 13px; border: 1px solid #69B1FF; padding: 6px 14px; border-radius: 4px; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; box-shadow: 0 2px 8px rgba(0,0,0,0.25); margin-right: 10px;" title="B&#7845;m v&#224;o &#273;&#226;y &#273;&#7875; &#273;&#7891;ng b&#7897; 10 b&#224;i vi&#7871;t t&#7915; file Word l&#234;n &#273;&#7847;u danh s&#225;ch">
+          <i class="fa-solid fa-arrows-rotate"></i> &#128260; C&#7853;p Nh&#7853;t 10 B&#224;i Word L&#234;n &#272;&#7847;u (1 Click)
+        </button>
         <span id="post-total-badge" style="font-size: 12.5px; background: #DFBA73; color: #000; font-weight: 700; padding: 3px 9px; border-radius: 4px;">0 Bài Viết</span>
       </div>
 
@@ -5036,6 +5040,62 @@
           }
         } catch(e) {}
       });
+      // Tự động đồng bộ các bài cập nhật mới nhất từ kho lưu trữ chuẩn vào localStorage
+      try {
+        var fallbackSource = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK || window.ORIGINAL_RECOVERED_ARTICLES_BACKUP;
+        if (fallbackSource) {
+          var targetSyncIds = [
+            "tuvi-12-con-giap-dau-nam",
+            "xong-dat-dau-nam-dai-cat",
+            "tuvi-ngay-12-con-giap",
+            "post-ly-tinh-cua-sao-tu-vi-1639",
+            "khoahoc-huyen-hoc-chuyen-sau",
+            "diendan-dam-dao-ly-so",
+            "tuvi-tuan-chuyen-bien-tai-loc",
+            "tuvi-thang-nguyet-lenh",
+            "tuvi-tron-doi-giai-ma-menh-than",
+            "tuvi-van-han-dai-van-tieu-han"
+          ];
+          var syncMasterMap = {};
+          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+            var rawList = Array.isArray(fallbackSource[k]) ? fallbackSource[k] : (fallbackSource[k] && Array.isArray(fallbackSource[k].value) ? fallbackSource[k].value : null);
+            if (rawList) {
+              rawList.forEach(function(item) {
+                if (item && targetSyncIds.indexOf(item.id) !== -1) {
+                  syncMasterMap[item.id] = item;
+                }
+              });
+            }
+          });
+
+          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+            var raw = localStorage.getItem(k);
+            if (raw) {
+              var arr = JSON.parse(raw);
+              if (Array.isArray(arr) && arr.length > 0) {
+                var changed = false;
+                arr.forEach(function(item) {
+                  if (item && syncMasterMap[item.id]) {
+                    var m = syncMasterMap[item.id];
+                    if (item.tieuDe !== m.tieuDe || item.hinhAnh !== m.hinhAnh || item.updatedAt !== m.updatedAt) {
+                      item.tieuDe = m.tieuDe;
+                      item.noiDung = m.noiDung;
+                      item.tomTat = m.tomTat;
+                      item.hinhAnh = m.hinhAnh;
+                      item.updatedAt = m.updatedAt;
+                      item.tacGia = m.tacGia;
+                      changed = true;
+                    }
+                  }
+                });
+                if (changed) {
+                  localStorage.setItem(k, JSON.stringify(arr));
+                }
+              }
+            }
+          });
+        }
+      } catch(eSync) {}
     }
     try { sanitizeAllStorage(); } catch(e) {}
 
@@ -5044,7 +5104,7 @@
       "bai-pha-quan-dan-than": "Ảnh Bài Viết Khung 16-9/Sao Phá Quan Dần Thân.png",
       "bai-dau-so-cot-tuy-phu": "Ảnh Bài Viết Khung 16-9/Đẩu Số Cốt Tủy Phú 1.png",
       "post-tu-vi-tron-doi-12-con-giap-1699": "Ảnh Bài Viết Khung 16-9/Xem Tử Vi Trọn Đời.png",
-      "tuvi-tron-doi-giai-ma-menh-than": "Ảnh Bài Viết Khung 16-9/Tử Vi Cung Mệnh Cung Thân.png",
+      "tuvi-tron-doi-giai-ma-menh-than": "Ảnh Bài Viết Khung 16-9/Tử Vi Trọn Đời.png",
       "bai-kham-thien-that-sat": "Ảnh Bài Viết Khung 16-9/Sao Thất Sát.jpeg",
       "bai-menh-thien-dong-thai-am": "Ảnh Bài Viết Khung 16-9/Thiên Dồng - Thái Âm Tai Tý.png",
       "bai-kham-thien-pha-quan": "Ảnh Bài Viết Khung 16-9/Sao Phá Quân Ở Mênh.jpeg",
@@ -5277,7 +5337,11 @@
               return;
             }
           }
-          // Bài viết người dùng đã lưu/sửa trong localStorage luôn luôn thắng và ghi đè lên bản mẫu fallback
+          // Nếu bài trong fallback có updatedAt mới hơn bài trong localStorage, ưu tiên giữ bản fallback mới nhất
+          if (customMap[p.id] && Number(customMap[p.id].updatedAt || 0) > Number(p.updatedAt || 0)) {
+            return;
+          }
+          // Bài viết người dùng đã lưu/sửa trong localStorage ghi đè lên bản mẫu fallback nếu mới hơn hoặc bằng
           customMap[p.id] = p;
         }
       });
@@ -5342,12 +5406,9 @@
 
       // SẮP XẾP BÀI VIẾT:
       // BÀI NÀO VỪA ĐƯỢC NGƯỜI DÙNG CẬP NHẬT HOẶC LƯU MỚI (CÓ updatedAt GẦN NHẤT) LUÔN NẰM NGAY ĐẦU TIÊN
-      const nowMax = Date.now() + 60000;
       combined.sort((a, b) => {
         let upA = Number(a.updatedAt) || 0;
         let upB = Number(b.updatedAt) || 0;
-        if (upA > nowMax) upA = 0;
-        if (upB > nowMax) upB = 0;
         if (upA && upB && upA !== upB) return upB - upA;
         if (upA && !upB) return -1;
         if (!upA && upB) return 1;
@@ -7255,7 +7316,8 @@
         "TAMLINH_BAI_VIET_CUSTOM",
         "PHONGTHUY_BAI_VIET_CUSTOM",
         "KIENTHUC_BAI_VIET_CUSTOM",
-        "TUONGSO_BAI_VIET_CUSTOM"
+        "TUONGSO_BAI_VIET_CUSTOM",
+        "BAI_VIET_CHUYEN_MUC_CUSTOM"
       ];
       
       allKeys.forEach(key => {
@@ -7281,9 +7343,22 @@
               existingList.forEach(item => { if (item && item.id) existingMap[item.id] = item; });
               let changed = false;
               backupList.forEach(bp => {
-                if (bp && bp.id && !existingMap[bp.id] && !hiddenSet.has(bp.id)) {
-                  existingList.push(bp);
-                  changed = true;
+                if (bp && bp.id && !hiddenSet.has(bp.id)) {
+                  if (!existingMap[bp.id]) {
+                    existingList.push(bp);
+                    changed = true;
+                  } else {
+                    var curr = existingMap[bp.id];
+                    if (Number(bp.updatedAt || 0) >= Number(curr.updatedAt || 0) && (curr.noiDung !== bp.noiDung || curr.tieuDe !== bp.tieuDe || curr.hinhAnh !== bp.hinhAnh || curr.updatedAt !== bp.updatedAt)) {
+                      curr.tieuDe = bp.tieuDe;
+                      curr.noiDung = bp.noiDung;
+                      curr.tomTat = bp.tomTat;
+                      curr.hinhAnh = bp.hinhAnh;
+                      curr.updatedAt = bp.updatedAt;
+                      curr.tacGia = bp.tacGia || "Thầy Duy Tâm Phúc";
+                      changed = true;
+                    }
+                  }
                 }
               });
               if (changed) {

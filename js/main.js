@@ -606,14 +606,9 @@ function render12Palaces(userData) {
 
   container.innerHTML = `
     <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-      <div style="padding: 48px 0; text-align: center;">
-        <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
-        <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an sao 108 Tinh Tú &amp; kết xuất đồ bản…</div>
-      </div>
-    </div>
-
-    <div id="tuvi-render-staging" aria-hidden="true">
-      <div class="tuvi-sheet-wrapper" style="background: #FFFFFF; padding: 22px 16px; display: inline-block;">
+      <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+        <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
+          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #FFFFFF; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box;">
       <div class="tuvi-board" style="position: relative;">
         <!-- ROW 1 -->
         ${renderPalaceCell(palaces[5], 1, 1)}
@@ -778,13 +773,17 @@ function render12Palaces(userData) {
 
         <!-- TUẦN & TRIỆT BADGES -->
         ${boundaryBadgesHtml}
-      </div>
+            </div>
+          </div>
         </div>
+      </div>
     </div>
+    <div id="tuvi-render-staging" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 832px; opacity: 0; pointer-events: none;"></div>
   `;
 
-  if (typeof window.renderTuViBoardToImage === 'function') {
-    window.renderTuViBoardToImage();
+  if (typeof window.fitTuViModalLiveBoard === "function") {
+    window.fitTuViModalLiveBoard();
+    requestAnimationFrame(function() { window.fitTuViModalLiveBoard(); });
   }
 }
 
@@ -900,10 +899,34 @@ function drawTuViBadgesOnCanvas(canvas, positions) {
 /**
  * Kết xuất đồ bản thành hình ảnh PNG độ phân giải cao
  */
+window.fitTuViModalLiveBoard = function() {
+  const box = document.getElementById("tuvi-scaler-box") || document.getElementById("tuvi-image-view");
+  const inner = document.getElementById("tuvi-scaler-inner");
+  const board = document.getElementById("tuvi-live-board");
+  if (!box || !inner || !board) return;
+  const vw = box.clientWidth || (window.innerWidth > 680 ? 640 : window.innerWidth - 16);
+  const vh = box.clientHeight || (window.innerHeight - 120);
+  if (vw <= 0 || vh <= 0) return;
+  const origW = 832;
+  const origH = 1112;
+  const scale = Math.min(vw / origW, vh / origH, 1);
+  board.style.transform = "scale(" + scale + ")";
+  board.style.transformOrigin = "0 0";
+  inner.style.width = Math.round(origW * scale) + "px";
+  inner.style.height = Math.round(origH * scale) + "px";
+};
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); });
+}
+
 window.renderTuViBoardToImage = async function () {
   const view = document.getElementById('tuvi-image-view');
   const staging = document.getElementById('tuvi-render-staging');
-  const sheet = staging && (staging.querySelector('.tuvi-sheet-wrapper') || staging.querySelector('.tuvi-board'));
+  const liveBoard = document.getElementById("tuvi-live-board");
+  if (staging && liveBoard && !staging.hasChildNodes()) {
+    staging.innerHTML = liveBoard.outerHTML;
+  }
+  const sheet = (staging && (staging.querySelector(".tuvi-sheet-wrapper") || staging.querySelector(".tuvi-board"))) || liveBoard;
   if (!view || !staging || !sheet) return;
 
   const fallbackToLiveBoard = (note) => {
@@ -925,12 +948,12 @@ window.renderTuViBoardToImage = async function () {
 
   try {
     if (document.fonts && document.fonts.ready) {
-      await document.fonts.ready;
+      await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
     }
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
     const canvas = await html2canvas(sheet, {
-      scale: 2.5,
+      scale: 2,
       useCORS: true,
       backgroundColor: '#FFFFFF',
       logging: false
@@ -968,7 +991,7 @@ async function getTuViImageBlob() {
   }
   try {
     const canvas = await html2canvas(boardElement, {
-      scale: 2.5,
+      scale: 2,
       useCORS: true,
       backgroundColor: '#E8E8E0',
       logging: false,
@@ -2241,6 +2264,11 @@ function initEventHandlers() {
           arr.forEach(function(item) {
             if (item && item.tacGia !== "Thầy Duy Tâm Phúc") {
               item.tacGia = "Thầy Duy Tâm Phúc";
+              changed = true;
+            }
+                        if (item && (item.id === "tuvi-tron-doi-giai-ma-menh-than" || item.id === "post-tu-vi-tron-doi-12-con-giap-1699" || (item.tieuDe && item.tieuDe.indexOf("Tá»¬ VI TRá»ŒN Äá»œI") !== -1))) {
+              item.chuyenMuc = "Xem tá»­ vi trá»n Ä‘á»i";
+              item.hinhAnh = "áº¢nh BÃ i Viáº¿t Khung 16-9/Tá»­ Vi Trá»n Äá»i.png";
               changed = true;
             }
             if (item && item.id === "post-tu-vi-tron-doi-12-con-giap-1699") {
@@ -5515,14 +5543,13 @@ function initEventHandlers() {
     }
 
     // Hiển thị loading trong modal body
-    const modalView = document.getElementById('kinhdich-image-view');
+    const modalView = document.getElementById("kinhdich-image-view");
     if (modalView) {
-      modalView.innerHTML = `
-        <div style="padding: 48px 0; text-align: center;">
-          <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
-          <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an quẻ, Lục Thân, Lục Thú &amp; kết xuất đồ bản…</div>
-        </div>
-      `;
+      modalView.innerHTML = '<div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;"><div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;"><div id="kinhdich-live-card" style="width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0;">' + html + '</div></div></div>';
+      if (typeof window.fitKinhDichModalLiveBoard === "function") {
+        window.fitKinhDichModalLiveBoard();
+        requestAnimationFrame(function() { window.fitKinhDichModalLiveBoard(); });
+      }
     }
 
     // Hiển thị nút "Mở Lại Bản Đồ Quẻ Dịch" trên giao diện để người dùng có thể mở lại khi đóng modal (chữ to 1.4, nằm gọn 1 dòng)
@@ -5547,9 +5574,6 @@ function initEventHandlers() {
     }
 
     // Kết xuất đồ bản thành ảnh PNG độ nét cao đưa vào Modal
-    if (typeof renderKinhDichBoardToImage === 'function') {
-      renderKinhDichBoardToImage();
-    }
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search
@@ -5654,6 +5678,27 @@ function initEventHandlers() {
   let cachedKinhDichBlob = null;
   let cachedKinhDichName = 'Que_Dich';
 
+window.fitKinhDichModalLiveBoard = function() {
+  const box = document.getElementById("kinhdich-scaler-box") || document.getElementById("kinhdich-image-view");
+  const inner = document.getElementById("kinhdich-scaler-inner");
+  const card = document.getElementById("kinhdich-live-card");
+  if (!box || !inner || !card) return;
+  const vw = box.clientWidth || (window.innerWidth > 800 ? 760 : window.innerWidth - 16);
+  const vh = box.clientHeight || (window.innerHeight - 120);
+  if (vw <= 0 || vh <= 0) return;
+  const origW = 1150;
+  const targetCard = card.querySelector(".dichquai-export-board") || card.querySelector(".dq-export-wrapper") || card;
+  const origH = targetCard.scrollHeight || 1350;
+  const scale = Math.min(vw / origW, vh / origH, 1);
+  card.style.transform = "scale(" + scale + ")";
+  card.style.transformOrigin = "0 0";
+  inner.style.width = Math.round(origW * scale) + "px";
+  inner.style.height = Math.round(origH * scale) + "px";
+};
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", function() { if (typeof window.fitKinhDichModalLiveBoard === "function") window.fitKinhDichModalLiveBoard(); });
+}
+
   async function renderKinhDichBoardToImage() {
     const modalView = document.getElementById('kinhdich-image-view');
     const staging = document.getElementById('kinhdich-render-staging');
@@ -5676,7 +5721,7 @@ function initEventHandlers() {
     try {
       // Đợi font chữ và layout render ổn định
       if (document.fonts && document.fonts.ready) {
-        await document.fonts.ready;
+        await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
       }
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
       await new Promise(r => setTimeout(r, 100));
@@ -5685,7 +5730,7 @@ function initEventHandlers() {
       const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1200;
 
       const canvas = await html2canvas(sheet, {
-        scale: 3,
+        scale: 2,
         useCORS: true,
         backgroundColor: '#FFFFFF',
         scrollX: 0,
@@ -5885,12 +5930,10 @@ function initEventHandlers() {
 
   window.downloadKinhDichImage = async function() {
     if (!cachedKinhDichDataUrl && !cachedKinhDichBlob) {
-      if (typeof window.taiXuatQueDich === 'function') {
-        window.taiXuatQueDich();
-      } else {
-        alert('Chưa có ảnh quẻ dịch để tải về!');
+      if (typeof renderKinhDichBoardToImage === "function") {
+        if (typeof showToast === "function") showToast("Dang tao anh chat luong cao de tai ve...");
+        await renderKinhDichBoardToImage();
       }
-      return;
     }
     const fileName = `Bang_Xuat_Que_Dich_${cachedKinhDichName || 'Que'}_${Date.now()}.png`;
 
@@ -6018,7 +6061,7 @@ function initEventHandlers() {
     exportCard.style.transform = 'none';
 
     html2canvas(exportCard, {
-      scale: 3,
+        scale: 2,
       useCORS: true,
       backgroundColor: '#FFFFFF',
       scrollX: 0,
