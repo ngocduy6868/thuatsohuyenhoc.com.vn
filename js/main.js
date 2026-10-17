@@ -5742,26 +5742,6 @@ function initEventHandlers() {
   let cachedKinhDichBlob = null;
   let cachedKinhDichName = 'Que_Dich';
 
-window.fitKinhDichModalLiveBoard = function() {
-  const box = document.getElementById("kinhdich-scaler-box") || document.getElementById("kinhdich-image-view");
-  const inner = document.getElementById("kinhdich-scaler-inner");
-  const card = document.getElementById("kinhdich-live-card");
-  if (!box || !inner || !card) return;
-  const vw = box.clientWidth || (window.innerWidth > 800 ? 760 : window.innerWidth - 16);
-  const vh = box.clientHeight || (window.innerHeight - 120);
-  if (vw <= 0 || vh <= 0) return;
-  const origW = 1150;
-  const targetCard = card.querySelector(".dichquai-export-board") || card.querySelector(".dq-export-wrapper") || card;
-  const origH = targetCard.scrollHeight || 1350;
-  const scale = Math.min(vw / origW, vh / origH, 1);
-  card.style.transform = "scale(" + scale + ")";
-  card.style.transformOrigin = "0 0";
-  inner.style.width = Math.round(origW * scale) + "px";
-  inner.style.height = Math.round(origH * scale) + "px";
-};
-if (typeof window !== "undefined") {
-  window.addEventListener("resize", function() { if (typeof window.fitKinhDichModalLiveBoard === "function") window.fitKinhDichModalLiveBoard(); });
-}
 
   async function renderKinhDichBoardToImage() {
     const modalView = document.getElementById('kinhdich-image-view');
