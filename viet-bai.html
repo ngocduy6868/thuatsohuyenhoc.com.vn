@@ -4982,6 +4982,36 @@
         } catch(e) {}
       });
 
+      // Tự động kiểm tra và dọn dẹp lỗi font Mojibake và lỗi chính tả Đấu Năm
+      ["XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+        try {
+          var arr = JSON.parse(localStorage.getItem(k) || "[]");
+          if (Array.isArray(arr) && arr.length > 0) {
+            var changed = false;
+            var cleanArr = arr.filter(function(item) {
+              if (!item) return false;
+              if (item.chuyenMuc && item.chuyenMuc.indexOf("Đấu Năm") !== -1) {
+                item.chuyenMuc = item.chuyenMuc.replace(/Đấu Năm/g, "Đầu Năm");
+                changed = true;
+              }
+              if (item.tieuDe && item.tieuDe.indexOf("Đấu Năm") !== -1) {
+                item.tieuDe = item.tieuDe.replace(/Đấu Năm/g, "Đầu Năm");
+                changed = true;
+              }
+              var strP = JSON.stringify(item);
+              if (strP.indexOf("KhÃ¡i") !== -1 || strP.indexOf("XÃ´ng") !== -1 || strP.indexOf("Ã ") !== -1 || strP.indexOf("á»") !== -1 || strP.indexOf("\uFFFD") !== -1) {
+                changed = true;
+                return false; // Loại bỏ bản ghi dính lỗi mã để nhận bản GỐC chuẩn UTF-8
+              }
+              return true;
+            });
+            if (changed) {
+              localStorage.setItem(k, JSON.stringify(cleanArr));
+            }
+          }
+        } catch(e) {}
+      });
+
       // Tự động chuẩn hóa toàn bộ tác giả bài viết trong bộ nhớ về "Thầy Duy Tâm Phúc"
       ["XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TUVI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
         try {
@@ -5291,6 +5321,17 @@
       let customAll = [...customCM, ...customXN, ...customXT, ...customTuVi, ...customTL, ...customPT, ...customKT, ...customTS];
       customAll.forEach(p => {
         if (p && p.id && !unwantedPostIds.has(p.id)) {
+          // Bỏ qua bản ghi dính lỗi phông chữ Mojibake
+          var strP = JSON.stringify(p);
+          if (strP.indexOf("KhÃ¡i") !== -1 || strP.indexOf("XÃ´ng") !== -1 || strP.indexOf("Ã ") !== -1 || strP.indexOf("á»") !== -1 || strP.indexOf("\uFFFD") !== -1) {
+            return; // Ưu tiên giữ nguyên bản GỐC chuẩn UTF-8
+          }
+          if (p.chuyenMuc && p.chuyenMuc.indexOf("Đấu Năm") !== -1) {
+            p.chuyenMuc = p.chuyenMuc.replace(/Đấu Năm/g, "Đầu Năm");
+          }
+          if (p.tieuDe && p.tieuDe.indexOf("Đấu Năm") !== -1) {
+            p.tieuDe = p.tieuDe.replace(/Đấu Năm/g, "Đầu Năm");
+          }
           if (p.id === "tuvi-ngay-12-con-giap") {
             const cm = (p.chuyenMuc || "").toLowerCase();
             const tt = (p.tieuDe || "").toLowerCase();
