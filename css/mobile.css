@@ -2622,6 +2622,93 @@
     color: #7A1414 !important;
   }
 
+  /* Bài viết Popup: Căn chỉnh thông tin Tác giả & Ngày đăng trên Mobile chuẩn yêu cầu */
+  .article-modal-meta,
+  .article-reader-body > div:has(#modal-post-author),
+  .article-reader-body > div:has(#nav-modal-author) {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    width: 100% !important;
+    box-sizing: border-box !important;
+    gap: 8px !important;
+    margin-bottom: 14px !important;
+    border-bottom: 1px dashed #E0D6C3 !important;
+    padding-bottom: 10px !important;
+  }
+
+  .article-meta-author,
+  .article-reader-body > div:has(#modal-post-author) > span:first-child,
+  .article-reader-body > div:has(#nav-modal-author) > span:first-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    text-align: left !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .article-meta-author .meta-label,
+  .article-reader-body > div:has(#modal-post-author) > span:first-child {
+    font-size: 12px !important;
+    color: #8C7B6B !important;
+    line-height: 1.35 !important;
+    text-align: left !important;
+  }
+
+  .article-meta-author #modal-post-author,
+  .article-meta-author #nav-modal-author,
+  .article-reader-body > div:has(#modal-post-author) > span:first-child strong,
+  .article-reader-body > div:has(#nav-modal-author) > span:first-child strong {
+    display: block !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #4A3E31 !important;
+    white-space: nowrap !important;
+    line-height: 1.35 !important;
+    margin-top: 2px !important;
+    text-align: left !important;
+  }
+
+  .article-meta-dot,
+  .article-reader-body > div:has(#modal-post-author) > span:nth-child(2),
+  .article-reader-body > div:has(#nav-modal-author) > span:nth-child(2) {
+    display: none !important;
+  }
+
+  .article-meta-date,
+  .article-reader-body > div:has(#modal-post-author) > span:last-child,
+  .article-reader-body > div:has(#nav-modal-author) > span:last-child {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: flex-end !important;
+    text-align: right !important;
+    flex: 1 !important;
+    min-width: 0 !important;
+  }
+
+  .article-meta-date .meta-label,
+  .article-reader-body > div:has(#modal-post-author) > span:last-child {
+    font-size: 12px !important;
+    color: #8C7B6B !important;
+    line-height: 1.35 !important;
+    text-align: right !important;
+  }
+
+  .article-meta-date #modal-post-date,
+  .article-meta-date #nav-modal-date,
+  .article-reader-body > div:has(#modal-post-author) > span:last-child strong,
+  .article-reader-body > div:has(#nav-modal-author) > span:last-child strong {
+    display: block !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    color: #4A3E31 !important;
+    white-space: nowrap !important;
+    line-height: 1.35 !important;
+    margin-top: 2px !important;
+    text-align: right !important;
+  }
+
   #modal-post-content p,
   .article-reader-body p,
   #nav-modal-content p {
