@@ -1215,57 +1215,63 @@
     const selHour = document.getElementById('tt-gio');
     const selMin = document.getElementById('tt-phut');
 
-    if (selDay && selDay.options.length === 0) {
+    if (selDay) {
+      const curVal = parseInt(selDay.value, 10) || 16;
+      selDay.innerHTML = '';
       for (let i = 1; i <= 31; i++) {
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = i < 10 ? '0' + i : '' + i;
-        if (i === 16) opt.selected = true;
+        if (i === curVal) opt.selected = true;
         selDay.appendChild(opt);
       }
     }
 
-    if (selMonth && selMonth.options.length === 0) {
+    if (selMonth) {
+      const curVal = parseInt(selMonth.value, 10) || 6;
+      selMonth.innerHTML = '';
       for (let i = 1; i <= 12; i++) {
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = 'Tháng ' + (i < 10 ? '0' + i : '' + i);
-        if (i === 6) opt.selected = true;
+        if (i === curVal) opt.selected = true;
         selMonth.appendChild(opt);
       }
     }
 
-    if (selYear && (selYear.options.length < 50 || selYear.options[0]?.value !== '2100')) {
-      const currentVal = parseInt(selYear.value, 10) || 1976;
+    if (selYear) {
+      const curVal = parseInt(selYear.value, 10) || 1976;
       selYear.innerHTML = '';
       for (let y = 2100; y >= 1930; y--) {
         const opt = document.createElement('option');
         opt.value = y;
         opt.textContent = 'Năm ' + y;
-        if (y === currentVal) opt.selected = true;
+        if (y === curVal) opt.selected = true;
         selYear.appendChild(opt);
       }
     }
 
-    if (selHour && selHour.options.length === 0) {
+    if (selHour) {
+      const curVal = parseInt(selHour.value, 10) || 12;
+      selHour.innerHTML = '';
       for (let h = 0; h <= 23; h++) {
         const opt = document.createElement('option');
         opt.value = h;
         opt.textContent = (h < 10 ? '0' + h : '' + h) + ' giờ';
-        if (h === 12) opt.selected = true;
+        if (h === curVal) opt.selected = true;
         selHour.appendChild(opt);
       }
     }
 
-    if (selMin && selMin.options.length < 50) {
-      const currentMin = parseInt(selMin.value, 10) || 30;
+    if (selMin) {
+      const curVal = parseInt(selMin.value, 10) || 30;
       selMin.innerHTML = '';
       for (let mi = 0; mi <= 59; mi++) {
         const opt = document.createElement('option');
         opt.value = mi;
         const txt = mi < 10 ? '0' + mi : '' + mi;
         opt.textContent = txt + ' phút';
-        if (mi === currentMin) opt.selected = true;
+        if (mi === curVal) opt.selected = true;
         selMin.appendChild(opt);
       }
     }
