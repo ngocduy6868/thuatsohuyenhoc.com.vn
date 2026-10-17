@@ -5507,23 +5507,18 @@
           }
         }
 
-        // Rà soát từ cấm Google trước khi xuất bản
+        // Rà soát từ cấm Google để hiển thị cảnh báo tham khảo (tuyệt đối không chặn việc lưu bài của người dùng)
         let googleViolations = [];
         try {
           googleViolations = scanGoogleProhibitedWords(title + " \n " + summary + " \n " + content);
+          if (googleViolations && googleViolations.length > 0) {
+            const gAlert = document.getElementById("google-policy-alert");
+            if (gAlert) {
+              gAlert.style.display = "block";
+            }
+          }
         } catch(ge) {
           console.warn("Lỗi quét từ cấm:", ge);
-        }
-
-        if (googleViolations && googleViolations.length > 0) {
-          const termsStr = googleViolations.map(v => "• \"" + v.term + "\" (" + v.cat + ")").join("\n");
-          const actionVerb = editingId ? "Cập Nhật" : "Đăng Bài";
-          const confirmPublish = confirm("CẢNH BÁO TỪ CẤM / HẠN CHẾ CỦA GOOGLE:\n\nBài viết phát hiện " + googleViolations.length + " từ ngữ vi phạm chính sách của Google (SEO/Ads):\n" + termsStr + "\n\nViệc này có thể dẫn đến việc bài viết bị Google hạn chế hiển thị hoặc không phê duyệt quảng cáo.\n\nNhấn OK để vẫn tiếp tục " + actionVerb + ", hoặc nhấn Cancel để chỉnh sửa lại từ cấm.");
-          if (!confirmPublish) {
-            const gAlert = document.getElementById("google-policy-alert");
-            if (gAlert) gAlert.scrollIntoView({ behavior: "smooth" });
-            return;
-          }
         }
 
         // Xác định chính xác chuyên mục
@@ -5848,29 +5843,9 @@
           resetFormToNew();
         }
 
-        // NẾU ĐANG CHỈNH SỬA: Giữ nguyên vị trí ở form trên đầu để tiếp tục làm việc, không cuộn xuống làm văng màn hình
-        if (isUpdatingExisting) {
-          const editAlert = document.getElementById("editing-alert");
-          if (editAlert) {
-            editAlert.scrollIntoView({ behavior: "smooth", block: "nearest" });
-          }
-        } else {
-          // NẾU ĐĂNG BÀI MỚI: Tự động cuộn mượt đến ngay bài viết vừa lưu ở danh sách bên dưới & bật viền highlight nổi bật
-          const targetCard = document.getElementById("post-card-" + targetId);
-          if (targetCard) {
-            targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
-            targetCard.style.transition = "all 0.4s ease";
-            targetCard.style.outline = "3px solid #52C41A";
-            targetCard.style.boxShadow = "0 0 16px rgba(82, 196, 26, 0.45)";
-            setTimeout(() => {
-              targetCard.style.outline = "";
-              targetCard.style.boxShadow = "";
-            }, 4500);
-          } else if (successBanner) {
-            successBanner.scrollIntoView({ behavior: "smooth", block: "center" });
-          } else {
-            window.scrollTo({ top: 0, behavior: "smooth" });
-          }
+        // Giữ vị trí người dùng ổn định tại form, không cuộn giật làm văng màn hình
+        if (successBanner) {
+          successBanner.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
 
         // Tự động tối ưu ngầm toàn bộ bộ nhớ và ảnh sau khi lưu để luôn ở mức nhẹ nhất
@@ -6002,7 +5977,10 @@
       const btnSaveNew = document.getElementById("btn-save-as-new");
       if (btnSaveNew) btnSaveNew.style.display = "inline-flex";
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      const editAnchor = document.getElementById("editing-alert") || document.getElementById("post-composer-form");
+      if (editAnchor) {
+        editAnchor.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
       // Cập nhật giao diện lịch sử phiên bản cho bài đang sửa nếu bảng đang mở
       try {
         const histPanel = document.getElementById("version-history-panel");
