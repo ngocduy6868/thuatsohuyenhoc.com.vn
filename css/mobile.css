@@ -4,7 +4,7 @@
    Chỉ áp dụng khi màn hình <= 900px
    ========================================================================== */
 
-@media screen and (max-width: 900px) and (pointer: coarse), screen and (max-width: 900px) and (hover: none) {
+@media screen and (max-width: 900px) {
 
   /* -------------------------------------------------------------------------
      1. RESET KHUNG NHÌN & CONTAINER
