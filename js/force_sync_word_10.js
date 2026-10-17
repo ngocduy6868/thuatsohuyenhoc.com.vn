@@ -239,11 +239,5 @@ function triggerManualSyncWord10(isAuto) {
   }
 }
 
-// Chay tu dong
-triggerManualSyncWord10(true);
-window.addEventListener("DOMContentLoaded", function() {
-  triggerManualSyncWord10(true);
-});
-window.addEventListener("load", function() {
-  triggerManualSyncWord10(true);
-});
+// KHONG CHAY TU DONG - Chi chay khi nguoi dung chu dong bam nut
+// (Bao ve 100% noi dung bai viet nguoi dung tu sua theo Rule 5, 6, 7)

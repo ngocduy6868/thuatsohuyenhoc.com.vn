@@ -5041,61 +5041,6 @@
         } catch(e) {}
       });
       // Tự động đồng bộ các bài cập nhật mới nhất từ kho lưu trữ chuẩn vào localStorage
-      try {
-        var fallbackSource = window.DEFAULT_RECOVERED_ARTICLES_FALLBACK || window.ORIGINAL_RECOVERED_ARTICLES_BACKUP;
-        if (fallbackSource) {
-          var targetSyncIds = [
-            "tuvi-12-con-giap-dau-nam",
-            "xong-dat-dau-nam-dai-cat",
-            "tuvi-ngay-12-con-giap",
-            "post-ly-tinh-cua-sao-tu-vi-1639",
-            "khoahoc-huyen-hoc-chuyen-sau",
-            "diendan-dam-dao-ly-so",
-            "tuvi-tuan-chuyen-bien-tai-loc",
-            "tuvi-thang-nguyet-lenh",
-            "tuvi-tron-doi-giai-ma-menh-than",
-            "tuvi-van-han-dai-van-tieu-han"
-          ];
-          var syncMasterMap = {};
-          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
-            var rawList = Array.isArray(fallbackSource[k]) ? fallbackSource[k] : (fallbackSource[k] && Array.isArray(fallbackSource[k].value) ? fallbackSource[k].value : null);
-            if (rawList) {
-              rawList.forEach(function(item) {
-                if (item && targetSyncIds.indexOf(item.id) !== -1) {
-                  syncMasterMap[item.id] = item;
-                }
-              });
-            }
-          });
-
-          ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
-            var raw = localStorage.getItem(k);
-            if (raw) {
-              var arr = JSON.parse(raw);
-              if (Array.isArray(arr) && arr.length > 0) {
-                var changed = false;
-                arr.forEach(function(item) {
-                  if (item && syncMasterMap[item.id]) {
-                    var m = syncMasterMap[item.id];
-                    if (item.tieuDe !== m.tieuDe || item.hinhAnh !== m.hinhAnh || item.updatedAt !== m.updatedAt) {
-                      item.tieuDe = m.tieuDe;
-                      item.noiDung = m.noiDung;
-                      item.tomTat = m.tomTat;
-                      item.hinhAnh = m.hinhAnh;
-                      item.updatedAt = m.updatedAt;
-                      item.tacGia = m.tacGia;
-                      changed = true;
-                    }
-                  }
-                });
-                if (changed) {
-                  localStorage.setItem(k, JSON.stringify(arr));
-                }
-              }
-            }
-          });
-        }
-      } catch(eSync) {}
     }
     try { sanitizeAllStorage(); } catch(e) {}
 
@@ -5338,9 +5283,6 @@
             }
           }
           // Nếu bài trong fallback có updatedAt mới hơn bài trong localStorage, ưu tiên giữ bản fallback mới nhất
-          if (customMap[p.id] && Number(customMap[p.id].updatedAt || 0) > Number(p.updatedAt || 0)) {
-            return;
-          }
           // Bài viết người dùng đã lưu/sửa trong localStorage ghi đè lên bản mẫu fallback nếu mới hơn hoặc bằng
           customMap[p.id] = p;
         }
@@ -7348,16 +7290,6 @@
                     existingList.push(bp);
                     changed = true;
                   } else {
-                    var curr = existingMap[bp.id];
-                    if (Number(bp.updatedAt || 0) >= Number(curr.updatedAt || 0) && (curr.noiDung !== bp.noiDung || curr.tieuDe !== bp.tieuDe || curr.hinhAnh !== bp.hinhAnh || curr.updatedAt !== bp.updatedAt)) {
-                      curr.tieuDe = bp.tieuDe;
-                      curr.noiDung = bp.noiDung;
-                      curr.tomTat = bp.tomTat;
-                      curr.hinhAnh = bp.hinhAnh;
-                      curr.updatedAt = bp.updatedAt;
-                      curr.tacGia = bp.tacGia || "Thầy Duy Tâm Phúc";
-                      changed = true;
-                    }
                   }
                 }
               });
