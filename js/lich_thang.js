@@ -30,7 +30,7 @@
     '1/1': 'Mùng 1 Tết',
     '2/1': 'Mùng 2 Tết',
     '3/1': 'Mùng 3 Tết',
-    '15/1': 'Rằm T.Giêng',
+    '15/1': 'Rằm T. Giêng',
     '10/3': 'Giỗ Tổ Hùng Vương',
     '15/4': 'Phật Đản',
     '5/5': 'Tết Đoan Ngọ',
@@ -56,8 +56,8 @@
       const can = parts[0];
       const chi = parts[1];
       const canMap = {
-        'Giáp': 'G.', 'Ất': 'Ấ.', 'Bính': 'B.', 'Đinh': 'Đ.', 'Mậu': 'M.',
-        'Kỷ': 'K.', 'Canh': 'C.', 'Tân': 'T.', 'Nhâm': 'N.', 'Quý': 'Q.'
+        'Giáp': 'G. ', 'Ất': 'Ấ. ', 'Bính': 'B. ', 'Đinh': 'Đ. ', 'Mậu': 'M. ',
+        'Kỷ': 'K. ', 'Canh': 'C. ', 'Tân': 'T. ', 'Nhâm': 'N. ', 'Quý': 'Q. '
       };
       if (canMap[can]) {
         return canMap[can] + chi;
@@ -249,13 +249,13 @@
         <table class="lt-calendar-table">
           <thead>
             <tr>
-              <th><span class="lt-header-full">Thứ Hai</span><span class="lt-header-short">T.Hai</span></th>
-              <th><span class="lt-header-full">Thứ Ba</span><span class="lt-header-short">T.Ba</span></th>
-              <th><span class="lt-header-full">Thứ Tư</span><span class="lt-header-short">T.Tư</span></th>
-              <th><span class="lt-header-full">Thứ Năm</span><span class="lt-header-short">T.Năm</span></th>
-              <th><span class="lt-header-full">Thứ Sáu</span><span class="lt-header-short">T.Sáu</span></th>
-              <th><span class="lt-header-full">Thứ Bảy</span><span class="lt-header-short">T.Bảy</span></th>
-              <th class="th-sunday"><span class="lt-header-full">Chủ Nhật</span><span class="lt-header-short">C.Nhật</span></th>
+              <th><span class="lt-header-full">Thứ Hai</span><span class="lt-header-short">T. Hai</span></th>
+              <th><span class="lt-header-full">Thứ Ba</span><span class="lt-header-short">T. Ba</span></th>
+              <th><span class="lt-header-full">Thứ Tư</span><span class="lt-header-short">T. Tư</span></th>
+              <th><span class="lt-header-full">Thứ Năm</span><span class="lt-header-short">T. Năm</span></th>
+              <th><span class="lt-header-full">Thứ Sáu</span><span class="lt-header-short">T. Sáu</span></th>
+              <th><span class="lt-header-full">Thứ Bảy</span><span class="lt-header-short">T. Bảy</span></th>
+              <th class="th-sunday"><span class="lt-header-full">Chủ Nhật</span><span class="lt-header-short">C. Nhật</span></th>
             </tr>
           </thead>
           <tbody>
