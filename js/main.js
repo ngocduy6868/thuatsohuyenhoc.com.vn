@@ -2296,7 +2296,8 @@ function initEventHandlers() {
       "sao-pha-quan-trong-tu-vi-dau-so",
       "sao-tham-lang-trong-tu-vi-dau-so",
       "bai-viet-moi-cua-ban",
-      "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
+      "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0",
+      "tuvi-post-ban-ve-sao-khong-kiep-mvary3y7"
     ]);
 
     let defaultPosts = []; // Đã hợp nhất trọn vẹn 45 bài chuẩn vào window.ORIGINAL_RECOVERED_ARTICLES_BACKUP
@@ -2969,10 +2970,20 @@ function initEventHandlers() {
     return tempDiv.innerHTML;
   }
 
+  let lastModalOpenTime = 0;
+  let lastModalOpenId = "";
   window.openArticleModal = function(postId, directPost) {
     let post = directPost;
+    const now = Date.now();
+    const targetIdStr = String(postId || (directPost && directPost.id) || "");
+    if (now - lastModalOpenTime < 250 && lastModalOpenId === targetIdStr) {
+      return; // Debounce rapid / duplicate clicks
+    }
+    lastModalOpenTime = now;
+    lastModalOpenId = targetIdStr;
+
     if (!post) {
-      const storages = ["TUVI_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM"];
+      const storages = ["TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM", "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM", "TUONGSO_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"];
       let customList = [];
       for (const k of storages) {
         try {
@@ -2991,7 +3002,7 @@ function initEventHandlers() {
           }
         }
       }
-      customList.sort((a, b) => (b.updatedAt || 0) - (a.updatedAt || 0));
+      customList.sort((a, b) => (Number(b.updatedAt) || 0) - (Number(a.updatedAt) || 0));
       post = customList.find(p => p && p.id === postId);
       if (!post && (postId === "tuvi-can-xuong-tinh-cot" || (postId && postId.includes("can-xuong")))) {
         post = customList.find(p => p && (
@@ -3059,11 +3070,10 @@ function initEventHandlers() {
 
     // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t hoặc bị lưu bản rút gọn trong cookie/storage
     const fullText = (post.tieuDe || "") + " " + (post.noiDung || "") + " " + (post.tomTat || "");
-    const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || 
-                        fullText.indexOf("Tr?ch Nh?t") !== -1 || 
-                        /[a-zA-Z\u00C0-\u024F]\?[a-zA-Z\u00C0-\u024F]/.test(fullText);
+    const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || fullText.indexOf("Tr?ch Nh?t") !== -1;
+    const isUserEdited = (Number(post.updatedAt) || 0) > 1792020983905;
     const backupMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
-    if (backupMaster && post && post.id) {
+    if (!isUserEdited && backupMaster && post && post.id) {
       let cleanBackup = null;
       const backupKeys = [
         "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
@@ -3086,8 +3096,7 @@ function initEventHandlers() {
       if (cleanBackup && cleanBackup.noiDung) {
         const curLen = (post.noiDung || "").length;
         const bLen = cleanBackup.noiDung.length;
-        const isUserEdited = (Number(post.updatedAt) || 0) > 1792020983905;
-        if (isCorrupted || (!isUserEdited && bLen > curLen + 100)) {
+        if (isCorrupted || bLen > curLen + 100) {
           post = Object.assign({}, cleanBackup);
         }
       }
@@ -3115,14 +3124,18 @@ function initEventHandlers() {
 
     if (post.id === 'tuvi-12-con-giap-dau-nam') {
       dispCat = `Tử Vi ${namActive}`;
-      dispTitle = `Xem Tử Vi Năm ${namActive}: Luận Đoán Cát Hung 12 Con Giáp & Vận Trình Đầu Xuân`;
-      if (namActive !== 2026) {
+      if (!isUserEdited && (!post.tieuDe || post.tieuDe.indexOf("Xem Tử Vi Năm") !== -1)) {
+        dispTitle = `Xem Tử Vi Năm ${namActive}: Luận Đoán Cát Hung 12 Con Giáp & Vận Trình Đầu Xuân`;
+      }
+      if (namActive !== 2026 && !isUserEdited) {
         dispContent = dispContent.replace(/2026/g, namActive);
       }
     } else if (post.id === 'xong-dat-dau-nam-dai-cat') {
       dispCat = `Xông Đất Đầu Năm ${namActive}`;
-      dispTitle = `Xông Đất Đầu Năm ${namActive}: Cẩm Nang Chọn Tuổi Xông Nhà, Mở Hàng Đại Cát`;
-      if (namActive !== 2026) {
+      if (!isUserEdited && (!post.tieuDe || post.tieuDe.indexOf("Xông Đất Đầu Năm") !== -1)) {
+        dispTitle = `Xông Đất Đầu Năm ${namActive}: Cẩm Nang Chọn Tuổi Xông Nhà, Mở Hàng Đại Cát`;
+      }
+      if (namActive !== 2026 && !isUserEdited) {
         dispContent = dispContent.replace(/2026/g, namActive);
       }
     }

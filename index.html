@@ -3075,6 +3075,24 @@
                 var changed = false;
                 masterArr.forEach(function(mp) {
                   if (mp && mp.id && !localIdMap[mp.id]) {
+                    if (k === "BAI_VIET_CHUYEN_MUC_CUSTOM") {
+                      var existsInOtherCustom = false;
+                      var otherKeys = [
+                        "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
+                        "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM",
+                        "TUONGSO_BAI_VIET_CUSTOM"
+                      ];
+                      for (var o = 0; o < otherKeys.length; o++) {
+                        try {
+                          var oList = JSON.parse(localStorage.getItem(otherKeys[o]) || "[]");
+                          if (Array.isArray(oList) && oList.some(function(item) { return item && item.id === mp.id; })) {
+                            existsInOtherCustom = true;
+                            break;
+                          }
+                        } catch(e) {}
+                      }
+                      if (existsInOtherCustom) return;
+                    }
                     localArr.push(mp);
                     localIdMap[mp.id] = true;
                     changed = true;
@@ -3163,6 +3181,24 @@
                           if (!rp || !rp.id || hiddenSet.has(rp.id)) return;
                           var lp = localMap[rp.id];
                           if (!lp) {
+                            if (k === "BAI_VIET_CHUYEN_MUC_CUSTOM") {
+                              var existsInOtherCustomSync = false;
+                              var otherKeysSync = [
+                                "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
+                                "TAMLINH_BAI_VIET_CUSTOM", "PHONGTHUY_BAI_VIET_CUSTOM", "KIENTHUC_BAI_VIET_CUSTOM",
+                                "TUONGSO_BAI_VIET_CUSTOM"
+                              ];
+                              for (var sIdx = 0; sIdx < otherKeysSync.length; sIdx++) {
+                                try {
+                                  var sList = JSON.parse(localStorage.getItem(otherKeysSync[sIdx]) || "[]");
+                                  if (Array.isArray(sList) && sList.some(function(item) { return item && item.id === rp.id; })) {
+                                    existsInOtherCustomSync = true;
+                                    break;
+                                  }
+                                } catch(e) {}
+                              }
+                              if (existsInOtherCustomSync) return;
+                            }
                             // Bài mới trên máy chủ mà máy này chưa có -> Thêm vào
                             mergedArr.push(rp);
                             keyChanged = true;
@@ -3380,7 +3416,7 @@
 
             item.hinhAnh = resolveArticleImage(item);
 
-            if (!customMap[item.id] || (Number(item.updatedAt) || 0) >= (Number(customMap[item.id].updatedAt) || 0)) {
+            if (!customMap[item.id] || (Number(item.updatedAt) || 0) > (Number(customMap[item.id].updatedAt) || 0)) {
               if (!isRealImage(item.hinhAnh) && customMap[item.id] && isRealImage(customMap[item.id].hinhAnh)) {
                 item.hinhAnh = customMap[item.id].hinhAnh;
               }
@@ -3444,17 +3480,17 @@
 
         var html = '<article class="featured-article-card" onclick="openArticleModal(\'' + (main.id || '') + '\')" style="cursor: pointer;">' +
           (hasMainImg ? (
-            '<div class="featured-art-img-wrap" onclick="openArticleModal(\'' + (main.id || '') + '\')" style="cursor: pointer;">' +
-              '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img" style="cursor: pointer;">' +
+            '<div class="featured-art-img-wrap">' +
+              '<img src="' + main.hinhAnh + '" alt="' + (main.tieuDe || '') + '" class="featured-art-img">' +
               '<span class="article-category-tag">' + (main.chuyenMuc || '') + '</span>' +
             '</div>'
           ) : (
-            '<div style="padding: 16px 20px 0 20px; cursor: pointer;" onclick="openArticleModal(\'' + (main.id || '') + '\')">' +
+            '<div style="padding: 16px 20px 0 20px;">' +
               '<span class="article-category-tag" style="position: static; display: inline-block;">' + (main.chuyenMuc || '') + '</span>' +
             '</div>'
           )) +
           '<div class="featured-art-body">' +
-            '<h4 class="featured-art-title"><a href="#" onclick="openArticleModal(\'' + (main.id || '') + '\'); return false;">' + (main.tieuDe || '') + '</a></h4>' +
+            '<h4 class="featured-art-title"><a href="#" onclick="event.preventDefault(); event.stopPropagation(); openArticleModal(\'' + (main.id || '') + '\'); return false;">' + (main.tieuDe || '') + '</a></h4>' +
             '<div class="featured-art-meta"><span>' + (main.tacGia || '') + '</span> &bull; <span>' + (main.ngayDang || '') + '</span></div>' +
             '<p class="featured-art-desc">' + (main.tomTat || '') + '</p>' +
           '</div>' +
@@ -3465,9 +3501,9 @@
           var sImg = resolveArticleImage(s);
           var hasSImg = Boolean(sImg && sImg.trim());
           html += '<article class="side-article-item" onclick="openArticleModal(\'' + (s.id || '') + '\')" style="cursor: pointer;">' +
-            (hasSImg ? '<div class="side-art-thumb" onclick="openArticleModal(\'' + (s.id || '') + '\')" style="cursor: pointer;"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '" style="cursor: pointer;"></div>' : '') +
+            (hasSImg ? '<div class="side-art-thumb"><img src="' + sImg + '" alt="' + (s.tieuDe || '') + '"></div>' : '') +
             '<div class="side-art-content"' + (!hasSImg ? ' style="padding-left: 0;"' : '') + '>' +
-              '<h5 class="side-art-title"><a href="#" onclick="openArticleModal(\'' + (s.id || '') + '\'); return false;">' + (s.tieuDe || '') + '</a></h5>' +
+              '<h5 class="side-art-title"><a href="#" onclick="event.preventDefault(); event.stopPropagation(); openArticleModal(\'' + (s.id || '') + '\'); return false;">' + (s.tieuDe || '') + '</a></h5>' +
               '<span class="side-art-date">' + (s.ngayDang || '') + '</span>' +
             '</div>' +
           '</article>';
@@ -3484,17 +3520,17 @@
             var hasBImg = Boolean(bImg && bImg.trim());
             bHtml += '<article class="bottom-article-card" onclick="openArticleModal(\'' + (b.id || '') + '\')" style="cursor: pointer;">' +
               (hasBImg ? (
-                '<div class="bottom-art-img-wrap" onclick="openArticleModal(\'' + (b.id || '') + '\')" style="cursor: pointer;">' +
-                  '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img" style="cursor: pointer;">' +
+                '<div class="bottom-art-img-wrap">' +
+                  '<img src="' + bImg + '" alt="' + (b.tieuDe || '') + '" class="bottom-art-img">' +
                   (b.chuyenMuc ? '<span class="bottom-art-tag">' + b.chuyenMuc + '</span>' : '') +
                 '</div>'
               ) : (
-                '<div style="padding: 12px 14px 0 14px; cursor: pointer;" onclick="openArticleModal(\'' + (b.id || '') + '\')">' +
+                '<div style="padding: 12px 14px 0 14px;">' +
                   (b.chuyenMuc ? '<span class="bottom-art-tag" style="position: static; display: inline-block;">' + b.chuyenMuc + '</span>' : '') +
                 '</div>'
               )) +
               '<div class="bottom-art-body">' +
-                '<h5 class="bottom-art-title"><a href="#" onclick="openArticleModal(\'' + (b.id || '') + '\'); return false;">' + (b.tieuDe || '') + '</a></h5>' +
+                '<h5 class="bottom-art-title"><a href="#" onclick="event.preventDefault(); event.stopPropagation(); openArticleModal(\'' + (b.id || '') + '\'); return false;">' + (b.tieuDe || '') + '</a></h5>' +
                 '<p class="bottom-art-desc">' + (b.tomTat || '') + '</p>' +
                 '<div class="bottom-art-meta"><span>' + (b.tacGia || 'Duy Tâm Phúc') + '</span> &bull; <span>' + (b.ngayDang || '') + '</span></div>' +
               '</div>' +
@@ -3743,11 +3779,6 @@
         if (!e.key || e.key.indexOf("_CUSTOM") !== -1 || e.key.indexOf("TRIGGER") !== -1) {
           syncChuyenMuc();
         }
-      });
-      window.addEventListener("focus", syncChuyenMuc);
-      window.addEventListener("pageshow", syncChuyenMuc);
-      document.addEventListener("visibilitychange", function() {
-        if (!document.hidden) syncChuyenMuc();
       });
     })();
   </script>

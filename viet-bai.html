@@ -5626,7 +5626,8 @@
           try {
             let customCM = JSON.parse(localStorage.getItem("BAI_VIET_CHUYEN_MUC_CUSTOM") || "[]");
             if (customCM.some(p => p.id === targetId)) {
-              customCM = customCM.filter(p => p.id !== targetId);
+              const idxCM = customCM.findIndex(p => p.id === targetId);
+              if (idxCM !== -1) customCM[idxCM] = postObj;
               safeSaveToStorage("BAI_VIET_CHUYEN_MUC_CUSTOM", customCM);
             }
           } catch(e) {}
