@@ -5602,15 +5602,10 @@ function initEventHandlers() {
       window.openKinhDichModal();
     }
 
-    // Hiển thị loading trong modal body và kích hoạt kết xuất ảnh đồ bản quẻ dịch
+    // Hiển thị loading trong modal body
     const modalView = document.getElementById("kinhdich-image-view");
     if (modalView) {
       modalView.innerHTML = '<div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;"><div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;"><div id="kinhdich-live-card" style="width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0;">' + html + '</div></div></div>';
-      const liveCard = document.getElementById("kinhdich-live-card");
-      if (liveCard) {
-        const tb = liveCard.querySelector(".dq-download-toolbar");
-        if (tb) tb.style.display = "none";
-      }
       if (typeof window.fitKinhDichModalLiveBoard === "function") {
         window.fitKinhDichModalLiveBoard();
         requestAnimationFrame(function() { window.fitKinhDichModalLiveBoard(); });
@@ -5639,9 +5634,6 @@ function initEventHandlers() {
     }
 
     // Kết xuất đồ bản thành ảnh PNG độ nét cao đưa vào Modal
-    if (typeof renderKinhDichBoardToImage === 'function') {
-      renderKinhDichBoardToImage();
-    }
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search

@@ -1180,25 +1180,26 @@
       </div>
     `;
 
-    // Hiển thị hoạt ảnh đang an sao & kết xuất đồ bản trong Modal Body
+    // Đưa ngay đồ bản Lá Số Tứ Trụ hoàn chỉnh vào Modal để hiển thị sắc nét tức thì, không bị trễ hay màn hình trắng
     const modalView = document.getElementById('tutru-image-view');
     if (modalView) {
       const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
       if (modalBody) {
+        modalBody.style.overflowY = 'auto';
+        modalBody.style.display = 'block';
         modalBody.scrollTop = 0;
-        modalBody.style.overflow = 'hidden';
       }
-      modalView.scrollTop = 0;
-      modalView.style.overflow = 'hidden';
-      modalView.innerHTML = `
-        <div style="padding: 48px 0; text-align: center;">
-          <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
-          <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an 4 Trụ, Thập Thần, Đại Vận &amp; kết xuất đồ bản…</div>
-        </div>
-      `;
+      modalView.style.overflow = 'visible';
+      modalView.style.height = 'auto';
+      modalView.style.display = 'block';
+      modalView.style.padding = '12px 10px 24px';
+      const cardEl = container ? container.querySelector('.tt-laso-card') : null;
+      if (cardEl) {
+        modalView.innerHTML = '<div class="tt-laso-wrapper-direct" style="width: 100%; max-width: 1060px; margin: 0 auto; box-sizing: border-box; overflow-x: auto; -webkit-overflow-scrolling: touch;">' + cardEl.outerHTML + '</div>';
+      }
     }
 
-    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào #tutru-modal
+    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào bộ nhớ đệm
     if (typeof window.renderTuTruBoardToImage === 'function') {
       window.renderTuTruBoardToImage();
     }
@@ -1214,63 +1215,57 @@
     const selHour = document.getElementById('tt-gio');
     const selMin = document.getElementById('tt-phut');
 
-    if (selDay) {
-      const curVal = parseInt(selDay.value, 10) || 16;
-      selDay.innerHTML = '';
+    if (selDay && selDay.options.length === 0) {
       for (let i = 1; i <= 31; i++) {
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = i < 10 ? '0' + i : '' + i;
-        if (i === curVal) opt.selected = true;
+        if (i === 16) opt.selected = true;
         selDay.appendChild(opt);
       }
     }
 
-    if (selMonth) {
-      const curVal = parseInt(selMonth.value, 10) || 6;
-      selMonth.innerHTML = '';
+    if (selMonth && selMonth.options.length === 0) {
       for (let i = 1; i <= 12; i++) {
         const opt = document.createElement('option');
         opt.value = i;
         opt.textContent = 'Tháng ' + (i < 10 ? '0' + i : '' + i);
-        if (i === curVal) opt.selected = true;
+        if (i === 6) opt.selected = true;
         selMonth.appendChild(opt);
       }
     }
 
-    if (selYear) {
-      const curVal = parseInt(selYear.value, 10) || 1976;
+    if (selYear && (selYear.options.length < 50 || selYear.options[0]?.value !== '2100')) {
+      const currentVal = parseInt(selYear.value, 10) || 1976;
       selYear.innerHTML = '';
       for (let y = 2100; y >= 1930; y--) {
         const opt = document.createElement('option');
         opt.value = y;
         opt.textContent = 'Năm ' + y;
-        if (y === curVal) opt.selected = true;
+        if (y === currentVal) opt.selected = true;
         selYear.appendChild(opt);
       }
     }
 
-    if (selHour) {
-      const curVal = parseInt(selHour.value, 10) || 12;
-      selHour.innerHTML = '';
+    if (selHour && selHour.options.length === 0) {
       for (let h = 0; h <= 23; h++) {
         const opt = document.createElement('option');
         opt.value = h;
         opt.textContent = (h < 10 ? '0' + h : '' + h) + ' giờ';
-        if (h === curVal) opt.selected = true;
+        if (h === 12) opt.selected = true;
         selHour.appendChild(opt);
       }
     }
 
-    if (selMin) {
-      const curVal = parseInt(selMin.value, 10) || 30;
+    if (selMin && selMin.options.length < 50) {
+      const currentMin = parseInt(selMin.value, 10) || 30;
       selMin.innerHTML = '';
       for (let mi = 0; mi <= 59; mi++) {
         const opt = document.createElement('option');
         opt.value = mi;
         const txt = mi < 10 ? '0' + mi : '' + mi;
         opt.textContent = txt + ' phút';
-        if (mi === curVal) opt.selected = true;
+        if (mi === currentMin) opt.selected = true;
         selMin.appendChild(opt);
       }
     }
@@ -1328,35 +1323,8 @@
    * Giữ nguyên 100% cấu trúc, tự động co ảnh vừa vặn mọi kích thước màn hình
    */
   async function renderTuTruBoardToImage() {
-    const view = document.getElementById('tutru-image-view');
-    const staging = document.getElementById('tutru-render-staging');
-    const sheet = (staging && staging.querySelector('.tt-laso-card'))
-               || document.querySelector('#tutru-output-container .tt-laso-card')
-               || document.querySelector('.tt-laso-card');
-
-    if (!sheet) {
-      console.warn('Không tìm thấy element đồ bản Tứ Trụ để chụp ảnh');
-      return;
-    }
-
-    const fallbackToLiveBoard = (note) => {
-      if (!view || !staging) return;
-      staging.style.position = 'static';
-      staging.style.left = 'auto';
-      staging.style.top = 'auto';
-      staging.style.opacity = '1';
-      staging.style.pointerEvents = 'auto';
-      staging.style.width = '100%';
-      staging.style.maxWidth = '1060px';
-      staging.style.margin = '0 auto';
-      view.innerHTML = note ? `<p style="margin-bottom: 12px; font-size: 13px; color: #B45309; text-align: center;">${note}</p>` : '';
-      view.appendChild(staging);
-    };
-
-    if (typeof html2canvas !== 'function') {
-      fallbackToLiveBoard();
-      return;
-    }
+    const cardEl = document.querySelector('#tutru-modal .tt-laso-card') || document.querySelector('#tutru-output-container .tt-laso-card');
+    if (!cardEl || typeof html2canvas !== 'function') return;
 
     try {
       if (document.fonts && document.fonts.ready) {
@@ -1364,84 +1332,17 @@
       }
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-      const targetWidth = 1060;
-      const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1450;
-
-      const canvas = await html2canvas(sheet, {
+      const canvas = await html2canvas(cardEl, {
         scale: 2,
         useCORS: true,
         backgroundColor: '#FFFDF9',
-        logging: false,
-        scrollX: 0,
-        scrollY: 0,
-        x: 0,
-        y: 0,
-        width: targetWidth,
-        height: targetHeight,
-        windowWidth: 1180,
-        windowHeight: Math.max(targetHeight + 200, 2000),
-        onclone: (clonedDoc) => {
-          if (clonedDoc.body) {
-            clonedDoc.body.style.zoom = '1';
-            clonedDoc.body.style.transform = 'none';
-          }
-          if (clonedDoc.documentElement) {
-            clonedDoc.documentElement.style.zoom = '1';
-            clonedDoc.documentElement.style.transform = 'none';
-          }
-          const s = clonedDoc.getElementById('tutru-render-staging');
-          if (s) {
-            s.style.position = 'static';
-            s.style.left = '0';
-            s.style.top = '0';
-            s.style.opacity = '1';
-            s.style.width = '1060px';
-            s.style.maxWidth = '1060px';
-            s.style.margin = '0';
-          }
-          const card = clonedDoc.querySelector('.tt-laso-card');
-          if (card) {
-            card.style.width = '1060px';
-            card.style.maxWidth = '1060px';
-            card.style.margin = '0';
-            card.style.overflow = 'visible';
-          }
-          const daivan = clonedDoc.querySelector('.tt-daivan-wrapper');
-          if (daivan) {
-            daivan.style.overflow = 'visible';
-            daivan.style.width = '100%';
-            daivan.style.maxWidth = '100%';
-          }
-          const luunien = clonedDoc.querySelector('.tt-luunien-container');
-          if (luunien) {
-            luunien.style.overflow = 'visible';
-            luunien.style.width = '100%';
-            luunien.style.maxWidth = '100%';
-          }
-          const luunienTable = clonedDoc.querySelector('.tt-luunien-table');
-          if (luunienTable) {
-            luunienTable.style.width = '100%';
-            luunienTable.style.maxWidth = '100%';
-            luunienTable.style.tableLayout = 'fixed';
-          }
-        }
+        logging: false
       });
 
       cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
-
-      if (view) {
-        view.innerHTML = `<img src="${cachedTuTruDataUrl}" alt="Bản đồ Lá Số Tứ Trụ" class="tuvi-board-img">`;
-        view.scrollTop = 0;
-      }
-      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
-      if (modalBody) {
-        modalBody.scrollTop = 0;
-        modalBody.style.overflow = 'hidden';
-      }
     } catch (err) {
-      console.error('Lỗi khi xuất ảnh Lá Số Tứ Trụ:', err);
-      fallbackToLiveBoard();
+      console.warn('Lỗi khi chuẩn bị ảnh Tứ Trụ:', err);
     }
   }
 
