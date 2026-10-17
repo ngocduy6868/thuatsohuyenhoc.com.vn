@@ -3959,7 +3959,37 @@
     window.moLapLaSoTuVi = moLapLaSoTuVi;
 
     function sanitizeXemNgayStorage() {
-      // Bảo tồn 100% dữ liệu và ID của người dùng đã chỉnh sửa, tuyệt đối không tự ý đổi ID hay can thiệp vào bài viết
+      try {
+        var nowMax = Date.now() + 60000;
+        ["XEMNGAY_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+          var raw = localStorage.getItem(k);
+          if (raw) {
+            var list = JSON.parse(raw);
+            if (Array.isArray(list)) {
+              var changed = false;
+              list.forEach(function(item) {
+                if (item && item.id === "xem-ngay-an-tang-dao-hieu") {
+                  if (item.chuyenMuc !== "Xem ngày an táng") {
+                    item.chuyenMuc = "Xem ngày an táng";
+                    changed = true;
+                  }
+                  if (item.tieuDe && (item.tieuDe.indexOf("Cải Táng") !== -1 || item.tieuDe.indexOf("C?i Tng") !== -1)) {
+                    item.tieuDe = "Xem Ngày An Táng";
+                    changed = true;
+                  }
+                  if (Number(item.updatedAt) > nowMax) {
+                    item.updatedAt = 1792020983905;
+                    changed = true;
+                  }
+                }
+              });
+              if (changed) {
+                localStorage.setItem(k, JSON.stringify(list));
+              }
+            }
+          }
+        });
+      } catch(e) {}
     }
     try { sanitizeXemNgayStorage(); } catch(e) {}
 
@@ -4016,29 +4046,26 @@
 
       var target = null;
 
-      // 1. Tìm trong bài viết do người dùng cập nhật / tạo mới (ưu tiên bài mới nhất):
-      // 1.1 Khớp chính xác tuyệt đối tên chuyên mục
-      target = customPosts.find(function(p) {
-        if (!p) return false;
-        return normCat(p.chuyenMuc) === targetKey;
-      });
-
-      // 1.2 Khớp theo ID chuẩn chuyên mục
-      if (!target && defaultId) {
+      // 1. ƯU TIÊN TUYỆT ĐỐI THEO ID CHUẨN CỦA MỤC ĐƯỢC CHỌN (ĐẢM BẢO XEM NGÀY TỐT LUÔN RA BÀI XEM NGÀY TỐT):
+      if (defaultId) {
         target = customPosts.find(function(p) {
           return p && p.id === defaultId;
         });
+        if (!target) {
+          target = defPosts.find(function(p) {
+            return p && p.id === defaultId;
+          });
+        }
       }
 
-      // 2. Lấy trong dữ liệu hệ thống chuẩn:
-      // 2.1 Khớp theo ID chuẩn từ window.XEMNGAY_BAI_VIET_DATA
-      if (!target && defaultId) {
-        target = defPosts.find(function(p) {
-          return p && p.id === defaultId;
+      // 2. NẾU KHÔNG CÓ DEFAULT ID HOẶC CHƯA TÌM THẤY: TÌM THEO TÊN CHUYÊN MỤC
+      if (!target) {
+        target = customPosts.find(function(p) {
+          if (!p) return false;
+          return normCat(p.chuyenMuc) === targetKey;
         });
       }
 
-      // 2.2 Khớp chính xác tuyệt đối tên chuyên mục
       if (!target) {
         target = defPosts.find(function(p) {
           return p && normCat(p.chuyenMuc) === targetKey;

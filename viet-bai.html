@@ -4991,6 +4991,45 @@
           }
         } catch(e) {}
       });
+
+      // Tự động chuẩn hóa bài Xem Ngày An Táng để không bao giờ bị dính nhầm chuyên mục XEM NGÀY TỐT hay tiêu đề cũ
+      ["XEMNGAY_BAI_VIET_CUSTOM", "BAI_VIET_CHUYEN_MUC_CUSTOM"].forEach(function(k) {
+        try {
+          var raw = localStorage.getItem(k);
+          if (raw) {
+            var arr = JSON.parse(raw);
+            if (Array.isArray(arr) && arr.length > 0) {
+              if (k === "BAI_VIET_CHUYEN_MUC_CUSTOM") {
+                var filtered = arr.filter(function(item) { return !item || item.id !== "xem-ngay-an-tang-dao-hieu"; });
+                if (filtered.length !== arr.length) {
+                  localStorage.setItem(k, JSON.stringify(filtered));
+                }
+              } else {
+                var changed = false;
+                arr.forEach(function(item) {
+                  if (item && item.id === "xem-ngay-an-tang-dao-hieu") {
+                    if (item.chuyenMuc !== "Xem ngày an táng") {
+                      item.chuyenMuc = "Xem ngày an táng";
+                      changed = true;
+                    }
+                    if (item.tieuDe && (item.tieuDe.indexOf("Cải Táng") !== -1 || item.tieuDe.indexOf("C?i Tng") !== -1)) {
+                      item.tieuDe = "Xem Ngày An Táng";
+                      changed = true;
+                    }
+                    if (Number(item.updatedAt) > nowMax) {
+                      item.updatedAt = 1792020983905;
+                      changed = true;
+                    }
+                  }
+                });
+                if (changed) {
+                  localStorage.setItem(k, JSON.stringify(arr));
+                }
+              }
+            }
+          }
+        } catch(e) {}
+      });
     }
     try { sanitizeAllStorage(); } catch(e) {}
 
@@ -5264,6 +5303,12 @@
             p.chuyenMuc = "Xem ngày xuất hành";
             p.hinhAnh = "Ảnh Bài Viết Khung 16-9/Xem Ngày Xuất Hành.png";
           }
+          if (p.id === "xem-ngay-an-tang-dao-hieu") {
+            p.chuyenMuc = "Xem ngày an táng";
+            if (p.tieuDe && (p.tieuDe.indexOf("Cải Táng") !== -1 || p.tieuDe.indexOf("C?i Tng") !== -1)) {
+              p.tieuDe = "Xem Ngày An Táng";
+            }
+          }
           combined.push(p);
           ids.add(p.id);
         }
@@ -5276,6 +5321,12 @@
             p.chuyenMuc = "Xem ngày xuất hành";
             if (!p.hinhAnh || p.hinhAnh.includes("phongthuy_coxua")) {
               p.hinhAnh = "assets/images/banner_xem_ngay_xuat_hanh.png";
+            }
+          }
+          if (p.id === "xem-ngay-an-tang-dao-hieu") {
+            p.chuyenMuc = "Xem ngày an táng";
+            if (p.tieuDe && (p.tieuDe.indexOf("Cải Táng") !== -1 || p.tieuDe.indexOf("C?i Tng") !== -1)) {
+              p.tieuDe = "Xem Ngày An Táng";
             }
           }
           combined.push(p);
@@ -5352,6 +5403,14 @@
 
         let editingId = forceNew ? "" : (document.getElementById("editing-post-id") ? document.getElementById("editing-post-id").value.trim() : "");
         const statusEl = document.getElementById("save-status-indicator");
+
+        if (editingId === "xem-ngay-an-tang-dao-hieu" || (title && (title.indexOf("An Táng") !== -1 || title.indexOf("Cải Táng") !== -1))) {
+          if (cat === "XEM NGÀY TỐT" || !cat || cat.indexOf("an táng") === -1) {
+            cat = "Xem ngày an táng";
+            const inpCat = document.getElementById("inp-selected-cat");
+            if (inpCat) inpCat.value = cat;
+          }
+        }
 
         // 1. Tự động lấy tiêu đề từ khung soạn thảo nếu người dùng chưa nhập ở ô trên
         if (!title) {
@@ -5893,6 +5952,12 @@
       } catch(e) {}
 
       document.getElementById("editing-post-id").value = p.id;
+      if (p.id === "xem-ngay-an-tang-dao-hieu") {
+        if (!p.tieuDe || p.tieuDe.indexOf("Cải Táng") !== -1 || p.tieuDe.indexOf("C?i") !== -1) {
+          p.tieuDe = "Xem Ngày An Táng";
+        }
+        p.chuyenMuc = "Xem ngày an táng";
+      }
       document.getElementById("inp-title").value = p.tieuDe || "";
       
       const normPcm = (p.chuyenMuc || "").normalize("NFC").trim().toLowerCase();

@@ -447,20 +447,20 @@ window.XEMNGAY_BAI_VIET_DATA = [
   },
   {
     "id": "xem-ngay-an-tang-dao-hieu",
-    "tieuDe": "Cải Táng Theo Quan Niệm Dân Gian",
-    "chuyenMuc": "XEM NGÀY TỐT",
+    "tieuDe": "Xem Ngày An Táng",
+    "chuyenMuc": "Xem ngày an táng",
     "tacGia": "Thầy Duy Tâm Phúc",
     "ngayDang": "16/10/2026",
     "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt An Táng.jpeg",
     "noiBat": true,
-    "uuTienFeed": 1,
+    "uuTienFeed": 14,
     "tomTat": "Cải táng, còn được gọi là bốc mộ hoặc sang cát, là một phong tục mai táng truyền thống đã tồn tại lâu đời trong văn hóa của người Việt, thể hiện đạo hiếu và sự tôn kính tổ tiên.",
     "noiDung": `
       <h3>1. Ý nghĩa của phong tục cải táng</h3>
-      <p>Cải táng, còn được gọi là bốc mộ hoặc sang cát, là một phong tục mai táng truyền thống đã tồn tại lâu đời trong văn hóa của người Việt. Đây không chỉ là việc quy tập hài cốt người thân về nơi an nghỉ vĩnh hằng mà còn là dịp để con cháu bày tỏ lòng hiếu kính, tri ấn cội nguồn tổ tiên.</p>
+      <p>Cải táng, còn được gọi là bốc mộ hoặc sang cát, là một phong tục mai táng truyền thống đã tồn tại lâu đời trong văn hóa của người Việt. Đây không chỉ là việc quy tập hài cốt người thân về nơi an nghỉ vĩnh hằng mà còn là dịp để con cháu bày tỏ lòng hiếu kính, tri ân cội nguồn tổ tiên.</p>
       <h3>2. Thời điểm và trạch nhật cải táng</h3>
       <p>Thời điểm cải táng thường được tiến hành vào những tháng cuối năm (từ tháng 9 đến tháng Chạp Âm lịch), khi thời tiết hanh khô, mát mẻ. Việc chọn ngày giờ bốc mộ cần hết sức cẩn trọng, tránh những ngày giờ phạm Trùng Tang, Tam Tang, Thụ Tử hoặc xung khắc với tuổi của người mất và trưởng nam.</p>
     `,
-    "updatedAt": 1795200000000
+    "updatedAt": 1792020983905
   }
 ];
