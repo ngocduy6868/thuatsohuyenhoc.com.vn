@@ -4452,6 +4452,21 @@
               var changed = false;
               var sanitized = arr.filter(function(p) {
                 if (!p) return false;
+                // Tự động sửa triệt để lỗi chính tả Đấu Năm -> Đầu Năm
+                if (p.chuyenMuc && p.chuyenMuc.indexOf("Đấu Năm") !== -1) {
+                  p.chuyenMuc = p.chuyenMuc.replace(/Đấu Năm/g, "Đầu Năm");
+                  changed = true;
+                }
+                if (p.tieuDe && p.tieuDe.indexOf("Đấu Năm") !== -1) {
+                  p.tieuDe = p.tieuDe.replace(/Đấu Năm/g, "Đầu Năm");
+                  changed = true;
+                }
+                // Nếu bản ghi bị lỗi font Mojibake (KhÃ¡i, XÃ´ng, Ã , á»)
+                var strP = JSON.stringify(p);
+                if (strP.indexOf("KhÃ¡i") !== -1 || strP.indexOf("XÃ´ng") !== -1 || strP.indexOf("Ã ") !== -1 || strP.indexOf("á»") !== -1) {
+                  changed = true;
+                  return false; // Loại bỏ bản ghi lỗi để hệ thống tự nạp từ kho chuẩn vật lý UTF-8
+                }
                 if (p.id === "tuvi-ngay-12-con-giap") {
                   var cm = (p.chuyenMuc || "").toLowerCase();
                   var tt = (p.tieuDe || "").toLowerCase();

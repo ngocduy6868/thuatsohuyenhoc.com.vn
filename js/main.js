@@ -3137,14 +3137,12 @@ function initEventHandlers() {
       }
     }
 
-    if (!post) return;
-
-    // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Tr?ch Nh?t hoặc bị lưu bản rút gọn trong cookie/storage
+    // Tự động kiểm tra và phục hồi nếu bài viết bị lỗi font / ký tự lạ \uFFFD / Mojibake hoặc bị lưu bản rút gọn trong cookie/storage
     const fullText = (post.tieuDe || "") + " " + (post.noiDung || "") + " " + (post.tomTat || "");
-    const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || fullText.indexOf("Tr?ch Nh?t") !== -1;
-    const isUserEdited = (Number(post.updatedAt) || 0) > 1792020983905;
+    const isCorrupted = fullText.indexOf("\uFFFD") !== -1 || fullText.indexOf("Tr?ch Nh?t") !== -1 || fullText.indexOf("KhÃ¡i") !== -1 || fullText.indexOf("XÃ´ng") !== -1 || fullText.indexOf("Ã ") !== -1 || fullText.indexOf("á»") !== -1 || fullText.indexOf("Ã©") !== -1;
+    const isUserEdited = (Number(post.updatedAt) || 0) > 1792020983905 && !isCorrupted;
     const backupMaster = window.ORIGINAL_RECOVERED_ARTICLES_BACKUP || window.DEFAULT_RECOVERED_ARTICLES_FALLBACK;
-    if (!isUserEdited && backupMaster && post && post.id) {
+    if (backupMaster && post && post.id && (!isUserEdited || isCorrupted)) {
       let cleanBackup = null;
       const backupKeys = [
         "TUVI_BAI_VIET_CUSTOM", "XEMNGAY_BAI_VIET_CUSTOM", "XEMTUOI_BAI_VIET_CUSTOM",
@@ -3192,6 +3190,11 @@ function initEventHandlers() {
     let dispCat = post.chuyenMuc || "Chuyên Mục";
     let dispTitle = post.tieuDe || "";
     let dispContent = post.noiDung || post.tomTat || "";
+
+    // Sửa triệt để lỗi chính tả nếu có
+    dispCat = dispCat.replace(/Đấu Năm/g, "Đầu Năm");
+    dispTitle = dispTitle.replace(/Đấu Năm/g, "Đầu Năm");
+    dispContent = dispContent.replace(/Đấu Năm/g, "Đầu Năm");
 
     if (post.id === 'tuvi-12-con-giap-dau-nam') {
       dispCat = `Tử Vi ${namActive}`;
@@ -3243,7 +3246,8 @@ function initEventHandlers() {
           clickHandler = function() { window.location.href = "XEM TỬ VI & XÔNG ĐẤT ĐẦU NĂM/tu-vi-theo-thang.html"; };
         }
 
-        imgWrap.innerHTML = '<img id="modal-post-img" src="' + modalImgSrc.trim() + '" alt="" style="width: 100%; max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.12); cursor: ' + cursorStyle + ';"' + (titleAttr ? ' title="' + titleAttr + '"' : '') + '>';
+        const safeImgSrc = modalImgSrc.trim();
+        imgWrap.innerHTML = '<img id="modal-post-img" src="' + safeImgSrc + '" alt="" style="width: 100%; max-width: 100%; height: auto; display: block; margin: 0 auto; border-radius: 8px; border: none; box-shadow: 0 4px 15px rgba(0,0,0,0.12); cursor: ' + cursorStyle + ';"' + (titleAttr ? ' title="' + titleAttr + '"' : '') + '>';
         imgWrap.style.display = "block";
         imgWrap.style.textAlign = "center";
         imgWrap.style.margin = "0 auto 20px auto";
@@ -3251,6 +3255,24 @@ function initEventHandlers() {
         if (newImg) {
           if (clickHandler) newImg.onclick = clickHandler;
           newImg.onerror = function() {
+            var curr = this.getAttribute("src") || "";
+            if (!this.dataset.triedFallback1) {
+              this.dataset.triedFallback1 = "1";
+              if (curr.indexOf("%") === -1 && /[^\x00-\x7F]/.test(curr)) {
+                this.src = encodeURI(curr);
+                return;
+              }
+              if (_pid.indexOf("van-han") !== -1) {
+                this.src = "assets/images/xem_van_han_tu_vi.png";
+                return;
+              }
+            } else if (!this.dataset.triedFallback2) {
+              this.dataset.triedFallback2 = "1";
+              if (_pid.indexOf("van-han") !== -1) {
+                this.src = "Ảnh Bài Viết Khung 16-9/xem_van_han_tu_vi.png";
+                return;
+              }
+            }
             this.onerror = null;
             imgWrap.innerHTML = "";
             imgWrap.style.display = "none";
