@@ -13,8 +13,56 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261015">
+  <link rel="stylesheet" href="css/style.css?v=20261017_social_v2">
   <link rel="stylesheet" href="css/boisim.css">
+  <style id="header-social-critical-css">
+    .quick-category-container {
+      display: flex !important;
+      flex-direction: column !important;
+      position: relative !important;
+    }
+    .header-social-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: clamp(4px, 0.4vw, 6px) !important;
+      margin-top: -6px !important;
+      margin-bottom: 2px !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+    }
+    .header-social-col {
+      display: flex !important;
+      justify-content: center !important;
+      align-items: center !important;
+      width: 100% !important;
+    }
+    .social-circle-badge {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      width: 26px !important;
+      height: 26px !important;
+      border-radius: 50% !important;
+      border: 1.5px solid #DFBA73 !important;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important;
+      transition: transform 0.2s, box-shadow 0.2s !important;
+      flex-shrink: 0 !important;
+      text-decoration: none !important;
+    }
+    .social-circle-badge:hover {
+      transform: translateY(-2px) scale(1.1) !important;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3) !important;
+    }
+    .social-circle-badge.fb {
+      background: #1877F2 !important;
+    }
+    .social-circle-badge.tt {
+      background: #000000 !important;
+    }
+    .social-circle-badge.yt {
+      background: #FFFFFF !important;
+    }
+  </style>
   <script>
     (function() {
       var ua = navigator.userAgent || '';
@@ -194,29 +242,28 @@
         <div class="ancient-seal-wrap" title="Dấu Ấn Cổ Truyền">
           <img src="assets/an_trien.png" alt="Ấn Triện" class="ancient-seal">
         </div>
-        <div class="quick-category-container">
-          <div class="header-social-grid">
-            <div class="header-social-col">
-              <a href="https://www.facebook.com/groups/1813226453368562" target="_blank" class="social-circle-badge fb" title="Facebook">
-                <svg viewBox="0 0 24 24" width="14" height="14" fill="#FFFFFF">
+        <div class="quick-category-container" style="display: flex !important; flex-direction: column !important; position: relative !important;">
+          <div class="header-social-grid" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(4px, 0.4vw, 6px) !important; width: 100% !important; margin-top: -6px !important; margin-bottom: 2px !important; box-sizing: border-box !important;">
+            <div class="header-social-col" style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important;">
+              <a href="https://www.facebook.com/groups/1813226453368562" target="_blank" class="social-circle-badge fb" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 26px !important; height: 26px !important; border-radius: 50% !important; background: #1877F2 !important; border: 1.5px solid #DFBA73 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important; text-decoration: none !important; flex-shrink: 0 !important;" title="Facebook">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF">
                   <path d="M14 13.5h2.5l1-4H14v-2c0-1.03.28-1.5 1.5-1.5h2V2.14c-.87-.12-2.07-.14-3.15-.14-3.14 0-5.35 1.92-5.35 5.5v2H6v4h3v10.5h5V13.5z"/>
                 </svg>
               </a>
             </div>
-            <div class="header-social-col">
-              <a href="https://www.tiktok.com/@duytamphuc" target="_blank" class="social-circle-badge tt" title="TikTok">
-                <svg viewBox="0 0 24 24" width="14" height="14">
+            <div class="header-social-col" style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important;">
+              <a href="https://www.tiktok.com/@duytamphuc" target="_blank" class="social-circle-badge tt" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 26px !important; height: 26px !important; border-radius: 50% !important; background: #000000 !important; border: 1.5px solid #DFBA73 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important; text-decoration: none !important; flex-shrink: 0 !important;" title="TikTok">
+                <svg viewBox="0 0 24 24" width="13" height="13">
                   <path fill="#25F4EE" d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.909 2.879 2.89 2.89 0 0 1-2.894-2.887 2.89 2.89 0 0 1 2.894-2.887c.365 0 .713.072 1.03.203V9.458a6.34 6.34 0 0 0-1.03-.084C5.972 9.374 3.1 12.247 3.1 15.791c0 3.543 2.872 6.417 6.416 6.417 3.544 0 6.418-2.874 6.418-6.417V8.634a8.214 8.214 0 0 0 4.655 1.45V6.686z" style="transform: translate(-0.7px, -0.7px);"/>
                   <path fill="#FE2C55" d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.909 2.879 2.89 2.89 0 0 1-2.894-2.887 2.89 2.89 0 0 1 2.894-2.887c.365 0 .713.072 1.03.203V9.458a6.34 6.34 0 0 0-1.03-.084C5.972 9.374 3.1 12.247 3.1 15.791c0 3.543 2.872 6.417 6.416 6.417 3.544 0 6.418-2.874 6.418-6.417V8.634a8.214 8.214 0 0 0 4.655 1.45V6.686z" style="transform: translate(0.7px, 0.7px);"/>
                   <path fill="#FFFFFF" d="M19.589 6.686a4.793 4.793 0 0 1-3.77-4.245V2h-3.445v13.672a2.896 2.896 0 0 1-2.909 2.879 2.89 2.89 0 0 1-2.894-2.887 2.89 2.89 0 0 1 2.894-2.887c.365 0 .713.072 1.03.203V9.458a6.34 6.34 0 0 0-1.03-.084C5.972 9.374 3.1 12.247 3.1 15.791c0 3.543 2.872 6.417 6.416 6.417 3.544 0 6.418-2.874 6.418-6.417V8.634a8.214 8.214 0 0 0 4.655 1.45V6.686z"/>
                 </svg>
               </a>
             </div>
-            <div class="header-social-col">
-              <a href="https://www.youtube.com/@ngocduy6806" target="_blank" class="social-circle-badge yt" title="YouTube">
-                <svg viewBox="0 0 24 24" width="16" height="16">
-                  <path fill="#FF0000" d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814z"/>
-                  <path fill="#FFFFFF" d="m9.545 15.568 6.273-3.568-6.273-3.568z"/>
+            <div class="header-social-col" style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important;">
+              <a href="https://www.youtube.com/@ngocduy6806" target="_blank" class="social-circle-badge yt" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 26px !important; height: 26px !important; border-radius: 50% !important; background: #FF0000 !important; border: 1.5px solid #DFBA73 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important; text-decoration: none !important; flex-shrink: 0 !important;" title="YouTube">
+                <svg viewBox="0 0 24 24" width="13" height="13" fill="#FFFFFF">
+                  <path d="M8 5v14l11-7z"/>
                 </svg>
               </a>
             </div>
