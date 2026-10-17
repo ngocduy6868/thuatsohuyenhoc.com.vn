@@ -5603,13 +5603,14 @@ function initEventHandlers() {
     }
 
     // Hiển thị loading trong modal body
-    const modalView = document.getElementById("kinhdich-image-view");
+    const modalView = document.getElementById('kinhdich-image-view');
     if (modalView) {
-      modalView.innerHTML = '<div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;"><div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;"><div id="kinhdich-live-card" style="width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0;">' + html + '</div></div></div>';
-      if (typeof window.fitKinhDichModalLiveBoard === "function") {
-        window.fitKinhDichModalLiveBoard();
-        requestAnimationFrame(function() { window.fitKinhDichModalLiveBoard(); });
-      }
+      modalView.innerHTML = `
+        <div style="padding: 48px 0; text-align: center;">
+          <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
+          <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an quẻ, Lục Thân, Lục Thú &amp; kết xuất đồ bản…</div>
+        </div>
+      `;
     }
 
     // Hiển thị nút "Mở Lại Bản Đồ Quẻ Dịch" trên giao diện để người dùng có thể mở lại khi đóng modal (chữ to 1.4, nằm gọn 1 dòng)
@@ -5634,6 +5635,9 @@ function initEventHandlers() {
     }
 
     // Kết xuất đồ bản thành ảnh PNG độ nét cao đưa vào Modal
+    if (typeof renderKinhDichBoardToImage === 'function') {
+      renderKinhDichBoardToImage();
+    }
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search
@@ -5781,7 +5785,7 @@ if (typeof window !== "undefined") {
     try {
       // Đợi font chữ và layout render ổn định
       if (document.fonts && document.fonts.ready) {
-        await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
+        await document.fonts.ready;
       }
       await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
       await new Promise(r => setTimeout(r, 100));
@@ -5790,7 +5794,7 @@ if (typeof window !== "undefined") {
       const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1200;
 
       const canvas = await html2canvas(sheet, {
-        scale: 2,
+        scale: 3,
         useCORS: true,
         backgroundColor: '#FFFFFF',
         scrollX: 0,
