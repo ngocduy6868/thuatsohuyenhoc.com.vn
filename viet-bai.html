@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -20,6 +20,7 @@
   <script src="js/bai_viet_luu_tru_chuan.js?v=20261017_master_final"></script>
   <script src="js/dong_bo_toan_dien.js?v=20261018_v6_final"></script>
   <script src="js/firebase-sync.js?v=20261017_sync10"></script>
+  <script src="js/github_sync_engine.js?v=20261018"></script>
   <style>
     :root {
       --primary-red: #7A1414;
@@ -1097,6 +1098,7 @@
           <button type="button" onclick="if (window.FirebaseSync) { window.FirebaseSync.pushAll().then(ok => { if (ok) alert('☁️ ĐÃ ĐỒNG BỘ TOÀN BỘ BÀI VIẾT LÊN CLOUD FIREBASE!'); else alert('⚠️ Đang kết nối hoặc kiểm tra lại mạng!'); }); }" style="background: #0D5CB6; border: 1.5px solid #DFBA73; padding: 5px 14px; border-radius: 4px; font-size: 13px; font-weight: 800; color: #FFF; cursor: pointer; box-shadow: 0 2px 6px rgba(0,0,0,0.2);" title="Bấm để đồng bộ toàn bộ bài viết lên Cloud Firebase">
             ☁️ Đồng Bộ Cloud
           </button>
+          <button type="button" onclick="moModalXuatBanGitHub()" style="background: linear-gradient(135deg, #7A1414, #B81414); border: 1.5px solid #DFBA73; padding: 5px 16px; border-radius: 4px; font-size: 13px; font-weight: 800; color: #FFE6AA; cursor: pointer; box-shadow: 0 2px 6px rgba(122,20,20,0.35); display: inline-flex; align-items: center; gap: 6px;" title="Xuất bản trực tiếp bài viết lên GitHub để phát sóng tức thì tới Điện thoại &amp; mọi trình duyệt"><span>🚀</span> Xuất Bản Lên GitHub</button>
           <button type="button" onclick="resetFormToNew()" style="background: #FAF3E8; border: 1px solid #DFBA73; padding: 5px 12px; border-radius: 4px; font-size: 12.5px; font-weight: 700; color: #7A1414; cursor: pointer;">
             + Viết Bài Mới
           </button>
