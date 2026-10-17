@@ -5602,15 +5602,27 @@ function initEventHandlers() {
       window.openKinhDichModal();
     }
 
-    // Hiển thị loading trong modal body
+    // Hiển thị đồ bản quẻ dịch tức thì 0 giây (MỘT PHÁT RA LUÔN - chuẩn như bên Tử Vi)
     const modalView = document.getElementById('kinhdich-image-view');
     if (modalView) {
       modalView.innerHTML = `
-        <div style="padding: 48px 0; text-align: center;">
-          <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
-          <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an quẻ, Lục Thân, Lục Thú &amp; kết xuất đồ bản…</div>
+        <div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
+            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFFFF; margin: 0;">
+              <style>
+                #kinhdich-live-card .dq-download-toolbar { display: none !important; }
+                #kinhdich-live-card .dq-cards-row { flex-direction: row !important; }
+                #kinhdich-live-card .dichquai-export-board { width: 1150px !important; min-width: 1150px !important; max-width: 1150px !important; margin: 0 !important; box-shadow: none !important; background-color: #FFFFFF !important; }
+              </style>
+              ${html}
+            </div>
+          </div>
         </div>
       `;
+      if (typeof window.fitKinhDichModalLiveBoard === 'function') {
+        window.fitKinhDichModalLiveBoard();
+        requestAnimationFrame(function() { window.fitKinhDichModalLiveBoard(); });
+      }
     }
 
     // Hiển thị nút "Mở Lại Bản Đồ Quẻ Dịch" trên giao diện để người dùng có thể mở lại khi đóng modal (chữ to 1.4, nằm gọn 1 dòng)
@@ -5740,8 +5752,26 @@ function initEventHandlers() {
   // =========================================================================
   let cachedKinhDichDataUrl = null;
   let cachedKinhDichBlob = null;
-  let cachedKinhDichName = 'Que_Dich';
-
+window.fitKinhDichModalLiveBoard = function() {
+  const box = document.getElementById("kinhdich-scaler-box") || document.getElementById("kinhdich-image-view");
+  const inner = document.getElementById("kinhdich-scaler-inner");
+  const card = document.getElementById("kinhdich-live-card");
+  if (!box || !inner || !card) return;
+  const vw = box.clientWidth || (window.innerWidth > 800 ? 760 : window.innerWidth - 16);
+  const vh = box.clientHeight || (window.innerHeight - 120);
+  if (vw <= 0 || vh <= 0) return;
+  const origW = 1150;
+  const targetCard = card.querySelector(".dichquai-export-board") || card.querySelector(".dq-export-wrapper") || card;
+  const origH = targetCard.scrollHeight || 1350;
+  const scale = Math.min(vw / origW, vh / origH, 1);
+  card.style.transform = "scale(" + scale + ")";
+  card.style.transformOrigin = "0 0";
+  inner.style.width = Math.round(origW * scale) + "px";
+  inner.style.height = Math.round(origH * scale) + "px";
+};
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", function() { if (typeof window.fitKinhDichModalLiveBoard === "function") window.fitKinhDichModalLiveBoard(); });
+}
 
   async function renderKinhDichBoardToImage() {
     const modalView = document.getElementById('kinhdich-image-view');
@@ -5896,6 +5926,10 @@ function initEventHandlers() {
     if (modal) {
       modal.classList.remove('hidden');
       if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
+      if (typeof window.fitKinhDichModalLiveBoard === 'function') {
+        window.fitKinhDichModalLiveBoard();
+        requestAnimationFrame(window.fitKinhDichModalLiveBoard);
+      }
       requestAnimationFrame(adjustKinhDichModalWidth);
       setTimeout(adjustKinhDichModalWidth, 60);
     }

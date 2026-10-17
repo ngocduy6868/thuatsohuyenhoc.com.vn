@@ -1180,6 +1180,25 @@
       </div>
     `;
 
+    // Hiển thị đồ bản Lá Số Tứ Trụ tức thì 0 giây (MỘT PHÁT RA LUÔN - chuẩn như bên Tử Vi)
+    const tutruView = document.getElementById('tutru-image-view');
+    const stagingCard = container.querySelector('.tt-laso-card');
+    if (tutruView && stagingCard) {
+      tutruView.innerHTML = `
+        <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+          <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
+            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFDF9; margin: 0;">
+              ${stagingCard.innerHTML}
+            </div>
+          </div>
+        </div>
+      `;
+      if (typeof window.fitTuTruModalLiveBoard === 'function') {
+        window.fitTuTruModalLiveBoard();
+        requestAnimationFrame(function() { window.fitTuTruModalLiveBoard(); });
+      }
+    }
+
     // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào #tutru-modal
     if (typeof window.renderTuTruBoardToImage === 'function') {
       window.renderTuTruBoardToImage();
@@ -1298,11 +1317,26 @@
   let cachedTuTruBlob = null;
   let cachedTuTruHoTen = '';
 
-  /**
-   * KẾT XUẤT ĐỒ BẢN TỨ TRỤ RA HÌNH ẢNH (html2canvas)
-   * Tương tự cơ chế chuẩn của Lá Số Tử Vi (js/main.js)
-   * Giữ nguyên 100% cấu trúc, tự động co ảnh vừa vặn mọi kích thước màn hình
-   */
+window.fitTuTruModalLiveBoard = function() {
+  const box = document.getElementById("tutru-scaler-box") || document.getElementById("tutru-image-view");
+  const inner = document.getElementById("tutru-scaler-inner");
+  const board = document.getElementById("tutru-live-board");
+  if (!box || !inner || !board) return;
+  const vw = box.clientWidth || (window.innerWidth > 800 ? 760 : window.innerWidth - 16);
+  const vh = box.clientHeight || (window.innerHeight - 120);
+  if (vw <= 0 || vh <= 0) return;
+  const origW = 1060;
+  const origH = board.scrollHeight || 1450;
+  const scale = Math.min(vw / origW, vh / origH, 1);
+  board.style.transform = "scale(" + scale + ")";
+  board.style.transformOrigin = "0 0";
+  inner.style.width = Math.round(origW * scale) + "px";
+  inner.style.height = Math.round(origH * scale) + "px";
+};
+if (typeof window !== "undefined") {
+  window.addEventListener("resize", function() { if (typeof window.fitTuTruModalLiveBoard === "function") window.fitTuTruModalLiveBoard(); });
+}
+
   async function renderTuTruBoardToImage() {
     const view = document.getElementById('tutru-image-view');
     const staging = document.getElementById('tutru-render-staging');
@@ -1582,6 +1616,10 @@
     const modal = document.getElementById('tutru-modal');
     if (modal) modal.classList.remove('hidden');
     if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
+    if (typeof window.fitTuTruModalLiveBoard === 'function') {
+      window.fitTuTruModalLiveBoard();
+      requestAnimationFrame(window.fitTuTruModalLiveBoard);
+    }
   };
 
   window.closeTuTruModal = function () {
