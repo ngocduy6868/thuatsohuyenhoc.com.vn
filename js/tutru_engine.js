@@ -1057,6 +1057,15 @@
     }
 
     // 2. Hiển thị hoạt ảnh đang an sao & kết xuất đồ bản trong Modal Body
+    const modalView = document.getElementById('tutru-image-view');
+    if (modalView) {
+      modalView.innerHTML = `
+        <div style="padding: 48px 0; text-align: center;">
+          <i class="fa-solid fa-circle-notch fa-spin text-[#8B1E1E]" style="font-size: 28px; color: #8B1E1E;"></i>
+          <div style="margin-top: 12px; font-size: 13px; color: #78716C; font-weight: 500;">Đang an 4 Trụ, Thập Thần, Đại Vận &amp; kết xuất đồ bản…</div>
+        </div>
+      `;
+    }
 
     // Cập nhật thông tin Đương Số lên thanh tiêu đề Modal
     const subTitleEl = document.getElementById('tutru-modal-subtitle') || document.querySelector('#tutru-modal .tuvi-modal-subtitle');
@@ -1171,18 +1180,15 @@
       </div>
     `;
 
-    const modalView = document.getElementById("tutru-image-view");
-    if (modalView) {
-      var cardEl = document.querySelector("#tutru-render-staging .tt-laso-card");
-      var cardHtml = cardEl ? cardEl.outerHTML : (container ? container.innerHTML : "");
-      modalView.innerHTML = '<div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;"><div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;"><div id="tutru-live-card" style="width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0;">' + cardHtml + '</div></div></div>';
-      if (typeof window.fitTuTruModalLiveBoard === "function") {
-        window.fitTuTruModalLiveBoard();
-        requestAnimationFrame(function() { window.fitTuTruModalLiveBoard(); });
-      }
+    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào #tutru-modal
+    if (typeof window.renderTuTruBoardToImage === 'function') {
+      window.renderTuTruBoardToImage();
     }
   }
 
+  /**
+   * KHỞI TẠO FORM & TƯƠNG TÁC
+   */
   function khoiTaoFormTuTru() {
     const selDay = document.getElementById('tt-ngay');
     const selMonth = document.getElementById('tt-thang');
@@ -1330,7 +1336,7 @@
 
     try {
       if (document.fonts && document.fonts.ready) {
-        await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
+        await document.fonts.ready;
       }
       await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
@@ -1415,10 +1421,9 @@
    */
   async function downloadTuTruImage() {
     if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
-      if (typeof window.renderTuTruBoardToImage === "function") {
-        if (typeof showToast === "function") showToast("Dang tao anh chat luong cao de tai ve...");
-        await window.renderTuTruBoardToImage();
-      }
+      if (typeof showToast === 'function') showToast('Chưa có ảnh lá số để tải về!');
+      else alert('Chưa có ảnh lá số để tải về!');
+      return;
     }
     const hoTen = (cachedTuTruHoTen || document.getElementById('tt-hoten')?.value || 'Thân_Chủ').trim();
     const fileName = `La_So_Tu_Tru_${hoTen.replace(/\s+/g, '_')}.png`;
