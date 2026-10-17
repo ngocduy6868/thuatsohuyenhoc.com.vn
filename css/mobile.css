@@ -1336,25 +1336,118 @@
     box-sizing: border-box !important;
   }
 
+  .dq-download-toolbar {
+    width: 1150px !important;
+    min-width: 1150px !important;
+    max-width: 1150px !important;
+    margin: 0 auto 10px !important;
+    box-sizing: border-box !important;
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    flex-wrap: nowrap !important;
+  }
+
   .dichquai-export-board {
     width: 1150px !important;
-    min-width: 1050px !important;
+    min-width: 1150px !important;
     max-width: 1150px !important;
     margin: 0 auto !important;
     box-sizing: border-box !important;
     padding: 12px 18px 14px !important;
+    background-color: #FFFFFF !important;
+    background-image: none !important;
+    border: 2.5px solid #8B1E1E !important;
+    border-radius: 4px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08) !important;
   }
 
   .dq-header {
+    display: flex !important;
     flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
     text-align: left !important;
     gap: 10px !important;
+    border-bottom: 2px solid #8B1E1E !important;
+    padding-bottom: 7px !important;
+    margin-bottom: 9px !important;
+  }
+
+  .dq-header-logo-wrap {
+    width: 66px !important;
+    height: 66px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .dq-header-center {
+    flex: 1 1 auto !important;
+    text-align: center !important;
+  }
+
+  .dq-header-right {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .dq-calligraphy-col {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: center !important;
+    line-height: 1.15 !important;
+  }
+
+  .dq-seal-wrap {
+    width: 60px !important;
+    height: 60px !important;
+    flex-shrink: 0 !important;
+  }
+
+  .dq-info-box {
+    width: 100% !important;
+    border: 2px solid #000000 !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dq-info-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
   }
 
   .dq-cards-row {
+    display: flex !important;
     flex-direction: row !important;
+    justify-content: center !important;
     gap: 32px !important;
     flex-wrap: nowrap !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dq-card-box {
+    width: 250px !important;
+    min-width: 250px !important;
+    flex-shrink: 0 !important;
+    padding: 8px 14px 6px !important;
+    border: 2px solid #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  .dq-table-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin-bottom: 10px !important;
+  }
+
+  .dq-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+    border-collapse: collapse !important;
+    border: 2px solid #000000 !important;
   }
 
   /* -------------------------------------------------------------------------

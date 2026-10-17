@@ -6627,10 +6627,10 @@ ul {
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
-/* Modal Tứ Trụ popup: Đồng bộ kích thước chuẩn theo khung Tứ Trụ */
+/* Modal Tứ Trụ popup: Đồng bộ kích thước chuẩn 100% theo khung Tử Vi & Kinh Dịch (Ảnh 2) */
 #tutru-modal .tuvi-modal-dialog {
-  width: min(96vw, 1050px) !important;
-  max-width: 1050px !important;
+  width: min(96vw, 680px) !important;
+  max-width: 680px !important;
   height: min(94vh, 920px) !important;
   max-height: 94vh !important;
   padding: 6px 12px 8px 12px !important;
