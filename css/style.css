@@ -6827,12 +6827,14 @@ ul {
 
 /* BANNER HEADER */
 .lvs-header-banner {
-  background: #FFFDF8 url('../assets/banner_lich_van_su_clean.png') center center / 100% 100% no-repeat;
+  background: #FFFDF8 url('../assets/banner_lich_van_su_clean.png') center center / cover no-repeat;
   border-radius: 12px;
   border: 1.5px solid #821010;
   box-shadow: 0 4px 14px rgba(110, 14, 14, 0.12);
   width: 100%;
   aspect-ratio: 1024 / 171;
+  min-height: 110px;
+  flex-shrink: 0;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
