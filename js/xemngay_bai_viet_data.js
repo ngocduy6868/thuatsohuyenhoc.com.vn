@@ -1,461 +1,184 @@
-/**
- * =======================================================================================
- * DỮ LIỆU BÀI VIẾT XEM NGÀY (TRẠCH NHẬT) - 14 MỤC LỤC CHUYÊN SÂU HOÀN CHỈNH 100%
- * Dự án: Thuật Số Huyền Học
- * =======================================================================================
- */
-
-window.XEMNGAY_SUB_CATS = [
-  "XEM NGÀY TỐT",
-  "Xem ngày mua xe",
-  "Xem ngày xuất hành",
-  "Xem ngày tốt kết hôn",
-  "Xem ngày hoàng đạo",
-  "Xem ngày động thổ",
-  "Xem ngày tốt xây dựng",
-  "Xem ngày đổ trần, lợp mái",
-  "Xem ngày nhập trạch nhà mới",
-  "Xem ngày mua nhà",
-  "Xem ngày khai trương",
-  "Xem ngày ký hợp đồng",
-  "Xem ngày tốt nhận chức",
-  "Xem ngày an táng"
-];
-
-window.XEMNGAY_BAI_VIET_DATA = [
-  {
-    "id": "xem-ngay-tot-tong-quan",
-    "tieuDe": "Bí Quyết Chọn Ngày Lành Tháng Tốt: Nghênh Cát Tránh Hung Theo Đổng Công Tuyển Trạch",
-    "chuyenMuc": "XEM NGÀY TỐT",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "15/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt.png",
-    "noiBat": true,
-    "uuTienFeed": 1,
-    "tomTat": "Hướng dẫn tổng quan về thuật trạch nhật cổ truyền, phương pháp phối hợp Thiên Can, Địa Chi, Ngũ Hành, Nhị Thập Bát Tú và hệ thống Thần Sát để lựa chọn ngày đại cát khởi sự bình an.",
-    "noiDung": `
-      <h3>1. Ý nghĩa sâu sắc của việc chọn ngày lành tháng tốt</h3>
-      <p>Từ ngàn xưa, người phương Đông đã đúc kết quan niệm <strong>“Thiên thời – Địa lợi – Nhân hòa”</strong>, trong đó “Thiên thời” được xem là một trong những yếu tố quan trọng nhất khi bắt đầu những công việc lớn. Thuật <strong>Trạch Nhật – chọn ngày, chọn giờ</strong> được hình thành nhằm tìm kiếm thời điểm thuận lợi, hòa nhịp với trường năng lượng của vũ trụ, giúp khởi đầu hanh thông và hạn chế những xung sát bất lợi.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt.png" alt="Bí quyết chọn ngày lành tháng tốt" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Loại bỏ các ngày đại kỵ trong dân gian</h3>
-      <p>Trước tiên, việc chọn ngày tốt phải bắt đầu từ việc loại trừ những ngày mang trường khí xung sát nặng nề:</p>
-      <ul>
-        <li><strong>Ngày Sát Chủ, Thụ Tử:</strong> Ngày đại kỵ cho mọi việc trọng đại, dễ phát sinh trở ngại bất ngờ.</li>
-        <li><strong>Ngày Tam Nương:</strong> Rơi vào các ngày mùng 3, 7, 13, 18, 22 và 27 âm lịch hàng tháng. Cổ nhân khuyên nên tránh khởi sự việc lớn.</li>
-        <li><strong>Ngày Nguyệt Kỵ:</strong> Các ngày mùng 5, 14 và 23 âm lịch ("Mùng năm, mười bốn, hai ba - Đi chơi cũng thiệt nữa là đi buôn").</li>
-        <li><strong>Ngày Dương Công Kỵ Nhật:</strong> Những ngày khí trường suy vi trong năm, không nên tiến hành hôn sự hay động thổ.</li>
-      </ul>
-
-      <h3>3. Ưu tiên ngày Hoàng Đạo và hệ thống Thập Nhị Trực</h3>
-      <p>Sau khi loại bỏ ngày xấu, tiến hành chọn <strong>ngày Hoàng Đạo</strong> được cát tinh soi chiếu (Thanh Long, Minh Đường, Kim Quỹ, Thiên Đức, Ngọc Đường, Tư Mệnh). Đồng thời đối chiếu với <strong>Thập Nhị Trực</strong>: ưu tiên các Trực cát lành như <em>Trực Khai, Trực Kiến, Trực Mãn, Trực Định</em> tùy theo tính chất từng công việc cụ thể.</p>
-
-      <h3>4. Xét sự hòa hợp với bản mệnh và tuổi gia chủ</h3>
-      <p>Một ngày dù đẹp trên lịch chung nhưng nếu xung khắc với Can Chi hoặc Ngũ Hành bản mệnh của gia chủ thì vẫn không được xem là ngày cát:</p>
-      <ul>
-        <li><strong>Ngũ hành tương sinh:</strong> Ngũ hành của ngày nên tương sinh hoặc tỷ hòa với mệnh gia chủ (ví dụ người mệnh Mộc nên chọn ngày Thủy hoặc Mộc).</li>
-        <li><strong>Địa chi hòa hợp:</strong> Tránh ngày có Địa chi xung, hình, hại với tuổi (ví dụ người tuổi Tý tránh chọn ngày Ngọ; người tuổi Dần tránh ngày Thân).</li>
-      </ul>
-
-      <h3>5. Lời khuyên tu tâm dưỡng đức và chuẩn bị chu đáo</h3>
-      <p>Trạch nhật là sự kết hợp hài hòa giữa <strong>ngày – giờ – công việc – tuổi mệnh</strong>. Cổ nhân dạy: <em>"Đức năng thắng số"</em>. Việc xem ngày giờ tốt mang lại sự tự tin, an tâm và chủ động về mặt tâm lý, nhưng yếu tố quyết định thành công bền vững vẫn là sự chuẩn bị kỹ lưỡng, tính minh bạch và lòng chân thành của người thực hiện.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-mua-xe-cat-loi",
-    "tieuDe": "Xem Ngày Mua Xe Hợp Tuổi: Chọn Ngày Cát Tinh Nghênh Tài Khí, Vạn Dặm Bình An",
-    "chuyenMuc": "Xem ngày mua xe",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "15/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Mua Xe.png",
-    "noiBat": true,
-    "uuTienFeed": 2,
-    "tomTat": "Chi tiết các tiêu chí phong thủy khi trạch nhật mua xe ô tô, xe máy: Chọn ngày Đại An, Tốc Hỷ, sao Lộc Tồn để phương tiện luôn mang lại may mắn, tài lộc cho chủ nhân.",
-    "noiDung": `
-      <h3>1. Tầm quan trọng của ngày mua xe trong phong thủy</h3>
-      <p>Trong quan niệm phong thủy truyền thống, chiếc xe không đơn thuần là phương tiện đi lại mà còn là người bạn đồng hành gắn liền với sự an toàn, tính mạng, công danh và tài vận của chủ sở hữu. Chọn ngày mua xe, ngày nhận xe và thời điểm lăn bánh cát lành giúp tâm lý người lái vững vàng, kích hoạt năng lượng bình an và đón nhận nhiều may mắn trên mọi cung đường.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Mua Xe.png" alt="Xem ngày mua xe hợp tuổi" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Các tiêu chí chọn ngày đẹp mua xe và nhận xe</h3>
-      <ul>
-        <li><strong>Chọn ngày Hoàng Đạo:</strong> Ưu tiên các ngày có sao cát như Thiên Mã, Lộc Mã, Phúc Sinh, Thiên Đức chiếu mệnh.</li>
-        <li><strong>Chọn Trực tốt:</strong> Trực Khai (mở mang cát lợi), Trực Mãn (sung túc, viên mãn) hoặc Trực Định (bền vững, ổn định).</li>
-        <li><strong>Tránh các ngày hung tinh:</strong> Tránh ngày có sao Kiếp Sát, Thiên Tặc, Nguyệt Phá, ngày Thụ Tử hoặc Sát Chủ.</li>
-      </ul>
-
-      <h3>3. Đối chiếu tuổi và bản mệnh của chủ xe</h3>
-      <p>Ngày mua xe cần tương sinh với ngũ hành bản mệnh của chủ phương tiện:</p>
-      <ul>
-        <li>Chủ xe mệnh Kim nên chọn ngày hành Thổ hoặc Kim.</li>
-        <li>Chủ xe mệnh Mộc nên chọn ngày hành Thủy hoặc Mộc.</li>
-        <li>Chủ xe mệnh Thủy nên chọn ngày hành Kim hoặc Thủy.</li>
-        <li>Chủ xe mệnh Hỏa nên chọn ngày hành Mộc hoặc Hỏa.</li>
-        <li>Chủ xe mệnh Thổ nên chọn ngày hành Hỏa hoặc Thổ.</li>
-      </ul>
-      <p>Đặc biệt, tránh ngày có Địa Chi tương xung với tuổi của chủ xe (như Tý xung Ngọ, Mão xung Dậu, Dần xung Thân, Tỵ xung Hợi...).</p>
-
-      <h3>4. Chọn khung giờ Hoàng Đạo và hướng lăn bánh xuất hành</h3>
-      <p>Khi nhận xe và đưa xe rời khỏi showroom, việc khởi hành đúng <strong>khung giờ Hoàng Đạo</strong> (như giờ Đại An, Tốc Hỷ, Tiểu Cát) và hướng đầu xe về phía phương vị nghênh Hỷ Thần hoặc Tài Thần sẽ giúp chiếc xe đón nhận luồng sinh khí hanh thông đầu tiên.</p>
-
-      <h3>5. Những lưu ý cần thiết sau khi đưa xe về nhà</h3>
-      <p>Bên cạnh yếu tố phong thủy, chủ xe cần kiểm tra kỹ lưỡng các giấy tờ pháp lý, bảo hiểm, bảo dưỡng kỹ thuật và giữ thái độ điềm tĩnh, tuân thủ luật lệ an toàn giao thông để mỗi chuyến đi đều trọn vẹn bình an.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-xuat-hanh-hanh-thong",
-    "tieuDe": "Xem Ngày Xuất Hành: Định Hướng Hỷ Thần, Tài Thần Để Đi Đến Nơi Về Đến Chốn",
-    "chuyenMuc": "Xem ngày xuất hành",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "14/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Xuất Hành.png",
-    "noiBat": true,
-    "uuTienFeed": 3,
-    "tomTat": "Bảng tra cứu phương vị xuất hành nghênh tiếp Hỷ Thần, Tài Thần; bí quyết tránh Hạc Thần và giờ Không Vong theo Khổng Minh Lục Nhâm khi đi xa, công tác, du xuân.",
-    "noiDung": `
-      <h3>1. Ý nghĩa của thuật xem ngày giờ xuất hành</h3>
-      <p>Xuất hành là bước chân đầu tiên rời khỏi tư gia để bắt đầu một hành trình công tác, du xuân, lập nghiệp hay thương thảo kinh doanh. Thuật trạch nhật xuất hành giúp gia chủ chọn đúng thời khắc và phương vị mang trường năng lượng tương hỗ, giúp chuyến đi thuận buồm xuôi gió, đi đến nơi về đến chốn.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Xuất Hành.png" alt="Xem ngày xuất hành hanh thông" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Phương pháp xác định phương vị Hỷ Thần và Tài Thần</h3>
-      <p>Mỗi ngày theo Thiên Can đều có phương vị thần sát ngự trị riêng:</p>
-      <ul>
-        <li><strong>Hỷ Thần:</strong> Mang lại niềm vui, tin mừng, gia đạo hòa hợp, thuận lợi cho việc cầu duyên, thăm hỏi thân nhân, kết giao bạn bè.</li>
-        <li><strong>Tài Thần:</strong> Chủ về tiền tài, ký kết hợp đồng, giao thương buôn bán phát đạt, thuận lợi cho các chuyến công tác kinh doanh.</li>
-        <li><strong>Hạc Thần:</strong> Phương vị hung tinh chủ về khẩu thiệt, bất trắc dọc đường. Cần tuyệt đối tránh hướng đi đối diện với Hạc Thần.</li>
-      </ul>
-
-      <h3>3. Ứng dụng Khổng Minh Lục Nhâm định giờ cát</h3>
-      <p>Lục Nhâm Đại Độn là phương pháp chọn giờ xuất hành chuẩn xác của Khổng Minh gồm 6 cung:</p>
-      <ul>
-        <li><strong>Đại An:</strong> Cung cát nhất, mọi sự bình an, cầu tài ở hướng Tây Nam, gia đạo yên ổn.</li>
-        <li><strong>Tốc Hỷ:</strong> Điềm lành đến nhanh, nên khởi hành vào buổi sáng sớm, việc công hanh thông.</li>
-        <li><strong>Tiểu Cát:</strong> Gặp may mắn nhỏ, quý nhân tương trợ, mọi sự êm thấm.</li>
-        <li><em>Tránh các giờ:</em> Lưu Niên (dây dưa chậm trễ), Xích Khẩu (dễ sinh cãi vã), Không Vong (hao tổn tiền của).</li>
-      </ul>
-
-      <h3>4. Lời khuyên an toàn khi lên đường</h3>
-      <p>Chọn ngày giờ đẹp là điểm tựa tinh thần vững chắc, song yếu tố an toàn thực tế luôn đặt lên hàng đầu: chuẩn bị sức khỏe, phương tiện kiểm tra cẩn thận và giữ tâm trạng an lạc, tỉnh táo suốt hành trình.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-tot-ket-hon-tram-nam",
-    "tieuDe": "Xem Ngày Tốt Kết Hôn: Trạch Nhật Đính Hôn - Thành Hôn Cho Tình Duyên Bền Chặt",
-    "chuyenMuc": "Xem ngày tốt kết hôn",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "14/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Kết Hôn.png",
-    "noiBat": true,
-    "uuTienFeed": 4,
-    "tomTat": "Quy trình xem ngày cưới hỏi chuẩn cổ truyền: Lấy tuổi cô dâu làm gốc tính Kim Lâu, chọn ngày Hoàng Đạo, trực Thành, trực Mãn, loại trừ ngày Cô Quả, Quả Tú.",
-    "noiDung": `
-      <h3>1. Ý nghĩa trọng đại của ngày cưới hỏi</h3>
-      <p>Hôn nhân là khởi đầu cho một gia đình mới, là sự gắn kết linh thiêng giữa hai dòng họ. Người xưa có câu <em>“Lấy vợ xem tuổi đàn bà, làm nhà xem tuổi đàn ông”</em>, nhấn mạnh việc chọn năm, chọn tháng và ngày cưới hỏi phải dựa trên tuổi của cô dâu để đảm bảo hạnh phúc trăm năm viên mãn.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Kết Hôn.png" alt="Xem ngày tốt kết hôn trăm năm" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Kiểm tra tuổi Kim Lâu của cô dâu</h3>
-      <p>Trong năm cưới, tuổi mụ của cô dâu không được phạm phải Kim Lâu (Kim Lâu Thân, Kim Lâu Thê, Kim Lâu Tử, Kim Lâu Lục Súc). Nếu phạm tuổi Kim Lâu nhưng không thể hoãn đám cưới, cổ nhân thường chọn phương án cưới sau ngày sinh nhật của cô dâu hoặc cưới sau ngày Đông Chí.</p>
-
-      <h3>3. Chọn tháng đại lợi và ngày Hoàng Đạo</h3>
-      <ul>
-        <li><strong>Tháng Bất Tương:</strong> Tháng không có âm dương câu sát, là thời điểm cát lợi nhất cho việc cưới hỏi.</li>
-        <li><strong>Ngày Hoàng Đạo & Trực Cát:</strong> Ưu tiên ngày Thanh Long, Minh Đường, Kim Quỹ; chọn Trực Định (tình duyên bền chặt), Trực Thành (mọi sự thành tựu) hoặc Trực Mãn (con cháu đề huề).</li>
-        <li><strong>Tránh các ngày hung:</strong> Tuyệt đối tránh ngày Tam Nương, Nguyệt Kỵ, ngày Cô Thần, Quả Tú và ngày xung khắc với tuổi của cô dâu chú rể.</li>
-      </ul>
-
-      <h3>4. Khung giờ Hoàng Đạo đón dâu và làm lễ gia tiên</h3>
-      <p>Thời điểm chú rể bước vào nhà gái xin dâu và thời khắc rước dâu về nhà trai làm lễ bái tạ tổ tiên cần diễn ra trong khung giờ đại cát. Điều này giúp khởi đầu đời sống hôn nhân nhận được sự che chở của phúc đức tổ tiên, gia đạo thuận hòa.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-hoang-dao-6-sao",
-    "tieuDe": "Xem Ngày Hoàng Đạo: Ý Nghĩa & Cách Ứng Dụng 6 Hoàng Đạo Tinh Trong Đời Sống",
-    "chuyenMuc": "Xem ngày hoàng đạo",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "13/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Hoàng Đạo.png",
-    "noiBat": true,
-    "uuTienFeed": 5,
-    "tomTat": "Tìm hiểu chi tiết về 6 sao Hoàng Đạo (Thanh Long, Minh Đường, Kim Quỹ, Thiên Đức, Ngọc Đường, Tư Mệnh) và cách phối hợp trực nhật để chọn thời điểm cát lành nhất.",
-    "noiDung": `
-      <h3>1. Khái niệm ngày Hoàng Đạo trong lịch pháp cổ</h3>
-      <p>Theo thiên văn cổ đại, Hoàng Đạo là quỹ đạo biểu kiến của Mặt Trời trên bầu trời. Trên quỹ đạo này có các vị thần tinh tú túc trực luân phiên. Ngày nào có cát thần chiếu quản được gọi là <strong>ngày Hoàng Đạo</strong> (trường khí ôn hòa, may mắn), ngược lại là ngày Hắc Đạo (trường khí xung khắc).</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Hoàng Đạo.png" alt="Xem ngày hoàng đạo 6 sao" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Ý nghĩa chi tiết của 6 sao Hoàng Đạo</h3>
-      <ul>
-        <li><strong>Thanh Long Hoàng Đạo:</strong> Đứng đầu các cát tinh, chủ về công danh sự nghiệp, thi cử đỗ đạt, xuất hành mưu đại sự.</li>
-        <li><strong>Minh Đường Hoàng Đạo:</strong> Chủ về quý nhân phù trợ, kết giao minh hữu, đàm phán hợp tác thuận buồm xuôi gió.</li>
-        <li><strong>Kim Quỹ Hoàng Đạo:</strong> Tượng trưng cho kho vàng kho bạc, cực tốt cho việc cầu tài lộc, khai trương, mở cửa hàng, giao dịch bất động sản.</li>
-        <li><strong>Thiên Đức Hoàng Đạo:</strong> Đức độ của trời, muôn phúc quy tụ, hóa giải mọi hung sát, rất tốt cho cưới hỏi, cầu tự.</li>
-        <li><strong>Ngọc Đường Hoàng Đạo:</strong> Ánh sáng ngọc ngà, lợi cho việc học vấn, nhận chức, tu tạo nhà cửa, an cư lập nghiệp.</li>
-        <li><strong>Tư Mệnh Hoàng Đạo:</strong> Thần chủ mệnh che chở, thích hợp cho việc dâng hương, cầu bình an, khởi công công trình.</li>
-      </ul>
-
-      <h3>3. Nguyên tắc phối hợp ngày Hoàng Đạo</h3>
-      <p>Một ngày Hoàng Đạo dù tốt nhưng vẫn cần đối chiếu với Can Chi bản mệnh của gia chủ để tránh trường hợp "ngày Hoàng Đạo nhưng lại là ngày xung tuổi". Sự kết hợp giữa ngày Hoàng Đạo, Trực cát và tuổi hợp sẽ tạo nên thời khắc đại cát đại lợi nhất.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-dong-tho-khoi-cong",
-    "tieuDe": "Xem Ngày Động Thổ: Định Ngày Khởi Công Công Trình An Lành, Tránh Tam Sát - Thái Tuế",
-    "chuyenMuc": "Xem ngày động thổ",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "13/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Động Thổ.png",
-    "noiBat": true,
-    "uuTienFeed": 6,
-    "tomTat": "Khai móng, động thổ là nghi lễ giao cảm với Thổ Thần địa phương. Hướng dẫn chọn ngày vượng khí, tránh phương tọa phạm Tam Sát, Thái Tuế và Ngũ Hoàng.",
-    "noiDung": `
-      <h3>1. Ý nghĩa linh thiêng của nghi lễ động thổ</h3>
-      <p>Đất có Thổ Công, sông có Hà Bá. Khởi công xây dựng một ngôi nhà tác động trực tiếp vào long mạch và nguyên khí của khu đất. Nghi lễ động thổ là lời thưa gửi trang nghiêm của gia chủ tới các bậc thần linh cai quản bản thổ, cầu mong công trình diễn ra bình an, hanh thông, công thợ hòa hảo.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Động Thổ.png" alt="Xem ngày động thổ khởi công" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Xét tuổi gia chủ làm nhà</h3>
-      <p>Trước khi chọn ngày, cần xét năm khởi công của gia chủ xem có phạm phải ba đại kỵ:</p>
-      <ul>
-        <li><strong>Tam Tai:</strong> Ba năm liên tiếp gặp nạn tai trắc trở.</li>
-        <li><strong>Kim Lâu:</strong> Tổn hại đến bản thân, vợ con hoặc tài lộc.</li>
-        <li><strong>Hoang Ốc:</strong> Ngôi nhà hoang vắng, lạnh lẽo khí trường.</li>
-      </ul>
-      <p>Nếu gia chủ phạm phải các hạn trên nhưng muốn xây nhà ngay thì có thể làm thủ tục mượn tuổi của người thân nam giới có tuổi đẹp trong năm.</p>
-
-      <h3>3. Tránh phương vị phạm Thái Tuế và Tam Sát</h3>
-      <p>Khi chọn ngày động thổ, phải xét hướng nhà để tránh khởi công vào thời điểm hung tinh lâm tọa. Tuyệt đối không động thổ ở phương vị đang phạm Tam Sát, Thái Tuế, Tuế Phá hoặc Ngũ Hoàng Đại Sát.</p>
-
-      <h3>4. Trình tự nhát cuốc đầu tiên và lễ vật cúng cáo</h3>
-      <p>Vào đúng khung giờ Hoàng Đạo đã định, sau khi hương đăng trà quả tươm tất và gia chủ đọc văn khấn thành kính, người chủ sự (hoặc người được mượn tuổi) sẽ tự tay bổ những nhát cuốc đầu tiên tại vị trí long mạch đắc địa, chính thức khởi đầu công trình.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-tot-xay-dung",
-    "tieuDe": "Xem Ngày Tốt Xây Dựng: Cẩm Nang Phong Thủy Kiến Tạo Gia Cư Vững Chắc",
-    "chuyenMuc": "Xem ngày tốt xây dựng",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "12/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Xây Dựng.png",
-    "noiBat": true,
-    "uuTienFeed": 7,
-    "tomTat": "Tổng hợp các bước trạch nhật trong toàn bộ quy trình xây dựng: từ đào móng, đổ trụ, xây tường đến hoàn thiện công trình để gia cư bền vững muôn đời.",
-    "noiDung": `
-      <h3>1. Tổng quan các mốc trạch nhật trong xây dựng</h3>
-      <p>Xây cất ngôi nhà là công trình thế kỷ của đời người. Một công trình hoàn mỹ không chỉ đòi hỏi bản vẽ kiến trúc kiên cố mà còn cần sự dung hòa về trường khí thiên địa ở mỗi mốc thi công trọng đại:</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Xây Dựng.png" alt="Xem ngày tốt xây dựng" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Các giai đoạn thi công then chốt cần chọn ngày</h3>
-      <ul>
-        <li><strong>Ngày đào móng, đổ bê tông móng:</strong> Nền tảng chịu lực cho cả ngôi nhà, cần chọn ngày Thổ vượng hoặc ngày Kim tương sinh.</li>
-        <li><strong>Ngày dựng cột trụ tầng một:</strong> Khung xương chống đỡ, chọn ngày Hoàng Đạo mang tính chất vững chãi như Trực Định, Trực Thành.</li>
-        <li><strong>Ngày lắp đặt cổng chính và cửa chính:</strong> Nơi thu nạp sinh khí (Khí khẩu) cho ngôi nhà, cần tính toán kỹ hướng đón gió và tránh ngày xung tuổi chủ nhà.</li>
-        <li><strong>Ngày đặt bồn nước, bể phốt ngầm:</strong> Tác động tới mạch nước ngầm và tài vận, cần tránh các cung vị quý nhân và cung bản mệnh.</li>
-      </ul>
-
-      <h3>3. Tiêu chí chọn ngày đẹp theo Nhị Thập Bát Tú</h3>
-      <p>Kết hợp 28 vì tinh tú trong thiên văn học cổ truyền: Ưu tiên các sao cát như <em>sao Giác, sao Phòng, sao Vĩ, sao Đẩu, sao Bích</em> giúp gia đình ấm no, công nhân xây dựng an toàn, công trình không bị đình trệ hay tranh chấp.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-do-tran-lop-mai",
-    "tieuDe": "Xem Ngày Đổ Trần, Lợp Mái: Trạch Nhật Thượng Lương Cát Tinh Chiếu Mệnh",
-    "chuyenMuc": "Xem ngày đổ trần, lợp mái",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "12/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Đổ Trần, Lợp Mái.png",
-    "noiBat": true,
-    "uuTienFeed": 8,
-    "tomTat": "Thời khắc cất nóc, đổ mái đóng vai trò che chở gia đạo. Chọn ngày có sao Thiên Đức, Nguyệt Đức, Trực Định hoặc Trực Khai để nóc nhà vững chãi, ấm êm.",
-    "noiDung": `
-      <h3>1. Ý nghĩa của lễ Thượng Lương (Cất nóc, lợp mái)</h3>
-      <p>Mái nhà là phần che chở mưa nắng, hội tụ toàn bộ vòm khí của cả gia đình. Trong văn hóa cổ truyền, lễ cất nóc (Thượng Lương) là cột mốc đánh dấu công trình cơ bản đã thành hình, chuẩn bị bước vào giai đoạn hoàn thiện. Chọn ngày tốt cất nóc giúp ngôi nhà tụ khí tàng phong, con cháu sinh sống khỏe mạnh, an khang.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Đổ Trần, Lợp Mái.png" alt="Xem ngày đổ trần lợp mái" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Tiêu chuẩn chọn ngày đổ trần, cất nóc cát lợi</h3>
-      <ul>
-        <li><strong>Cát tinh chiếu rọi:</strong> Ưu tiên ngày có sao Thiên Đức, Nguyệt Đức, Thiên Ân, Nguyệt Ân chiếu mệnh.</li>
-        <li><strong>Trực ngày đắc cách:</strong> Chọn Trực Định (bền vững), Trực Khai (sáng sủa, thông thoáng) hoặc Trực Thành (thành tựu viên mãn).</li>
-        <li><strong>Tránh ngày Hỏa sát:</strong> Vì nóc nhà tiếp xúc trực tiếp với ánh nắng mặt trời nên tuyệt đối tránh các ngày Thiên Hỏa, Địa Hỏa, Nguyệt Hỏa để phòng ngừa rủi ro chập cháy, nứt nẻ bê tông.</li>
-      </ul>
-
-      <h3>3. Giờ hoàng đạo đặt xà gồ nóc và đổ mẻ bê tông cuối</h3>
-      <p>Chọn khung giờ Hoàng Đạo trong ngày để thực hiện nghi thức gác thanh xà gồ chính hoặc đổ mẻ bê tông nóc. Người chủ sự nên giữ tâm thế trang nghiêm, thanh tịnh để truyền năng lượng an lành vào mái nhà.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-nhap-trach-nha-moi",
-    "tieuDe": "Xem Ngày Nhập Trạch Nhà Mới: Lễ Nghi Dọn Về Nhà Mới Kích Hoạt Vượng Khí Gia Đạo",
-    "chuyenMuc": "Xem ngày nhập trạch nhà mới",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "11/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Nhập Trạch Nhà Mới.png",
-    "noiBat": true,
-    "uuTienFeed": 9,
-    "tomTat": "Nghi lễ nhập trạch dọn về nhà mới: Cách chọn ngày Thủy vượng (tinh tài), tránh ngày Hỏa vượng; trình tự mang bếp lửa, gạo nước vào nhà mới nghênh tài đón lộc.",
-    "noiDung": `
-      <h3>1. Ý nghĩa thiêng liêng của nghi lễ nhập trạch</h3>
-      <p>Nhập trạch là nghi thức đánh dấu thời điểm gia đình chính thức chuyển về sinh sống tại ngôi nhà mới. Đây là một bước ngoặt trọng đại, mở ra một chương mới cho gia đạo. Việc chọn ngày lành tháng tốt nhập trạch mang ý nghĩa tấu cáo thần linh bản thổ, đón rước chân linh tổ tiên và cầu mong bình an, phát đạt, hòa thuận cho tất cả thành viên.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Nhập Trạch Nhà Mới.png" alt="Xem ngày nhập trạch nhà mới" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Nguyên tắc chọn ngày Hoàng Đạo và ngũ hành tương sinh</h3>
-      <ul>
-        <li><strong>Chọn ngày Hoàng Đạo & Trực Cát:</strong> Ưu tiên các Trực Khai, Trực Thành, Trực Mãn mang ý nghĩa sung túc, khởi sắc.</li>
-        <li><strong>Ưu tiên hành Thủy và Kim:</strong> Trong phong thủy, Thủy chủ về tiền tài luân chuyển, Kim chủ về kho tàng tích lũy. Nhập trạch nên chọn ngày hành Thủy hoặc Kim.</li>
-        <li><strong>Tránh ngày Hỏa quá vượng:</strong> Ngày Hỏa khí cực thịnh dễ làm tâm lý người trong nhà nóng nảy, dễ xảy ra bất hòa.</li>
-      </ul>
-
-      <h3>3. Đối soát tuổi và bản mệnh của gia chủ</h3>
-      <p>Ngày nhập trạch tuyệt đối không được xung khắc với Địa Chi của người chủ gia đình (ví dụ gia chủ tuổi Tý tránh ngày Ngọ; tuổi Sửu tránh ngày Mùi). Tránh các ngày mang sát khí nặng như ngày Sát Chủ, Thụ Tử, Tam Nương và Nguyệt Kỵ.</p>
-
-      <h3>4. Khung giờ tốt và thời điểm dọn nhà</h3>
-      <p>Nghi thức nhập trạch nên tiến hành vào <strong>buổi sáng sớm hoặc buổi trưa</strong> (thời điểm dương khí đang vượng). Tránh làm lễ nhập trạch vào buổi tối hoặc ban đêm khi âm khí bắt đầu thịnh, không tốt cho việc an cư.</p>
-
-      <h3>5. Trình tự mang vật phẩm kích hoạt tài lộc vào nhà mới</h3>
-      <ul>
-        <li><strong>Bếp lửa (bếp than hoặc bếp ga):</strong> Mang vào đầu tiên để khai hỏa, xua tan hàn khí và mang lại hơi ấm cho gian nhà.</li>
-        <li><strong>Chiếu gối đang sử dụng:</strong> Mang vào tiếp theo tượng trưng cho sự yên ấm, gắn bó.</li>
-        <li><strong>Hũ gạo, hũ muối, bình nước sạch:</strong> Tượng trưng cho sự no ấm, sung túc trọn vẹn của cuộc sống.</li>
-        <li><strong>Tiền vàng và lễ vật cúng:</strong> Gia chủ tự tay mang vào đặt lên bàn thờ gia tiên và thần linh.</li>
-      </ul>
-    `
-  },
-  {
-    "id": "xem-ngay-mua-nha-giao-dich",
-    "tieuDe": "Xem Ngày Mua Nhà: Chọn Ngày Ký Công Chứng, Giao Dịch Điền Sản Đắc Tài Đắc Lộc",
-    "chuyenMuc": "Xem ngày mua nhà",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "11/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Mua Nhà.png",
-    "noiBat": true,
-    "uuTienFeed": 10,
-    "tomTat": "Bí quyết chọn ngày ký hợp đồng đặt cọc, công chứng mua đất mua nhà: Tránh ngày Không Vong, Phá Nhật để giao dịch thuận buồn xuôi gió, sinh lời bền vững.",
-    "noiDung": `
-      <h3>1. Giá trị phong thủy trong giao dịch điền sản</h3>
-      <p>Mua nhà, tậu đất là những quyết định đầu tư tài sản lớn trong cuộc đời. Việc chọn ngày lành tháng tốt để ký hợp đồng đặt cọc, ký công chứng chuyển nhượng quyền sử dụng đất giúp quá trình pháp lý thuận buồm xuôi gió, tránh được những tranh chấp ngầm và mang lại năng lượng gia tăng tài lộc bền vững cho mảnh đất mới.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Mua Nhà.png" alt="Xem ngày mua nhà giao dịch" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Tiêu chí chọn ngày ký kết mua nhà đất</h3>
-      <ul>
-        <li><strong>Sao cát tài lộc:</strong> Ưu tiên ngày có sao Lộc Tồn, Thiên Tài, Địa Tài, Phúc Sinh hợp chiếu.</li>
-        <li><strong>Trực ngày đại cát:</strong> Trực Thành (việc mua bán hoàn tất mỹ mãn), Trực Mãn (tài lộc tích tụ đầy kho), Trực Định (quyền sở hữu bền vững).</li>
-        <li><strong>Tránh ngày hung hại:</strong> Tránh ngày Phá Nhật, Tuyệt Nhật, ngày Không Vong (dễ hao tiền, hợp đồng bị hủy bỏ) và ngày xung với tuổi người đứng tên sổ đỏ.</li>
-      </ul>
-
-      <h3>3. Giờ hoàng đạo đặt bút ký tên và bàn giao giấy tờ</h3>
-      <p>Chọn khung giờ Hoàng Đạo hợp với tuổi người mua để thực hiện việc ký kết và giao dịch chuyển tiền. Giữ tâm lý tỉnh táo, đọc kỹ từng điều khoản pháp lý kết hợp với năng lượng cát lành của thời khắc sẽ đem lại sự an tâm tuyệt đối.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-khai-truong-hong-phat",
-    "tieuDe": "Xem Ngày Khai Trương: Chọn Giờ Hoàng Đạo Khai Mở Kinh Doanh Hồng Phát",
-    "chuyenMuc": "Xem ngày khai trương",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "10/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Khai Trương.png",
-    "noiBat": true,
-    "uuTienFeed": 11,
-    "tomTat": "Hướng dẫn chi tiết chọn ngày giờ mở cửa hàng, doanh nghiệp đón tài lộc: Chọn người mở hàng hợp vía, bố trí mâm lễ cúng Thần Tài khai trương đắc tài sai lộc.",
-    "noiDung": `
-      <h3>1. Ý nghĩa của thời khắc khai trương mở cửa</h3>
-      <p>Người xưa có câu <em>“Vạn sự khởi đầu nan”</em>, ngày khai trương cửa hàng, chi nhánh hay công ty là thời điểm đón nhận nguồn sinh khí thương mại đầu tiên. Ngày khai trương thuận lợi sẽ mở ra một chu kỳ kinh doanh hồng phát, khách hàng tấp nập, tài lộc dồi dào và thuận buồm xuôi gió.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Khai Trương.png" alt="Xem ngày khai trương hồng phát" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Phương pháp chọn ngày khai trương theo tuổi chủ tiệm</h3>
-      <ul>
-        <li><strong>Địa chi tương hợp:</strong> Chọn ngày có Địa Chi Tam Hợp hoặc Lục Hợp với tuổi chủ sự (ví dụ người tuổi Mão chọn ngày Hợi hoặc Mùi; người tuổi Tỵ chọn ngày Dậu hoặc Sửu).</li>
-        <li><strong>Trực cát khai mở:</strong> Ưu tiên Trực Khai (mở mang đón tài), Trực Thành (thành công rực rỡ) hoặc Trực Mãn.</li>
-        <li><strong>Tránh các ngày xấu:</strong> Tránh ngày Sát Chủ, Thiên Tặc, Nguyệt Phá và ngày xung khắc thiên can bản mệnh.</li>
-      </ul>
-
-      <h3>3. Chọn giờ mở hàng và người mở hàng hợp vía</h3>
-      <p>Người đầu tiên bước vào mua hàng nên là người có tính cách xởi lởi, nhanh nhẹn, đạo đức tốt và có tuổi tương sinh với bản mệnh của chủ tiệm. Khung giờ mở bán đầu tiên nên nằm trong giờ Hoàng Đạo (Tốc Hỷ, Đại An) để kích hoạt vận may mua may bán đắt.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-ky-hop-dong-thanh-cong",
-    "tieuDe": "Xem Ngày Ký Hợp Đồng: Tránh Ngày Nguyệt Kỵ, Đón Cát Tinh Đàm Phán Thắng Lợi",
-    "chuyenMuc": "Xem ngày ký hợp đồng",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "10/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Ký Hợp Đồng.png",
-    "noiBat": true,
-    "uuTienFeed": 12,
-    "tomTat": "Bí quyết chọn ngày đẹp ký kết thỏa thuận kinh tế, liên kết làm ăn: Tránh ngày Xích Khẩu, Nguyệt Kỵ; hướng ngồi đàm phán hợp phong thủy giúp đạt kết quả viên mãn.",
-    "noiDung": `
-      <h3>1. Phong thủy trong đàm phán và ký kết kinh tế</h3>
-      <p>Ký hợp đồng là sự giao ước trách nhiệm và quyền lợi giữa các đối tác. Trong phong thủy lý số, việc chọn ngày có trường khí hòa hợp sẽ giúp hai bên giải tỏa nghi ngại, tiếng nói chung dễ dàng đạt được, các điều khoản được thực thi suôn sẻ và bền vững lâu dài.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Ký Hợp Đồng.png" alt="Xem ngày ký hợp đồng thành công" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Nguyên tắc chọn ngày đẹp ký kết</h3>
-      <ul>
-        <li><strong>Cát tinh trí tuệ:</strong> Ưu tiên ngày có sao Văn Xương, Thiên Quan, Tuế Đức chủ về trí tuệ sáng suốt, lời ăn tiếng nói có trọng lượng.</li>
-        <li><strong>Tránh ngày xung đột:</strong> Tuyệt đối tránh ngày Xích Khẩu (chủ về tranh cãi, mâu thuẫn), ngày Nguyệt Kỵ (nửa đường đứt gánh) và ngày xung tuổi với đại diện hai bên.</li>
-      </ul>
-
-      <h3>3. Thời điểm và không gian đàm phán tối ưu</h3>
-      <p>Chọn khung giờ Hoàng Đạo để đặt bút ký tên. Bố trí chỗ ngồi đàm phán quay mặt về hướng cát lành (hướng sinh khí) và giữ phong thái tự tin, tôn trọng đối tác để tạo dựng mối quan hệ hợp tác cùng phát triển.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-tot-nhan-chuc-thang-tien",
-    "tieuDe": "Xem Ngày Tốt Nhận Chức: Chọn Ngày Vượng Quan Lộc, Thanh Long Nghênh Vận Thăng Tiến",
-    "chuyenMuc": "Xem ngày tốt nhận chức",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "09/09/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Nhận Chức.png",
-    "noiBat": true,
-    "uuTienFeed": 13,
-    "tomTat": "Cẩm nang phong thủy ngày nhậm chức, chuyển văn phòng mới: Cách chọn ngày vượng sao Quốc Ấn, Thanh Long; cách an vị bàn làm việc chiêu tài nạp cát.",
-    "noiDung": `
-      <h3>1. Ý nghĩa bước chuyển công danh sự nghiệp</h3>
-      <p>Thời điểm nhận quyết định bổ nhiệm, chính thức bước vào vị trí lãnh đạo hoặc quản lý mới là một dấu mốc then chốt trong cuộc đời làm việc. Chọn ngày tốt nhậm chức giúp người đảm trách công việc nhận được sự ủng hộ của cấp trên, sự đồng lòng của cấp dưới và trường khí hanh thông để hoàn thành xuất sắc trọng trách.</p>
-      <p style="text-align: center; margin: 16px 0;">
-        <img src="Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Nhận Chức.png" alt="Xem ngày tốt nhận chức thăng tiến" style="max-width: 100%; border-radius: 8px; box-shadow: 0 4px 15px rgba(0,0,0,0.12);">
-      </p>
-
-      <h3>2. Tiêu chí chọn ngày vượng sao Quan Lộc</h3>
-      <ul>
-        <li><strong>Cát thần phù trợ:</strong> Chọn ngày có sao Quốc Ấn, Thiên Quan Quý Nhân, Thanh Long, Thiên Phúc chiếu quản.</li>
-        <li><strong>Trực Định và Trực Thành:</strong> Giúp vị trí công tác mới được vững chắc, uy tín gia tăng, sự nghiệp phát triển không ngừng.</li>
-        <li><strong>Tránh ngày hung hại:</strong> Tránh ngày Phá Nhật, ngày có sao Thiên Hình, Quan Phù dễ vướng thị phi, kiện tụng.</li>
-      </ul>
-
-      <h3>3. Bố trí bàn làm việc tụ khí ngày đầu tiên</h3>
-      <p>Vào đúng giờ Hoàng Đạo ngày nhậm chức, ngồi vào bàn làm việc mới với tư thế vững chãi. Bàn làm việc nên có điểm tựa phía sau (hóa giải thế vô kháo) và không gian thoáng đãng phía trước để đón sinh khí quang minh.</p>
-    `
-  },
-  {
-    "id": "xem-ngay-an-tang-dao-hieu",
-    "tieuDe": "Xem Ngày An Táng",
-    "chuyenMuc": "Xem ngày an táng",
-    "tacGia": "Thầy Duy Tâm Phúc",
-    "ngayDang": "16/10/2026",
-    "hinhAnh": "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt An Táng.jpeg",
-    "noiBat": true,
-    "uuTienFeed": 1,
-    "tomTat": "Xem ngày an táng là phong tục truyền thống nhằm lựa chọn ngày giờ phù hợp để tiễn đưa người đã khuất. Việc xem ngày thường tham khảo Hoàng Đạo, Hắc Đạo",
-    "noiDung": `<h3><strong>1. Xem Ngày An Táng Là Gì?</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Xem ngày an táng là việc lựa chọn ngày giờ chôn cất người đã khuất theo phong tục và tín ngưỡng truyền thống. Đây là nghi thức quan trọng, thể hiện lòng thành kính, sự tiếc thương và đạo lý uống nước nhớ nguồn của người Việt.</p></h2><h3><strong>2. Ý Nghĩa Của Việc Chọn Ngày An Táng</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Theo quan niệm dân gian, chọn ngày giờ phù hợp giúp gia đình an tâm khi tiễn biệt người đã khuất. Bên cạnh ý nghĩa tâm linh, việc xác định thời gian cụ thể còn giúp gia đình sắp xếp họ hàng, phương tiện, nghi lễ và phối hợp với nghĩa trang chu đáo.</p></h2><h3><strong>3. Xem Ngày Hoàng Đạo, Hắc Đạo Và Trực Ngày</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Khi xem ngày an táng, một số gia đình tham khảo ngày Hoàng Đạo, Hắc Đạo, 12 Trực và các sao tốt xấu trong lịch cổ. Tuy nhiên, mỗi trường phái có cách luận giải riêng, vì vậy không nên chỉ căn cứ vào một yếu tố để kết luận ngày an táng tốt hay xấu.</p></h2><h3><strong>4. Xem Ngày Theo Tuổi Và Năm Sinh Người Đã Khuất</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Một số phương pháp truyền thống xét năm sinh, tuổi âm lịch, Thiên Can, Địa Chi và mối quan hệ xung hợp giữa tuổi người mất với ngày an táng. Những yếu tố này cần được xác định chính xác theo phương pháp sử dụng, tránh nhầm lẫn giữa năm âm lịch và năm dương lịch.</p></h2><h3><strong>5. Chọn Giờ Đưa Tang Và Hạ Huyệt</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Giờ an táng thường được tham khảo theo 12 giờ Địa Chi và các nguyên tắc chọn giờ trong lịch pháp cổ. Khi xác định giờ, gia đình cần cân nhắc thêm thời gian di chuyển, thời tiết, điều kiện tổ chức và sự phối hợp với nghĩa trang để nghi lễ diễn ra thuận lợi, an toàn.</p></h2><h3><strong>6. Phong Thủy Âm Trạch Và Vị Trí Mộ Phần</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Trong phong thủy âm trạch, các yếu tố như long mạch, minh đường, thủy pháp, hướng huyệt và thế đất được xem xét theo quan niệm truyền thống. Trên thực tế, cần ưu tiên địa điểm an táng hợp pháp, nền đất ổn định, thoát nước tốt, không có nguy cơ sạt lở hoặc ngập úng.</p></h2><h3><strong>7. Những Điều Kiêng Kỵ Khi An Táng</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Theo phong tục từng địa phương, gia đình có thể lưu ý các quan niệm về ngày xung tuổi, trùng tang, ngày Sát Chủ và những nghi thức riêng khi đưa tang, hạ huyệt. Tuy nhiên, không nên vì những quan niệm này mà trách móc người thân, gây hoang mang hoặc trì hoãn việc an táng cần thiết.</p></h2><h3><strong>8. Những Việc Cần Chuẩn Bị Trước Ngày An Táng</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Gia đình nên chuẩn bị giấy tờ cần thiết, liên hệ nghĩa trang, thống nhất giờ giấc, phân công người phụ trách và chuẩn bị lễ nghi phù hợp với điều kiện thực tế. Đồng thời, cần bảo đảm an toàn khi di chuyển, hạ huyệt và thực hiện đúng quy định về mai táng tại địa phương.</p></h2><h3><strong>9. Có Nhất Thiết Phải Chọn Ngày Tốt Mới An Táng Không?</strong></h3><h2 data-pm-slice="1 1 []" style="font-size: 17px; font-family: Inter, system-ui, -apple-system, sans-serif; color: rgb(122, 20, 20); margin: 20px 0px 10px; line-height: 1.45;"><p style="color: rgb(44, 36, 30); font-weight: normal;">Việc xem ngày có thể được tham khảo để phù hợp với tín ngưỡng và phong tục gia đình, nhưng không nên tuyệt đối hóa ngày tốt, ngày xấu. Khi có sự khác biệt giữa quan niệm dân gian và điều kiện thực tế, cần ưu tiên sức khỏe, vệ sinh, an toàn, quy định pháp luật và việc tổ chức tang lễ kịp thời.</p></h2>`,
-    "updatedAt": 1792208281480
-  }
+﻿window.XEMNGAY_BAI_VIET_DATA = [
+    {
+        "id":  "xem-ngay-tot-tong-quan",
+        "tieuDe":  "XEM NGÀY TỐT",
+        "chuyenMuc":  "XEM NGÀY TỐT",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "15/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt.png",
+        "noiBat":  true,
+        "uuTienFeed":  1,
+        "tomTat":  "Ngày Hoàng Đạo là những ngày được xem là có ý nghĩa cát lợi theo lịch pháp cổ truyền. Người xưa thường lựa chọn ngày Hoàng Đạo để tiến hành các công việc quan trọng như khai trương, cưới hỏi, động thổ, nhập trạch, mua xe...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ngày Hoàng Đạo – Ngày Tốt Để Tiến Hành Công Việc\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày Hoàng Đạo là những ngày được xem là có ý nghĩa cát lợi theo lịch pháp cổ truyền. Người xưa thường lựa chọn ngày Hoàng Đạo để tiến hành các công việc quan trọng như khai trương, cưới hỏi, động thổ, nhập trạch, mua xe và xuất hành. Tuy nhiên, khi chọn ngày vẫn cần xét đến tính chất công việc và những yếu tố lịch pháp liên quan, không nên chỉ dựa vào danh nghĩa Hoàng Đạo để kết luận ngày đó phù hợp với mọi việc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Ngày Có Trực Tốt – Lựa Chọn Theo Từng Công Việc\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTrong lịch truyền thống, 12 Trực gồm Kiến, Trừ, Mãn, Bình, Định, Chấp, Phá, Nguy, Thành, Thu, Khai và Bế. Mỗi Trực mang ý nghĩa riêng và được vận dụng khác nhau khi xem ngày. Chẳng hạn, Trực Thành thường được xem xét khi tiến hành công việc cần sự hoàn thành, Trực Khai gắn với ý nghĩa mở đầu, còn Trực Phá thường được cân nhắc kỹ khi lựa chọn ngày cho những việc trọng đại. Việc đánh giá cần dựa trên mục đích cụ thể và phương pháp xem ngày đang áp dụng.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Ngày Có Sao Tốt – Tham Khảo Các Yếu Tố Cát Tinh\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eMột số ngày được xem là tốt nhờ có các sao cát tinh theo hệ thống thần sát trong lịch cổ. Khi xem ngày cưới hỏi, khai trương, xây dựng hoặc nhập trạch, người xem thường tham khảo những sao được cho là phù hợp với từng công việc. Tuy nhiên, mỗi sao có ý nghĩa và phạm vi áp dụng khác nhau, vì vậy cần kết hợp với những yếu tố khác để đưa ra nhận định tổng thể.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Ngày Hợp Tuổi – Xét Thiên Can Và Địa Chi\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi chọn ngày làm việc lớn, nhiều người còn xem xét mối quan hệ giữa ngày dự định thực hiện và tuổi của người đứng ra tiến hành công việc. Các yếu tố thường được tham khảo gồm Thiên Can, Địa Chi, quan hệ tương sinh, tương khắc và các cặp xung hợp. Mục đích là tìm ngày được cho là phù hợp theo quan niệm truyền thống, thay vì chỉ lựa chọn ngày đẹp chung cho tất cả mọi người.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e5. Ngày Tam Nương – Ngày Kỵ Theo Quan Niệm Dân Gian\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày Tam Nương thường được nhắc đến trong phong tục xem ngày của người Việt. Theo cách tính phổ biến, những ngày này gồm mùng 3, 7, 13, 18, 22 và 27 âm lịch. Dân gian thường khuyên cân nhắc khi tiến hành những việc trọng đại vào các ngày trên. Dù vậy, đây là quan niệm truyền thống, không phải căn cứ khoa học để khẳng định công việc chắc chắn gặp bất lợi.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e6. Ngày Nguyệt Kỵ – Những Ngày Thường Được Cân Nhắc Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày Nguyệt Kỵ thường được nhắc đến là ngày mùng 5, 14 và 23 âm lịch hằng tháng. Trong quan niệm dân gian, những ngày này thường được cân nhắc kỹ trước khi tổ chức cưới hỏi, khai trương hoặc thực hiện các công việc quan trọng. Khi xem ngày, cần hiểu đây là một yếu tố tham khảo và nên đối chiếu với mục đích cụ thể, thay vì mặc định mọi công việc đều phải tránh những ngày này.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e7. Ngày Sát Chủ Và Ngày Thọ Tử – Các Ngày Kỵ Trong Lịch Cổ\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eSát Chủ và Thọ Tử là những tên gọi xuất hiện trong một số hệ thống lịch chọn ngày truyền thống. Tùy phương pháp tính và loại công việc, các ngày này được xem xét như yếu tố cần thận trọng khi lựa chọn thời điểm tiến hành việc lớn. Do cách xác định có thể khác nhau giữa các lịch và trường phái, người xem cần nêu rõ phương pháp sử dụng, tránh áp dụng máy móc hoặc kết luận ngày nào cũng mang ý nghĩa giống nhau.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e8. Ngày Hắc Đạo – Cần Xét Cùng Những Yếu Tố Khác\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày Hắc Đạo thường được đặt đối lập với ngày Hoàng Đạo trong lịch pháp truyền thống. Khi gặp ngày Hắc Đạo, nhiều người có xu hướng cân nhắc lại thời điểm tiến hành các công việc quan trọng. Tuy nhiên, việc xem ngày không nên chỉ căn cứ vào yếu tố này mà cần kết hợp với Trực ngày, sao tốt xấu, tuổi người thực hiện và tính chất của công việc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e9. Cách Chọn Ngày Tốt Và Tránh Ngày Kỵ Cho Phù Hợp\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐể chọn ngày, trước tiên cần xác định rõ công việc cần thực hiện là cưới hỏi, động thổ, nhập trạch, khai trương, mua xe hay xuất hành. Sau đó, tham khảo ngày Hoàng Đạo, Trực ngày, sao tốt, các ngày kỵ và tuổi của người liên quan. Cuối cùng, cần tổng hợp các yếu tố để lựa chọn thời điểm phù hợp nhất theo phương pháp xem ngày đã chọn. Việc xem ngày mang ý nghĩa văn hóa và tinh thần; bên cạnh đó, điều kiện thực tế, tài chính, sức khỏe, thời tiết và sự chuẩn bị vẫn là những yếu tố quan trọng quyết định sự thuận lợi của công việc.\u003c/p\u003e",
+        "updatedAt":  1792212559748
+    },
+    {
+        "id":  "xem-ngay-mua-xe-cat-loi",
+        "tieuDe":  "XEM NGÀY MUA XE",
+        "chuyenMuc":  "Xem ngày mua xe",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "15/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Ngày Tốt Mua Xe.png",
+        "noiBat":  true,
+        "uuTienFeed":  2,
+        "tomTat":  "Theo quan niệm phong thủy phương Đông, mua xe là việc quan trọng bởi chiếc xe không chỉ là phương tiện đi lại mà còn gắn bó với công việc, cuộc sống và những hành trình hằng ngày. Vì vậy, nhiều người có thói quen xem ngà...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Mua Xe\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTheo quan niệm phong thủy phương Đông, mua xe là việc quan trọng bởi chiếc xe không chỉ là phương tiện đi lại mà còn gắn bó với công việc, cuộc sống và những hành trình hằng ngày. Vì vậy, nhiều người có thói quen xem ngày tốt, giờ đẹp để mua xe hoặc nhận xe với mong muốn mọi chuyến đi được bình an, công việc thuận lợi và tài lộc hanh thông. Việc chọn ngày phù hợp còn mang ý nghĩa tinh thần, giúp chủ xe cảm thấy yên tâm hơn khi bắt đầu sử dụng phương tiện mới.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày mua xe, có thể tham khảo ngày Hoàng đạo, Trực ngày, Can Chi, ngũ hành và các sao tốt xấu theo lịch cổ truyền. Bên cạnh đó, tuổi của chủ xe cũng thường được cân nhắc để lựa chọn ngày có ngũ hành tương sinh hoặc phù hợp với bản mệnh. Ngoài ngày mua xe, nhiều người còn chọn giờ đẹp để nhận xe, làm thủ tục hoặc bắt đầu chuyến đi đầu tiên.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Tốt Theo Mục Đích Sử Dụng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNếu mua xe phục vụ công việc kinh doanh, người mua thường ưu tiên những ngày mang ý nghĩa khai mở, phát triển và thuận lợi về tài lộc. Nếu mua xe để đi lại cá nhân hoặc phục vụ gia đình, yếu tố bình an, ổn định và thuận tiện được đặt lên hàng đầu. Việc chọn ngày nên phù hợp với mục đích sử dụng, điều kiện thực tế và lịch trình nhận xe.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Mua Xe\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt mua xe là nét văn hóa tín ngưỡng truyền thống, mang ý nghĩa cầu chúc may mắn chứ không bảo đảm chắc chắn mọi việc sẽ thuận lợi. Chủ xe vẫn cần kiểm tra kỹ chất lượng phương tiện, giấy tờ pháp lý, bảo hiểm và các điều kiện an toàn trước khi sử dụng. Sự chuẩn bị chu đáo kết hợp với tâm thế cẩn trọng sẽ giúp mỗi hành trình thêm an tâm và thuận lợi.\u003c/p\u003e",
+        "updatedAt":  1792212559750
+    },
+    {
+        "id":  "xem-ngay-xuat-hanh-hanh-thong",
+        "tieuDe":  "XEM NGÀY XUÁT HÀNH",
+        "chuyenMuc":  "Xem ngày xuất hành",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "14/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Xuất Hành.png",
+        "noiBat":  true,
+        "uuTienFeed":  3,
+        "tomTat":  "Xem ngày tốt xuất hành là phong tục truyền thống trong văn hóa phương Đông, với mong muốn lựa chọn thời điểm thuận lợi trước khi bắt đầu một chuyến đi, đi công tác, du lịch, khai trương hoặc thực hiện những công việc qua...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Xuất Hành\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt xuất hành là phong tục truyền thống trong văn hóa phương Đông, với mong muốn lựa chọn thời điểm thuận lợi trước khi bắt đầu một chuyến đi, đi công tác, du lịch, khai trương hoặc thực hiện những công việc quan trọng. Theo quan niệm dân gian và thuật số cổ truyền, ngày giờ xuất hành phù hợp mang ý nghĩa cầu mong bình an, gặp nhiều may mắn, công việc hanh thông và đạt được mục tiêu như mong muốn.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày xuất hành, người ta thường tham khảo ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu trong lịch pháp cổ truyền. Ngoài ra, có thể xem xét tuổi của người xuất hành, mục đích chuyến đi và hướng di chuyển để lựa chọn thời điểm phù hợp. Giờ xuất hành cũng là yếu tố được quan tâm, đặc biệt khi đi xa hoặc bắt đầu công việc quan trọng.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Giờ Theo Mục Đích Xuất Hành\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNếu xuất hành để làm ăn, gặp đối tác hoặc ký kết hợp đồng, nhiều người ưu tiên ngày giờ mang ý nghĩa thuận lợi về công danh và tài lộc. Nếu đi du lịch, thăm thân hoặc công tác xa, yếu tố bình an, thuận tiện và phù hợp với lịch trình được đặt lên hàng đầu. Việc lựa chọn ngày giờ nên gắn với hoàn cảnh thực tế, tránh làm ảnh hưởng đến công việc và kế hoạch cá nhân.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xuất Hành\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt xuất hành là hình thức tham khảo theo tín ngưỡng truyền thống, không bảo đảm chắc chắn kết quả chuyến đi. Trước khi khởi hành, mỗi người nên kiểm tra phương tiện, chuẩn bị giấy tờ, theo dõi thời tiết và tuân thủ quy định an toàn giao thông. Sự chuẩn bị kỹ lưỡng kết hợp với tinh thần chủ động sẽ giúp chuyến đi diễn ra thuận lợi và an tâm hơn.\u003c/p\u003e",
+        "updatedAt":  1792212559752
+    },
+    {
+        "id":  "xem-ngay-tot-ket-hon-tram-nam",
+        "tieuDe":  "XEM NGÀY TỐT KẾT HÔN",
+        "chuyenMuc":  "Xem ngày tốt kết hôn",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "14/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Kết Hôn.png",
+        "noiBat":  true,
+        "uuTienFeed":  4,
+        "tomTat":  "Xem ngày tốt kết hôn là phong tục truyền thống trong văn hóa phương Đông, thể hiện mong muốn lựa chọn thời điểm đẹp để đôi lứa chính thức nên duyên vợ chồng. Hôn lễ không chỉ đánh dấu bước ngoặt quan trọng trong cuộc đời...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Kết Hôn\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt kết hôn là phong tục truyền thống trong văn hóa phương Đông, thể hiện mong muốn lựa chọn thời điểm đẹp để đôi lứa chính thức nên duyên vợ chồng. Hôn lễ không chỉ đánh dấu bước ngoặt quan trọng trong cuộc đời mỗi người mà còn là sự gắn kết giữa hai gia đình. Theo quan niệm dân gian, chọn ngày lành tháng tốt mang ý nghĩa cầu chúc cuộc sống hôn nhân hòa thuận, gia đạo bình an, tình cảm bền lâu và gia đình hạnh phúc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày Cưới\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày kết hôn, người ta thường tham khảo ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Bên cạnh đó, tuổi của cô dâu và chú rể cũng được cân nhắc nhằm lựa chọn ngày giờ phù hợp với quan niệm phong thủy và tập tục gia đình. Một số gia đình còn xem ngày ăn hỏi, ngày đón dâu và giờ tổ chức hôn lễ để việc cưới hỏi được tiến hành chu đáo.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Cưới Theo Tuổi Và Hoàn Cảnh\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eViệc chọn ngày tốt cần xét đến tuổi của hai người, phong tục địa phương và điều kiện tổ chức thực tế. Theo truyền thống, một số gia đình chú trọng tuổi cô dâu khi chọn năm cưới, đồng thời xem ngày giờ để tránh những thời điểm được quan niệm là không thuận lợi. Tuy nhiên, ngày cưới cũng cần phù hợp với lịch trình của hai bên gia đình, địa điểm tổ chức và sự thuận tiện của khách mời.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Kết Hôn\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt kết hôn là nét đẹp văn hóa mang ý nghĩa tinh thần, không quyết định toàn bộ hạnh phúc của cuộc sống vợ chồng. Một cuộc hôn nhân bền vững còn phụ thuộc vào tình yêu, sự tôn trọng, lòng tin và trách nhiệm của cả hai người. Vì vậy, việc chọn ngày lành nên kết hợp với sự chuẩn bị chu đáo để ngày trọng đại diễn ra vui vẻ, ấm áp và trọn vẹn.\u003c/p\u003e",
+        "updatedAt":  1792212559754
+    },
+    {
+        "id":  "xem-ngay-hoang-dao-6-sao",
+        "tieuDe":  "XEM NGÀY HOÀNG ĐẠO",
+        "chuyenMuc":  "Xem ngày hoàng đạo",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "13/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Hoàng Đạo.png",
+        "noiBat":  true,
+        "uuTienFeed":  5,
+        "tomTat":  "Xem ngày Hoàng đạo là phong tục truyền thống trong văn hóa phương Đông, dựa trên lịch pháp cổ truyền để lựa chọn những ngày được quan niệm là thuận lợi cho các công việc quan trọng. Theo tín ngưỡng dân gian, ngày Hoàng đ...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Hoàng Đạo\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày Hoàng đạo là phong tục truyền thống trong văn hóa phương Đông, dựa trên lịch pháp cổ truyền để lựa chọn những ngày được quan niệm là thuận lợi cho các công việc quan trọng. Theo tín ngưỡng dân gian, ngày Hoàng đạo thường gắn với ý nghĩa cát lành, may mắn và hanh thông. Vì vậy, nhiều người có thói quen xem ngày trước khi khai trương, cưới hỏi, động thổ, nhập trạch, mua xe hoặc xuất hành, với mong muốn mọi việc được tiến hành suôn sẻ.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Cách Xác Định Ngày Hoàng Đạo\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTheo lịch cổ truyền, ngày Hoàng đạo được xác định dựa trên sự phối hợp giữa địa chi của ngày và tháng âm lịch, cùng hệ thống các thần sát trong thuật chọn ngày. Mỗi ngày có thể được phân loại theo tính chất cát hung khác nhau. Tuy nhiên, việc đánh giá ngày tốt không nên chỉ dựa vào tên gọi Hoàng đạo mà cần xem xét thêm các yếu tố như Can Chi, Trực ngày, sao tốt xấu và mục đích công việc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Hoàng Đạo Theo Công Việc\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTùy từng mục đích, việc lựa chọn ngày có thể khác nhau. Ngày cưới hỏi thường chú trọng ý nghĩa hòa hợp và hạnh phúc gia đình; ngày khai trương hướng đến sự khởi đầu thuận lợi; ngày động thổ, xây dựng thường kết hợp xem tuổi gia chủ và các yếu tố phong thủy. Đối với xuất hành hoặc nhận xe, nhiều người còn quan tâm đến giờ tốt để chủ động sắp xếp lịch trình.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Hoàng Đạo\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày Hoàng đạo là một yếu tố tham khảo trong văn hóa truyền thống, không đồng nghĩa mọi công việc thực hiện trong ngày đó đều chắc chắn thành công. Khi lựa chọn ngày, nên cân nhắc tính chất công việc, điều kiện thực tế và sự thuận tiện của các bên liên quan. Việc chuẩn bị kỹ lưỡng, đưa ra quyết định hợp lý và thực hiện công việc cẩn trọng vẫn là những yếu tố quan trọng để hướng đến kết quả tốt đẹp.\u003c/p\u003e",
+        "updatedAt":  1792212559757
+    },
+    {
+        "id":  "xem-ngay-dong-tho-khoi-cong",
+        "tieuDe":  "XEM NGÀY ĐỘNG THỔ",
+        "chuyenMuc":  "Xem ngày động thổ",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "13/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Động Thổ.png",
+        "noiBat":  true,
+        "uuTienFeed":  6,
+        "tomTat":  "Xem ngày tốt động thổ là phong tục truyền thống trong văn hóa phương Đông, thường được thực hiện trước khi khởi công xây dựng nhà ở, công trình kinh doanh hoặc các hạng mục kiến trúc. Theo quan niệm phong thủy, lựa chọn ...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Động Thổ\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt động thổ là phong tục truyền thống trong văn hóa phương Đông, thường được thực hiện trước khi khởi công xây dựng nhà ở, công trình kinh doanh hoặc các hạng mục kiến trúc. Theo quan niệm phong thủy, lựa chọn ngày lành tháng tốt mang ý nghĩa cầu mong quá trình thi công thuận lợi, công trình bền vững, gia đình bình an và công việc làm ăn phát triển. Nghi lễ động thổ còn thể hiện sự thành kính đối với thần linh, thổ địa theo tín ngưỡng dân gian.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày động thổ, người ta thường cân nhắc tuổi của gia chủ, năm xây dựng, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Một số yếu tố như Tam Tai, Kim Lâu, Hoang Ốc cũng thường được tham khảo khi xem tuổi làm nhà. Ngoài ra, cần lựa chọn giờ khởi công phù hợp để nghi lễ được tiến hành chu đáo và thuận tiện cho đơn vị thi công.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Động Thổ Theo Công Trình\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐối với nhà ở gia đình, việc chọn ngày thường gắn với tuổi của người đứng tên xây dựng hoặc người được gia đình lựa chọn làm chủ lễ theo phong tục. Với công trình kinh doanh, cửa hàng hoặc nhà xưởng, nhiều người chú trọng thời điểm khởi công mang ý nghĩa phát triển và ổn định lâu dài. Việc xem ngày cần kết hợp với kế hoạch thi công, điều kiện thời tiết và các thủ tục pháp lý liên quan.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Động Thổ\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt động thổ là nét đẹp văn hóa tín ngưỡng, mang ý nghĩa tinh thần và không bảo đảm chắc chắn công trình sẽ thuận lợi. Gia chủ cần chuẩn bị đầy đủ hồ sơ xây dựng, kiểm tra nền móng, lựa chọn đơn vị thi công có năng lực và tuân thủ các quy định về an toàn lao động. Sự chuẩn bị cẩn thận kết hợp với kế hoạch hợp lý sẽ góp phần giúp công trình được triển khai hiệu quả và bền vững.\u003c/p\u003e",
+        "updatedAt":  1792212559759
+    },
+    {
+        "id":  "xem-ngay-tot-xay-dung",
+        "tieuDe":  "XEM NGÀY TỐT XÂY DỰNG",
+        "chuyenMuc":  "Xem ngày tốt xây dựng",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "12/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Xấy Dựng.png",
+        "noiBat":  true,
+        "uuTienFeed":  7,
+        "tomTat":  "Xem ngày tốt xây dựng là phong tục truyền thống trong văn hóa phương Đông, nhằm lựa chọn thời điểm phù hợp để bắt đầu các công việc liên quan đến xây dựng nhà ở, công trình kinh doanh, nhà xưởng hoặc sửa chữa, cải tạo nh...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Tốt Xây Dựng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt xây dựng là phong tục truyền thống trong văn hóa phương Đông, nhằm lựa chọn thời điểm phù hợp để bắt đầu các công việc liên quan đến xây dựng nhà ở, công trình kinh doanh, nhà xưởng hoặc sửa chữa, cải tạo nhà cửa. Theo quan niệm phong thủy, chọn ngày lành tháng tốt mang ý nghĩa cầu mong quá trình thi công thuận lợi, công trình bền vững, gia đình bình an và cuộc sống ổn định lâu dài.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày xây dựng, người ta thường cân nhắc tuổi gia chủ, năm khởi công, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Đối với việc xây nhà, những yếu tố như Tam Tai, Kim Lâu và Hoang Ốc cũng thường được tham khảo để đánh giá năm xây dựng theo quan niệm dân gian. Ngoài ra, cần xem xét ngày động thổ, ngày đổ mái và thời điểm tiến hành các hạng mục quan trọng để chủ động sắp xếp công việc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Tốt Theo Từng Hạng Mục\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eMỗi giai đoạn xây dựng có thể được lựa chọn thời điểm riêng tùy theo phong tục và điều kiện thực tế. Ngày động thổ đánh dấu thời điểm bắt đầu công trình; ngày đổ mái gắn với việc hoàn thiện phần kết cấu quan trọng; ngày nhập trạch được xem khi chuẩn bị chuyển vào nhà mới. Việc lựa chọn ngày cần phù hợp với tiến độ thi công, thời tiết và kế hoạch của gia đình.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Xây Dựng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt xây dựng là hình thức tham khảo theo truyền thống văn hóa, không bảo đảm chắc chắn công trình sẽ thành công. Gia chủ nên ưu tiên thiết kế phù hợp, chất lượng vật liệu, năng lực nhà thầu, an toàn lao động và các thủ tục pháp lý cần thiết. Kết hợp sự chuẩn bị kỹ lưỡng với kế hoạch thi công hợp lý sẽ góp phần giúp công trình hoàn thành đúng tiến độ, đảm bảo chất lượng và sử dụng bền lâu.\u003c/p\u003e",
+        "updatedAt":  1792212559761
+    },
+    {
+        "id":  "xem-ngay-do-tran-lop-mai",
+        "tieuDe":  "XEM NGÀY ĐỔ TRẦN, LỢP MÁI",
+        "chuyenMuc":  "Xem ngày đổ trần, lợp mái",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "12/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Đổ Trần Lợp Mái.png",
+        "noiBat":  true,
+        "uuTienFeed":  8,
+        "tomTat":  "Xem ngày tốt đổ trần, lợp mái là phong tục được nhiều gia đình quan tâm trong quá trình xây dựng nhà cửa. Đây là những giai đoạn quan trọng, đánh dấu sự hoàn thiện phần kết cấu và mái che của ngôi nhà. Theo quan niệm pho...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Đổ Trần, Lợp Mái\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt đổ trần, lợp mái là phong tục được nhiều gia đình quan tâm trong quá trình xây dựng nhà cửa. Đây là những giai đoạn quan trọng, đánh dấu sự hoàn thiện phần kết cấu và mái che của ngôi nhà. Theo quan niệm phong thủy phương Đông, lựa chọn ngày lành tháng tốt mang ý nghĩa cầu mong công trình được thi công thuận lợi, nhà cửa vững chắc, gia đình bình an và cuộc sống ổn định lâu dài.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày đổ trần, lợp mái, người ta thường tham khảo tuổi gia chủ, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Bên cạnh đó, giờ tiến hành công việc cũng được cân nhắc để phù hợp với phong tục và kế hoạch thi công. Việc lựa chọn ngày nên được xem xét tổng thể, tránh chỉ dựa vào một yếu tố riêng lẻ để kết luận tốt hay xấu.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Phân Biệt Ngày Đổ Trần Và Ngày Lợp Mái\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày đổ trần thường gắn với việc thi công sàn bê tông hoặc kết cấu trần của công trình, tùy theo thiết kế xây dựng. Trong khi đó, ngày lợp mái đánh dấu thời điểm hoàn thiện phần mái che, có thể sử dụng ngói, tôn hoặc vật liệu phù hợp. Một số gia đình chọn ngày riêng cho từng hạng mục, trong khi những công trình khác có thể bố trí theo tiến độ thực tế và điều kiện thời tiết.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt đổ trần, lợp mái mang ý nghĩa văn hóa và tinh thần, không bảo đảm chắc chắn công trình sẽ thuận lợi. Gia chủ nên phối hợp với đơn vị thi công để lựa chọn thời điểm phù hợp, bảo đảm chất lượng bê tông, điều kiện thời tiết, an toàn lao động và tiến độ xây dựng. Sự chuẩn bị chu đáo sẽ góp phần giúp công trình hoàn thiện bền vững và đáp ứng nhu cầu sử dụng lâu dài.\u003c/p\u003e",
+        "updatedAt":  1792212559763
+    },
+    {
+        "id":  "xem-ngay-nhap-trach-nha-moi",
+        "tieuDe":  "XEM NGÀY NHẬP TRẠCH VỀ NHÀ MỚI",
+        "chuyenMuc":  "Xem ngày nhập trạch nhà mới",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "11/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Nhập Trạch.png",
+        "noiBat":  true,
+        "uuTienFeed":  9,
+        "tomTat":  "Nhập trạch là nghi lễ truyền thống đánh dấu thời điểm gia đình chuyển đến sinh sống tại nhà mới. Theo phong tục phương Đông, việc xem ngày tốt nhập trạch mang ý nghĩa cầu mong cuộc sống an cư, gia đạo bình an, sức khỏe d...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Nhập Trạch\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNhập trạch là nghi lễ truyền thống đánh dấu thời điểm gia đình chuyển đến sinh sống tại nhà mới. Theo phong tục phương Đông, việc xem ngày tốt nhập trạch mang ý nghĩa cầu mong cuộc sống an cư, gia đạo bình an, sức khỏe dồi dào và công việc thuận lợi. Đây cũng là dịp để gia chủ thực hiện nghi lễ kính cáo thần linh, thổ địa theo tín ngưỡng dân gian, thể hiện mong muốn bắt đầu một giai đoạn mới trong không gian sống ổn định và hài hòa.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi chọn ngày nhập trạch, người ta thường xem xét tuổi gia chủ, ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Ngoài ra, giờ nhập trạch cũng được quan tâm nhằm lựa chọn thời điểm phù hợp để thực hiện nghi lễ và chuyển đồ đạc vào nhà. Việc chọn ngày nên dựa trên tổng thể các yếu tố, kết hợp với điều kiện thực tế của gia đình.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Những Việc Thường Thực Hiện Trong Ngày Nhập Trạch\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTheo phong tục truyền thống, gia chủ thường chuẩn bị lễ vật, thắp hương kính cáo thần linh và tổ tiên, sau đó tiến hành các công việc chuyển vào nhà mới. Một số gia đình thực hiện nghi thức mang bếp, nước hoặc những vật dụng tượng trưng cho sự sung túc vào nhà trước. Các nghi lễ có thể khác nhau tùy vùng miền, điều kiện gia đình và tín ngưỡng riêng.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Nhập Trạch\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNgày nhập trạch nên được lựa chọn phù hợp với tiến độ hoàn thiện nhà cửa, hệ thống điện nước và điều kiện sinh hoạt. Nếu chưa thể chuyển đến ở ngay, gia chủ có thể tham khảo phong tục địa phương để sắp xếp nghi lễ phù hợp. Xem ngày tốt nhập trạch mang ý nghĩa tinh thần, không quyết định hoàn toàn sự thịnh vượng của gia đình. Một ngôi nhà an toàn, sạch sẽ, cùng sự hòa thuận và nỗ lực của các thành viên mới là nền tảng quan trọng cho cuộc sống lâu dài.\u003c/p\u003e",
+        "updatedAt":  1792212559765
+    },
+    {
+        "id":  "xem-ngay-mua-nha-giao-dich",
+        "tieuDe":  "XEM NGÀY MUA NHÀ",
+        "chuyenMuc":  "Xem ngày mua nhà",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "11/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Mua Nhà.png",
+        "noiBat":  true,
+        "uuTienFeed":  10,
+        "tomTat":  "Mua nhà là một trong những việc quan trọng của đời người, gắn liền với tài sản, nơi an cư và kế hoạch lâu dài của gia đình. Theo quan niệm phong thủy phương Đông, xem ngày tốt mua nhà mang ý nghĩa lựa chọn thời điểm thuậ...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Mua Nhà\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eMua nhà là một trong những việc quan trọng của đời người, gắn liền với tài sản, nơi an cư và kế hoạch lâu dài của gia đình. Theo quan niệm phong thủy phương Đông, xem ngày tốt mua nhà mang ý nghĩa lựa chọn thời điểm thuận lợi để thực hiện giao dịch, ký kết hợp đồng hoặc nhận bàn giao bất động sản. Nhiều người tin rằng chọn ngày lành tháng tốt giúp khởi đầu việc an cư được suôn sẻ, gia đạo ổn định và cuộc sống thêm thuận lợi.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày mua nhà, người ta thường tham khảo ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Tuổi của người đứng tên mua nhà cũng có thể được cân nhắc theo quan niệm phong thủy. Tuy nhiên, cần phân biệt ngày ký hợp đồng mua bán, ngày công chứng, ngày nhận bàn giao và ngày nhập trạch, bởi mỗi việc có mục đích và thời điểm khác nhau.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Mua Nhà Theo Mục Đích\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐối với người mua nhà để ở, việc lựa chọn ngày thường hướng đến ý nghĩa an cư, bình an và ổn định gia đình. Với người mua nhà đầu tư hoặc kinh doanh bất động sản, nhiều người chú trọng thời điểm giao dịch mang ý nghĩa tài lộc và phát triển lâu dài. Ngày được chọn nên phù hợp với lịch trình của các bên, thủ tục pháp lý và kế hoạch tài chính.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Mua Nhà\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt mua nhà là hình thức tham khảo theo văn hóa truyền thống, không bảo đảm giá trị bất động sản tăng lên hay giao dịch chắc chắn thành công. Người mua cần kiểm tra giấy tờ pháp lý, quyền sở hữu, quy hoạch, chất lượng công trình, nghĩa vụ tài chính và các điều khoản hợp đồng. Kết hợp việc chọn ngày phù hợp với sự thẩm định kỹ lưỡng sẽ giúp hạn chế rủi ro và đưa ra quyết định mua nhà sáng suốt hơn\u003c/p\u003e",
+        "updatedAt":  1792212559767
+    },
+    {
+        "id":  "xem-ngay-khai-truong-hong-phat",
+        "tieuDe":  "XEM NGÀY KHAI TRƯƠNG",
+        "chuyenMuc":  "Xem ngày khai trương",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "10/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Khai Trương.jpeg",
+        "noiBat":  true,
+        "uuTienFeed":  11,
+        "tomTat":  "Khai trương là dấu mốc khởi đầu hoạt động kinh doanh, buôn bán hoặc cung cấp dịch vụ. Theo quan niệm phong thủy phương Đông, xem ngày tốt khai trương mang ý nghĩa cầu mong công việc hanh thông, khách hàng đông đúc, tài l...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Khai Trương\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhai trương là dấu mốc khởi đầu hoạt động kinh doanh, buôn bán hoặc cung cấp dịch vụ. Theo quan niệm phong thủy phương Đông, xem ngày tốt khai trương mang ý nghĩa cầu mong công việc hanh thông, khách hàng đông đúc, tài lộc thuận lợi và hoạt động kinh doanh phát triển bền vững. Việc chọn ngày lành tháng tốt còn thể hiện mong muốn có một khởi đầu suôn sẻ, tạo niềm tin và động lực cho chủ cửa hàng, doanh nghiệp.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày khai trương, người ta thường tham khảo tuổi chủ kinh doanh, ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Bên cạnh đó, giờ khai trương cũng được cân nhắc để lựa chọn thời điểm phù hợp cho nghi lễ, mở cửa đón khách hoặc thực hiện giao dịch đầu tiên. Việc xem ngày nên kết hợp nhiều yếu tố thay vì chỉ dựa vào một tiêu chí riêng lẻ.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Khai Trương Theo Loại Hình Kinh Doanh\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐối với cửa hàng bán lẻ, quán ăn hoặc cơ sở dịch vụ, ngày khai trương thường được lựa chọn sao cho thuận tiện đón khách và quảng bá thương hiệu. Với doanh nghiệp, văn phòng hoặc cơ sở sản xuất, thời điểm khai trương cần phù hợp với kế hoạch vận hành và sự tham gia của đối tác. Ngoài yếu tố phong thủy, việc chuẩn bị hàng hóa, nhân sự, chất lượng dịch vụ và chương trình giới thiệu cũng góp phần tạo ấn tượng tốt ban đầu.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Khai Trương\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt khai trương là nét đẹp văn hóa tín ngưỡng, mang ý nghĩa tinh thần chứ không bảo đảm chắc chắn thành công trong kinh doanh. Chủ cơ sở nên chuẩn bị đầy đủ giấy phép cần thiết, kiểm tra cơ sở vật chất, xây dựng kế hoạch tài chính và chú trọng trải nghiệm khách hàng. Một khởi đầu chu đáo kết hợp với chiến lược kinh doanh phù hợp sẽ tạo nền tảng cho sự phát triển lâu dài.\u003c/p\u003e",
+        "updatedAt":  1792212559769
+    },
+    {
+        "id":  "xem-ngay-ky-hop-dong-thanh-cong",
+        "tieuDe":  "XEM NGÀY KÝ HỢP ĐỒNG",
+        "chuyenMuc":  "Xem ngày ký hợp đồng",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "10/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Ký Hợp Đồng.jpeg",
+        "noiBat":  true,
+        "uuTienFeed":  12,
+        "tomTat":  "Ký hợp đồng là bước quan trọng trong các hoạt động kinh doanh, hợp tác đầu tư, mua bán tài sản và giao dịch dân sự. Theo quan niệm phong thủy phương Đông, xem ngày tốt ký hợp đồng mang ý nghĩa lựa chọn thời điểm thuận lợ...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Ký Hợp Đồng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKý hợp đồng là bước quan trọng trong các hoạt động kinh doanh, hợp tác đầu tư, mua bán tài sản và giao dịch dân sự. Theo quan niệm phong thủy phương Đông, xem ngày tốt ký hợp đồng mang ý nghĩa lựa chọn thời điểm thuận lợi để bắt đầu sự hợp tác, hướng đến công việc hanh thông, quan hệ bền vững và lợi ích lâu dài. Nhiều người tin rằng chọn ngày lành tháng tốt giúp tăng sự an tâm và thể hiện mong muốn giao dịch diễn ra suôn sẻ.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày ký hợp đồng, người ta thường tham khảo ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Tuổi của người đại diện ký kết cũng có thể được cân nhắc theo quan niệm phong thủy. Ngoài ngày ký, giờ ký hợp đồng cũng được lựa chọn để phù hợp với lịch trình của các bên và kế hoạch triển khai công việc.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Ký Theo Tính Chất Giao Dịch\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐối với hợp đồng kinh doanh, hợp tác đầu tư hoặc cung cấp dịch vụ, nhiều người ưu tiên thời điểm mang ý nghĩa thuận lợi cho sự phát triển và gắn kết lâu dài. Với hợp đồng mua bán nhà đất, xe cộ hoặc tài sản có giá trị lớn, ngày ký cần phù hợp với lịch công chứng, thanh toán và bàn giao. Việc lựa chọn thời điểm nên dựa trên tính chất giao dịch và sự thống nhất giữa các bên.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Ký Hợp Đồng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt ký hợp đồng là hình thức tham khảo theo văn hóa truyền thống, không bảo đảm giao dịch chắc chắn thành công. Điều quan trọng hơn là kiểm tra kỹ các điều khoản, quyền lợi, nghĩa vụ, thời hạn thanh toán, trách nhiệm pháp lý và phương án xử lý tranh chấp. Khi nội dung hợp đồng rõ ràng, các bên hiểu đúng cam kết và thực hiện đầy đủ trách nhiệm, sự hợp tác sẽ có nền tảng vững chắc hơn.\u003c/p\u003e",
+        "updatedAt":  1792212559771
+    },
+    {
+        "id":  "xem-ngay-tot-nhan-chuc-thang-tien",
+        "tieuDe":  "XEM NGÀY TỐT NHẬN CHỨC",
+        "chuyenMuc":  "Xem ngày tốt nhận chức",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "09/09/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt Nhận Chức.png",
+        "noiBat":  true,
+        "uuTienFeed":  13,
+        "tomTat":  "Nhận chức là dấu mốc quan trọng trong con đường công danh và sự nghiệp, đánh dấu thời điểm một người bắt đầu đảm nhiệm vị trí, chức vụ hoặc trọng trách mới. Theo quan niệm phong thủy phương Đông, xem ngày tốt nhận chức m...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Ý Nghĩa Của Việc Xem Ngày Nhận Chức\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eNhận chức là dấu mốc quan trọng trong con đường công danh và sự nghiệp, đánh dấu thời điểm một người bắt đầu đảm nhiệm vị trí, chức vụ hoặc trọng trách mới. Theo quan niệm phong thủy phương Đông, xem ngày tốt nhận chức mang ý nghĩa cầu mong công việc thuận lợi, sự nghiệp phát triển, được cấp trên tin tưởng và đồng nghiệp hỗ trợ. Việc lựa chọn ngày lành tháng tốt còn thể hiện mong muốn có khởi đầu suôn sẻ, tạo nền tảng cho quá trình công tác lâu dài.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Những Yếu Tố Cần Xem Khi Chọn Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày nhận chức, người ta thường tham khảo ngày Hoàng đạo, Can Chi, ngũ hành, Trực ngày và các sao tốt xấu theo lịch cổ truyền. Tuổi của người nhận chức cũng có thể được cân nhắc để lựa chọn ngày giờ phù hợp với quan niệm phong thủy. Bên cạnh đó, cần xem xét thời điểm công bố quyết định, ngày chính thức bắt đầu công việc và lịch trình bàn giao trách nhiệm.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Chọn Ngày Nhận Chức Theo Tính Chất Công Việc\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eĐối với người được bổ nhiệm vào vị trí quản lý, lãnh đạo hoặc đảm nhiệm chức vụ mới, nhiều người ưu tiên ngày mang ý nghĩa thăng tiến, danh vọng và sự ổn định. Với người bắt đầu công việc tại cơ quan hoặc doanh nghiệp mới, việc chọn ngày nên kết hợp với kế hoạch nhân sự và yêu cầu thực tế của đơn vị. Thời điểm nhận chức thuận tiện sẽ giúp quá trình tiếp nhận nhiệm vụ diễn ra chủ động và chu đáo.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Những Lưu Ý Khi Xem Ngày Nhận Chức\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày tốt nhận chức là hình thức tham khảo theo văn hóa truyền thống, không bảo đảm sự nghiệp chắc chắn thành công. Để phát triển lâu dài, mỗi người cần chuẩn bị năng lực chuyên môn, tinh thần trách nhiệm, khả năng quản lý và kỹ năng giao tiếp. Một khởi đầu tốt đẹp kết hợp với sự nỗ lực và thái độ làm việ\u003c/p\u003e",
+        "updatedAt":  1792212559774
+    },
+    {
+        "id":  "xem-ngay-an-tang-dao-hieu",
+        "tieuDe":  "XEM NGÀY AN TÁNG",
+        "chuyenMuc":  "Xem ngÃ y an tÃ¡ng",
+        "tacGia":  "Thầy Duy Tâm Phúc",
+        "ngayDang":  "16/10/2026",
+        "hinhAnh":  "Ảnh Bài Viết Khung 16-9/Xem Ngày Tốt An Táng.jpeg",
+        "noiBat":  true,
+        "uuTienFeed":  14,
+        "tomTat":  "Xem ngày an táng là việc lựa chọn ngày giờ chôn cất người đã khuất theo phong tục và tín ngưỡng truyền thống. Đây là nghi thức quan trọng, thể hiện lòng thành kính, sự tiếc thương và đạo lý uống nước nhớ nguồn của người ...",
+        "noiDung":  "\u003ch3\u003e\u003cstrong\u003e1. Xem Ngày An Táng Là Gì?\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eXem ngày an táng là việc lựa chọn ngày giờ chôn cất người đã khuất theo phong tục và tín ngưỡng truyền thống. Đây là nghi thức quan trọng, thể hiện lòng thành kính, sự tiếc thương và đạo lý uống nước nhớ nguồn của người Việt.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e2. Ý Nghĩa Của Việc Chọn Ngày An Táng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTheo quan niệm dân gian, chọn ngày giờ phù hợp giúp gia đình an tâm khi tiễn biệt người đã khuất. Bên cạnh ý nghĩa tâm linh, việc xác định thời gian cụ thể còn giúp gia đình sắp xếp họ hàng, phương tiện, nghi lễ và phối hợp với nghĩa trang chu đáo.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e3. Xem Ngày Hoàng Đạo, Hắc Đạo Và Trực Ngày\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eKhi xem ngày an táng, một số gia đình tham khảo ngày Hoàng Đạo, Hắc Đạo, 12 Trực và các sao tốt xấu trong lịch cổ. Tuy nhiên, mỗi trường phái có cách luận giải riêng, vì vậy không nên chỉ căn cứ vào một yếu tố để kết luận ngày an táng tốt hay xấu.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e4. Xem Ngày Theo Tuổi Và Năm Sinh Người Đã Khuất\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eMột số phương pháp truyền thống xét năm sinh, tuổi âm lịch, Thiên Can, Địa Chi và mối quan hệ xung hợp giữa tuổi người mất với ngày an táng. Những yếu tố này cần được xác định chính xác theo phương pháp sử dụng, tránh nhầm lẫn giữa năm âm lịch và năm dương lịch.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e5. Chọn Giờ Đưa Tang Và Hạ Huyệt\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eGiờ an táng thường được tham khảo theo 12 giờ Địa Chi và các nguyên tắc chọn giờ trong lịch pháp cổ. Khi xác định giờ, gia đình cần cân nhắc thêm thời gian di chuyển, thời tiết, điều kiện tổ chức và sự phối hợp với nghĩa trang để nghi lễ diễn ra thuận lợi, an toàn.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e6. Phong Thủy Âm Trạch Và Vị Trí Mộ Phần\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTrong phong thủy âm trạch, các yếu tố như long mạch, minh đường, thủy pháp, hướng huyệt và thế đất được xem xét theo quan niệm truyền thống. Trên thực tế, cần ưu tiên địa điểm an táng hợp pháp, nền đất ổn định, thoát nước tốt, không có nguy cơ sạt lở hoặc ngập úng.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e7. Những Điều Kiêng Kỵ Khi An Táng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eTheo phong tục từng địa phương, gia đình có thể lưu ý các quan niệm về ngày xung tuổi, trùng tang, ngày Sát Chủ và những nghi thức riêng khi đưa tang, hạ huyệt. Tuy nhiên, không nên vì những quan niệm này mà trách móc người thân, gây hoang mang hoặc trì hoãn việc an táng cần thiết.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e8. Những Việc Cần Chuẩn Bị Trước Ngày An Táng\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eGia đình nên chuẩn bị giấy tờ cần thiết, liên hệ nghĩa trang, thống nhất giờ giấc, phân công người phụ trách và chuẩn bị lễ nghi phù hợp với điều kiện thực tế. Đồng thời, cần bảo đảm an toàn khi di chuyển, hạ huyệt và thực hiện đúng quy định về mai táng tại địa phương.\u003c/p\u003e\n\u003ch3\u003e\u003cstrong\u003e9. Có Nhất Thiết Phải Chọn Ngày Tốt Mới An Táng Không?\u003c/strong\u003e\u003c/h3\u003e\n\u003cp\u003eViệc xem ngày có thể được tham khảo để phù hợp với tín ngưỡng và phong tục gia đình, nhưng không nên tuyệt đối hóa ngày tốt, ngày xấu. Khi có sự khác biệt giữa quan niệm dân gian và điều kiện thực tế, cần ưu tiên sức khỏe, vệ sinh, an toàn, quy định pháp luật và việc tổ chức tang lễ kịp thời.\u003c/p\u003e",
+        "updatedAt":  1792212559776
+    }
 ];
