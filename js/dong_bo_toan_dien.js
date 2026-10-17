@@ -1,12 +1,12 @@
 ﻿/**
- * Bá»˜ Äá»’NG Bá»˜ TOÃ€N DIá»†N VÃ€ Tá»° Äá»˜NG CHá»®A LÃ€NH ÄA Ná»€N Táº¢NG (PHIÃŠN Báº¢N CHá»NG CACHE VÄ¨NH VIá»„N)
+ * Bá»˜ Äá»’NG Bá»˜ TOÃ€N DIá»†N VÃ€ Tá»° Äá»˜NG CHá»®A LÃ€NH ÄA Ná»€N Táº¢NG (PHIÃŠN Báº¢N TUYá»†T Äá»I V6)
  * Cháº¡y Ä‘á»“ng bá»™ tá»©c thÃ¬ trÃªn: Cá»‘c Cá»‘c, Chrome, Safari, Edge, Android & iOS Mobile
- * Tá»± Ä‘á»™ng loáº¡i bá» hoÃ n toÃ n báº£n nhÃ¡p cÅ© 29/08/2026 vÃ  lá»—i dÃ­nh chá»¯ trÃªn má»i thiáº¿t bá»‹.
+ * Tá»± Ä‘á»™ng loáº¡i bá» triá»‡t Ä‘á»ƒ má»i báº£n nhÃ¡p cÅ©, lá»—i dÃ­nh chá»¯ cá»§a TOÃ€N Bá»˜ CÃC BÃ€I Tá»¬ VI & XÃ”NG Äáº¤T.
  */
 (function() {
   'use strict';
 
-  var BAN_CAP_NHAT_ID = "20261018_MASTER_FINAL_CROSS_PLATFORM_V5";
+  var BAN_CAP_NHAT_ID = "20261018_MASTER_FINAL_CROSS_PLATFORM_V6";
 
   // Dá»¯ liá»‡u chuáº©n váº­t lÃ½ tuyá»‡t Ä‘á»‘i cá»§a cÃ¡c bÃ i viáº¿t trá»ng Ä‘iá»ƒm
   var MASTER_CLEAN = {
@@ -78,26 +78,18 @@
       }
     });
 
+    // Náº¿u bÃ i viáº¿t náº±m trong danh má»¥c trá»ng Ä‘iá»ƒm (Tá»­ Vi, XÃ´ng Äáº¥t, Tá»­ Vi NgÃ y, Tuáº§n, ThÃ¡ng, Váº­n Háº¡n)
+    // Ã‰p buá»™c Ä‘á»“ng bá»™ tuyá»‡t Ä‘á»‘i sang báº£n chuáº©n sáº¡ch Ä‘áº¹p
     var master = MASTER_CLEAN[item.id];
     if (master) {
-      var isCorrupted = (
-        item.ngayDang === '29/08/2026' ||
-        !item.tieuDe ||
-        (item.noiDung && item.noiDung.indexOf("KhÃ¡i Niá»‡m Xem Tá»­ Vi Äáº§u NÄƒm Xem tá»­ vi") !== -1) ||
-        (item.noiDung && item.noiDung.indexOf("KhÃ¡i Niá»‡m XÃ´ng Äáº¥t Äáº§u NÄƒm XÃ´ng Ä‘áº¥t") !== -1) ||
-        (item.noiDung && item.noiDung.indexOf("PHáº¦N ") !== -1 && item.noiDung.indexOf("<strong") !== -1)
-      );
-
-      if (isCorrupted) {
-        item.tieuDe = master.tieuDe;
-        item.chuyenMuc = master.chuyenMuc;
-        item.tacGia = master.tacGia || "Tháº§y Duy TÃ¢m PhÃºc";
-        item.ngayDang = master.ngayDang || "15/09/2026";
-        item.hinhAnh = master.hinhAnh;
-        item.tomTat = master.tomTat;
-        item.noiDung = master.noiDung;
-        item.updatedAt = 1799999999999;
-      }
+      item.tieuDe = master.tieuDe;
+      item.chuyenMuc = master.chuyenMuc;
+      item.tacGia = master.tacGia || "Tháº§y Duy TÃ¢m PhÃºc";
+      item.ngayDang = master.ngayDang || "15/09/2026";
+      item.hinhAnh = master.hinhAnh;
+      item.tomTat = master.tomTat;
+      item.noiDung = master.noiDung;
+      item.updatedAt = 1799999999999;
     }
     return item;
   }
@@ -118,8 +110,6 @@
         "TAMLINH_LENGHI_DATA"
       ];
 
-      var coThayDoi = false;
-
       storageKeys.forEach(function(k) {
         try {
           var raw = localStorage.getItem(k);
@@ -133,21 +123,23 @@
             var item = list[i];
             if (!item || !item.id) continue;
 
-            var beforeStr = JSON.stringify(item);
-            list[i] = chuanHoaItem(item);
-            var afterStr = JSON.stringify(list[i]);
-
-            if (beforeStr !== afterStr) {
+            if (MASTER_CLEAN[item.id]) {
+              list[i] = chuanHoaItem(item);
               listChanged = true;
             }
           }
 
           if (listChanged) {
             localStorage.setItem(k, JSON.stringify(list));
-            coThayDoi = true;
           }
         } catch (eStorage) {}
       });
+
+      // Kiá»ƒm tra vÃ  cáº­p nháº­t DOM trang phá»¥ náº¿u cÃ³
+      var elSubDate = document.getElementById("tuvi-xongdat-date");
+      if (elSubDate && (elSubDate.textContent.trim() === "26/09/2026" || elSubDate.textContent.trim() === "29/08/2026")) {
+        elSubDate.textContent = "15/09/2026";
+      }
 
       localStorage.setItem("DONG_BO_VERSION", BAN_CAP_NHAT_ID);
     } catch(errAll) {}
@@ -155,16 +147,14 @@
 
   // KhÃ³a cháº¯n trá»±c tiáº¿p trÆ°á»›c khi Modal hiá»ƒn thá»‹ Ä‘á»ƒ Ä‘áº£m báº£o 100% khÃ´ng bao giá» hiá»ƒn thá»‹ báº£n cÅ©
   function baoVeModalHienThi() {
-    if (typeof window.openArticleModal === 'function' && !window.openArticleModal._healed) {
+    if (typeof window.openArticleModal === 'function' && !window.openArticleModal._healedV6) {
       var origModal = window.openArticleModal;
       window.openArticleModal = function(postId, directPost) {
         var tId = postId || (directPost && directPost.id);
         if (tId && MASTER_CLEAN[tId]) {
           var m = MASTER_CLEAN[tId];
-          if (!directPost || directPost.ngayDang === '29/08/2026' || !directPost.tieuDe || (directPost.noiDung && directPost.noiDung.indexOf("KhÃ¡i Niá»‡m Xem Tá»­ Vi Äáº§u NÄƒm Xem tá»­ vi") !== -1)) {
-            directPost = Object.assign({}, m, { updatedAt: 1799999999999 });
-            arguments[1] = directPost;
-          }
+          directPost = Object.assign({}, m, { updatedAt: 1799999999999 });
+          arguments[1] = directPost;
         }
         var ret = origModal.apply(this, arguments);
 
@@ -174,15 +164,19 @@
           if (curId && MASTER_CLEAN[curId]) {
             var mObj = MASTER_CLEAN[curId];
             var elDate = document.getElementById("modal-post-date");
-            if (elDate && elDate.textContent.trim() === "29/08/2026") {
+            if (elDate) {
               elDate.textContent = mObj.ngayDang || "15/09/2026";
             }
             var elTitle = document.getElementById("modal-post-title");
-            if (elTitle && (!elTitle.textContent.trim() || elTitle.textContent.trim() === "")) {
+            if (elTitle) {
               elTitle.textContent = mObj.tieuDe;
             }
+            var elAuthor = document.getElementById("modal-post-author");
+            if (elAuthor) {
+              elAuthor.textContent = mObj.tacGia || "Tháº§y Duy TÃ¢m PhÃºc";
+            }
             var elContent = document.getElementById("modal-post-content");
-            if (elContent && elContent.innerHTML.indexOf("KhÃ¡i Niá»‡m Xem Tá»­ Vi Äáº§u NÄƒm Xem tá»­ vi") !== -1) {
+            if (elContent) {
               elContent.innerHTML = mObj.noiDung;
             }
           }
@@ -190,22 +184,18 @@
 
         return ret;
       };
-      window.openArticleModal._healed = true;
+      window.openArticleModal._healedV6 = true;
     }
 
-    if (typeof window.getMasterArticleById === 'function' && !window.getMasterArticleById._healed) {
+    if (typeof window.getMasterArticleById === 'function' && !window.getMasterArticleById._healedV6) {
       var origGetMaster = window.getMasterArticleById;
       window.getMasterArticleById = function(targetId) {
-        var res = origGetMaster.apply(this, arguments);
         if (targetId && MASTER_CLEAN[targetId]) {
-          var m = MASTER_CLEAN[targetId];
-          if (!res || res.ngayDang === '29/08/2026' || !res.tieuDe || (res.noiDung && res.noiDung.indexOf("KhÃ¡i Niá»‡m Xem Tá»­ Vi Äáº§u NÄƒm Xem tá»­ vi") !== -1)) {
-            return Object.assign({}, m, { updatedAt: 1799999999999 });
-          }
+          return Object.assign({}, MASTER_CLEAN[targetId], { updatedAt: 1799999999999 });
         }
-        return res;
+        return origGetMaster.apply(this, arguments);
       };
-      window.getMasterArticleById._healed = true;
+      window.getMasterArticleById._healedV6 = true;
     }
   }
 
@@ -226,10 +216,12 @@
   });
 
   // TÃ¡i cháº¡y sau khi cÃ¡c bá»™ mÃ¡y Firestore / Network táº£i xong
-  setTimeout(thucHienDongBoToanDien, 500);
-  setTimeout(baoVeModalHienThi, 600);
-  setTimeout(thucHienDongBoToanDien, 1500);
-  setTimeout(baoVeModalHienThi, 1600);
+  setTimeout(thucHienDongBoToanDien, 300);
+  setTimeout(baoVeModalHienThi, 350);
+  setTimeout(thucHienDongBoToanDien, 1000);
+  setTimeout(baoVeModalHienThi, 1100);
+  setTimeout(thucHienDongBoToanDien, 2000);
+  setTimeout(baoVeModalHienThi, 2100);
 
   window.kichHoatDongBoToanDien = thucHienDongBoToanDien;
 })();
