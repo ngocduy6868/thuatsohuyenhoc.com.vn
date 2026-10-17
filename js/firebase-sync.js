@@ -33,6 +33,7 @@
 
   let db = null;
   let isInitialized = false;
+  const scheduledPushMap = {};
 
   // Tự động nạp Firebase SDK nếu trang chưa có
   function loadScript(src) {
@@ -152,8 +153,37 @@
     }
   }
 
+  // Xóa sạch các bài viết đã bị ẩn/xóa khỏi tất cả các kho lưu trữ chuyên mục
+  function purgeHiddenPostsFromAllStorages(hiddenArray) {
+    if (!Array.isArray(hiddenArray) || hiddenArray.length === 0) return;
+    const hSet = new Set(hiddenArray);
+    const catKeys = [
+      "BAI_VIET_CHUYEN_MUC_CUSTOM",
+      "XEMNGAY_BAI_VIET_CUSTOM",
+      "TUVI_BAI_VIET_CUSTOM",
+      "XEMTUOI_BAI_VIET_CUSTOM",
+      "TAMLINH_BAI_VIET_CUSTOM",
+      "PHONGTHUY_BAI_VIET_CUSTOM",
+      "KIENTHUC_BAI_VIET_CUSTOM",
+      "TUONGSO_BAI_VIET_CUSTOM"
+    ];
+    catKeys.forEach(ck => {
+      try {
+        const raw = localStorage.getItem(ck);
+        if (!raw) return;
+        const list = JSON.parse(raw);
+        if (Array.isArray(list)) {
+          const filtered = list.filter(p => p && p.id && !hSet.has(p.id));
+          if (filtered.length !== list.length) {
+            localStorage.setItem(ck, JSON.stringify(filtered));
+          }
+        }
+      } catch(e) {}
+    });
+  }
+
   // HÀM HỢP NHẤT THÔNG MINH (SMART MERGE): Giữ nguyên 100% bài có updatedAt mới hơn
-  function smartMergeCategoryData(key, cloudRaw) {
+  function smartMergeCategoryData(key, cloudRaw, isFromCloud) {
     if (!cloudRaw) return false;
     const localVal = localStorage.getItem(key);
     if (!localVal) {
@@ -166,8 +196,16 @@
         const cloudH = JSON.parse(cloudRaw || "[]");
         if (Array.isArray(cloudH)) {
           const localH = JSON.parse(localVal || "[]");
-          if (JSON.stringify(cloudH) !== JSON.stringify(localH)) {
-            localStorage.setItem(key, JSON.stringify(cloudH));
+          const unionH = Array.from(new Set([...cloudH, ...localH]));
+          ["BAI_VIET_HIDDEN_IDS", "XEMNGAY_HIDDEN_IDS", "XEMTUOI_HIDDEN_IDS", "TUVI_HIDDEN_IDS", "TAMLINH_HIDDEN_IDS", "PHONGTHUY_HIDDEN_IDS", "KIENTHUC_HIDDEN_IDS", "TUONGSO_HIDDEN_IDS"].forEach(hk => {
+            try {
+              let hList = JSON.parse(localStorage.getItem(hk) || "[]");
+              let uList = Array.from(new Set([...hList, ...unionH]));
+              localStorage.setItem(hk, JSON.stringify(uList));
+            } catch(e) {}
+          });
+          purgeHiddenPostsFromAllStorages(unionH);
+          if (JSON.stringify(unionH) !== JSON.stringify(localH)) {
             return true;
           }
         }
@@ -192,6 +230,15 @@
           if (Array.isArray(arr)) arr.forEach(id => hiddenSet.add(id));
         } catch(e) {}
       });
+      [
+        "tuvi-post-ban-ve-sao-khong-kiep-mvary3y7",
+        "bai-kham-thien-thien-tuong",
+        "sao-that-sat-trong-tu-vi-dau-so",
+        "sao-pha-quan-trong-tu-vi-dau-so",
+        "sao-tham-lang-trong-tu-vi-dau-so",
+        "bai-viet-moi-cua-ban",
+        "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
+      ].forEach(id => hiddenSet.add(id));
 
       // Đối với kho Chuyên mục tổng hợp: bỏ qua các bài đã thuộc kho chuyên mục cụ thể
       if (key === "BAI_VIET_CHUYEN_MUC_CUSTOM") {
@@ -213,8 +260,9 @@
       const localMap = {};
       localArr.forEach(p => { if (p && p.id) localMap[p.id] = p; });
 
-      const mergedArr = localArr.slice();
-      let hasChange = false;
+      // Lọc sạch các bài đã bị xóa khỏi mergedArr
+      const mergedArr = localArr.filter(p => p && p.id && !hiddenSet.has(p.id));
+      let hasChange = (mergedArr.length !== localArr.length);
       let hasLocalNewer = false;
       const nowMax = Date.now() + 60000;
 
@@ -222,7 +270,7 @@
       const cloudMap = {};
       cloudArr.forEach(p => { if (p && p.id) cloudMap[p.id] = p; });
       localArr.forEach(lp => {
-        if (lp && lp.id && !cloudMap[lp.id]) {
+        if (lp && lp.id && !hiddenSet.has(lp.id) && !cloudMap[lp.id]) {
           hasLocalNewer = true;
         }
       });
@@ -254,14 +302,21 @@
       });
 
       if (hasChange) {
-        localStorage.setItem(key, JSON.stringify(mergedArr));
+        try {
+          localStorage.setItem(key, JSON.stringify(mergedArr));
+        } catch(errSet) {
+          console.warn("Bộ nhớ localStorage đã đầy khi lưu " + key + ":", errSet);
+        }
       }
 
-      // Nếu bản nội bộ trong máy mới hơn Cloud -> Tự động đẩy bản mới lên Cloud
-      if (hasLocalNewer) {
-        setTimeout(() => {
-          pushCategoryToCloud(key, localStorage.getItem(key));
-        }, 1500);
+      // Nếu bản nội bộ trong máy mới hơn Cloud và KHÔNG PHẢI đang nhận sự kiện từ Cloud -> Đẩy lên Cloud (Debounce an toàn)
+      if (hasLocalNewer && !isFromCloud) {
+        if (!scheduledPushMap[key]) {
+          scheduledPushMap[key] = setTimeout(() => {
+            delete scheduledPushMap[key];
+            pushCategoryToCloud(key, localStorage.getItem(key));
+          }, 3500);
+        }
       }
 
       return hasChange;
@@ -290,7 +345,7 @@
         const key = doc.id;
         const cloudDoc = doc.data();
         if (cloudDoc && cloudDoc.data) {
-          if (smartMergeCategoryData(key, cloudDoc.data)) {
+          if (smartMergeCategoryData(key, cloudDoc.data, true)) {
             hasChanges = true;
           }
         }
@@ -321,7 +376,7 @@
             const key = change.doc.id;
             const cloudDoc = change.doc.data();
             if (cloudDoc && cloudDoc.data) {
-              if (smartMergeCategoryData(key, cloudDoc.data)) {
+              if (smartMergeCategoryData(key, cloudDoc.data, true)) {
                 changed = true;
               }
             }
@@ -339,30 +394,34 @@
     }
   }
 
+  let refreshTimer = null;
   function triggerUIRefresh() {
-    // 1. Nếu đang ở trang soạn thảo viet-bai.html
-    if (typeof window.renderExistingPosts === "function") {
-      try { window.renderExistingPosts(); } catch(e) {}
-    }
-    if (typeof window.updateStorageMonitorUI === "function") {
-      try { window.updateStorageMonitorUI(); } catch(e) {}
-    }
+    if (refreshTimer) clearTimeout(refreshTimer);
+    refreshTimer = setTimeout(() => {
+      // 1. Nếu đang ở trang soạn thảo viet-bai.html
+      if (typeof window.renderExistingPosts === "function") {
+        try { window.renderExistingPosts(); } catch(e) {}
+      }
+      if (typeof window.updateStorageMonitorUI === "function") {
+        try { window.updateStorageMonitorUI(); } catch(e) {}
+      }
 
-    // 2. Nếu đang ở trang chủ index.html
-    if (typeof window.syncChuyenMuc === "function") {
-      try { window.syncChuyenMuc(); } catch(e) {}
-    }
-    if (typeof window.renderChuyenMucTab === "function") {
-      try { window.renderChuyenMucTab(); } catch(e) {}
-    }
-    if (typeof window.canChinhChanBaiViet === "function") {
-      try { setTimeout(window.canChinhChanBaiViet, 100); } catch(e) {}
-    }
+      // 2. Nếu đang ở trang chủ index.html
+      if (typeof window.syncChuyenMuc === "function") {
+        try { window.syncChuyenMuc(); } catch(e) {}
+      }
+      if (typeof window.renderChuyenMucTab === "function") {
+        try { window.renderChuyenMucTab(); } catch(e) {}
+      }
+      if (typeof window.canChinhChanBaiViet === "function") {
+        try { setTimeout(window.canChinhChanBaiViet, 100); } catch(e) {}
+      }
 
-    // 3. Phát CustomEvent cho toàn bộ hệ thống
-    try {
-      window.dispatchEvent(new CustomEvent("firebasePostsSynced", { detail: { time: Date.now() } }));
-    } catch(e) {}
+      // 3. Phát CustomEvent cho toàn bộ hệ thống
+      try {
+        window.dispatchEvent(new CustomEvent("firebasePostsSynced", { detail: { time: Date.now() } }));
+      } catch(e) {}
+    }, 350);
   }
 
   // Export ra toàn cầu
@@ -371,11 +430,16 @@
     pushCategory: pushCategoryToCloud,
     pushAll: pushAllToCloud,
     pullAll: pullFromCloud,
-    listen: listenToCloudChanges
+    listen: listenToCloudChanges,
+    purgeHiddenPosts: purgeHiddenPostsFromAllStorages
   };
 
   // Tự động khởi chạy ngay khi tải trang
   document.addEventListener("DOMContentLoaded", function() {
+    try {
+      const hList = JSON.parse(localStorage.getItem("BAI_VIET_HIDDEN_IDS") || "[]");
+      purgeHiddenPostsFromAllStorages(hList);
+    } catch(e) {}
     setTimeout(async () => {
       await pullFromCloud();
       listenToCloudChanges();

@@ -3091,7 +3091,7 @@
           } catch(e) {}
         });
 
-        // TỰ ĐỘNG ĐỒNG BỘ THÔNG MINH DỮ LIỆU BÀI VIẾT (BẢO TOÀN 100% BÀI MỚI SỬA CỦA NGƯỜI DÙNG)
+        // TỰ ĐỘNG ĐỒNG BỘ THÔNG MINH DỮ LIỆU BÀI VIẾT (BẢO TOÀN 100% BÀI MỚI SỬA CỦA NGƯỜI DÙNG & TÔN TRỌNG LỆNH XÓA)
         (function autoSyncFromCloud() {
           try {
             fetch('data-baiviet.json?v=' + Date.now())
@@ -3099,8 +3099,39 @@
               .then(function(data) {
                 if (data && typeof data === 'object') {
                   var hasChange = false;
+
+                  // 1. Cập nhật danh sách bài đã xóa nếu có từ máy chủ
+                  var hiddenSet = new Set();
+                  ["BAI_VIET_HIDDEN_IDS", "XEMNGAY_HIDDEN_IDS", "XEMTUOI_HIDDEN_IDS", "TUVI_HIDDEN_IDS", "TAMLINH_HIDDEN_IDS", "PHONGTHUY_HIDDEN_IDS", "KIENTHUC_HIDDEN_IDS", "TUONGSO_HIDDEN_IDS"].forEach(function(hk) {
+                    try {
+                      var arr = JSON.parse(localStorage.getItem(hk) || "[]");
+                      if (Array.isArray(arr)) arr.forEach(function(id) { hiddenSet.add(id); });
+                    } catch(e) {}
+                  });
+                  [
+                    "tuvi-post-ban-ve-sao-khong-kiep-mvary3y7",
+                    "bai-kham-thien-thien-tuong",
+                    "sao-that-sat-trong-tu-vi-dau-so",
+                    "sao-pha-quan-trong-tu-vi-dau-so",
+                    "sao-tham-lang-trong-tu-vi-dau-so",
+                    "bai-viet-moi-cua-ban",
+                    "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
+                  ].forEach(function(id) { hiddenSet.add(id); });
+
+                  if (data["BAI_VIET_HIDDEN_IDS"]) {
+                    try {
+                      var serverHidden = typeof data["BAI_VIET_HIDDEN_IDS"] === 'string' ? JSON.parse(data["BAI_VIET_HIDDEN_IDS"]) : data["BAI_VIET_HIDDEN_IDS"];
+                      if (Array.isArray(serverHidden)) {
+                        serverHidden.forEach(function(id) { hiddenSet.add(id); });
+                        var unionList = Array.from(hiddenSet);
+                        localStorage.setItem("BAI_VIET_HIDDEN_IDS", JSON.stringify(unionList));
+                      }
+                    } catch(e) {}
+                  }
+
+                  // 2. Đồng bộ từng kho bài viết
                   for (var k in data) {
-                    if (data.hasOwnProperty(k)) {
+                    if (data.hasOwnProperty(k) && k !== "BAI_VIET_HIDDEN_IDS") {
                       var remoteRaw = data[k];
                       var remoteArr = [];
                       try {
@@ -3115,19 +3146,21 @@
                         if (!Array.isArray(localArr)) localArr = [];
                       } catch(e) { localArr = []; }
 
-                      if (localArr.length === 0 && remoteArr.length > 0) {
-                        localStorage.setItem(k, JSON.stringify(remoteArr));
+                      // Loại bỏ ngay các bài đã xóa khỏi localArr
+                      var mergedArr = localArr.filter(function(lp) { return lp && lp.id && !hiddenSet.has(lp.id); });
+                      var keyChanged = (mergedArr.length !== localArr.length);
+
+                      if (mergedArr.length === 0 && remoteArr.length > 0) {
+                        var cleanRemote = remoteArr.filter(function(rp) { return rp && rp.id && !hiddenSet.has(rp.id); });
+                        localStorage.setItem(k, JSON.stringify(cleanRemote));
                         hasChange = true;
                       } else if (remoteArr.length > 0) {
                         // SMART MERGE: Duyệt từng bài viết, bài nào có updatedAt lớn hơn thì giữ bài đó
                         var localMap = {};
-                        localArr.forEach(function(lp) { if (lp && lp.id) localMap[lp.id] = lp; });
-
-                        var mergedArr = localArr.slice();
-                        var keyChanged = false;
+                        mergedArr.forEach(function(lp) { if (lp && lp.id) localMap[lp.id] = lp; });
 
                         remoteArr.forEach(function(rp) {
-                          if (!rp || !rp.id) return;
+                          if (!rp || !rp.id || hiddenSet.has(rp.id)) return;
                           var lp = localMap[rp.id];
                           if (!lp) {
                             // Bài mới trên máy chủ mà máy này chưa có -> Thêm vào
@@ -3151,6 +3184,9 @@
                           localStorage.setItem(k, JSON.stringify(mergedArr));
                           hasChange = true;
                         }
+                      } else if (keyChanged) {
+                        localStorage.setItem(k, JSON.stringify(mergedArr));
+                        hasChange = true;
                       }
                     }
                   }
@@ -3158,6 +3194,12 @@
                     console.log("☁️ Đã đồng bộ thông minh bài viết mới nhất từ máy chủ!");
                     if (typeof window.syncChuyenMuc === 'function') {
                       setTimeout(window.syncChuyenMuc, 50);
+                    }
+                    if (typeof window.renderChuyenMucTab === 'function') {
+                      setTimeout(window.renderChuyenMucTab, 60);
+                    }
+                    if (typeof window.canChinhChanBaiViet === 'function') {
+                      setTimeout(window.canChinhChanBaiViet, 100);
                     }
                   }
                 }

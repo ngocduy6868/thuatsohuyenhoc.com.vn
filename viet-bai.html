@@ -5059,7 +5059,7 @@
           list.forEach(p => {
             if (!p || !p.id) return;
             const targetHD = HD_IMAGE_MAP[p.id];
-            if (targetHD) {
+            if (targetHD && (!p.hinhAnh || p.hinhAnh.includes("phongthuy_coxua") || p.hinhAnh.includes("placeholder"))) {
               if (p.hinhAnh !== targetHD) {
                 p.hinhAnh = targetHD;
                 changed = true;
@@ -5176,7 +5176,8 @@
         "sao-pha-quan-trong-tu-vi-dau-so",
         "sao-tham-lang-trong-tu-vi-dau-so",
         "bai-viet-moi-cua-ban",
-        "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0"
+        "post-trach-nhat-la-gi-nguyen-tac-chon-ng-mulpzbi0",
+        "tuvi-post-ban-ve-sao-khong-kiep-mvary3y7"
       ]);
 
       const combined = [];
@@ -5211,9 +5212,8 @@
               return;
             }
           }
-          if (!customMap[p.id] || (Number(p.updatedAt) || 0) >= (Number(customMap[p.id].updatedAt) || 0)) {
-            customMap[p.id] = p;
-          }
+          // Bài viết người dùng đã lưu/sửa trong localStorage luôn luôn thắng và ghi đè lên bản mẫu fallback
+          customMap[p.id] = p;
         }
       });
 
@@ -5232,7 +5232,7 @@
         if (p && !hiddenSet.has(p.id) && !unwantedPostIds.has(p.id)) {
           if (p.hinhAnh === "" || (typeof p.hinhAnh === "string" && p.hinhAnh.trim() === "")) {
             p.hinhAnh = "";
-          } else if (HD_IMAGE_MAP[p.id]) {
+          } else if ((!p.hinhAnh || p.hinhAnh.includes("phongthuy_coxua") || p.hinhAnh.includes("placeholder")) && HD_IMAGE_MAP[p.id]) {
             p.hinhAnh = HD_IMAGE_MAP[p.id];
           } else if ((!p.hinhAnh || p.hinhAnh.startsWith("data:image/") || p.hinhAnh.includes("phongthuy_coxua")) && defaultImgMap[p.id]) {
             p.hinhAnh = defaultImgMap[p.id];
@@ -5762,21 +5762,29 @@
           resetFormToNew();
         }
 
-        // Tự động cuộn mượt đến ngay bài viết vừa lưu ở danh sách bên dưới & bật viền highlight nổi bật
-        const targetCard = document.getElementById("post-card-" + targetId);
-        if (targetCard) {
-          targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
-          targetCard.style.transition = "all 0.4s ease";
-          targetCard.style.outline = "3px solid #52C41A";
-          targetCard.style.boxShadow = "0 0 16px rgba(82, 196, 26, 0.45)";
-          setTimeout(() => {
-            targetCard.style.outline = "";
-            targetCard.style.boxShadow = "";
-          }, 4500);
-        } else if (successBanner) {
-          successBanner.scrollIntoView({ behavior: "smooth", block: "center" });
+        // NẾU ĐANG CHỈNH SỬA: Giữ nguyên vị trí ở form trên đầu để tiếp tục làm việc, không cuộn xuống làm văng màn hình
+        if (isUpdatingExisting) {
+          const editAlert = document.getElementById("editing-alert");
+          if (editAlert) {
+            editAlert.scrollIntoView({ behavior: "smooth", block: "nearest" });
+          }
         } else {
-          window.scrollTo({ top: 0, behavior: "smooth" });
+          // NẾU ĐĂNG BÀI MỚI: Tự động cuộn mượt đến ngay bài viết vừa lưu ở danh sách bên dưới & bật viền highlight nổi bật
+          const targetCard = document.getElementById("post-card-" + targetId);
+          if (targetCard) {
+            targetCard.scrollIntoView({ behavior: "smooth", block: "center" });
+            targetCard.style.transition = "all 0.4s ease";
+            targetCard.style.outline = "3px solid #52C41A";
+            targetCard.style.boxShadow = "0 0 16px rgba(82, 196, 26, 0.45)";
+            setTimeout(() => {
+              targetCard.style.outline = "";
+              targetCard.style.boxShadow = "";
+            }, 4500);
+          } else if (successBanner) {
+            successBanner.scrollIntoView({ behavior: "smooth", block: "center" });
+          } else {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+          }
         }
 
         // Tự động tối ưu ngầm toàn bộ bộ nhớ và ảnh sau khi lưu để luôn ở mức nhẹ nhất
@@ -6016,7 +6024,8 @@
           "PHONGTHUY_BAI_VIET_CUSTOM",
           "KIENTHUC_BAI_VIET_CUSTOM",
           "TUONGSO_BAI_VIET_CUSTOM",
-          "BAI_VIET_CHUYEN_MUC_CUSTOM"
+          "BAI_VIET_CHUYEN_MUC_CUSTOM",
+          "BAI_VIET_HIDDEN_IDS"
         ];
         const payload = {};
         storages.forEach(k => {
@@ -6248,6 +6257,9 @@
       // Kích hoạt tín hiệu đồng bộ tức thì cho các tab khác, trang chủ & Firebase Cloud
       try {
         localStorage.setItem("BAI_VIET_SYNC_TRIGGER", String(Date.now()));
+        if (window.FirebaseSync && typeof window.FirebaseSync.pushCategory === "function") {
+          window.FirebaseSync.pushCategory("BAI_VIET_HIDDEN_IDS", localStorage.getItem("BAI_VIET_HIDDEN_IDS"));
+        }
         syncAllPostsToHostingServer();
       } catch (e) {}
 
@@ -6934,8 +6946,8 @@
 
           for (let p of list) {
             if (!p) continue;
-            // Nâng cấp ảnh đại diện sang ảnh nét HD chuẩn 16:9
-            if (p.id && HD_IMAGE_MAP[p.id]) {
+            // Nâng cấp ảnh đại diện sang ảnh nét HD chuẩn 16:9 chỉ khi ảnh bị thiếu hoặc lỗi placeholder
+            if (p.id && HD_IMAGE_MAP[p.id] && (!p.hinhAnh || p.hinhAnh.includes("phongthuy_coxua") || p.hinhAnh.includes("placeholder"))) {
               if (p.hinhAnh !== HD_IMAGE_MAP[p.id]) {
                 p.hinhAnh = HD_IMAGE_MAP[p.id];
                 listChanged = true;
@@ -7172,6 +7184,13 @@
       
       allKeys.forEach(key => {
         try {
+          const hiddenSet = new Set();
+          ["BAI_VIET_HIDDEN_IDS", "XEMNGAY_HIDDEN_IDS", "XEMTUOI_HIDDEN_IDS", "TUVI_HIDDEN_IDS", "TAMLINH_HIDDEN_IDS", "PHONGTHUY_HIDDEN_IDS", "KIENTHUC_HIDDEN_IDS", "TUONGSO_HIDDEN_IDS"].forEach(hk => {
+            try {
+              const arr = JSON.parse(localStorage.getItem(hk) || "[]");
+              if (Array.isArray(arr)) arr.forEach(id => hiddenSet.add(id));
+            } catch(e) {}
+          });
           const backupData = backup[key];
           const backupList = (backupData && (backupData.value || (Array.isArray(backupData) ? backupData : []))) || [];
           if (backupList.length > 0) {
@@ -7179,13 +7198,14 @@
             let existingList = [];
             try { if (existing) existingList = JSON.parse(existing) || []; } catch(e) {}
             if (!existing || existingList.length === 0) {
-              localStorage.setItem(key, JSON.stringify(backupList));
+              const cleanBackup = backupList.filter(bp => bp && bp.id && !hiddenSet.has(bp.id));
+              localStorage.setItem(key, JSON.stringify(cleanBackup));
             } else {
               const existingMap = {};
               existingList.forEach(item => { if (item && item.id) existingMap[item.id] = item; });
               let changed = false;
               backupList.forEach(bp => {
-                if (bp && bp.id && !existingMap[bp.id]) {
+                if (bp && bp.id && !existingMap[bp.id] && !hiddenSet.has(bp.id)) {
                   existingList.push(bp);
                   changed = true;
                 }
