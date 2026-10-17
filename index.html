@@ -13,7 +13,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,800;0,900;1,600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=20261017_social_v3">
+  <link rel="stylesheet" href="css/style.css?v=20261017_social_v4">
   <link rel="stylesheet" href="css/boisim.css">
   <style id="header-social-critical-css">
     .header-right {
@@ -23,14 +23,35 @@
       flex-shrink: 0 !important;
     }
     .ancient-seal-wrap {
+      width: 62px !important;
+      height: 62px !important;
       align-self: flex-end !important;
       margin-bottom: 0px !important;
       flex-shrink: 0 !important;
+      box-sizing: border-box !important;
     }
     .quick-category-container {
       display: flex !important;
       flex-direction: column !important;
       position: relative !important;
+    }
+    .quick-category-grid {
+      display: grid !important;
+      grid-template-columns: repeat(3, 1fr) !important;
+      gap: 6px !important;
+      box-sizing: border-box !important;
+    }
+    .quick-pill {
+      display: inline-flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      height: 28px !important;
+      box-sizing: border-box !important;
+      padding: 0 clamp(7px, 0.85vw, 14px) !important;
+      font-size: clamp(11px, 0.85vw, 12px) !important;
+      font-weight: 700 !important;
+      border-radius: 6px !important;
+      white-space: nowrap !important;
     }
     .header-social-grid {
       display: grid !important;
@@ -250,11 +271,11 @@
 
       <!-- Right: Ancient Seal & Quick Feature Category Pills -->
       <div class="header-right" style="display: flex !important; align-items: flex-end !important; gap: clamp(8px, 1.2vw, 16px) !important; flex-shrink: 0 !important;">
-        <div class="ancient-seal-wrap" style="align-self: flex-end !important; margin-bottom: 0px !important; flex-shrink: 0 !important;" title="Dấu Ấn Cổ Truyền">
+        <div class="ancient-seal-wrap" style="width: 62px !important; height: 62px !important; align-self: flex-end !important; margin-bottom: 0px !important; flex-shrink: 0 !important; box-sizing: border-box !important;" title="Dấu Ấn Cổ Truyền">
           <img src="assets/an_trien.png" alt="Ấn Triện" class="ancient-seal">
         </div>
         <div class="quick-category-container" style="display: flex !important; flex-direction: column !important; position: relative !important;">
-          <div class="header-social-grid" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: clamp(4px, 0.4vw, 6px) !important; width: 100% !important; margin-top: -14px !important; margin-bottom: 4px !important; box-sizing: border-box !important;">
+          <div class="header-social-grid" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; width: 100% !important; margin-top: -14px !important; margin-bottom: 4px !important; box-sizing: border-box !important;">
             <div class="header-social-col" style="display: flex !important; justify-content: center !important; align-items: center !important; width: 100% !important;">
               <a href="https://www.facebook.com/groups/1813226453368562" target="_blank" class="social-circle-badge fb" style="display: inline-flex !important; align-items: center !important; justify-content: center !important; width: 32px !important; height: 32px !important; border-radius: 50% !important; background: #1877F2 !important; border: 1.5px solid #DFBA73 !important; box-shadow: 0 1px 4px rgba(0,0,0,0.18) !important; text-decoration: none !important; flex-shrink: 0 !important;" title="Facebook">
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="#FFFFFF">
@@ -279,14 +300,14 @@
               </a>
             </div>
           </div>
-          <div class="quick-category-grid">
-            <a href="#kinhdich" class="quick-pill" id="quick-pill-kinhdich" onclick="chuyenTab('kinhdich'); return false;">Kinh Dịch</a>
-            <a href="#boisim" class="quick-pill" id="quick-pill-boisim" onclick="chuyenTab('boisim'); return false;">Xem Bói Sim</a>
-            <a href="#lich" class="quick-pill" id="quick-pill-lich" onclick="chuyenTab('lich'); return false;">Lịch Vạn Sự</a>
+          <div class="quick-category-grid" style="display: grid !important; grid-template-columns: repeat(3, 1fr) !important; gap: 6px !important; box-sizing: border-box !important;">
+            <a href="#kinhdich" class="quick-pill" id="quick-pill-kinhdich" style="height: 28px !important; box-sizing: border-box !important;" onclick="chuyenTab('kinhdich'); return false;">Kinh Dịch</a>
+            <a href="#boisim" class="quick-pill" id="quick-pill-boisim" style="height: 28px !important; box-sizing: border-box !important;" onclick="chuyenTab('boisim'); return false;">Xem Bói Sim</a>
+            <a href="#lich" class="quick-pill" id="quick-pill-lich" style="height: 28px !important; box-sizing: border-box !important;" onclick="chuyenTab('lich'); return false;">Lịch Vạn Sự</a>
 
-            <a href="#tuvi" class="quick-pill" id="quick-pill-tuvi" onclick="moLapLaSoTuVi(); return false;">Tử Vi</a>
-            <a href="#tutru" class="quick-pill" id="quick-pill-tutru" onclick="chuyenTab('tutru'); return false;">Tứ Trụ</a>
-            <a href="#tuongso" class="quick-pill" id="quick-pill-tuongso" onclick="chuyenTab('chuyenmuc', 'Tướng Số'); chonkhamChuyenMuc('Tướng Số'); return false;">Tướng Số</a>
+            <a href="#tuvi" class="quick-pill" id="quick-pill-tuvi" style="height: 28px !important; box-sizing: border-box !important;" onclick="moLapLaSoTuVi(); return false;">Tử Vi</a>
+            <a href="#tutru" class="quick-pill" id="quick-pill-tutru" style="height: 28px !important; box-sizing: border-box !important;" onclick="chuyenTab('tutru'); return false;">Tứ Trụ</a>
+            <a href="#tuongso" class="quick-pill" id="quick-pill-tuongso" style="height: 28px !important; box-sizing: border-box !important;" onclick="chuyenTab('chuyenmuc', 'Tướng Số'); chonkhamChuyenMuc('Tướng Số'); return false;">Tướng Số</a>
           </div>
         </div>
       </div>

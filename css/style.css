@@ -298,8 +298,8 @@ ul {
 }
 
 .ancient-seal-wrap {
-  width: clamp(56px, 5vw, 72px);
-  height: clamp(56px, 5vw, 72px);
+  width: 62px;
+  height: 62px;
   border: 2px solid #B82828;
   padding: 2px;
   border-radius: 6px;
@@ -308,6 +308,7 @@ ul {
   flex-shrink: 0;
   align-self: flex-end;
   margin-bottom: 0px;
+  box-sizing: border-box;
 }
 
 .ancient-seal {
@@ -324,9 +325,10 @@ ul {
 .header-social-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(4px, 0.4vw, 6px);
+  gap: 6px;
   margin-top: -14px;
   margin-bottom: 4px;
+  box-sizing: border-box;
 }
 
 .header-social-col {
@@ -369,14 +371,17 @@ ul {
 .quick-category-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: clamp(4px, 0.4vw, 6px);
+  gap: 6px;
+  box-sizing: border-box;
 }
 
 .quick-pill {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 5px clamp(7px, 0.85vw, 14px);
+  height: 28px;
+  box-sizing: border-box;
+  padding: 0 clamp(7px, 0.85vw, 14px);
   background: #FFF;
   border: 1px solid var(--gold-primary);
   color: #691212;
