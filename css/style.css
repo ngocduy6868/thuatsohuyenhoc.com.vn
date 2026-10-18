@@ -2190,45 +2190,50 @@ ul {
   box-sizing: border-box;
 }
 
-/* Ngũ Hành Colors */
-.star-moc { color: #166F16 !important; font-weight: 600; }
-.star-hoa { color: #D01111 !important; font-weight: 600; }
-.star-tho { color: #D98A2C !important; font-weight: 600; }
-.star-kim { color: #696864 !important; font-weight: 600; }
-.star-thuy { color: #000000 !important; font-weight: 600; }
+/* Ngũ Hành Colors - Đậm nét, tương phản cao, siêu rõ trên cả PC và Mobile */
+.star-moc { color: #0E6811 !important; font-weight: 700 !important; }
+.star-hoa { color: #C40D0D !important; font-weight: 700 !important; }
+.star-tho { color: #B36800 !important; font-weight: 700 !important; }
+.star-kim { color: #444444 !important; font-weight: 700 !important; }
+.star-thuy { color: #000000 !important; font-weight: 700 !important; }
 
 .star-main-bold {
   font-family: 'Noto Serif', serif;
-  font-size: 17px;
-  font-weight: 800;
+  font-size: 17.5px !important;
+  font-weight: 900 !important;
   display: block;
   line-height: 1.25;
   letter-spacing: 0.01em;
   white-space: nowrap !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 .tuvi-cell [class*="star-"],
 .tuvi-cell .star-main-bold {
   white-space: nowrap !important;
-  letter-spacing: -0.3px;
+  letter-spacing: -0.2px;
 }
 
 .tuvi-cell .tuvi-phu-list {
   display: flex;
   flex-direction: column;
-  gap: 1px;
+  gap: 1.5px;
 }
 
 .tuvi-cell .tuvi-phu-star,
 .tuvi-cell [class*="star-"]:not(.star-main-bold) {
-  line-height: 1.15 !important;
+  font-size: 12.5px !important;
+  font-weight: 700 !important;
+  line-height: 1.2 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
   padding: 0 !important;
+  -webkit-font-smoothing: antialiased;
 }
 
 .tuvi-cell .tuvi-canchi {
-  font-size: 13px !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
   line-height: 1.2;
 }
 
