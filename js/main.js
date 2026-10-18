@@ -640,66 +640,67 @@ function render12Palaces(userData) {
             <h2 style="font-family: sans-serif; font-weight: 800; font-size: 22px; color: #1A3DB5; letter-spacing: 1px; margin: 2px 0 0 0;">LÁ SỐ TỬ VI</h2>
           </div>
 
-          <div style="padding: 4px 6px; font-size: 13.5px; line-height: 1.34; text-align: left; max-width: 290px; margin: 4px 0 0 10px; position: relative; z-index: 10; width: auto; color: #1A3DB5; font-family: sans-serif;">
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+          <div style="padding: 4px 6px; font-size: 14px; line-height: 1.38; text-align: left; max-width: 290px; margin: 10px 0 0 10px; position: relative; z-index: 10; width: auto; color: #1A3DB5; font-family: sans-serif;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Họ tên:</span>
               <span style="font-weight: 700; color: #1A3DB5;">${thienBan.name}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Năm:</span>
-              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${thienBan.solYear}</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 95px; min-width: 95px;">${thienBan.solYear}</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.birthCanChi}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Tháng:</span>
-              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 95px; min-width: 95px;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiMonth}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Ngày:</span>
-              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 95px; min-width: 95px;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiDay}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Giờ:</span>
-              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${displayHour}</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 95px; min-width: 95px;">${displayHour}</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiHour}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 6px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Năm xem:</span>
-              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${thienBan.viewYear}</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 95px; min-width: 95px;">${thienBan.viewYear}</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.viewCanChi}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="width: 78px; min-width: 78px;"></span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.currentAge} tuổi</span>
             </div>
 
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 6px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Âm Dương:</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.amDuongNamNu}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Mệnh:</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.napAmMenh}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Cục:</span>
               <span style="color: #1A3DB5; font-weight: 700;">${displayCuc}</span>
             </div>
 
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 6px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Chủ Mệnh:</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.chuMenh}</span>
             </div>
-            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; margin-bottom: 2px;">
               <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Chủ Thân:</span>
               <span style="color: #1A3DB5; font-weight: 700;">${thienBan.chuThan}</span>
             </div>
             
-            <div style="display: flex; white-space: nowrap; gap: 4px; padding-top: 4px;">
+            <div style="display: flex; white-space: nowrap; gap: 4px; padding-top: 6px;">
               <span style="width: 78px; min-width: 78px;"></span>
-              <div style="color: #1A3DB5; font-weight: 650; line-height: 1.32;">
+              <div style="color: #1A3DB5; font-weight: 650; line-height: 1.38;">
                 <div>${thienBan.amDuongLy}</div>
                 <div>${thienBan.cucMenhRelation}</div>
                 <div>${displayThanCu}</div>
