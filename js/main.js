@@ -3,6 +3,15 @@
  * Tích hợp động cơ an sao Tử Vi Đẩu Số 12 Cung & Thiên Bàn
  */
 
+// Đảm bảo dữ liệu Base64 Logo Bát Quái luôn sẵn sàng kể cả khi mở file:/// offline
+if (typeof window !== 'undefined' && !window.LOGO_BATQUAI_TRON_DATA_URL && typeof document !== 'undefined') {
+  try {
+    var _sLogo = document.createElement('script');
+    _sLogo.src = 'js/logo_batquai_data.js';
+    document.head.appendChild(_sLogo);
+  } catch(e) {}
+}
+
 // Dữ liệu Thiên Can & Địa Chi
 const THIEN_CAN = ['Giáp', 'Ất', 'Bính', 'Đinh', 'Mậu', 'Kỷ', 'Canh', 'Tân', 'Nhâm', 'Quý'];
 const DIA_CHI = ['Tý', 'Sửu', 'Dần', 'Mão', 'Thìn', 'Tỵ', 'Ngọ', 'Mùi', 'Thân', 'Dậu', 'Tuất', 'Hợi'];
@@ -627,7 +636,7 @@ function render12Palaces(userData) {
           
           <!-- LOGO BÁT QUÁI ẨN TRUNG TÂM THIÊN BÀN (CHUẨN ẢNH 2 MOBI: 280px x 280px, TÂM CHÍNH GIỮA) -->
           <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.22; pointer-events: none; user-select: none; z-index: 2;">
-            <img src="assets/logo_batquai_tron.png" class="tuvi-thienban-logo" alt="Bát Quái Ẩn" style="width: 280px; height: 280px; object-fit: contain; border-radius: 50%; pointer-events: none; display: block;" />
+            <img src="${(typeof window !== 'undefined' && window.LOGO_BATQUAI_TRON_DATA_URL && window.LOGO_BATQUAI_TRON_DATA_URL.startsWith('data:')) ? window.LOGO_BATQUAI_TRON_DATA_URL : 'assets/logo_batquai_tron.png'}" class="tuvi-thienban-logo" alt="Bát Quái Ẩn" style="width: 280px; height: 280px; object-fit: contain; border-radius: 50%; pointer-events: none; display: block;" />
           </div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">
