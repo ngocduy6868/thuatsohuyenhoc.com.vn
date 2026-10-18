@@ -781,9 +781,19 @@ function render12Palaces(userData) {
     <div id="tuvi-render-staging" aria-hidden="true" style="position: absolute; left: -9999px; top: -9999px; width: 832px; opacity: 0; pointer-events: none;"></div>
   `;
 
+  const stagingEl = document.getElementById('tuvi-render-staging');
+  const liveBoardEl = document.getElementById('tuvi-live-board');
+  if (stagingEl && liveBoardEl) {
+    stagingEl.innerHTML = liveBoardEl.outerHTML;
+  }
+
   if (typeof window.fitTuViModalLiveBoard === "function") {
     window.fitTuViModalLiveBoard();
     requestAnimationFrame(function() { window.fitTuViModalLiveBoard(); });
+  }
+
+  if (typeof window.renderTuViBoardToImage === 'function') {
+    setTimeout(window.renderTuViBoardToImage, 100);
   }
 }
 
@@ -929,16 +939,10 @@ window.renderTuViBoardToImage = async function () {
   const sheet = (staging && (staging.querySelector(".tuvi-sheet-wrapper") || staging.querySelector(".tuvi-board"))) || liveBoard;
   if (!view || !staging || !sheet) return;
 
-  const fallbackToLiveBoard = (note) => {
-    staging.removeAttribute('aria-hidden');
-    staging.id = 'tuvi-live-board';
-    staging.style.position = 'relative';
-    staging.style.left = 'auto';
-    staging.style.top = 'auto';
-    staging.style.opacity = '1';
-    staging.style.pointerEvents = 'auto';
-    view.innerHTML = note ? `<p style="margin-bottom: 8px; font-size: 12px; color: #B45309;">${note}</p>` : '';
-    view.appendChild(staging);
+  const fallbackToLiveBoard = () => {
+    if (typeof window.fitTuViModalLiveBoard === "function") {
+      window.fitTuViModalLiveBoard();
+    }
   };
 
   if (typeof html2canvas !== 'function') {
@@ -956,17 +960,41 @@ window.renderTuViBoardToImage = async function () {
       scale: 2,
       useCORS: true,
       backgroundColor: '#FFFFFF',
-      logging: false
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      width: 832,
+      windowWidth: 1200,
+      onclone: (clonedDoc) => {
+        if (clonedDoc.body) {
+          clonedDoc.body.style.zoom = '1';
+          clonedDoc.body.style.transform = 'none';
+        }
+        const s = clonedDoc.getElementById('tuvi-render-staging');
+        if (s) {
+          s.style.position = 'static';
+          s.style.left = '0';
+          s.style.top = '0';
+          s.style.opacity = '1';
+          s.style.pointerEvents = 'auto';
+          s.style.width = '832px';
+        }
+        const lb = clonedDoc.getElementById('tuvi-live-board');
+        if (lb) {
+          lb.style.transform = 'none';
+          lb.style.position = 'static';
+          lb.style.left = '0';
+          lb.style.top = '0';
+          lb.style.opacity = '1';
+        }
+      }
     });
-
-    if (typeof drawTuViBadgesOnCanvas === 'function') {
-      drawTuViBadgesOnCanvas(canvas, window.currentTuViPositions);
-    }
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
     canvas.toBlob((blob) => { cachedTuViBlob = blob; }, 'image/png');
 
-    view.innerHTML = `<img src="${cachedTuViDataUrl}" alt="Bản đồ Lá Số Tử Vi" class="tuvi-board-img">`;
+    // Hiển thị DUY NHẤT một bức ảnh thẻ <img> giống hệt trang Tử Vi Việt Nam chuẩn mực!
+    view.innerHTML = `<img src="${cachedTuViDataUrl}" alt="Bản đồ Lá Số Tử Vi" class="tuvi-board-img" style="max-width: 100%; height: auto; display: block; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; -webkit-touch-callout: default !important; user-select: auto;">`;
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
     fallbackToLiveBoard();
@@ -974,61 +1002,51 @@ window.renderTuViBoardToImage = async function () {
 };
 
 /**
- * Lấy Blob của ảnh lá số
+ * Lấy Blob của ảnh lá số (Đảm bảo xuất chuẩn từ bản phẳng gốc 832px)
  */
 async function getTuViImageBlob() {
   if (cachedTuViBlob && cachedTuViDataUrl) {
     return cachedTuViBlob;
   }
-  const boardElement = document.querySelector('.tuvi-board') || document.getElementById('tuvi-12-palaces');
-  if (!boardElement) {
-    showToast('Không tìm thấy bản đồ Lá Số Tử Vi!');
-    return null;
+  if (typeof window.renderTuViBoardToImage === 'function') {
+    await window.renderTuViBoardToImage();
   }
-  if (typeof html2canvas !== 'function') {
-    showToast('Thư viện kết xuất ảnh chưa sẵn sàng!');
-    return null;
-  }
-  try {
-    const canvas = await html2canvas(boardElement, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: '#E8E8E0',
-      logging: false,
-      width: 800,
-      windowWidth: 1400
-    });
-    if (typeof drawTuViBadgesOnCanvas === 'function') {
-      drawTuViBadgesOnCanvas(canvas, window.currentTuViPositions);
-    }
-    cachedTuViDataUrl = canvas.toDataURL('image/png');
-    return new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        cachedTuViBlob = blob;
-        resolve(blob);
-      }, 'image/png');
-    });
-  } catch (err) {
-    console.error('Lỗi khi kết xuất ảnh lá số:', err);
-    showToast('Không thể kết xuất ảnh Lá Số Tử Vi!');
-    return null;
-  }
+  return cachedTuViBlob;
 }
 
 /**
- * Tải ảnh Lá Số Tử Vi về máy tính (PNG)
+ * Tải ảnh Lá Số Tử Vi về máy tính (PNG) & Hỗ trợ Mobile lưu vào Album ảnh
  */
 window.downloadTuViImage = async function () {
-  showToast('Đang tải ảnh Lá Số Tử Vi...');
   const name = document.getElementById('input-fullname')?.value.trim() || 'Thân_Chủ';
   const fileName = `La_So_Tu_Vi_${name.replace(/\s+/g, '_')}.png`;
 
   let blob = cachedTuViBlob;
   if (!blob) {
+    if (typeof showToast === 'function') showToast('Đang kết xuất ảnh Lá Số Tử Vi...');
     blob = await getTuViImageBlob();
   }
 
   if (blob) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+    // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" vào Cuộn camera
+    if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+      try {
+        const file = new File([blob], fileName, { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'Lá Số Tử Vi',
+            text: `Lá Số Tử Vi - ${name}`
+          });
+          if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+          return;
+        }
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+      }
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -1037,7 +1055,7 @@ window.downloadTuViImage = async function () {
     a.click();
     document.body.removeChild(a);
     setTimeout(() => URL.revokeObjectURL(url), 5000);
-    showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
+    if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
     return;
   }
 
@@ -1048,7 +1066,7 @@ window.downloadTuViImage = async function () {
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
-    showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
+    if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
   }
 };
 
