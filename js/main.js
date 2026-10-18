@@ -629,15 +629,13 @@ function render12Palaces(userData) {
         ${renderPalaceCell(palaces[4], 1, 2)}
 
         <!-- THIÊN BÀN TRUNG TÂM -->
-        <div class="tuvi-thienban" style="grid-column: 2 / span 2; grid-row: 2 / span 2;">
+        <div class="tuvi-thienban" style="grid-column: 2 / span 2; grid-row: 2 / span 2; overflow: hidden; position: relative;">
           <svg style="position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1;" viewBox="0 0 100 100" preserveAspectRatio="none">
             <polygon points="${tamHopPoints}" fill="none" stroke="#A8A29E" stroke-width="0.4" stroke-linejoin="round" />
           </svg>
           
-          <!-- LOGO BÁT QUÁI ẨN TRUNG TÂM THIÊN BÀN (CHUẨN ẢNH 2 MOBI: 280px x 280px, TÂM CHÍNH GIỮA) -->
-          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.22; pointer-events: none; user-select: none; z-index: 2;">
-            <img src="${(typeof window !== 'undefined' && window.LOGO_BATQUAI_TRON_DATA_URL && window.LOGO_BATQUAI_TRON_DATA_URL.startsWith('data:')) ? window.LOGO_BATQUAI_TRON_DATA_URL : 'assets/logo_batquai_tron.png'}" class="tuvi-thienban-logo" alt="Bát Quái Ẩn" style="width: 280px; height: 280px; object-fit: contain; border-radius: 50%; pointer-events: none; display: block;" />
-          </div>
+          <!-- LOGO BÁT QUÁI NẰM GỌN TRUNG TÂM THIÊN BÀN (CHUẨN 100% CẢ PC VÀ MOBILE) -->
+          <div class="tuvi-thienban-watermark" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 260px; height: 260px; background-image: url('${(typeof window !== 'undefined' && window.LOGO_BATQUAI_TRON_DATA_URL && window.LOGO_BATQUAI_TRON_DATA_URL.startsWith('data:')) ? window.LOGO_BATQUAI_TRON_DATA_URL : 'assets/logo_batquai_tron.png'}'); background-repeat: no-repeat; background-position: center center; background-size: contain; border-radius: 50%; opacity: 0.22; pointer-events: none; -webkit-touch-callout: none; user-select: none; z-index: 2;"></div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">
             <div style="font-size: 14.5px; font-weight: 700; color: #1A3DB5; text-transform: uppercase; letter-spacing: 0.8px; font-family: sans-serif;">DIỄN ĐÀN TỬ VI THUẬT SỐ</div>
@@ -759,8 +757,8 @@ function render12Palaces(userData) {
               <span style="font-family: 'KaiTi', 'STKaiti', 'Baskerville', 'Playfair Display', serif; font-size: 13.5px; font-weight: 900; color: #7A1414; line-height: 1.25; text-shadow: 0 1px 1px rgba(120, 20, 20, 0.15);">學</span>
             </div>
             <!-- Dau An Trien -->
-            <div style="width: 34px; height: 34px; box-sizing: border-box; border: 1.5px solid #B82828; padding: 1.5px; border-radius: 5px; background: #FFF; box-shadow: 0 1px 4px rgba(184, 40, 40, 0.2); display: flex; align-items: center; justify-content: center; overflow: hidden;">
-              <img src="${(typeof window !== 'undefined' && window.AN_TRIEN_DATA_URL && window.AN_TRIEN_DATA_URL.startsWith('data:')) ? window.AN_TRIEN_DATA_URL : 'assets/an_trien.png'}" alt="Ấn Triện" style="width: 100%; height: 100%; object-fit: contain; display: block;">
+            <div style="width: 34px; height: 34px; box-sizing: border-box; border: 1.5px solid #B82828; padding: 1.5px; border-radius: 5px; background: #FFF; box-shadow: 0 1px 4px rgba(184, 40, 40, 0.2); display: flex; align-items: center; justify-content: center; overflow: hidden; pointer-events: none;">
+              <img src="${(typeof window !== 'undefined' && window.AN_TRIEN_DATA_URL && window.AN_TRIEN_DATA_URL.startsWith('data:')) ? window.AN_TRIEN_DATA_URL : 'assets/an_trien.png'}" alt="Ấn Triện" style="width: 100%; height: 100%; object-fit: contain; display: block; pointer-events: none; -webkit-touch-callout: none; user-select: none;">
             </div>
           </div>
         </div>
@@ -781,8 +779,8 @@ function render12Palaces(userData) {
         ${boundaryBadgesHtml}
             </div>
           </div>
-          <!-- LỚP ẢNH TƯƠNG TÁC (CHO PHÉP CHUỘT PHẢI 'LƯU HÌNH ẢNH THÀNH...' TRÊN PC & CHẠM GIỮ 'LƯU VÀO ẢNH' TRÊN MOBILE) -->
-          <img id="tuvi-interactive-image" src="" alt="Lá Số Tử Vi" title="Lá Số Tử Vi - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Ảnh'" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 50; opacity: 0; cursor: pointer; -webkit-touch-callout: default !important; pointer-events: auto; display: none;" />
+          <!-- LỚP ẢNH TƯƠNG TÁC NÉT CAO (CHO PHÉP CHUỘT PHẢI 'LƯU HÌNH ẢNH THÀNH...' TRÊN PC & CHẠM GIỮ 'LƯU VÀO ALBUM ẢNH' TRÊN MOBILE) -->
+          <img id="tuvi-interactive-image" src="" alt="Lá Số Tử Vi" title="Lá Số Tử Vi - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Album Ảnh'" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 50; opacity: 0.001; cursor: pointer; -webkit-touch-callout: default !important; pointer-events: auto; display: none;" />
         </div>
       </div>
     </div>
@@ -1014,11 +1012,12 @@ window.renderTuViBoardToImage = async function () {
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
 
-    // Kích hoạt ngay lập tức lớp ảnh tương tác để chuột phải ra menu lưu ảnh chuẩn và mobile chạm giữ lưu vào Album
+    // Kích hoạt ngay lớp ảnh tương tác phủ kín bề mặt để chuột phải trên PC hoặc chạm giữ trên Mobile đều ra menu Lưu & Sao chép toàn bộ lá số
     const imgOverlay = document.getElementById('tuvi-interactive-image');
     if (imgOverlay) {
       imgOverlay.src = cachedTuViDataUrl;
       imgOverlay.style.display = 'block';
+      imgOverlay.style.opacity = '0.001';
     }
 
     canvas.toBlob((blob) => {
@@ -1033,7 +1032,7 @@ window.renderTuViBoardToImage = async function () {
       }
     }, 'image/png');
 
-    // Giữ nguyên giao diện Live Scaler Board trực tiếp (Ảnh 1) đẹp hoàn mỹ 100% trên màn hình
+    // Giữ nguyên giao diện Live Scaler Board trực tiếp đẹp hoàn mỹ 100% chuẩn như Ảnh 3 trên mọi màn hình
     if (typeof window.fitTuViModalLiveBoard === "function") {
       window.fitTuViModalLiveBoard();
     }

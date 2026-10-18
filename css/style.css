@@ -2186,8 +2186,40 @@ ul {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  overflow: visible;
+  overflow: hidden !important;
   box-sizing: border-box;
+}
+
+.tuvi-thienban-watermark {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  width: 260px !important;
+  height: 260px !important;
+  max-width: 260px !important;
+  max-height: 260px !important;
+  background-repeat: no-repeat !important;
+  background-position: center center !important;
+  background-size: contain !important;
+  border-radius: 50% !important;
+  opacity: 0.22 !important;
+  pointer-events: none !important;
+  -webkit-touch-callout: none !important;
+  user-select: none !important;
+  z-index: 2 !important;
+}
+
+#tuvi-interactive-image {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 50;
+  cursor: pointer;
+  -webkit-touch-callout: default !important;
+  pointer-events: auto;
 }
 
 /* Ngũ Hành Colors - Đậm rõ ràng chuẩn 1.1, giữ nguyên 100% cỡ chữ */
