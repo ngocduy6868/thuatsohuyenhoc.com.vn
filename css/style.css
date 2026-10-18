@@ -2192,9 +2192,9 @@ ul {
 
 .tuvi-thienban-watermark {
   position: absolute !important;
-  left: 50% !important;
-  top: 50% !important;
-  transform: translate(-50%, -50%) !important;
+  left: 70px !important;
+  top: 137px !important;
+  transform: none !important;
   width: 260px !important;
   height: 260px !important;
   max-width: 260px !important;
@@ -2210,17 +2210,6 @@ ul {
   z-index: 2 !important;
 }
 
-#tuvi-interactive-image {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 50;
-  cursor: pointer;
-  -webkit-touch-callout: default !important;
-  pointer-events: auto;
-}
 
 /* Ngũ Hành Colors - Đậm rõ ràng chuẩn 1.1, giữ nguyên 100% cỡ chữ */
 .star-moc { color: #157318 !important; font-weight: 750 !important; }

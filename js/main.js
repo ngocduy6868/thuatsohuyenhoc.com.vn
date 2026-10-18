@@ -635,7 +635,7 @@ function render12Palaces(userData) {
           </svg>
           
           <!-- LOGO BÁT QUÁI NẰM GỌN TRUNG TÂM THIÊN BÀN (CHUẨN 100% CẢ PC VÀ MOBILE) -->
-          <div class="tuvi-thienban-watermark" style="position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 260px; height: 260px; background-image: url('${(typeof window !== 'undefined' && window.LOGO_BATQUAI_TRON_DATA_URL && window.LOGO_BATQUAI_TRON_DATA_URL.startsWith('data:')) ? window.LOGO_BATQUAI_TRON_DATA_URL : 'assets/logo_batquai_tron.png'}'); background-repeat: no-repeat; background-position: center center; background-size: contain; border-radius: 50%; opacity: 0.22; pointer-events: none; -webkit-touch-callout: none; user-select: none; z-index: 2;"></div>
+          <div class="tuvi-thienban-watermark" style="position: absolute; left: 70px; top: 137px; transform: none; width: 260px; height: 260px; background-image: url('${(typeof window !== 'undefined' && window.LOGO_BATQUAI_TRON_DATA_URL && window.LOGO_BATQUAI_TRON_DATA_URL.startsWith('data:')) ? window.LOGO_BATQUAI_TRON_DATA_URL : 'assets/logo_batquai_tron.png'}'); background-repeat: no-repeat; background-position: center center; background-size: contain; border-radius: 50%; opacity: 0.22; pointer-events: none; -webkit-touch-callout: none; user-select: none; z-index: 2;"></div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">
             <div style="font-size: 14.5px; font-weight: 700; color: #1A3DB5; text-transform: uppercase; letter-spacing: 0.8px; font-family: sans-serif;">DIỄN ĐÀN TỬ VI THUẬT SỐ</div>
@@ -779,8 +779,6 @@ function render12Palaces(userData) {
         ${boundaryBadgesHtml}
             </div>
           </div>
-          <!-- LỚP ẢNH TƯƠNG TÁC NÉT CAO (CHO PHÉP CHUỘT PHẢI 'LƯU HÌNH ẢNH THÀNH...' TRÊN PC & CHẠM GIỮ 'LƯU VÀO ALBUM ẢNH' TRÊN MOBILE) -->
-          <img id="tuvi-interactive-image" src="" alt="Lá Số Tử Vi" title="Lá Số Tử Vi - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Album Ảnh'" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 50; opacity: 0.001; cursor: pointer; -webkit-touch-callout: default !important; pointer-events: auto; display: none;" />
         </div>
       </div>
     </div>
@@ -1007,34 +1005,27 @@ window.renderTuViBoardToImage = async function () {
           c.style.maxWidth = '200px';
           c.style.boxSizing = 'border-box';
         });
+        const wm = clonedDoc.querySelector('.tuvi-thienban-watermark');
+        if (wm) {
+          wm.style.position = 'absolute';
+          wm.style.left = '70px';
+          wm.style.top = '137px';
+          wm.style.width = '260px';
+          wm.style.height = '260px';
+          wm.style.transform = 'none';
+        }
       }
     });
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
-
-    // Kích hoạt ngay lớp ảnh tương tác phủ kín bề mặt để chuột phải trên PC hoặc chạm giữ trên Mobile đều ra menu Lưu & Sao chép toàn bộ lá số
-    const imgOverlay = document.getElementById('tuvi-interactive-image');
-    if (imgOverlay) {
-      imgOverlay.src = cachedTuViDataUrl;
-      imgOverlay.style.display = 'block';
-      imgOverlay.style.opacity = '0.001';
-    }
-
     canvas.toBlob((blob) => {
       cachedTuViBlob = blob;
-      if (imgOverlay && blob) {
-        try {
-          if (imgOverlay.src && imgOverlay.src.startsWith('blob:')) {
-            URL.revokeObjectURL(imgOverlay.src);
-          }
-        } catch(e) {}
-        imgOverlay.src = URL.createObjectURL(blob);
-      }
     }, 'image/png');
 
-    // Giữ nguyên giao diện Live Scaler Board trực tiếp đẹp hoàn mỹ 100% chuẩn như Ảnh 3 trên mọi màn hình
-    if (typeof window.fitTuViModalLiveBoard === "function") {
-      window.fitTuViModalLiveBoard();
+    // Chuyển giao hiển thị sang thẻ ảnh chuẩn nét cao (chuẩn 100% như bên Tứ Trụ và Kinh Dịch):
+    // Cho phép chuột phải trên PC hoặc chạm giữ trên Mobile đều lập tức ra menu Lưu & Sao chép hình ảnh bản đồ lá số
+    if (view) {
+      view.innerHTML = `<img id="tuvi-board-img" src="${cachedTuViDataUrl}" alt="Bản Đồ Lá Số Tử Vi" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Album Ảnh')" style="cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();">`;
     }
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
