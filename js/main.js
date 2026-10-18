@@ -772,6 +772,8 @@ function render12Palaces(userData) {
         ${boundaryBadgesHtml}
             </div>
           </div>
+          <!-- LỚP ẢNH TƯƠNG TÁC (CHO PHÉP CHUỘT PHẢI 'LƯU HÌNH ẢNH THÀNH...' TRÊN PC & CHẠM GIỮ 'LƯU VÀO ẢNH' TRÊN MOBILE) -->
+          <img id="tuvi-interactive-image" src="" alt="Lá Số Tử Vi" title="Lá Số Tử Vi - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Ảnh'" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; z-index: 50; opacity: 0; cursor: pointer; -webkit-touch-callout: default !important; pointer-events: auto; display: none;" />
         </div>
       </div>
     </div>
@@ -1002,7 +1004,25 @@ window.renderTuViBoardToImage = async function () {
     });
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
-    canvas.toBlob((blob) => { cachedTuViBlob = blob; }, 'image/png');
+
+    // Kích hoạt ngay lập tức lớp ảnh tương tác để chuột phải ra menu lưu ảnh chuẩn và mobile chạm giữ lưu vào Album
+    const imgOverlay = document.getElementById('tuvi-interactive-image');
+    if (imgOverlay) {
+      imgOverlay.src = cachedTuViDataUrl;
+      imgOverlay.style.display = 'block';
+    }
+
+    canvas.toBlob((blob) => {
+      cachedTuViBlob = blob;
+      if (imgOverlay && blob) {
+        try {
+          if (imgOverlay.src && imgOverlay.src.startsWith('blob:')) {
+            URL.revokeObjectURL(imgOverlay.src);
+          }
+        } catch(e) {}
+        imgOverlay.src = URL.createObjectURL(blob);
+      }
+    }, 'image/png');
 
     // Giữ nguyên giao diện Live Scaler Board trực tiếp (Ảnh 1) đẹp hoàn mỹ 100% trên màn hình
     if (typeof window.fitTuViModalLiveBoard === "function") {
