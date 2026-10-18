@@ -418,11 +418,11 @@ function render12Palaces(userData) {
     return `
       <div class="tuvi-cell" style="grid-column: ${colStart}; grid-row: ${rowStart};">
         <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding-bottom: 2px;">
-          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 800; font-size: 13.5px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
+          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 700; font-size: 13px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
           <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; width: 100%; text-align: center;">
-            <span style="font-weight: 800; color: #000000; font-size: 15px; letter-spacing: 0.3px; display: inline-block;">${displayPalaceName}</span>
+            <span style="font-weight: 700; color: #1A1A1A; font-size: 14.5px; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
           </div>
-          <span style="color: #000000; font-weight: 800; font-size: 14.5px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
+          <span style="color: #1A1A1A; font-weight: 700; font-size: 14px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
         </div>
 
         <div style="text-align: center; padding: 4px 0; min-height: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -438,10 +438,10 @@ function render12Palaces(userData) {
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 13.5px; color: #000000; font-weight: 700;">
-          <span style="text-align: left; white-space: nowrap; padding-left: 2px; font-weight: 700; ${footerLeftCornerStyle}">${tieuHanChi || chiName}</span>
-          <strong style="text-align: center; color: #000000; font-weight: 800; white-space: nowrap; padding: 0 4px;">${trangSinh}</strong>
-          <span style="text-align: right; white-space: nowrap; padding-right: 2px; font-weight: 700; ${footerRightCornerStyle}">Tháng ${hanThang !== undefined ? hanThang : (chiIdx + 1)}</span>
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 13px; color: #262626; font-weight: 600;">
+          <span style="text-align: left; white-space: nowrap; padding-left: 2px; font-weight: 600; ${footerLeftCornerStyle}">${tieuHanChi || chiName}</span>
+          <strong style="text-align: center; color: #1A1A1A; font-weight: 700; white-space: nowrap; padding: 0 4px;">${trangSinh}</strong>
+          <span style="text-align: right; white-space: nowrap; padding-right: 2px; font-weight: 600; ${footerRightCornerStyle}">Tháng ${hanThang !== undefined ? hanThang : (chiIdx + 1)}</span>
         </div>
       </div>
     `;
@@ -635,71 +635,71 @@ function render12Palaces(userData) {
           </div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">
-            <div style="font-size: 15px; font-weight: 800; color: #0C33A8; text-transform: uppercase; letter-spacing: 1px; font-family: sans-serif;">DIỄN ĐÀN TỬ VI THUẬT SỐ</div>
-            <div style="font-size: 15px; color: #C81500; font-weight: 700; font-family: monospace; padding-bottom: 2px; letter-spacing: 0.5px;">http://www.thuatsohuyenhoc.com.vn</div>
-            <h2 style="font-family: sans-serif; font-weight: 800; font-size: 24px; color: #0C33A8; letter-spacing: 1px; margin: 2px 0 0 0;">LÁ SỐ TỬ VI</h2>
+            <div style="font-size: 14.5px; font-weight: 700; color: #1A3DB5; text-transform: uppercase; letter-spacing: 0.8px; font-family: sans-serif;">DIỄN ĐÀN TỬ VI THUẬT SỐ</div>
+            <div style="font-size: 14px; color: #C81500; font-weight: 600; font-family: monospace; padding-bottom: 2px; letter-spacing: 0.5px;">http://www.thuatsohuyenhoc.com.vn</div>
+            <h2 style="font-family: sans-serif; font-weight: 800; font-size: 22px; color: #1A3DB5; letter-spacing: 1px; margin: 2px 0 0 0;">LÁ SỐ TỬ VI</h2>
           </div>
 
-          <div style="padding: 4px 6px; font-size: 13.8px; line-height: 1.32; text-align: left; max-width: 280px; margin: 4px 0 0 10px; position: relative; z-index: 10; width: auto; color: #0C33A8; font-family: sans-serif;">
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Họ tên:</span>
-              <span style="font-weight: 800; color: #0C33A8; white-space: nowrap;">${thienBan.name}</span>
+          <div style="padding: 4px 6px; font-size: 13.5px; line-height: 1.34; text-align: left; max-width: 290px; margin: 4px 0 0 10px; position: relative; z-index: 10; width: auto; color: #1A3DB5; font-family: sans-serif;">
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Họ tên:</span>
+              <span style="font-weight: 700; color: #1A3DB5;">${thienBan.name}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Năm:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.solYear}</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.birthCanChi}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Năm:</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${thienBan.solYear}</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.birthCanChi}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Tháng:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiMonth}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Tháng:</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiMonth}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Ngày:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiDay}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Ngày:</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiDay}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Giờ:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${displayHour}</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiHour}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Giờ:</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${displayHour}</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.canChiHour}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Năm xem:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.viewYear}</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.viewCanChi}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Năm xem:</span>
+              <span style="color: #1A3DB5; font-weight: 650; width: 100px; min-width: 100px;">${thienBan.viewYear}</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.viewCanChi}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
-              <span></span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.currentAge} tuổi</span>
-            </div>
-
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Âm Dương:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.amDuongNamNu}</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Mệnh:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.napAmMenh}</span>
-            </div>
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Cục:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${displayCuc}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="width: 78px; min-width: 78px;"></span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.currentAge} tuổi</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Chủ Mệnh:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.chuMenh}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Âm Dương:</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.amDuongNamNu}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
-              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Chủ Thân:</span>
-              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.chuThan}</span>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Mệnh:</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.napAmMenh}</span>
+            </div>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Cục:</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${displayCuc}</span>
+            </div>
+
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px; padding-top: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Chủ Mệnh:</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.chuMenh}</span>
+            </div>
+            <div style="display: flex; align-items: center; white-space: nowrap; gap: 4px;">
+              <span style="color: #262626; font-weight: 650; width: 78px; min-width: 78px;">Chủ Thân:</span>
+              <span style="color: #1A3DB5; font-weight: 700;">${thienBan.chuThan}</span>
             </div>
             
-            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; padding-top: 4px; white-space: nowrap;">
-              <span></span>
-              <div style="color: #0C33A8; font-weight: 800; line-height: 1.32; white-space: nowrap;">
+            <div style="display: flex; white-space: nowrap; gap: 4px; padding-top: 4px;">
+              <span style="width: 78px; min-width: 78px;"></span>
+              <div style="color: #1A3DB5; font-weight: 650; line-height: 1.32;">
                 <div>${thienBan.amDuongLy}</div>
                 <div>${thienBan.cucMenhRelation}</div>
                 <div>${displayThanCu}</div>
