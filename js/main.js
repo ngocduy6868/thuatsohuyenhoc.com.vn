@@ -625,9 +625,9 @@ function render12Palaces(userData) {
             <polygon points="${tamHopPoints}" fill="none" stroke="#A8A29E" stroke-width="0.4" stroke-linejoin="round" />
           </svg>
           
-          <!-- LOGO BÁT QUÁI ẨN TRUNG TÂM THIÊN BÀN (CHUẨN ẢNH 2 MOBI: 210px x 210px, TÂM CHÍNH GIỮA) -->
+          <!-- LOGO BÁT QUÁI ẨN TRUNG TÂM THIÊN BÀN (CHUẨN ẢNH 2 MOBI: 280px x 280px, TÂM CHÍNH GIỮA) -->
           <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.22; pointer-events: none; user-select: none; z-index: 2;">
-            <img src="assets/logo_batquai_tron.png" alt="Bát Quái Ẩn" style="width: 210px; height: 210px; object-fit: contain; border-radius: 50%; pointer-events: none; display: block;" />
+            <img src="assets/logo_batquai_tron.png" class="tuvi-thienban-logo" alt="Bát Quái Ẩn" style="width: 280px; height: 280px; object-fit: contain; border-radius: 50%; pointer-events: none; display: block;" />
           </div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">

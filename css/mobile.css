@@ -2517,6 +2517,15 @@
     margin: auto !important;
   }
 
+  .tuvi-thienban-logo {
+    width: 280px !important;
+    height: 280px !important;
+    max-width: 280px !important;
+    max-height: 280px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+  }
+
   /* Modal Footer: Nằm gọn gàng 1 dòng, không phình to chèn ép thân lá số */
   .tuvi-modal-footer {
     padding: 4px 2px !important;
