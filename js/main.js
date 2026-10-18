@@ -625,13 +625,9 @@ function render12Palaces(userData) {
             <polygon points="${tamHopPoints}" fill="none" stroke="#A8A29E" stroke-width="0.4" stroke-linejoin="round" />
           </svg>
           
-          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.18; pointer-events: none; color: #CDBF9F; user-select: none;">
-            <svg style="width: 180px; height: 180px;" viewBox="0 0 100 100" fill="currentColor">
-              <circle cx="50" cy="50" r="46" fill="none" stroke="currentColor" stroke-width="2" />
-              <path d="M50 4 A46 46 0 0 1 50 96 A23 23 0 0 1 50 50 A23 23 0 0 0 50 4" />
-              <circle cx="50" cy="27" r="6" fill="#FFFFFF" />
-              <circle cx="50" cy="73" r="6" fill="currentColor" />
-            </svg>
+          <!-- LOGO BÁT QUÁI ẨN TRUNG TÂM THIÊN BÀN (CẮT TRÒN ĐƯỜNG KÍNH 4x4, TÂM CHÍNH GIỮA THEO ẢNH 1) -->
+          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; opacity: 0.22; pointer-events: none; user-select: none; z-index: 2;">
+            <img src="assets/logo_batquai_tron.png" alt="Bát Quái Ẩn" style="width: 175px; height: 175px; object-fit: cover; border-radius: 50%; pointer-events: none; display: block;" />
           </div>
 
           <div style="padding-bottom: 4px; position: relative; z-index: 10; text-align: center;">
