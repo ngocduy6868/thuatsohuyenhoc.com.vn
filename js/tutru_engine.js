@@ -1440,7 +1440,31 @@ if (typeof window !== "undefined") {
       cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
 
-      view.innerHTML = `<img src="${cachedTuTruDataUrl}" alt="Bản đồ Lá Số Tứ Trụ" class="tuvi-board-img">`;
+      const inner = document.getElementById("tutru-scaler-inner");
+      if (inner) {
+        let touchImg = document.getElementById("tutru-mobile-touch-img");
+        if (!touchImg) {
+          touchImg = document.createElement("img");
+          touchImg.id = "tutru-mobile-touch-img";
+          touchImg.className = "tuvi-board-img";
+          touchImg.alt = "Bản đồ Lá Số Tứ Trụ";
+          touchImg.style.position = "absolute";
+          touchImg.style.left = "0";
+          touchImg.style.top = "0";
+          touchImg.style.width = "100%";
+          touchImg.style.height = "100%";
+          touchImg.style.objectFit = "contain";
+          touchImg.style.zIndex = "30";
+          touchImg.style.cursor = "pointer";
+          touchImg.style.webkitTouchCallout = "default";
+          touchImg.style.userSelect = "auto";
+          touchImg.title = "Chạm và giữ để Lưu vào Album ảnh";
+          inner.appendChild(touchImg);
+        }
+        touchImg.src = cachedTuTruDataUrl;
+      } else {
+        view.innerHTML = `<img src="${cachedTuTruDataUrl}" alt="Bản đồ Lá Số Tứ Trụ" class="tuvi-board-img">`;
+      }
       view.scrollTop = 0;
       const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
       if (modalBody) modalBody.scrollTop = 0;
@@ -1472,6 +1496,25 @@ if (typeof window !== "undefined") {
     }
 
     if (blob) {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+        try {
+          const file = new File([blob], fileName, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Lá Số Tứ Trụ',
+              text: `Lá Số Tứ Trụ - ${hoTen}`
+            });
+            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+            return;
+          }
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+          console.warn('Share API error:', e);
+        }
+      }
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

@@ -785,6 +785,9 @@ function render12Palaces(userData) {
     window.fitTuViModalLiveBoard();
     requestAnimationFrame(function() { window.fitTuViModalLiveBoard(); });
   }
+  if (typeof window.prepareMobileTuViImage === "function") {
+    setTimeout(window.prepareMobileTuViImage, 250);
+  }
 }
 
 /**
@@ -919,6 +922,39 @@ if (typeof window !== "undefined") {
   window.addEventListener("resize", function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); });
 }
 
+window.prepareMobileTuViImage = async function () {
+  try {
+    const blob = await getTuViImageBlob();
+    if (blob && cachedTuViDataUrl) {
+      const inner = document.getElementById("tuvi-scaler-inner");
+      if (inner) {
+        let touchImg = document.getElementById("tuvi-mobile-touch-img");
+        if (!touchImg) {
+          touchImg = document.createElement("img");
+          touchImg.id = "tuvi-mobile-touch-img";
+          touchImg.className = "tuvi-board-img";
+          touchImg.alt = "Bản đồ Lá Số Tử Vi";
+          touchImg.style.position = "absolute";
+          touchImg.style.left = "0";
+          touchImg.style.top = "0";
+          touchImg.style.width = "100%";
+          touchImg.style.height = "100%";
+          touchImg.style.objectFit = "contain";
+          touchImg.style.zIndex = "30";
+          touchImg.style.cursor = "pointer";
+          touchImg.style.webkitTouchCallout = "default";
+          touchImg.style.userSelect = "auto";
+          touchImg.title = "Nhấp chuột phải hoặc nhấn giữ để Lưu / Sao chép hình ảnh";
+          inner.appendChild(touchImg);
+        }
+        touchImg.src = cachedTuViDataUrl;
+      }
+    }
+  } catch (err) {
+    console.warn("prepareMobileTuViImage error:", err);
+  }
+};
+
 window.renderTuViBoardToImage = async function () {
   const view = document.getElementById('tuvi-image-view');
   const staging = document.getElementById('tuvi-render-staging');
@@ -974,14 +1010,19 @@ window.renderTuViBoardToImage = async function () {
 };
 
 /**
- * Lấy Blob của ảnh lá số
+ * Lấy Blob của ảnh lá số (Đảm bảo xuất chuẩn từ staging không bị méo tỷ lệ)
  */
 async function getTuViImageBlob() {
   if (cachedTuViBlob && cachedTuViDataUrl) {
     return cachedTuViBlob;
   }
-  const boardElement = document.querySelector('.tuvi-board') || document.getElementById('tuvi-12-palaces');
-  if (!boardElement) {
+  const staging = document.getElementById('tuvi-render-staging');
+  const liveBoard = document.getElementById("tuvi-live-board");
+  if (staging && liveBoard && !staging.hasChildNodes()) {
+    staging.innerHTML = liveBoard.outerHTML;
+  }
+  const sheet = (staging && (staging.querySelector(".tuvi-sheet-wrapper") || staging.querySelector(".tuvi-board"))) || liveBoard;
+  if (!sheet) {
     showToast('Không tìm thấy bản đồ Lá Số Tử Vi!');
     return null;
   }
@@ -990,13 +1031,14 @@ async function getTuViImageBlob() {
     return null;
   }
   try {
-    const canvas = await html2canvas(boardElement, {
+    if (document.fonts && document.fonts.ready) {
+      await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
+    }
+    const canvas = await html2canvas(sheet, {
       scale: 2,
       useCORS: true,
-      backgroundColor: '#E8E8E0',
-      logging: false,
-      width: 800,
-      windowWidth: 1400
+      backgroundColor: '#FFFFFF',
+      logging: false
     });
     if (typeof drawTuViBadgesOnCanvas === 'function') {
       drawTuViBadgesOnCanvas(canvas, window.currentTuViPositions);
@@ -1016,19 +1058,39 @@ async function getTuViImageBlob() {
 }
 
 /**
- * Tải ảnh Lá Số Tử Vi về máy tính (PNG)
+ * Tải ảnh Lá Số Tử Vi về máy tính (PNG) & Hỗ trợ Mobile lưu vào Album ảnh
  */
 window.downloadTuViImage = async function () {
-  showToast('Đang tải ảnh Lá Số Tử Vi...');
   const name = document.getElementById('input-fullname')?.value.trim() || 'Thân_Chủ';
   const fileName = `La_So_Tu_Vi_${name.replace(/\s+/g, '_')}.png`;
 
   let blob = cachedTuViBlob;
   if (!blob) {
+    showToast('Đang kết xuất ảnh Lá Số Tử Vi...');
     blob = await getTuViImageBlob();
   }
 
   if (blob) {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+    // Trên điện thoại: Ưu tiên mở bảng chia sẻ để bấm "Lưu hình ảnh" lưu thẳng vào Cuộn camera/Photos
+    if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+      try {
+        const file = new File([blob], fileName, { type: 'image/png' });
+        if (navigator.canShare({ files: [file] })) {
+          await navigator.share({
+            files: [file],
+            title: 'Lá Số Tử Vi',
+            text: `Lá Số Tử Vi - ${name}`
+          });
+          showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+          return;
+        }
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+        console.warn('Share API error, fallback to normal download:', e);
+      }
+    }
+
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
@@ -6025,6 +6087,25 @@ if (typeof window !== "undefined") {
     }
 
     if (blob) {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+        try {
+          const file = new File([blob], fileName, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Quẻ Dịch',
+              text: `Bản đồ Quẻ Dịch - ${cachedKinhDichName || 'Quẻ'}`
+            });
+            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+            return;
+          }
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+          console.warn('Share API error:', e);
+        }
+      }
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
