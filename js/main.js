@@ -1023,11 +1023,11 @@ async function getTuViImageBlob() {
   }
   const sheet = (staging && (staging.querySelector(".tuvi-sheet-wrapper") || staging.querySelector(".tuvi-board"))) || liveBoard;
   if (!sheet) {
-    showToast('Không tìm thấy bản đồ Lá Số Tử Vi!');
+    if (typeof showToast === 'function') showToast('Không tìm thấy bản đồ Lá Số Tử Vi!');
     return null;
   }
   if (typeof html2canvas !== 'function') {
-    showToast('Thư viện kết xuất ảnh chưa sẵn sàng!');
+    if (typeof showToast === 'function') showToast('Thư viện kết xuất ảnh chưa sẵn sàng!');
     return null;
   }
   try {
@@ -1038,7 +1038,34 @@ async function getTuViImageBlob() {
       scale: 2,
       useCORS: true,
       backgroundColor: '#FFFFFF',
-      logging: false
+      logging: false,
+      scrollX: 0,
+      scrollY: 0,
+      width: 832,
+      windowWidth: 1200,
+      onclone: (clonedDoc) => {
+        if (clonedDoc.body) {
+          clonedDoc.body.style.zoom = '1';
+          clonedDoc.body.style.transform = 'none';
+        }
+        const s = clonedDoc.getElementById('tuvi-render-staging');
+        if (s) {
+          s.style.position = 'static';
+          s.style.left = '0';
+          s.style.top = '0';
+          s.style.opacity = '1';
+          s.style.pointerEvents = 'auto';
+          s.style.width = '832px';
+        }
+        const lb = clonedDoc.getElementById('tuvi-live-board');
+        if (lb) {
+          lb.style.transform = 'none';
+          lb.style.position = 'static';
+          lb.style.left = '0';
+          lb.style.top = '0';
+          lb.style.opacity = '1';
+        }
+      }
     });
     if (typeof drawTuViBadgesOnCanvas === 'function') {
       drawTuViBadgesOnCanvas(canvas, window.currentTuViPositions);
@@ -1052,7 +1079,20 @@ async function getTuViImageBlob() {
     });
   } catch (err) {
     console.error('Lỗi khi kết xuất ảnh lá số:', err);
-    showToast('Không thể kết xuất ảnh Lá Số Tử Vi!');
+    try {
+      const fallbackTarget = liveBoard || document.querySelector('.tuvi-board');
+      if (fallbackTarget) {
+        const canvas = await html2canvas(fallbackTarget, { scale: 2, useCORS: true, backgroundColor: '#FFFFFF', logging: false });
+        if (typeof drawTuViBadgesOnCanvas === 'function') drawTuViBadgesOnCanvas(canvas, window.currentTuViPositions);
+        cachedTuViDataUrl = canvas.toDataURL('image/png');
+        return new Promise((resolve) => {
+          canvas.toBlob((blob) => { cachedTuViBlob = blob; resolve(blob); }, 'image/png');
+        });
+      }
+    } catch (e2) {
+      console.error('Lỗi fallback canvas:', e2);
+    }
+    if (typeof showToast === 'function') showToast('Không thể kết xuất ảnh Lá Số Tử Vi!');
     return null;
   }
 }
