@@ -640,66 +640,66 @@ function render12Palaces(userData) {
             <h2 style="font-family: sans-serif; font-weight: 800; font-size: 24px; color: #0C33A8; letter-spacing: 1px; margin: 2px 0 0 0;">LÁ SỐ TỬ VI</h2>
           </div>
 
-          <div style="padding: 4px 6px; font-size: 14.5px; line-height: 1.35; text-align: left; max-width: 270px; margin: 12px 0 0 10px; position: relative; z-index: 10; width: auto; color: #0C33A8; font-family: sans-serif;">
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Họ tên:</span>
-              <span style="font-weight: 800; color: #0C33A8;">${thienBan.name}</span>
+          <div style="padding: 4px 6px; font-size: 13.8px; line-height: 1.32; text-align: left; max-width: 280px; margin: 4px 0 0 10px; position: relative; z-index: 10; width: auto; color: #0C33A8; font-family: sans-serif;">
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Họ tên:</span>
+              <span style="font-weight: 800; color: #0C33A8; white-space: nowrap;">${thienBan.name}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 88px auto; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Năm:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.solYear}</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.birthCanChi}</span>
+            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Năm:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.solYear}</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.birthCanChi}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 88px auto; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Tháng:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.canChiMonth}</span>
+            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Tháng:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${String(thienBan.solMonth).padStart(2, '0')} (${thienBan.lunMonth})</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiMonth}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 88px auto; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Ngày:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.canChiDay}</span>
+            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Ngày:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${String(thienBan.solDay).padStart(2, '0')} (${thienBan.lunDay})</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiDay}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 88px auto; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Giờ:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${displayHour}</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.canChiHour}</span>
+            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Giờ:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${displayHour}</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.canChiHour}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 88px auto; gap: 4px; align-items: center; padding-top: 6px;">
-              <span style="color: #000000; font-weight: 800;">Năm xem:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.viewYear}</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.viewCanChi}</span>
+            <div style="display: grid; grid-template-columns: 86px 82px auto; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Năm xem:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.viewYear}</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.viewCanChi}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center;">
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
               <span></span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.currentAge} tuổi</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.currentAge} tuổi</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center; padding-top: 6px;">
-              <span style="color: #000000; font-weight: 800;">Âm Dương:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.amDuongNamNu}</span>
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Âm Dương:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.amDuongNamNu}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Mệnh:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.napAmMenh}</span>
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Mệnh:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.napAmMenh}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Cục:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${displayCuc}</span>
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Cục:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${displayCuc}</span>
             </div>
 
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center; padding-top: 6px;">
-              <span style="color: #000000; font-weight: 800;">Chủ Mệnh:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.chuMenh}</span>
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; padding-top: 4px; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Chủ Mệnh:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.chuMenh}</span>
             </div>
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; align-items: center;">
-              <span style="color: #000000; font-weight: 800;">Chủ Thân:</span>
-              <span style="color: #0C33A8; font-weight: 800;">${thienBan.chuThan}</span>
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; align-items: center; white-space: nowrap;">
+              <span style="color: #000000; font-weight: 800; white-space: nowrap;">Chủ Thân:</span>
+              <span style="color: #0C33A8; font-weight: 800; white-space: nowrap;">${thienBan.chuThan}</span>
             </div>
             
-            <div style="display: grid; grid-template-columns: 78px 1fr; gap: 4px; padding-top: 6px;">
+            <div style="display: grid; grid-template-columns: 86px 1fr; gap: 4px; padding-top: 4px; white-space: nowrap;">
               <span></span>
-              <div style="color: #0C33A8; font-weight: 800; line-height: 1.35;">
+              <div style="color: #0C33A8; font-weight: 800; line-height: 1.32; white-space: nowrap;">
                 <div>${thienBan.amDuongLy}</div>
                 <div>${thienBan.cucMenhRelation}</div>
                 <div>${displayThanCu}</div>
@@ -986,14 +986,31 @@ window.renderTuViBoardToImage = async function () {
           lb.style.boxSizing = 'border-box';
           lb.style.opacity = '1';
         }
+        const b = clonedDoc.querySelector('.tuvi-board');
+        if (b) {
+          b.style.display = 'grid';
+          b.style.gridTemplateColumns = '200px 200px 200px 200px';
+          b.style.gridTemplateRows = '267px 267px 267px 267px';
+          b.style.width = '800px';
+          b.style.maxWidth = '800px';
+          b.style.minWidth = '800px';
+        }
+        const cells = clonedDoc.querySelectorAll('.tuvi-cell');
+        cells.forEach(c => {
+          c.style.width = '200px';
+          c.style.maxWidth = '200px';
+          c.style.boxSizing = 'border-box';
+        });
       }
     });
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
     canvas.toBlob((blob) => { cachedTuViBlob = blob; }, 'image/png');
 
-    // Hiển thị DUY NHẤT một bức ảnh thẻ <img> giống hệt trang Tử Vi Việt Nam chuẩn mực!
-    view.innerHTML = `<img id="tuvi-board-img" src="${cachedTuViDataUrl}" alt="Bản đồ Lá Số Tử Vi" class="tuvi-board-img" style="max-width: 100%; height: auto; max-height: 100%; object-fit: contain; display: block; margin: 0 auto; box-shadow: 0 4px 15px rgba(0,0,0,0.08); cursor: pointer; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto;">`;
+    // Giữ nguyên giao diện Live Scaler Board trực tiếp (Ảnh 1) đẹp hoàn mỹ 100% trên màn hình
+    if (typeof window.fitTuViModalLiveBoard === "function") {
+      window.fitTuViModalLiveBoard();
+    }
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
     fallbackToLiveBoard();
