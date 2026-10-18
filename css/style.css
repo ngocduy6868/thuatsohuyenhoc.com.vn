@@ -2190,17 +2190,17 @@ ul {
   box-sizing: border-box;
 }
 
-/* Ngũ Hành Colors - Thanh thoát, sắc nét chuẩn 0.8 */
-.star-moc { color: #157318 !important; font-weight: 600 !important; }
-.star-hoa { color: #C81010 !important; font-weight: 600 !important; }
-.star-tho { color: #B86B07 !important; font-weight: 600 !important; }
-.star-kim { color: #555555 !important; font-weight: 600 !important; }
-.star-thuy { color: #000000 !important; font-weight: 600 !important; }
+/* Ngũ Hành Colors - Đậm rõ ràng chuẩn 1.1, giữ nguyên 100% cỡ chữ */
+.star-moc { color: #157318 !important; font-weight: 750 !important; }
+.star-hoa { color: #C81010 !important; font-weight: 750 !important; }
+.star-tho { color: #B86B07 !important; font-weight: 750 !important; }
+.star-kim { color: #555555 !important; font-weight: 750 !important; }
+.star-thuy { color: #000000 !important; font-weight: 750 !important; }
 
 .star-main-bold {
   font-family: 'Noto Serif', serif;
   font-size: 17px !important;
-  font-weight: 750 !important;
+  font-weight: 850 !important;
   display: block;
   line-height: 1.25;
   letter-spacing: 0.01em;
@@ -2223,7 +2223,7 @@ ul {
 .tuvi-cell .tuvi-phu-star,
 .tuvi-cell [class*="star-"]:not(.star-main-bold) {
   font-size: 12.5px !important;
-  font-weight: 600 !important;
+  font-weight: 750 !important;
   line-height: 1.2 !important;
   margin-top: 0 !important;
   margin-bottom: 0 !important;
@@ -2233,7 +2233,7 @@ ul {
 
 .tuvi-cell .tuvi-canchi {
   font-size: 13px !important;
-  font-weight: 700 !important;
+  font-weight: 850 !important;
   line-height: 1.2;
 }
 

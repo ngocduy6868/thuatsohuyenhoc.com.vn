@@ -418,11 +418,11 @@ function render12Palaces(userData) {
     return `
       <div class="tuvi-cell" style="grid-column: ${colStart}; grid-row: ${rowStart};">
         <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding-bottom: 2px;">
-          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 700; font-size: 13px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
+          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 850; font-size: 13px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
           <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; width: 100%; text-align: center;">
-            <span style="font-weight: 700; color: #1A1A1A; font-size: 14.5px; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
+            <span style="font-weight: 850; color: #111111; font-size: 14.5px; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
           </div>
-          <span style="color: #1A1A1A; font-weight: 700; font-size: 14px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
+          <span style="color: #111111; font-weight: 850; font-size: 14px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
         </div>
 
         <div style="text-align: center; padding: 4px 0; min-height: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -438,10 +438,10 @@ function render12Palaces(userData) {
           </div>
         </div>
 
-        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 13px; color: #262626; font-weight: 600;">
-          <span style="text-align: left; white-space: nowrap; padding-left: 2px; font-weight: 600; ${footerLeftCornerStyle}">${tieuHanChi || chiName}</span>
-          <strong style="text-align: center; color: #1A1A1A; font-weight: 700; white-space: nowrap; padding: 0 4px;">${trangSinh}</strong>
-          <span style="text-align: right; white-space: nowrap; padding-right: 2px; font-weight: 600; ${footerRightCornerStyle}">Tháng ${hanThang !== undefined ? hanThang : (chiIdx + 1)}</span>
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; font-size: 13px; color: #111111; font-weight: 800;">
+          <span style="text-align: left; white-space: nowrap; padding-left: 2px; font-weight: 800; ${footerLeftCornerStyle}">${tieuHanChi || chiName}</span>
+          <strong style="text-align: center; color: #111111; font-weight: 850; white-space: nowrap; padding: 0 4px;">${trangSinh}</strong>
+          <span style="text-align: right; white-space: nowrap; padding-right: 2px; font-weight: 800; ${footerRightCornerStyle}">Tháng ${hanThang !== undefined ? hanThang : (chiIdx + 1)}</span>
         </div>
       </div>
     `;
