@@ -1050,6 +1050,18 @@ window.renderTuViBoardToImage = async function () {
           wm.style.height = '260px';
           wm.style.transform = 'none';
         }
+        const bBadges = clonedDoc.querySelectorAll('.tuvi-boundary-badge');
+        bBadges.forEach(bg => {
+          bg.style.transform = 'none';
+          bg.style.width = '50px';
+          bg.style.height = '24px';
+          bg.style.marginLeft = '-25px';
+          bg.style.marginTop = '-12px';
+          bg.style.display = 'flex';
+          bg.style.alignItems = 'center';
+          bg.style.justifyContent = 'center';
+          bg.style.boxSizing = 'border-box';
+        });
       }
     });
 

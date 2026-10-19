@@ -2270,8 +2270,11 @@ ul {
   position: absolute;
   z-index: 10;
   pointer-events: none;
-  transform: translate(-50%, -50%) scale(1.2);
-  transform-origin: center center;
+  width: 50px !important;
+  height: 24px !important;
+  margin-left: -25px !important;
+  margin-top: -12px !important;
+  transform: none !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -2285,12 +2288,14 @@ ul {
   background: #000000 !important;
   color: #FFFFFF !important;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif !important;
-  font-size: 11px !important;
+  font-size: 12.5px !important;
   font-weight: bold !important;
-  min-width: 42px !important;
-  height: 20px !important;
-  padding: 3px 6px 1px 6px !important;
-  border-radius: 2px !important;
+  width: 50px !important;
+  min-width: 50px !important;
+  max-width: 50px !important;
+  height: 24px !important;
+  padding: 0 !important;
+  border-radius: 3px !important;
   border: none !important;
   white-space: nowrap !important;
   box-sizing: border-box !important;
@@ -2305,12 +2310,15 @@ ul {
 .tuvi-badge-triet span,
 .tuvi-badge-label {
   color: #FFFFFF !important;
-  font-size: 11px !important;
+  font-size: 12.5px !important;
   font-weight: bold !important;
   line-height: 1 !important;
   white-space: nowrap !important;
-  display: inline-block !important;
-  margin-top: 1px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
 /* Toast Notification */
