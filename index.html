@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
@@ -2885,9 +2885,14 @@
             <p class="tuvi-modal-subtitle">Đồ bản Địa Bàn 12 Cung &amp; Thiên Bàn trung tâm phân định theo Ngũ Hành sao</p>
           </div>
         </div>
-        <button type="button" id="close-tuvi-modal" class="tuvi-modal-close-btn" title="Đóng">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" id="btn-header-download-tuvi" class="tuvi-action-btn btn-green" onclick="window.downloadTuViImage()" style="padding: 4px 12px; font-size: 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: #16A34A; color: #FFF; border: none; cursor: pointer; white-space: nowrap;" title="Tải ảnh lá số về máy">
+            <i class="fa-solid fa-download"></i> Tải ảnh
+          </button>
+          <button type="button" id="close-tuvi-modal" class="tuvi-modal-close-btn" title="Đóng">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
 
       <!-- 12 Palaces Grid & Canonical Board Container -->
@@ -2940,9 +2945,14 @@
             <p class="tuvi-modal-subtitle">Đồ bản 4 Trụ, 8 Đại Vận &amp; 60 Năm Lưu Niên phân định theo Ngũ Hành sao</p>
           </div>
         </div>
-        <button type="button" id="close-tutru-modal" class="tuvi-modal-close-btn" title="Đóng" onclick="window.closeTuTruModal()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" id="btn-header-download-tutru" class="tuvi-action-btn btn-green" onclick="window.downloadTuTruImage()" style="padding: 4px 12px; font-size: 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: #16A34A; color: #FFF; border: none; cursor: pointer; white-space: nowrap;" title="Tải ảnh lá số về máy">
+            <i class="fa-solid fa-download"></i> Tải ảnh
+          </button>
+          <button type="button" id="close-tutru-modal" class="tuvi-modal-close-btn" title="Đóng" onclick="window.closeTuTruModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Modal Body: Chứa ảnh Lá Số Tứ Trụ -->
@@ -2996,9 +3006,14 @@
             <p id="kinhdich-modal-subtitle" class="tuvi-modal-subtitle">Đồ bản Quẻ Chủ, Quẻ Biến &amp; Bảng nạp giáp, lục thân, lục thú phân định theo Ngũ Hành</p>
           </div>
         </div>
-        <button type="button" id="close-kinhdich-modal" class="tuvi-modal-close-btn" title="Đóng" onclick="window.closeKinhDichModal()">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <button type="button" id="btn-header-download-kinhdich" class="tuvi-action-btn btn-green" onclick="window.downloadKinhDichImage()" style="padding: 4px 12px; font-size: 12px; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px; font-weight: 700; background: #16A34A; color: #FFF; border: none; cursor: pointer; white-space: nowrap;" title="Tải ảnh quẻ dịch về máy">
+            <i class="fa-solid fa-download"></i> Tải ảnh
+          </button>
+          <button type="button" id="close-kinhdich-modal" class="tuvi-modal-close-btn" title="Đóng" onclick="window.closeKinhDichModal()">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
       </div>
 
       <!-- Modal Body: Chứa ảnh Đồ Bản Quẻ Dịch -->

@@ -1152,7 +1152,13 @@ window.copyTuViImage = async function () {
 window.openTuViImageZoomModal = async function () {
   const zoomModal = document.getElementById('modal-image-zoom');
   const zoomImg = document.getElementById('modal-zoom-img');
+  const zoomTitle = document.getElementById('modal-zoom-title');
   if (!zoomModal || !zoomImg) return;
+
+  window.currentZoomType = 'tuvi';
+  if (zoomTitle) {
+    zoomTitle.textContent = 'Bức Ảnh Bản Đồ Lá Số Tử Vi (Độ Nét Cao)';
+  }
 
   if (cachedTuViDataUrl) {
     zoomImg.src = cachedTuViDataUrl;
@@ -1230,7 +1236,17 @@ function initModalEvents() {
   if (zoomBtn) zoomBtn.addEventListener('click', window.openTuViImageZoomModal);
   if (copyBtn) copyBtn.addEventListener('click', window.copyTuViImage);
   if (downloadBtn) downloadBtn.addEventListener('click', window.downloadTuViImage);
-  if (zoomDownloadBtn) zoomDownloadBtn.addEventListener('click', window.downloadTuViImage);
+  if (zoomDownloadBtn) {
+    zoomDownloadBtn.addEventListener('click', function () {
+      if (window.currentZoomType === 'tutru' && typeof window.downloadTuTruImage === 'function') {
+        window.downloadTuTruImage();
+      } else if (window.currentZoomType === 'kinhdich' && typeof window.downloadKinhDichImage === 'function') {
+        window.downloadKinhDichImage();
+      } else if (typeof window.downloadTuViImage === 'function') {
+        window.downloadTuViImage();
+      }
+    });
+  }
   if (printBtn) printBtn.addEventListener('click', () => window.print());
 }
 
@@ -5998,6 +6014,7 @@ if (typeof window !== "undefined") {
     const zoomTitle = document.getElementById('modal-zoom-title');
     if (!zoomModal || !zoomImg) return;
 
+    window.currentZoomType = 'kinhdich';
     if (cachedKinhDichDataUrl) {
       zoomImg.src = cachedKinhDichDataUrl;
     }

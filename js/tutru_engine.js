@@ -1633,13 +1633,19 @@ if (typeof window !== "undefined") {
     const zoomTitle = document.getElementById('modal-zoom-title');
     if (!zoomModal || !zoomImg) return;
 
+    window.currentZoomType = 'tutru';
     if (cachedTuTruDataUrl) {
       zoomImg.src = cachedTuTruDataUrl;
+    } else {
+      if (typeof window.renderTuTruBoardToImage === 'function') {
+        window.renderTuTruBoardToImage();
+      }
     }
     if (zoomTitle) {
       zoomTitle.textContent = 'Bức Ảnh Bản Đồ Lá Số Tứ Trụ (Độ Nét Cao)';
     }
     zoomModal.classList.remove('hidden');
+    if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
   };
 
   // Đóng modal khi click vào nền backdrop hoặc bấm Escape
