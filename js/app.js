@@ -471,10 +471,10 @@ function render12Palaces(userData) {
     const pair = [Math.min(chi1, chi2), Math.max(chi1, chi2)];
     // Tý (0), Sửu (1), Dần (2), Mão (3), Thìn (4), Tỵ (5),
     // Ngọ (6), Mùi (7), Thân (8), Dậu (9), Tuất (10), Hợi (11)
-    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: '75%' };     // Sửu - Tý (ranh giới đứng giữa Cột 2 & Cột 3, giáp đáy Thiên Bàn)
+    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: 'calc(75% + 5px)' };     // Sửu - Tý (ranh giới đứng giữa Cột 2 & Cột 3, giáp đáy Thiên Bàn)
     if (pair[0] === 2 && pair[1] === 3) return { left: '12.5%', top: '75%' };   // Dần - Mão (ranh giới ngang giữa Hàng 3 & Hàng 4, Cột 1)
     if (pair[0] === 4 && pair[1] === 5) return { left: '12.5%', top: '25%' };   // Thìn - Tỵ (ranh giới ngang giữa Hàng 1 & Hàng 2, Cột 1)
-    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: '25%' };     // Ngọ - Mùi (ranh giới đứng giữa Cột 2 & Cột 3, giáp đỉnh Thiên Bàn)
+    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: 'calc(25% - 5px)' };     // Ngọ - Mùi (ranh giới đứng giữa Cột 2 & Cột 3, giáp đỉnh Thiên Bàn)
     if (pair[0] === 8 && pair[1] === 9) return { left: '87.5%', top: '25%' };   // Thân - Dậu (ranh giới ngang giữa Hàng 1 & Hàng 2, Cột 4)
     if (pair[0] === 10 && pair[1] === 11) return { left: '87.5%', top: '75%' }; // Tuất - Hợi (ranh giới ngang giữa Hàng 3 & Hàng 4, Cột 4)
     return null;
@@ -1652,8 +1652,22 @@ function initKinhDichModal() {
         : null;
       if (!coords) return;
 
+      let topPercent = 0;
+      let topPxOffset = 0;
+      if (typeof coords.top === 'string') {
+        const match = coords.top.match(/calc\s*\(\s*([\d.]+)%\s*([+-])\s*([\d.]+)px\s*\)/);
+        if (match) {
+          topPercent = parseFloat(match[1]);
+          topPxOffset = (match[2] === '-' ? -1 : 1) * parseFloat(match[3]) * scale;
+        } else {
+          topPercent = parseFloat(coords.top) || 0;
+        }
+      } else {
+        topPercent = Number(coords.top) || 0;
+      }
+
       let cx = (parseFloat(coords.left) / 100) * canvas.width;
-      let cy = (parseFloat(coords.top) / 100) * canvas.height;
+      let cy = (topPercent / 100) * canvas.height + topPxOffset;
 
       if (offsetDir !== 0) {
         cx += offsetDir * (badgeW / 2 + Math.round(2 * scale));

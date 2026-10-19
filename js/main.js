@@ -458,10 +458,10 @@ function render12Palaces(userData) {
 
   function getBoundaryCoords(chi1, chi2) {
     const pair = [Math.min(chi1, chi2), Math.max(chi1, chi2)];
-    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: '75%' };
+    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: 'calc(75% + 5px)' };
     if (pair[0] === 2 && pair[1] === 3) return { left: '12.5%', top: '75%' };
     if (pair[0] === 4 && pair[1] === 5) return { left: '12.5%', top: '25%' };
-    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: '25%' };
+    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: 'calc(25% - 5px)' };
     if (pair[0] === 8 && pair[1] === 9) return { left: '87.5%', top: '25%' };
     if (pair[0] === 10 && pair[1] === 11) return { left: '87.5%', top: '75%' };
     return null;
@@ -882,8 +882,22 @@ function drawTuViBadgesOnCanvas(canvas, positions) {
       : null;
     if (!coords) return;
 
+    let topPercent = 0;
+    let topPxOffset = 0;
+    if (typeof coords.top === 'string') {
+      const match = coords.top.match(/calc\s*\(\s*([\d.]+)%\s*([+-])\s*([\d.]+)px\s*\)/);
+      if (match) {
+        topPercent = parseFloat(match[1]);
+        topPxOffset = (match[2] === '-' ? -1 : 1) * parseFloat(match[3]);
+      } else {
+        topPercent = parseFloat(coords.top) || 0;
+      }
+    } else {
+      topPercent = Number(coords.top) || 0;
+    }
+
     let cx = (padX + (parseFloat(coords.left) / 100) * boardW) * scale;
-    let cy = (padY + (parseFloat(coords.top) / 100) * boardH) * scale;
+    let cy = (padY + (topPercent / 100) * boardH + topPxOffset) * scale;
 
     if (offsetDir !== 0) {
       cx += offsetDir * (badgeW / 2 + Math.round(2 * scale));
