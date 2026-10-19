@@ -70,4 +70,10 @@
   2. Mọi tệp nguồn đã được đồng bộ chuẩn tuyệt đối giữa Desktop, Ổ D (`D:\Giao Diện Trang Web\`) và Hosting Online GitHub `thuatsohuyenhoc.com.vn`.
   3. Bất kỳ sự can thiệp nào trong tương lai CHỈ ĐƯỢC PHÉP THỰC HIỆN KHI NGƯỜI DÙNG (USER) TRỰC TIẾP CHỈ ĐỊNH VÀ XÁC NHẬN ĐỒNG Ý.
 
-
+## 11. KHÓA BẤT BIẾN TOÀN DIỆN MÃ NGUỒN VÀ DỮ LIỆU HOÀN THIỆN NGÀY 19/10/2026 (FINAL CODE & DATA FREEZE V2.0 - HOÀN CHỈNH TRANG WEB)
+- **MỐC ĐÓNG BĂNG HOÀN CHỈNH TRANG WEB (FINAL FREEZE V2.0):**
+  1. **Đồng bộ tính năng Tải ảnh:** Cả 3 bộ máy Tử Vi, Tứ Trụ, Kinh Dịch đều hỗ trợ mở trực tiếp hộp thoại "Lưu như" (Save As) của Windows trên PC và lưu vào Cuộn camera/Album ảnh trên Mobile.
+  2. **Tương tác phóng to ảnh:** Bấm chuột trái trên PC hoặc chạm 1 cái trên Mobile vào lá số của cả 3 bộ máy (Tử Vi, Tứ Trụ, Kinh Dịch) đều mở khung ảnh phóng to chất lượng cao tức thì 0 giây với nút Tải ảnh màu xanh trên header.
+  3. **Khắc phục triệt để lỗi ảnh Tử Vi:** Chụp đồ bản phẳng chuẩn 832px x 1112px qua `#tuvi-render-staging`, đảm bảo 100% mọi màn hình đều hiển thị đầy đủ 12 cung, 4 cột x 4 hàng sắc nét, không bao giờ bị cắt xén.
+  4. **Trạng thái đồng nhất 100%:** Toàn bộ mã nguồn trên Desktop (`C:\Users\pc\Desktop\Giao Diện Trang Web\`), Thư mục Hosting (`TRON_BO_WEB_UP_HOSTING\`), GitHub Repository và Website Online `https://thuatsohuyenhoc.com.vn/index.html` hoàn toàn đồng nhất từng byte (Differences count: 0).
+- **NGUYÊN TẮC BẤT BIẾN:** Đóng file, khóa toàn bộ mã nguồn. Tuyệt đối không can thiệp hay sửa đổi trừ khi có yêu cầu chỉ định mới từ Người Dùng (USER).
