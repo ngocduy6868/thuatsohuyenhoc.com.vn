@@ -1185,14 +1185,20 @@
     const stagingCard = container.querySelector('.tt-laso-card');
     if (tutruView && stagingCard) {
       tutruView.innerHTML = `
-        <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-          <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
-            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFDF9; margin: 0;">
+        <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
+          <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
+            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFDF9; margin: 0; cursor: pointer;">
               ${stagingCard.innerHTML}
             </div>
           </div>
         </div>
       `;
+      tutruView.style.cursor = 'pointer';
+      tutruView.onclick = function(e) {
+        if (typeof window.openTuTruImageZoomModal === 'function') {
+          window.openTuTruImageZoomModal();
+        }
+      };
       if (typeof window.fitTuTruModalLiveBoard === 'function') {
         window.fitTuTruModalLiveBoard();
         requestAnimationFrame(function() { window.fitTuTruModalLiveBoard(); });
@@ -1440,10 +1446,22 @@ if (typeof window !== "undefined") {
       cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
 
-      view.innerHTML = `<img src="${cachedTuTruDataUrl}" alt="Bản đồ Lá Số Tứ Trụ" class="tuvi-board-img">`;
+      view.innerHTML = `<img id="tutru-board-img" src="${cachedTuTruDataUrl}" alt="Bản Đồ Lá Số Tứ Trụ" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)" style="cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();">`;
       view.scrollTop = 0;
+      view.style.cursor = 'pointer';
+      view.onclick = function(e) {
+        if (typeof window.openTuTruImageZoomModal === 'function') {
+          window.openTuTruImageZoomModal();
+        }
+      };
       const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
       if (modalBody) modalBody.scrollTop = 0;
+
+      const zoomModal = document.getElementById('modal-image-zoom');
+      const zoomImg = document.getElementById('modal-zoom-img');
+      if (zoomModal && !zoomModal.classList.contains('hidden') && window.currentZoomType === 'tutru' && zoomImg) {
+        zoomImg.src = cachedTuTruDataUrl;
+      }
     } catch (err) {
       console.error('Lỗi khi xuất ảnh Lá Số Tứ Trụ:', err);
       fallbackToLiveBoard();
@@ -1627,22 +1645,26 @@ if (typeof window !== "undefined") {
     if (modal) modal.classList.add('hidden');
   };
 
-  window.openTuTruImageZoomModal = function () {
+  window.openTuTruImageZoomModal = async function () {
     const zoomModal = document.getElementById('modal-image-zoom');
     const zoomImg = document.getElementById('modal-zoom-img');
     const zoomTitle = document.getElementById('modal-zoom-title');
     if (!zoomModal || !zoomImg) return;
 
     window.currentZoomType = 'tutru';
+    if (zoomTitle) {
+      zoomTitle.textContent = 'Bức Ảnh Bản Đồ Lá Số Tứ Trụ (Độ Nét Cao)';
+    }
+
     if (cachedTuTruDataUrl) {
       zoomImg.src = cachedTuTruDataUrl;
     } else {
       if (typeof window.renderTuTruBoardToImage === 'function') {
-        window.renderTuTruBoardToImage();
+        await window.renderTuTruBoardToImage();
       }
-    }
-    if (zoomTitle) {
-      zoomTitle.textContent = 'Bức Ảnh Bản Đồ Lá Số Tứ Trụ (Độ Nét Cao)';
+      if (cachedTuTruDataUrl) {
+        zoomImg.src = cachedTuTruDataUrl;
+      }
     }
     zoomModal.classList.remove('hidden');
     if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
