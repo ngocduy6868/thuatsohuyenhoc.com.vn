@@ -1248,6 +1248,14 @@ function initModalEvents() {
     });
   }
   if (printBtn) printBtn.addEventListener('click', () => window.print());
+
+  if (!window.openTuTruImageZoomModal) {
+    window.openTuTruImageZoomModal = function() {
+      if (window.TUTRU_ENGINE && typeof window.TUTRU_ENGINE.openZoom === 'function') {
+        window.TUTRU_ENGINE.openZoom();
+      }
+    };
+  }
 }
 
 /**

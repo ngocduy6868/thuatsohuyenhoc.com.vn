@@ -1681,6 +1681,10 @@ if (typeof window !== "undefined") {
       zoomTitle.textContent = 'Bức Ảnh Bản Đồ Lá Số Tứ Trụ (Độ Nét Cao)';
     }
 
+    // Hiển thị modal phóng to ngay lập tức (phản hồi tức thì 0 giây)
+    zoomModal.classList.remove('hidden');
+    if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
+
     if (cachedTuTruDataUrl) {
       zoomImg.src = cachedTuTruDataUrl;
     } else {
@@ -1691,16 +1695,23 @@ if (typeof window !== "undefined") {
         zoomImg.src = cachedTuTruDataUrl;
       }
     }
-    zoomModal.classList.remove('hidden');
-    if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
   };
 
-  // Đóng modal khi click vào nền backdrop hoặc bấm Escape
+  // Đóng modal khi click vào nền backdrop hoặc bấm Escape; Chạm/Click chuột trái vào lá số Tứ Trụ để phóng to ảnh
   if (typeof document !== 'undefined') {
     document.addEventListener('click', function (e) {
       const modal = document.getElementById('tutru-modal');
-      if (modal && !modal.classList.contains('hidden') && e.target === modal) {
-        modal.classList.add('hidden');
+      if (modal && !modal.classList.contains('hidden')) {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+          return;
+        }
+        // Nhấn chuột trái trên PC hoặc chạm 1 cái trên Mobile vào lá số Tứ Trụ -> Mở khung ảnh phóng to
+        const inTutruBoard = e.target.closest('#tutru-image-view, #tutru-scaler-box, #tutru-scaler-inner, #tutru-live-board, #tutru-board-img, .tt-laso-card');
+        const inActionBtn = e.target.closest('button, a, .tuvi-modal-header, .tuvi-modal-footer');
+        if (inTutruBoard && !inActionBtn) {
+          window.openTuTruImageZoomModal();
+        }
       }
     });
 
