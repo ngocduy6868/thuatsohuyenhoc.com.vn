@@ -48,18 +48,18 @@ const TuViEngine = (function () {
     'Thiên Đồng': 'thuy', 'Liêm Trinh': 'hoa', 'Thiên Phủ': 'tho', 'Thái Âm': 'thuy',
     'Tham Lang': 'thuy', 'Cự Môn': 'thuy', 'Thiên Tướng': 'thuy', 'Thiên Lương': 'moc',
     'Thất Sát': 'kim', 'Phá Quân': 'thuy',
-    'Văn Xương': 'kim', 'Văn Khúc': 'thuy', 'Tả Phù': 'tho', 'Hữu Bật': 'tho',
+    'Văn Xương': 'kim', 'Văn Khúc': 'thuy', 'Tả Phù': 'tho', 'Hữu Bật': 'thuy',
     'Thiên Khôi': 'hoa', 'Thiên Việt': 'hoa', 'Lộc Tồn': 'tho', 'Kình Dương': 'kim',
     'Đà La': 'kim', 'Địa Không': 'hoa', 'Địa Kiếp': 'hoa', 'Hỏa Tinh': 'hoa',
     'Hoả Tinh': 'hoa', 'Linh Tinh': 'hoa', 'Hóa Lộc': 'moc', 'Hóa Quyền': 'moc',
     'Hóa Khoa': 'moc', 'Hóa Kỵ': 'thuy', 'Thiên Mã': 'hoa', 'Đào Hoa': 'moc',
-    'Hồng Loan': 'hoa', 'Thiên Hỷ': 'thuy', 'Bạch Hổ': 'kim', 'Tang Môn': 'moc',
+    'Hồng Loan': 'thuy', 'Thiên Hỷ': 'thuy', 'Bạch Hổ': 'kim', 'Tang Môn': 'moc',
     'Thái Tuế': 'hoa', 'Thiên Khốc': 'kim', 'Thiên Hư': 'kim', 'Long Trì': 'thuy',
-    'Phượng Các': 'moc', 'Tam Thai': 'kim', 'Bát Tọa': 'moc', 'Ân Quang': 'moc',
-    'Thiên Quý': 'tho', 'Thiên Quan': 'hoa', 'Thiên Phúc': 'hoa', 'Giải Thần': 'moc',
+    'Phượng Các': 'moc', 'Tam Thai': 'thuy', 'Bát Tọa': 'moc', 'Ân Quang': 'moc',
+    'Thiên Quý': 'tho', 'Thiên Quan': 'hoa', 'Thiên Phúc': 'tho', 'Giải Thần': 'moc',
     'Thiên Đức': 'hoa', 'Nguyệt Đức': 'hoa', 'Phúc Đức': 'tho', 'Thiên Tài': 'tho',
     'Thiên Thọ': 'tho', 'Thiên Y': 'thuy', 'Thiên Trù': 'tho', 'Phong Cáo': 'tho',
-    'Thanh Long': 'moc', 'Tướng Quân': 'moc', 'Bác Sĩ': 'thuy', 'Bác Sỹ': 'thuy',
+    'Thanh Long': 'thuy', 'Tướng Quân': 'moc', 'Bác Sĩ': 'thuy', 'Bác Sỹ': 'thuy',
     'Lực Sĩ': 'hoa', 'Phục Binh': 'hoa', 'Quan Phủ': 'hoa', 'Quan Phù': 'hoa',
     'Tử Phù': 'hoa', 'Tuế Phá': 'hoa', 'Tiểu Hao': 'hoa', 'Đại Hao': 'hoa',
     'Điếu Khách': 'hoa', 'Trực Phù': 'hoa', 'Kiếp Sát': 'hoa', 'Phá Toái': 'hoa',
@@ -68,7 +68,7 @@ const TuViEngine = (function () {
     'Hoa Cái': 'kim', 'Quốc Ấn': 'tho', 'Đường Phù': 'moc', 'Thai Phụ': 'kim',
     'Thiên Giải': 'hoa', 'Địa Giải': 'tho', 'Tấu Thư': 'kim', 'Phi Liêm': 'hoa',
     'Hỷ Thần': 'hoa', 'Hỉ Thần': 'hoa', 'Bệnh Phù': 'tho', 'Đẩu Quân': 'hoa',
-    'Thiếu Dương': 'hoa', 'Thiếu Âm': 'tho', 'Long Đức': 'thuy', 'Thiên Thương': 'tho',
+    'Thiếu Dương': 'hoa', 'Thiếu Âm': 'thuy', 'Long Đức': 'thuy', 'Thiên Thương': 'tho',
     'Thiên Sứ': 'thuy',
     // 10 Sao Lưu Niên theo Năm Xem (viewYear)
     'L.Thái Tuế': 'hoa', 'L.Tang Môn': 'moc', 'L.Bạch Hổ': 'kim',
@@ -769,7 +769,7 @@ const TuViEngine = (function () {
     addStar(posDiaGiai, 'Địa Giải', 'phuGood');
 
     // 5.23. Lưu Hà, Thiên Trù (theo Can năm)
-    const luuHaMap = [9, 10, 7, 4, 5, 6, 8, 3, 11, 2];
+    const luuHaMap = [9, 10, 7, 8, 5, 6, 4, 3, 11, 2];
     const thienTruMap = [5, 6, 0, 5, 6, 8, 2, 6, 9, 10];
     addStar(luuHaMap[canYearIdx % 10], 'Lưu Hà', 'phuBad');
     addStar(thienTruMap[canYearIdx % 10], 'Thiên Trù', 'phuGood');
