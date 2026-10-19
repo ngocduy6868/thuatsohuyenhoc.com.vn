@@ -614,10 +614,10 @@ function render12Palaces(userData) {
   }
 
   container.innerHTML = `
-    <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-      <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-        <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
-          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #FFFFFF; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box;">
+    <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
+      <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;">
+        <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
+          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #FFFFFF; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer;">
       <div class="tuvi-board" style="position: relative;">
         <!-- ROW 1 -->
         ${renderPalaceCell(palaces[5], 1, 1)}
@@ -5672,9 +5672,9 @@ function initEventHandlers() {
     const modalView = document.getElementById('kinhdich-image-view');
     if (modalView) {
       modalView.innerHTML = `
-        <div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;">
-          <div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
-            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFFFF; margin: 0;">
+        <div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openKinhDichImageZoomModal==='function')window.openKinhDichImageZoomModal();" title="Bản Đồ Quẻ Dịch Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
+          <div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
+            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFFFF; margin: 0; cursor: pointer;">
               <style>
                 #kinhdich-live-card .dq-download-toolbar { display: none !important; }
                 #kinhdich-live-card .dq-cards-row { flex-direction: row !important; }
@@ -5685,6 +5685,12 @@ function initEventHandlers() {
           </div>
         </div>
       `;
+      modalView.style.cursor = 'pointer';
+      modalView.onclick = function(e) {
+        if (typeof window.openKinhDichImageZoomModal === 'function') {
+          window.openKinhDichImageZoomModal();
+        }
+      };
       if (typeof window.fitKinhDichModalLiveBoard === 'function') {
         window.fitKinhDichModalLiveBoard();
         requestAnimationFrame(function() { window.fitKinhDichModalLiveBoard(); });
@@ -6008,20 +6014,29 @@ if (typeof window !== "undefined") {
     }
   };
 
-  window.openKinhDichImageZoomModal = function() {
+  window.openKinhDichImageZoomModal = async function() {
     const zoomModal = document.getElementById('modal-image-zoom');
     const zoomImg = document.getElementById('modal-zoom-img');
     const zoomTitle = document.getElementById('modal-zoom-title');
     if (!zoomModal || !zoomImg) return;
 
     window.currentZoomType = 'kinhdich';
-    if (cachedKinhDichDataUrl) {
-      zoomImg.src = cachedKinhDichDataUrl;
-    }
     if (zoomTitle) {
       zoomTitle.textContent = 'Bức Ảnh Bản Đồ Quẻ Dịch (Độ Nét Cao)';
     }
+
+    if (cachedKinhDichDataUrl) {
+      zoomImg.src = cachedKinhDichDataUrl;
+    } else {
+      if (typeof renderKinhDichBoardToImage === 'function') {
+        await renderKinhDichBoardToImage();
+      }
+      if (cachedKinhDichDataUrl) {
+        zoomImg.src = cachedKinhDichDataUrl;
+      }
+    }
     zoomModal.classList.remove('hidden');
+    if (typeof window.fitPageToWindow === 'function') window.fitPageToWindow();
   };
 
   window.copyKinhDichImage = async function() {
@@ -6092,6 +6107,25 @@ if (typeof window !== "undefined") {
     }
 
     if (blob) {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" trực tiếp vào Album ảnh điện thoại
+      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+        try {
+          const file = new File([blob], fileName, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Bản Đồ Quẻ Dịch',
+              text: 'Bản Đồ Quẻ Dịch Chuẩn Truyền Thống'
+            });
+            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+            return;
+          }
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+        }
+      }
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

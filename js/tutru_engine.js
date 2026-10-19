@@ -1473,6 +1473,12 @@ if (typeof window !== "undefined") {
    */
   async function downloadTuTruImage() {
     if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
+      if (typeof renderTuTruBoardToImage === 'function') {
+        if (typeof showToast === 'function') showToast('Đang kết xuất ảnh chất lượng cao để tải về...');
+        await renderTuTruBoardToImage();
+      }
+    }
+    if (!cachedTuTruDataUrl && !cachedTuTruBlob) {
       if (typeof showToast === 'function') showToast('Chưa có ảnh lá số để tải về!');
       else alert('Chưa có ảnh lá số để tải về!');
       return;
@@ -1490,6 +1496,25 @@ if (typeof window !== "undefined") {
     }
 
     if (blob) {
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+      // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" trực tiếp vào Album ảnh điện thoại
+      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+        try {
+          const file = new File([blob], fileName, { type: 'image/png' });
+          if (navigator.canShare({ files: [file] })) {
+            await navigator.share({
+              files: [file],
+              title: 'Lá Số Tứ Trụ',
+              text: `Lá Số Tứ Trụ Bát Tự - ${hoTen}`
+            });
+            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+            return;
+          }
+        } catch (e) {
+          if (e.name === 'AbortError') return;
+        }
+      }
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
