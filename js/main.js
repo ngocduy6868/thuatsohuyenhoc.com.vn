@@ -990,90 +990,104 @@ window.renderTuViBoardToImage = async function () {
       y: 0,
       width: 832,
       height: 1112,
-      windowWidth: 1200,
-      windowHeight: 1600,
+      windowWidth: 832,
+      windowHeight: 1112,
       onclone: (clonedDoc) => {
-        if (clonedDoc.body) {
+        const targetInClone = clonedDoc.getElementById('tuvi-staging-board') || 
+                              clonedDoc.getElementById('tuvi-live-board') || 
+                              (clonedDoc.getElementById('tuvi-render-staging') && clonedDoc.getElementById('tuvi-render-staging').firstElementChild);
+        
+        if (targetInClone) {
+          // Làm sạch hoàn toàn body của clonedDoc để chỉ chứa duy nhất Đồ Bản tại tọa độ gốc (0, 0)
+          clonedDoc.body.innerHTML = '';
+          clonedDoc.body.style.margin = '0';
+          clonedDoc.body.style.padding = '0';
+          clonedDoc.body.style.background = '#FFFFFF';
+          clonedDoc.body.style.width = '832px';
+          clonedDoc.body.style.minWidth = '832px';
+          clonedDoc.body.style.maxWidth = '832px';
+          clonedDoc.body.style.height = '1112px';
+          clonedDoc.body.style.minHeight = '1112px';
+          clonedDoc.body.style.maxHeight = '1112px';
+          clonedDoc.body.style.overflow = 'hidden';
           clonedDoc.body.style.zoom = '1';
           clonedDoc.body.style.transform = 'none';
+
+          if (clonedDoc.documentElement) {
+            clonedDoc.documentElement.style.margin = '0';
+            clonedDoc.documentElement.style.padding = '0';
+            clonedDoc.documentElement.style.zoom = '1';
+            clonedDoc.documentElement.style.transform = 'none';
+          }
+
+          clonedDoc.body.appendChild(targetInClone);
+
+          targetInClone.style.margin = '0';
+          targetInClone.style.position = 'static';
+          targetInClone.style.left = '0';
+          targetInClone.style.top = '0';
+          targetInClone.style.width = '832px';
+          targetInClone.style.minWidth = '832px';
+          targetInClone.style.maxWidth = '832px';
+          targetInClone.style.height = '1112px';
+          targetInClone.style.boxSizing = 'border-box';
+          targetInClone.style.opacity = '1';
+          targetInClone.style.transform = 'none';
+          targetInClone.style.overflow = 'visible';
+          targetInClone.style.display = 'block';
+
+          // Chuẩn hóa board lưới 4x4
+          const b = targetInClone.querySelector('.tuvi-board');
+          if (b) {
+            b.style.display = 'grid';
+            b.style.gridTemplateColumns = '200px 200px 200px 200px';
+            b.style.gridTemplateRows = '267px 267px 267px 267px';
+            b.style.width = '800px';
+            b.style.maxWidth = '800px';
+            b.style.minWidth = '800px';
+            b.style.margin = '0 auto';
+          }
+
+          // Chuẩn hóa 12 cung
+          const cells = targetInClone.querySelectorAll('.tuvi-cell');
+          cells.forEach(c => {
+            c.style.width = '200px';
+            c.style.maxWidth = '200px';
+            c.style.boxSizing = 'border-box';
+          });
+
+          // Chuẩn hóa Watermark Bát Quái
+          const wm = targetInClone.querySelector('.tuvi-thienban-watermark');
+          if (wm) {
+            wm.style.position = 'absolute';
+            wm.style.left = '70px';
+            wm.style.top = '137px';
+            wm.style.width = '260px';
+            wm.style.height = '260px';
+            wm.style.transform = 'none';
+          }
+
+          // Chuẩn hóa Tuần / Triệt badges
+          const bBadges = targetInClone.querySelectorAll('.tuvi-boundary-badge');
+          bBadges.forEach(bg => {
+            bg.style.transform = 'none';
+            bg.style.width = '50px';
+            bg.style.height = '24px';
+            bg.style.marginLeft = '-25px';
+            bg.style.marginTop = '-12px';
+            bg.style.display = 'flex';
+            bg.style.alignItems = 'center';
+            bg.style.justifyContent = 'center';
+            bg.style.boxSizing = 'border-box';
+          });
+
+          // Triệt tiêu hoàn toàn lỗi dãn chữ (letter-spacing) của html2canvas trên Windows
+          const allElements = targetInClone.querySelectorAll('*');
+          allElements.forEach(el => {
+            el.style.letterSpacing = 'normal';
+            el.style.fontKerning = 'none';
+          });
         }
-        if (clonedDoc.documentElement) {
-          clonedDoc.documentElement.style.zoom = '1';
-          clonedDoc.documentElement.style.transform = 'none';
-        }
-        const st = clonedDoc.getElementById('tuvi-render-staging');
-        if (st) {
-          st.style.position = 'static';
-          st.style.left = '0';
-          st.style.top = '0';
-          st.style.opacity = '1';
-          st.style.width = '832px';
-          st.style.maxWidth = '832px';
-          st.style.minWidth = '832px';
-          st.style.overflow = 'visible';
-          st.style.display = 'block';
-        }
-        const sInner = clonedDoc.getElementById('tuvi-scaler-inner');
-        if (sInner) {
-          sInner.style.width = '832px';
-          sInner.style.maxWidth = '832px';
-          sInner.style.minWidth = '832px';
-          sInner.style.overflow = 'visible';
-        }
-        const sBox = clonedDoc.getElementById('tuvi-scaler-box');
-        if (sBox) {
-          sBox.style.overflow = 'visible';
-        }
-        const lb = clonedDoc.getElementById('tuvi-staging-board') || clonedDoc.getElementById('tuvi-live-board');
-        if (lb) {
-          lb.style.transform = 'none';
-          lb.style.position = 'static';
-          lb.style.left = '0';
-          lb.style.top = '0';
-          lb.style.margin = '0 auto';
-          lb.style.width = '832px';
-          lb.style.minWidth = '832px';
-          lb.style.maxWidth = '832px';
-          lb.style.boxSizing = 'border-box';
-          lb.style.opacity = '1';
-          lb.style.overflow = 'visible';
-        }
-        const b = clonedDoc.querySelector('.tuvi-board');
-        if (b) {
-          b.style.display = 'grid';
-          b.style.gridTemplateColumns = '200px 200px 200px 200px';
-          b.style.gridTemplateRows = '267px 267px 267px 267px';
-          b.style.width = '800px';
-          b.style.maxWidth = '800px';
-          b.style.minWidth = '800px';
-        }
-        const cells = clonedDoc.querySelectorAll('.tuvi-cell');
-        cells.forEach(c => {
-          c.style.width = '200px';
-          c.style.maxWidth = '200px';
-          c.style.boxSizing = 'border-box';
-        });
-        const wm = clonedDoc.querySelector('.tuvi-thienban-watermark');
-        if (wm) {
-          wm.style.position = 'absolute';
-          wm.style.left = '70px';
-          wm.style.top = '137px';
-          wm.style.width = '260px';
-          wm.style.height = '260px';
-          wm.style.transform = 'none';
-        }
-        const bBadges = clonedDoc.querySelectorAll('.tuvi-boundary-badge');
-        bBadges.forEach(bg => {
-          bg.style.transform = 'none';
-          bg.style.width = '50px';
-          bg.style.height = '24px';
-          bg.style.marginLeft = '-25px';
-          bg.style.marginTop = '-12px';
-          bg.style.display = 'flex';
-          bg.style.alignItems = 'center';
-          bg.style.justifyContent = 'center';
-          bg.style.boxSizing = 'border-box';
-        });
       }
     });
 
