@@ -736,7 +736,7 @@ function render12Palaces(userData) {
           </div>
 
           <!-- Ô SAO TỨ HÓA (CHIA CÂN KHOẢNG CÁCH 2 BÊN TÍNH TỪ PHẦN NGOÀI CỦA Ô THỨ 2) -->
-          <div style="position: absolute; bottom: 8px; left: 0; width: calc(100% - 58px); z-index: 20; display: flex; justify-content: center; pointer-events: none;">
+          <div style="position: absolute; bottom: 24px; left: 0; width: calc(100% - 58px); z-index: 20; display: flex; justify-content: center; pointer-events: none;">
             <div class="tuvi-tuhoa-box" style="pointer-events: auto; border: 1.5px solid #D81E05; border-radius: 4px; padding: 4px 10px; background: rgba(255, 255, 255, 0.96); box-shadow: 0 1px 3px rgba(0,0,0,0.06); font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
               <div style="display: grid; grid-template-columns: auto auto; column-gap: 16px; row-gap: 2px; font-size: 13px; font-weight: 700; color: #D81E05; line-height: 1.35; white-space: nowrap;">
                 <div>H.Lộc: <span>${tuHoaPalaces.loc || 'MỆNH'}</span></div>
@@ -840,7 +840,7 @@ function drawTuViBadgesOnCanvas(canvas, positions) {
     ctx.save();
     // Loại trừ vùng ô Tứ Hóa đã căn giữa để đường Tam Hợp không đè lên ô Tứ Hóa
     const boxX = (padX + cellW + 35) * scale;
-    const boxY = (padY + cellH + tbH - 8 - 50) * scale;
+    const boxY = (padY + cellH + tbH - 24 - 50) * scale;
     const boxW = 270 * scale;
     const boxH = 55 * scale;
 
