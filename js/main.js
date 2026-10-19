@@ -807,9 +807,7 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-  if (typeof window.renderTuViBoardToImage === 'function') {
-    setTimeout(window.renderTuViBoardToImage, 100);
-  }
+
 }
 
 /**
@@ -1084,11 +1082,8 @@ window.renderTuViBoardToImage = async function () {
       cachedTuViBlob = blob;
     }, 'image/png');
 
-    // Chuyển giao hiển thị sang thẻ ảnh chuẩn nét cao (chuẩn 100% như bên Tứ Trụ và Kinh Dịch):
-    // Cho phép chuột phải trên PC hoặc chạm giữ trên Mobile đều lập tức ra menu Lưu & Sao chép hình ảnh bản đồ lá số
-    if (view) {
-      view.innerHTML = `<img id="tuvi-board-img" src="${cachedTuViDataUrl}" alt="Bản Đồ Lá Số Tử Vi" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)" style="cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();">`;
-    }
+    // Lưu blob và dataURL để phục vụ tải ảnh/sao chép/in ấn, TUYỆT ĐỐI không ghi đè view.innerHTML
+    // Giữ nguyên bản Live Board (#tuvi-live-board) phẳng chuẩn, sắc nét 100%, không bị cắt xén hay nhảy giật màn hình
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
     fallbackToLiveBoard();

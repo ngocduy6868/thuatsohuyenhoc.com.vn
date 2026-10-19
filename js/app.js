@@ -710,10 +710,7 @@ function render12Palaces(userData) {
     </div>
   `;
 
-  // Kết xuất bản dựng ẩn thành 1 ảnh PNG vừa khít khung nhìn
-  if (typeof window.renderTuViBoardToImage === 'function') {
-    window.renderTuViBoardToImage();
-  }
+
 }
 
 // =========================================================================
@@ -1754,8 +1751,8 @@ function initKinhDichModal() {
       cachedTuViDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuViBlob = blob; }, 'image/png');
 
-      view.innerHTML =
-        `<img src="${cachedTuViDataUrl}" alt="Bản đồ Lá Số Tử Vi" class="tuvi-board-img">`;
+      // Lưu blob và dataURL phục vụ tải/sao chép/phóng to, TUYỆT ĐỐI không ghi đè view.innerHTML
+      // Giữ nguyên bản Live Board (#tuvi-live-board) phẳng chuẩn, không bao giờ bị nhảy ảnh hay cắt xén
     } catch (err) {
       console.error('Lỗi kết xuất ảnh lá số:', err);
       fallbackToLiveBoard('Không kết xuất được ảnh — đang hiển thị bản tương tác.');
