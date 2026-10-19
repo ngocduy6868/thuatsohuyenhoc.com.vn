@@ -458,10 +458,10 @@ function render12Palaces(userData) {
 
   function getBoundaryCoords(chi1, chi2) {
     const pair = [Math.min(chi1, chi2), Math.max(chi1, chi2)];
-    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: 'calc(75% + 5px)' };
+    if (pair[0] === 0 && pair[1] === 1) return { left: '50%', top: '75%' };
     if (pair[0] === 2 && pair[1] === 3) return { left: '12.5%', top: '75%' };
     if (pair[0] === 4 && pair[1] === 5) return { left: '12.5%', top: '25%' };
-    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: 'calc(25% - 5px)' };
+    if (pair[0] === 6 && pair[1] === 7) return { left: '50%', top: '25%' };
     if (pair[0] === 8 && pair[1] === 9) return { left: '87.5%', top: '25%' };
     if (pair[0] === 10 && pair[1] === 11) return { left: '87.5%', top: '75%' };
     return null;
