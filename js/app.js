@@ -430,7 +430,6 @@ function render12Palaces(userData) {
     }
     if (hasBadgeAtSuuTy) {
       if (chiIdx === 1) headerRightCornerStyle = 'padding-right: 20px;'; // Cung Sửu: tránh góc phải trên
-      else if (chiIdx === 0) headerLeftCornerStyle = 'padding-left: 20px;';  // Cung Tý: tránh góc trái trên
     }
 
     return `

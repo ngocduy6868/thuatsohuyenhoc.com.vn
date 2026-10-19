@@ -421,7 +421,6 @@ function render12Palaces(userData) {
     }
     if (hasBadgeAtSuuTy) {
       if (chiIdx === 1) headerRightCornerStyle = 'padding-right: 20px;';
-      else if (chiIdx === 0) headerLeftCornerStyle = 'padding-left: 20px;';
     }
 
     return `
@@ -779,6 +778,8 @@ function render12Palaces(userData) {
         ${boundaryBadgesHtml}
             </div>
           </div>
+          <!-- THẺ ẢNH THỰC THỂ TRONG SUỐT PHỦ LÊN LIVE BOARD PHỤC VỤ MENU CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
+          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.001; z-index: 30; cursor: pointer; display: block;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
         </div>
       </div>
     </div>
@@ -807,7 +808,12 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-
+  // Tự động kết xuất ảnh ngầm để cấp src cho thẻ img overlay phục vụ menu chuột phải Lưu / Tải ảnh
+  setTimeout(function() {
+    if (typeof window.renderTuViBoardToImage === 'function') {
+      window.renderTuViBoardToImage();
+    }
+  }, 100);
 }
 
 /**
@@ -1095,6 +1101,12 @@ window.renderTuViBoardToImage = async function () {
     canvas.toBlob((blob) => {
       cachedTuViBlob = blob;
     }, 'image/png');
+
+    // Cập nhật src cho thẻ img overlay trên Live Board phục vụ menu chuột phải
+    const overlayImg = document.getElementById('tuvi-board-img');
+    if (overlayImg) {
+      overlayImg.src = cachedTuViDataUrl;
+    }
 
     // Lưu blob và dataURL để phục vụ tải ảnh/sao chép/in ấn, TUYỆT ĐỐI không ghi đè view.innerHTML
     // Giữ nguyên bản Live Board (#tuvi-live-board) phẳng chuẩn, sắc nét 100%, không bị cắt xén hay nhảy giật màn hình
