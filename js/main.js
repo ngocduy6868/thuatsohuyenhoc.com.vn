@@ -1073,18 +1073,38 @@ window.renderTuViBoardToImage = async function () {
             wm.style.transform = 'none';
           }
 
-          // Chuẩn hóa Tuần / Triệt badges
+          // Chuẩn hóa Tuần / Triệt badges để căn giữa 100% trong html2canvas (giống hệt Live Board)
           const bBadges = targetInClone.querySelectorAll('.tuvi-boundary-badge');
           bBadges.forEach(bg => {
-            bg.style.transform = 'none';
-            bg.style.width = '50px';
-            bg.style.height = '24px';
-            bg.style.marginLeft = '-25px';
-            bg.style.marginTop = '-12px';
-            bg.style.display = 'flex';
-            bg.style.alignItems = 'center';
-            bg.style.justifyContent = 'center';
-            bg.style.boxSizing = 'border-box';
+            bg.style.setProperty('transform', 'none', 'important');
+            bg.style.setProperty('width', '50px', 'important');
+            bg.style.setProperty('height', '24px', 'important');
+            bg.style.setProperty('margin-left', '-25px', 'important');
+            bg.style.setProperty('margin-top', '-12px', 'important');
+            bg.style.setProperty('display', 'table', 'important');
+            bg.style.setProperty('background', '#000000', 'important');
+            bg.style.setProperty('background-color', '#000000', 'important');
+            bg.style.setProperty('border-radius', '3px', 'important');
+            bg.style.setProperty('box-sizing', 'border-box', 'important');
+            bg.style.setProperty('padding', '0', 'important');
+            bg.style.setProperty('text-align', 'center', 'important');
+            bg.style.setProperty('line-height', '24px', 'important');
+
+            const span = bg.querySelector('.tuvi-badge-label') || bg.querySelector('span');
+            if (span) {
+              span.style.setProperty('display', 'table-cell', 'important');
+              span.style.setProperty('width', '50px', 'important');
+              span.style.setProperty('height', '24px', 'important');
+              span.style.setProperty('vertical-align', 'middle', 'important');
+              span.style.setProperty('text-align', 'center', 'important');
+              span.style.setProperty('line-height', '24px', 'important');
+              span.style.setProperty('color', '#FFFFFF', 'important');
+              span.style.setProperty('font-size', '12.5px', 'important');
+              span.style.setProperty('font-weight', 'bold', 'important');
+              span.style.setProperty('font-family', '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif', 'important');
+              span.style.setProperty('margin', '0', 'important');
+              span.style.setProperty('padding', '0', 'important');
+            }
           });
 
           // Triệt tiêu hoàn toàn lỗi dãn chữ (letter-spacing) của html2canvas trên Windows
