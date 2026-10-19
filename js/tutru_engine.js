@@ -1487,53 +1487,21 @@ if (typeof window !== "undefined") {
     const fileName = `La_So_Tu_Tru_${hoTen.replace(/\s+/g, '_')}.png`;
 
     let blob = cachedTuTruBlob;
-    if (!blob && cachedTuTruDataUrl) {
-      try {
-        const res = await fetch(cachedTuTruDataUrl);
-        blob = await res.blob();
-        cachedTuTruBlob = blob;
-      } catch (e) {}
+    if (!blob && cachedTuTruDataUrl && typeof window.tuviDataURLtoBlob === 'function') {
+      blob = window.tuviDataURLtoBlob(cachedTuTruDataUrl);
     }
 
-    if (blob) {
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-      // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" trực tiếp vào Album ảnh điện thoại
-      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
-        try {
-          const file = new File([blob], fileName, { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: 'Lá Số Tứ Trụ',
-              text: `Lá Số Tứ Trụ Bát Tự - ${hoTen}`
-            });
-            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
-            return;
-          }
-        } catch (e) {
-          if (e.name === 'AbortError') return;
-        }
-      }
-
-      const url = URL.createObjectURL(blob);
+    if (typeof window.saveImageFileWithPicker === 'function') {
+      await window.saveImageFileWithPicker(blob || cachedTuTruDataUrl, fileName, 'Đã tải thành công ảnh Lá Số Tứ Trụ!');
+    } else {
+      const url = blob ? URL.createObjectURL(blob) : cachedTuTruDataUrl;
       const a = document.createElement('a');
       a.href = url;
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 5000);
-      if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tứ Trụ!');
-      return;
-    }
-
-    if (cachedTuTruDataUrl) {
-      const a = document.createElement('a');
-      a.href = cachedTuTruDataUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      if (blob) setTimeout(() => URL.revokeObjectURL(url), 5000);
       if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tứ Trụ!');
     }
   }

@@ -1083,6 +1083,91 @@ async function getTuViImageBlob() {
 }
 
 /**
+ * Chuyển đổi chuỗi base64 DataURL thành Blob an toàn 100% trên cả giao thức file:/// và https://
+ */
+window.tuviDataURLtoBlob = function (dataurl) {
+  if (!dataurl || typeof dataurl !== 'string') return null;
+  try {
+    const arr = dataurl.split(',');
+    const mimeMatch = arr[0].match(/:(.*?);/);
+    const mime = mimeMatch ? mimeMatch[1] : 'image/png';
+    const bstr = atob(arr[1]);
+    let n = bstr.length;
+    const u8arr = new Uint8Array(n);
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n);
+    }
+    return new Blob([u8arr], { type: mime });
+  } catch (err) {
+    return null;
+  }
+};
+
+/**
+ * Trình tải ảnh chuẩn cho cả 3 mục: Tử Vi, Tứ Trụ, Kinh Dịch
+ * - Trên PC (Desktop): Mở trực tiếp hộp thoại "Lưu như" (Save As) của Windows với tên tệp và định dạng PNG
+ * - Trên Mobile: Mở Share Sheet lưu trực tiếp vào Thư viện / Album ảnh
+ */
+window.saveImageFileWithPicker = async function (blobOrDataUrl, defaultFileName, successMsg) {
+  let blob = (blobOrDataUrl instanceof Blob) ? blobOrDataUrl : window.tuviDataURLtoBlob(blobOrDataUrl);
+  if (!blob) return false;
+
+  const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+
+  // 1. Trên Điện thoại: Mở bảng chia sẻ hệ điều hành để bấm "Lưu hình ảnh" vào Cuộn camera / Album ảnh
+  if (isMobile && navigator.canShare && typeof File !== 'undefined') {
+    try {
+      const file = new File([blob], defaultFileName, { type: 'image/png' });
+      if (navigator.canShare({ files: [file] })) {
+        await navigator.share({
+          files: [file],
+          title: defaultFileName.replace(/\.png$/i, ''),
+          text: defaultFileName.replace(/\.png$/i, '')
+        });
+        if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
+        return true;
+      }
+    } catch (e) {
+      if (e.name === 'AbortError') return true;
+    }
+  }
+
+  // 2. Trên PC: Mở cửa sổ "Lưu như" (Save As) của Windows qua File System Access API
+  if (!isMobile && typeof window.showSaveFilePicker === 'function') {
+    try {
+      const handle = await window.showSaveFilePicker({
+        suggestedName: defaultFileName,
+        types: [{
+          description: 'Tệp PNG',
+          accept: { 'image/png': ['.png'] }
+        }]
+      });
+      const writable = await handle.createWritable();
+      await writable.write(blob);
+      await writable.close();
+      if (typeof showToast === 'function') showToast(successMsg || 'Đã tải thành công ảnh về máy!');
+      return true;
+    } catch (err) {
+      if (err.name === 'AbortError') {
+        return true; // Người dùng chủ động bấm Hủy trên hộp thoại Lưu như
+      }
+    }
+  }
+
+  // 3. Fallback tiêu chuẩn qua thẻ <a> download
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = defaultFileName;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(() => URL.revokeObjectURL(url), 5000);
+  if (typeof showToast === 'function') showToast(successMsg || 'Đã tải thành công ảnh về máy!');
+  return true;
+};
+
+/**
  * Tải ảnh Lá Số Tử Vi về máy tính (PNG) & Hỗ trợ Mobile lưu vào Album ảnh
  */
 window.downloadTuViImage = async function () {
@@ -1094,47 +1179,14 @@ window.downloadTuViImage = async function () {
     if (typeof showToast === 'function') showToast('Đang kết xuất ảnh Lá Số Tử Vi...');
     blob = await getTuViImageBlob();
   }
-
-  if (blob) {
-    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-    // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" vào Cuộn camera
-    if (isMobile && navigator.canShare && typeof File !== 'undefined') {
-      try {
-        const file = new File([blob], fileName, { type: 'image/png' });
-        if (navigator.canShare({ files: [file] })) {
-          await navigator.share({
-            files: [file],
-            title: 'Lá Số Tử Vi',
-            text: `Lá Số Tử Vi - ${name}`
-          });
-          if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
-          return;
-        }
-      } catch (e) {
-        if (e.name === 'AbortError') return;
-      }
-    }
-
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(() => URL.revokeObjectURL(url), 5000);
-    if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
-    return;
+  if (!blob && cachedTuViDataUrl) {
+    blob = window.tuviDataURLtoBlob(cachedTuViDataUrl);
   }
 
-  if (cachedTuViDataUrl) {
-    const a = document.createElement('a');
-    a.href = cachedTuViDataUrl;
-    a.download = fileName;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Lá Số Tử Vi!');
+  if (blob) {
+    await window.saveImageFileWithPicker(blob, fileName, 'Đã tải thành công ảnh Lá Số Tử Vi!');
+  } else if (cachedTuViDataUrl) {
+    await window.saveImageFileWithPicker(cachedTuViDataUrl, fileName, 'Đã tải thành công ảnh Lá Số Tử Vi!');
   }
 };
 
@@ -6135,60 +6187,29 @@ if (typeof window !== "undefined") {
   window.downloadKinhDichImage = async function() {
     if (!cachedKinhDichDataUrl && !cachedKinhDichBlob) {
       if (typeof renderKinhDichBoardToImage === "function") {
-        if (typeof showToast === "function") showToast("Dang tao anh chat luong cao de tai ve...");
+        if (typeof showToast === "function") showToast("Đang tạo ảnh chất lượng cao để tải về...");
         await renderKinhDichBoardToImage();
       }
     }
-    const fileName = `Bang_Xuat_Que_Dich_${cachedKinhDichName || 'Que'}_${Date.now()}.png`;
+    const queName = cachedKinhDichName || 'Que_Dich';
+    const fileName = `Bang_Xuat_Que_Dich_${queName.replace(/\s+/g, '_')}.png`;
 
     let blob = cachedKinhDichBlob;
-    if (!blob && cachedKinhDichDataUrl) {
-      try {
-        const res = await fetch(cachedKinhDichDataUrl);
-        blob = await res.blob();
-        cachedKinhDichBlob = blob;
-      } catch (e) {}
+    if (!blob && cachedKinhDichDataUrl && typeof window.tuviDataURLtoBlob === 'function') {
+      blob = window.tuviDataURLtoBlob(cachedKinhDichDataUrl);
     }
 
-    if (blob) {
-      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-      // Trên điện thoại: Nếu hỗ trợ Web Share API với file thì mở bảng chia sẻ để bấm "Lưu hình ảnh" trực tiếp vào Album ảnh điện thoại
-      if (isMobile && navigator.canShare && typeof File !== 'undefined') {
-        try {
-          const file = new File([blob], fileName, { type: 'image/png' });
-          if (navigator.canShare({ files: [file] })) {
-            await navigator.share({
-              files: [file],
-              title: 'Bản Đồ Quẻ Dịch',
-              text: 'Bản Đồ Quẻ Dịch Chuẩn Truyền Thống'
-            });
-            if (typeof showToast === 'function') showToast('Đã mở bảng lưu ảnh vào Album ảnh!');
-            return;
-          }
-        } catch (e) {
-          if (e.name === 'AbortError') return;
-        }
-      }
-
-      const url = URL.createObjectURL(blob);
+    if (typeof window.saveImageFileWithPicker === 'function') {
+      await window.saveImageFileWithPicker(blob || cachedKinhDichDataUrl, fileName, 'Đã tải thành công ảnh Quẻ Dịch!');
+    } else {
+      const url = blob ? URL.createObjectURL(blob) : cachedKinhDichDataUrl;
       const a = document.createElement('a');
       a.href = url;
       a.download = fileName;
       document.body.appendChild(a);
       a.click();
       document.body.removeChild(a);
-      setTimeout(() => URL.revokeObjectURL(url), 5000);
-      if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Quẻ Dịch!');
-      return;
-    }
-
-    if (cachedKinhDichDataUrl) {
-      const a = document.createElement('a');
-      a.href = cachedKinhDichDataUrl;
-      a.download = fileName;
-      document.body.appendChild(a);
-      a.click();
-      document.body.removeChild(a);
+      if (blob) setTimeout(() => URL.revokeObjectURL(url), 5000);
       if (typeof showToast === 'function') showToast('Đã tải thành công ảnh Quẻ Dịch!');
     }
   };
