@@ -789,11 +789,22 @@ function render12Palaces(userData) {
   const liveBoardEl = document.getElementById('tuvi-live-board');
   if (stagingEl && liveBoardEl) {
     stagingEl.innerHTML = liveBoardEl.outerHTML;
+    const stagingBoard = stagingEl.firstElementChild;
+    if (stagingBoard) {
+      stagingBoard.id = 'tuvi-staging-board';
+      stagingBoard.style.position = 'static';
+      stagingBoard.style.transform = 'none';
+      stagingBoard.style.width = '832px';
+      stagingBoard.style.minWidth = '832px';
+      stagingBoard.style.maxWidth = '832px';
+      stagingBoard.style.margin = '0 auto';
+    }
   }
 
   if (typeof window.fitTuViModalLiveBoard === "function") {
     window.fitTuViModalLiveBoard();
     requestAnimationFrame(function() { window.fitTuViModalLiveBoard(); });
+    setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
   if (typeof window.renderTuViBoardToImage === 'function') {
@@ -935,8 +946,9 @@ if (typeof window !== "undefined") {
 
 window.renderTuViBoardToImage = async function () {
   const view = document.getElementById('tuvi-image-view');
-  const liveBoard = document.getElementById("tuvi-live-board");
-  if (!view || !liveBoard) return;
+  const staging = document.getElementById('tuvi-render-staging');
+  const captureTarget = (staging && (staging.querySelector('#tuvi-staging-board') || staging.firstElementChild)) || document.getElementById("tuvi-live-board");
+  if (!view || !captureTarget) return;
 
   const fallbackToLiveBoard = () => {
     if (typeof window.fitTuViModalLiveBoard === "function") {
@@ -955,7 +967,7 @@ window.renderTuViBoardToImage = async function () {
     }
     await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-    const canvas = await html2canvas(liveBoard, {
+    const canvas = await html2canvas(captureTarget, {
       scale: 2,
       useCORS: true,
       backgroundColor: '#FFFFFF',
@@ -977,7 +989,30 @@ window.renderTuViBoardToImage = async function () {
           clonedDoc.documentElement.style.zoom = '1';
           clonedDoc.documentElement.style.transform = 'none';
         }
-        const lb = clonedDoc.getElementById('tuvi-live-board');
+        const st = clonedDoc.getElementById('tuvi-render-staging');
+        if (st) {
+          st.style.position = 'static';
+          st.style.left = '0';
+          st.style.top = '0';
+          st.style.opacity = '1';
+          st.style.width = '832px';
+          st.style.maxWidth = '832px';
+          st.style.minWidth = '832px';
+          st.style.overflow = 'visible';
+          st.style.display = 'block';
+        }
+        const sInner = clonedDoc.getElementById('tuvi-scaler-inner');
+        if (sInner) {
+          sInner.style.width = '832px';
+          sInner.style.maxWidth = '832px';
+          sInner.style.minWidth = '832px';
+          sInner.style.overflow = 'visible';
+        }
+        const sBox = clonedDoc.getElementById('tuvi-scaler-box');
+        if (sBox) {
+          sBox.style.overflow = 'visible';
+        }
+        const lb = clonedDoc.getElementById('tuvi-staging-board') || clonedDoc.getElementById('tuvi-live-board');
         if (lb) {
           lb.style.transform = 'none';
           lb.style.position = 'static';
@@ -989,6 +1024,7 @@ window.renderTuViBoardToImage = async function () {
           lb.style.maxWidth = '832px';
           lb.style.boxSizing = 'border-box';
           lb.style.opacity = '1';
+          lb.style.overflow = 'visible';
         }
         const b = clonedDoc.querySelector('.tuvi-board');
         if (b) {
@@ -1025,7 +1061,7 @@ window.renderTuViBoardToImage = async function () {
     // Chuyển giao hiển thị sang thẻ ảnh chuẩn nét cao (chuẩn 100% như bên Tứ Trụ và Kinh Dịch):
     // Cho phép chuột phải trên PC hoặc chạm giữ trên Mobile đều lập tức ra menu Lưu & Sao chép hình ảnh bản đồ lá số
     if (view) {
-      view.innerHTML = `<img id="tuvi-board-img" src="${cachedTuViDataUrl}" alt="Bản Đồ Lá Số Tử Vi" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Click chuột phải để 'Lưu hình ảnh thành...' hoặc chạm giữ để 'Lưu vào Album Ảnh')" style="cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();">`;
+      view.innerHTML = `<img id="tuvi-board-img" src="${cachedTuViDataUrl}" alt="Bản Đồ Lá Số Tử Vi" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)" style="cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();">`;
     }
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
