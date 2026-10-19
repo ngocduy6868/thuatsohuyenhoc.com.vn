@@ -2167,7 +2167,7 @@ ul {
 
 .tuvi-cell {
   border: 0.7px solid #111111;
-  padding: 21px 3px 12px 3px;
+  padding: 20px 3px 12px 3px !important;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
