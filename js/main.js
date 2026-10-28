@@ -370,13 +370,13 @@ function render12Palaces(userData) {
 
     let displayPalaceName = palaceName;
     if (isThan) {
-      if (palaceName === 'TÀI BẠCH') displayPalaceName = 'TÀI &lt;THÂN&gt;';
-      else if (palaceName === 'PHU THÊ') displayPalaceName = 'THÊ &lt;THÂN&gt;';
-      else if (palaceName === 'QUAN LỘC') displayPalaceName = 'QUAN &lt;THÂN&gt;';
-      else if (palaceName === 'PHÚC ĐỨC') displayPalaceName = 'PHÚC &lt;THÂN&gt;';
-      else if (palaceName === 'THIÊN DI') displayPalaceName = 'DI &lt;THÂN&gt;';
-      else if (palaceName === 'MỆNH') displayPalaceName = 'MỆNH &lt;THÂN&gt;';
-      else displayPalaceName = `${palaceName} &lt;THÂN&gt;`;
+      if (palaceName === 'TÀI BẠCH') displayPalaceName = 'TÀI&lt;THÂN&gt;';
+      else if (palaceName === 'PHU THÊ') displayPalaceName = 'THÊ&lt;THÂN&gt;';
+      else if (palaceName === 'QUAN LỘC') displayPalaceName = 'QUAN&lt;THÂN&gt;';
+      else if (palaceName === 'PHÚC ĐỨC') displayPalaceName = 'PHÚC&lt;THÂN&gt;';
+      else if (palaceName === 'THIÊN DI') displayPalaceName = 'DI&lt;THÂN&gt;';
+      else if (palaceName === 'MỆNH') displayPalaceName = 'MỆNH&lt;THÂN&gt;';
+      else displayPalaceName = `${palaceName}&lt;THÂN&gt;`;
     }
 
     const isTuanOrTrietStar = (s) => {

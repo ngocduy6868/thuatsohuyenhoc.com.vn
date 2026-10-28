@@ -960,13 +960,13 @@ const TuViEngine = (function () {
       // Chuẩn hóa tên cung khi an Cung Thân theo từng giờ sinh
       let palaceDisplayName = palaceName;
       if (isThan) {
-        if (palaceName === 'PHÚC ĐỨC') palaceDisplayName = 'PHÚC <THÂN>';
-        else if (palaceName === 'QUAN LỘC') palaceDisplayName = 'QUAN <THÂN>';
-        else if (palaceName === 'TÀI BẠCH') palaceDisplayName = 'TÀI <THÂN>';
-        else if (palaceName === 'THIÊN DI') palaceDisplayName = 'DI <THÂN>';
-        else if (palaceName === 'PHU THÊ') palaceDisplayName = (gender === 'Nữ' ? 'PHU' : 'THÊ') + ' <THÂN>';
-        else if (palaceName === 'MỆNH') palaceDisplayName = 'MỆNH <THÂN>';
-        else palaceDisplayName = `${palaceName} <THÂN>`;
+        if (palaceName === 'PHÚC ĐỨC') palaceDisplayName = 'PHÚC<THÂN>';
+        else if (palaceName === 'QUAN LỘC') palaceDisplayName = 'QUAN<THÂN>';
+        else if (palaceName === 'TÀI BẠCH') palaceDisplayName = 'TÀI<THÂN>';
+        else if (palaceName === 'THIÊN DI') palaceDisplayName = 'DI<THÂN>';
+        else if (palaceName === 'PHU THÊ') palaceDisplayName = (gender === 'Nữ' ? 'PHU' : 'THÊ') + '<THÂN>';
+        else if (palaceName === 'MỆNH') palaceDisplayName = 'MỆNH<THÂN>';
+        else palaceDisplayName = `${palaceName}<THÂN>`;
       }
 
       palacesData[chiIdx] = {

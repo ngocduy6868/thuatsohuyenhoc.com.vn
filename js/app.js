@@ -369,16 +369,16 @@ function render12Palaces(userData) {
     const cleanCanChiShort = (canChiShort || '').replace(/Tý/g, 'Tí');
     const cleanTieuHanChi = (tieuHanChi || chiName || '').replace(/Tý/g, 'Tí');
 
-    // Tên cung: Luôn in đậm màu đen #000000 chuẩn như lá số mẫu (kể cả MỆNH và THÊ <THÂN>, TÀI <THÂN>)
+    // Tên cung: Luôn in đậm màu đen #000000 chuẩn như lá số mẫu (kể cả MỆNH và THÊ<THÂN>, TÀI<THÂN>)
     let displayPalaceName = palaceName;
     if (isThan) {
-      if (palaceName === 'TÀI BẠCH') displayPalaceName = 'TÀI &lt;THÂN&gt;';
-      else if (palaceName === 'PHU THÊ') displayPalaceName = 'THÊ &lt;THÂN&gt;';
-      else if (palaceName === 'QUAN LỘC') displayPalaceName = 'QUAN &lt;THÂN&gt;';
-      else if (palaceName === 'PHÚC ĐỨC') displayPalaceName = 'PHÚC &lt;THÂN&gt;';
-      else if (palaceName === 'THIÊN DI') displayPalaceName = 'DI &lt;THÂN&gt;';
-      else if (palaceName === 'MỆNH') displayPalaceName = 'MỆNH &lt;THÂN&gt;';
-      else displayPalaceName = `${palaceName} &lt;THÂN&gt;`;
+      if (palaceName === 'TÀI BẠCH') displayPalaceName = 'TÀI&lt;THÂN&gt;';
+      else if (palaceName === 'PHU THÊ') displayPalaceName = 'THÊ&lt;THÂN&gt;';
+      else if (palaceName === 'QUAN LỘC') displayPalaceName = 'QUAN&lt;THÂN&gt;';
+      else if (palaceName === 'PHÚC ĐỨC') displayPalaceName = 'PHÚC&lt;THÂN&gt;';
+      else if (palaceName === 'THIÊN DI') displayPalaceName = 'DI&lt;THÂN&gt;';
+      else if (palaceName === 'MỆNH') displayPalaceName = 'MỆNH&lt;THÂN&gt;';
+      else displayPalaceName = `${palaceName}&lt;THÂN&gt;`;
     }
 
     // Không render "Tuần" và "Triệt" như một sao thông thường trong nội dung ô cung
