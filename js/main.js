@@ -986,7 +986,7 @@ window.renderTuViBoardToImage = async function () {
     const canvas = await html2canvas(captureTarget, {
       scale: 2,
       useCORS: true,
-      backgroundColor: '#FFFFFF',
+      backgroundColor: '#F5F2EB',
       logging: false,
       scrollX: 0,
       scrollY: 0,
@@ -1006,7 +1006,7 @@ window.renderTuViBoardToImage = async function () {
           clonedDoc.body.innerHTML = '';
           clonedDoc.body.style.margin = '0';
           clonedDoc.body.style.padding = '0';
-          clonedDoc.body.style.background = '#FFFFFF';
+          clonedDoc.body.style.background = '#F5F2EB';
           clonedDoc.body.style.width = '832px';
           clonedDoc.body.style.minWidth = '832px';
           clonedDoc.body.style.maxWidth = '832px';
