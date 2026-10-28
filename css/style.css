@@ -2227,15 +2227,12 @@ ul {
 
 .star-main-bold {
   font-family: 'Noto Serif', serif;
-  font-size: 0.94rem !important;
+  font-size: 17px !important;
   font-weight: 850 !important;
   display: block;
   line-height: 1.25;
   letter-spacing: 0.01em;
   white-space: nowrap !important;
-  text-align: center !important;
-  width: 100%;
-  margin: 0 auto;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -2243,7 +2240,6 @@ ul {
 .tuvi-cell .star-main-bold {
   white-space: nowrap !important;
   letter-spacing: -0.2px;
-  text-align: center;
 }
 
 .tuvi-cell .tuvi-phu-list {
