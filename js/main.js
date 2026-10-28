@@ -425,12 +425,10 @@ function render12Palaces(userData) {
 
     return `
       <div class="tuvi-cell" style="grid-column: ${colStart}; grid-row: ${rowStart};">
-        <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding-bottom: 2px;">
-          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 850; font-size: 12px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
-          <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; width: 100%; text-align: center;">
-            <span style="font-weight: 850; color: #111111; font-size: ${isThan ? '13px' : '14px'}; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
-          </div>
-          <span style="color: #111111; font-weight: 850; font-size: 14px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
+        <div style="display: grid; grid-template-columns: 1fr auto 1fr; align-items: baseline; width: 100%; padding-bottom: 2px; line-height: 1.2;">
+          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 850; font-size: 12px; white-space: nowrap; justify-self: start; text-align: left; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
+          <span style="font-weight: 850; color: #111111; font-size: ${isThan ? '13px' : '14px'}; letter-spacing: 0.2px; white-space: nowrap; justify-self: center; text-align: center; z-index: 2;">${displayPalaceName}</span>
+          <span style="color: #111111; font-weight: 850; font-size: 14px; white-space: nowrap; justify-self: end; text-align: right; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
         </div>
 
         <div style="text-align: center; padding: 4px 0; min-height: 30px; display: flex; flex-direction: column; align-items: center; justify-content: center;">
@@ -5837,11 +5835,11 @@ function initEventHandlers() {
       modalView.innerHTML = `
         <div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openKinhDichImageZoomModal==='function')window.openKinhDichImageZoomModal();" title="Bản Đồ Quẻ Dịch Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
           <div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFFFF; margin: 0; cursor: pointer;">
+            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer;">
               <style>
                 #kinhdich-live-card .dq-download-toolbar { display: none !important; }
                 #kinhdich-live-card .dq-cards-row { flex-direction: row !important; }
-                #kinhdich-live-card .dichquai-export-board { width: 1150px !important; min-width: 1150px !important; max-width: 1150px !important; margin: 0 !important; box-shadow: none !important; background-color: #FFFFFF !important; }
+                #kinhdich-live-card .dichquai-export-board { width: 1150px !important; min-width: 1150px !important; max-width: 1150px !important; margin: 0 !important; box-shadow: none !important; background-color: #F5F2EB !important; }
               </style>
               ${html}
             </div>
@@ -6041,7 +6039,7 @@ if (typeof window !== "undefined") {
       const canvas = await html2canvas(sheet, {
         scale: 3,
         useCORS: true,
-        backgroundColor: '#FFFFFF',
+        backgroundColor: '#F5F2EB',
         scrollX: 0,
         scrollY: 0,
         x: 0,
@@ -6068,7 +6066,7 @@ if (typeof window !== "undefined") {
             s.style.opacity = '1';
             s.style.width = '1150px';
             s.style.maxWidth = '1150px';
-            s.style.backgroundColor = '#FFFFFF';
+            s.style.backgroundColor = '#F5F2EB';
             s.style.backgroundImage = 'none';
             s.style.margin = '0';
             s.style.padding = '0';

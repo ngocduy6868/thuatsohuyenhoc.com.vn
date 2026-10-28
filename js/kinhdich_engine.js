@@ -1002,7 +1002,7 @@
           </div>
         </div>
 
-        <div id="trang-dich-quai-card" class="dichquai-export-board select-text" style="background-color: #FFFFFF !important; background-image: none !important;">
+        <div id="trang-dich-quai-card" class="dichquai-export-board select-text" style="background-color: #F5F2EB !important; background-image: none !important;">
           <!-- 1. TIÊU ĐỀ & LOGO ĐỒ BẢN -->
           <div class="dq-header">
             <div class="dq-header-logo-wrap">

@@ -1187,7 +1187,7 @@
       tutruView.innerHTML = `
         <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
           <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #FFFDF9; margin: 0; cursor: pointer;">
+            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer;">
               ${stagingCard.innerHTML}
             </div>
           </div>
@@ -1386,7 +1386,7 @@ if (typeof window !== "undefined") {
       const canvas = await html2canvas(sheet, {
         scale: 2,
         useCORS: true,
-        backgroundColor: '#FFFDF9',
+        backgroundColor: '#F5F2EB',
         logging: false,
         scrollX: 0,
         scrollY: 0,

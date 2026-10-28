@@ -434,12 +434,10 @@ function render12Palaces(userData) {
 
     return `
       <div class="tuvi-cell col-start-${colStart} row-start-${rowStart} relative">
-        <div class="relative flex items-center justify-between font-sans pb-0.5" style="line-height: 1;">
-          <span class="tuvi-canchi font-bold z-10" style="color: ${canChiColor}; font-size: 12px; ${headerLeftCornerStyle}">${cleanCanChiShort}</span>
-          <div class="absolute inset-0 flex items-center justify-center pointer-events-none" style="text-align: center;">
-            <span class="font-bold text-[#000000] tracking-wide inline-block uppercase font-sans" style="font-size: ${isThan ? '13px' : '14px'};">${displayPalaceName}</span>
-          </div>
-          <span class="text-[#000000] font-bold text-[14px] z-10 font-sans" style="${headerRightCornerStyle}">${daiHanAge}</span>
+        <div class="grid grid-cols-[1fr_auto_1fr] items-baseline w-full font-sans pb-0.5" style="line-height: 1.2;">
+          <span class="tuvi-canchi font-bold whitespace-nowrap justify-self-start text-left z-10" style="color: ${canChiColor}; font-size: 12px; ${headerLeftCornerStyle}">${cleanCanChiShort}</span>
+          <span class="font-bold text-[#000000] whitespace-nowrap justify-self-center text-center uppercase font-sans z-10" style="font-size: ${isThan ? '13px' : '14px'}; letter-spacing: 0.2px;">${displayPalaceName}</span>
+          <span class="text-[#000000] font-bold text-[14px] whitespace-nowrap justify-self-end text-right z-10 font-sans" style="${headerRightCornerStyle}">${daiHanAge}</span>
         </div>
 
         <div class="text-center py-0.5 min-h-[28px] flex flex-col items-center justify-center">
