@@ -426,9 +426,9 @@ function render12Palaces(userData) {
     return `
       <div class="tuvi-cell" style="grid-column: ${colStart}; grid-row: ${rowStart};">
         <div style="position: relative; display: flex; align-items: center; justify-content: space-between; padding-bottom: 2px;">
-          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 850; font-size: 13px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
+          <span class="tuvi-canchi" style="color: ${canChiColor}; font-weight: 850; font-size: 12px; z-index: 2; ${headerLeftCornerStyle}">${canChiShort}</span>
           <div style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; pointer-events: none; width: 100%; text-align: center;">
-            <span style="font-weight: 850; color: #111111; font-size: 14.5px; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
+            <span style="font-weight: 850; color: #111111; font-size: ${isThan ? '13px' : '14px'}; letter-spacing: 0.2px; display: inline-block;">${displayPalaceName}</span>
           </div>
           <span style="color: #111111; font-weight: 850; font-size: 14px; z-index: 2; ${headerRightCornerStyle}">${daiHanAge}</span>
         </div>
