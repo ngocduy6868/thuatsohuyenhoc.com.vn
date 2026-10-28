@@ -616,7 +616,7 @@ function render12Palaces(userData) {
     <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
       <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;">
         <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #FFFFFF; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer;">
+          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #F5F2EB; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer;">
       <div class="tuvi-board" style="position: relative;">
         <!-- ROW 1 -->
         ${renderPalaceCell(palaces[5], 1, 1)}

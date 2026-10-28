@@ -2101,7 +2101,7 @@ ul {
 }
 
 .tuvi-sheet-wrapper {
-  background: #FFFFFF;
+  background: #F5F2EB;
   padding: 22px 16px;
   display: inline-block;
   box-sizing: border-box;
@@ -2134,7 +2134,7 @@ ul {
   min-height: 0;
   min-width: 0;
   object-fit: contain;
-  background: #FFFFFF;
+  background: #F5F2EB;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
   border-radius: 2px;
   margin: auto;
@@ -2157,7 +2157,7 @@ ul {
   grid-template-columns: repeat(4, minmax(0, 1fr));
   grid-template-rows: repeat(4, minmax(130px, 1fr));
   border: 0.7px solid #111111;
-  background-color: #FFFFFF;
+  background-color: #F5F2EB;
   position: relative;
   user-select: text;
   box-shadow: none;
@@ -2173,21 +2173,21 @@ ul {
   justify-content: space-between;
   font-size: 15px;
   line-height: 1.25;
-  background-color: #FFFFFF;
+  background-color: #F5F2EB;
   position: relative;
   min-height: 132px;
   box-sizing: border-box;
 }
 
 .tuvi-cell:hover {
-  background-color: #FAF9F5;
+  background-color: #ECE8DD;
 }
 
 .tuvi-thienban {
   grid-column: 2 / span 2;
   grid-row: 2 / span 2;
   border: 0.7px solid #111111;
-  background-color: #FFFFFF;
+  background-color: #F5F2EB;
   padding: 10px 14px;
   position: relative;
   display: flex;
