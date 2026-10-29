@@ -187,7 +187,7 @@
         var ua = navigator.userAgent || '';
         var isRealMobile = /Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(ua) && !/Windows NT|Macintosh|X11/i.test(ua);
 
-        if (clientWidth > 0 && clientWidth <= 900) {
+        if (isRealMobile && clientWidth > 0 && clientWidth <= 900) {
           // CHẾ ĐỘ MOBILE ĐIỆN THOẠI: Kích hoạt giao diện Responsive CSS native, không ép zoom PC
           html.style.overflowX = 'hidden';
           body.style.overflowX = 'hidden';
@@ -199,7 +199,7 @@
           for (var i = 0; i < overlays.length; i++) {
             overlays[i].style.zoom = '1';
           }
-        } else if (clientWidth > 900 && clientWidth < baseWidth) {
+        } else if (clientWidth < baseWidth) {
           // CHẾ ĐỘ PC / MÁY TÍNH THU NHỎ CỬA SỔ: Giữ nguyên 100% tỷ lệ chuẩn PC
           var scale = clientWidth / baseWidth;
           html.style.overflowX = 'hidden';
@@ -3711,7 +3711,9 @@
               var requiredHeight = diff / bodyZoom;
 
               if (requiredHeight > 200) {
-                chuyenmuc.style.height = requiredHeight.toFixed(1) + "px";
+                var naturalHeight = chuyenmuc.scrollHeight;
+                var finalH = Math.max(requiredHeight, naturalHeight);
+                chuyenmuc.style.height = finalH.toFixed(1) + "px";
                 chuyenmuc.style.boxSizing = "border-box";
                 void chuyenmuc.offsetHeight;
 
@@ -3719,7 +3721,7 @@
                 var tries = 0;
                 while (tries < 5) {
                   var err = lastWidget.getBoundingClientRect().bottom - chuyenmuc.getBoundingClientRect().bottom;
-                  if (Math.abs(err) < 0.5) break;
+                  if (Math.abs(err) < 0.5 || err < 0) break;
                   var currentH = parseFloat(chuyenmuc.style.height) || chuyenmuc.offsetHeight;
                   chuyenmuc.style.height = (currentH + (err / bodyZoom)).toFixed(1) + "px";
                   void chuyenmuc.offsetHeight;
@@ -3737,14 +3739,16 @@
               var requiredRowHeight = diffRow / bodyZoom;
 
               if (requiredRowHeight > 30) {
-                bottomRow.style.height = requiredRowHeight.toFixed(1) + "px";
+                var naturalRowHeight = bottomRow.scrollHeight;
+                var finalRowH = Math.max(requiredRowHeight, naturalRowHeight);
+                bottomRow.style.height = finalRowH.toFixed(1) + "px";
                 void bottomRow.offsetHeight;
 
                 // Vòng lặp vi chỉnh tự động hội tụ sai số về 0
                 var triesRow = 0;
                 while (triesRow < 4) {
                   var errRow = lastWidget.getBoundingClientRect().bottom - bottomRow.getBoundingClientRect().bottom;
-                  if (Math.abs(errRow) < 0.5) break;
+                  if (Math.abs(errRow) < 0.5 || errRow < 0) break;
                   var currentHRow = parseFloat(bottomRow.style.height) || bottomRow.offsetHeight;
                   bottomRow.style.height = (currentHRow + (errRow / bodyZoom)).toFixed(1) + "px";
                   void bottomRow.offsetHeight;
@@ -3820,14 +3824,16 @@
 
             var requiredHeight = diff / bodyZoom;
             if (requiredHeight > 200) {
-              lich.style.height = requiredHeight.toFixed(1) + "px";
+              var naturalHeight = lich.scrollHeight;
+              var finalH = Math.max(requiredHeight, naturalHeight);
+              lich.style.height = finalH.toFixed(1) + "px";
               void lich.offsetHeight;
 
               // Vòng lặp vi chỉnh tự động hội tụ sai số về 0
               var tries = 0;
               while (tries < 4) {
                 var err = lastWidget.getBoundingClientRect().bottom - lich.getBoundingClientRect().bottom;
-                if (Math.abs(err) < 0.5) break;
+                if (Math.abs(err) < 0.5 || err < 0) break;
                 var currentH = parseFloat(lich.style.height) || lich.offsetHeight;
                 lich.style.height = (currentH + (err / bodyZoom)).toFixed(1) + "px";
                 void lich.offsetHeight;
