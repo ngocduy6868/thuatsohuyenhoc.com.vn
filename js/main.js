@@ -602,7 +602,7 @@ function render12Palaces(userData) {
     <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
       <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;">
         <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #F5F2EB; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer;">
+          <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #F5F2EB; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer; user-select: none; -webkit-user-select: none;">
       <div class="tuvi-board" style="position: relative;">
         <!-- ROW 1 -->
         ${renderPalaceCell(palaces[5], 1, 1)}
@@ -765,7 +765,7 @@ function render12Palaces(userData) {
             </div>
           </div>
           <!-- THẺ ẢNH THỰC THỂ TRONG SUỐT PHỦ LÊN LIVE BOARD PHỤC VỤ MENU CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
-          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.001; z-index: 30; cursor: pointer; display: block;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
+          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
         </div>
       </div>
     </div>
@@ -794,12 +794,12 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-  // Tự động kết xuất ảnh ngầm siêu tốc để cấp src cho thẻ img overlay phục vụ menu chuột phải / chạm giữ Lưu / Tải ảnh
+  // Tự động kết xuất ảnh ngầm siêu tốc (50ms) để cấp src cho thẻ img overlay phục vụ menu chuột phải / chạm giữ Lưu / Tải ảnh
   setTimeout(function() {
     if (typeof window.renderTuViBoardToImage === 'function') {
       window.renderTuViBoardToImage();
     }
-  }, 120);
+  }, 50);
 }
 
 /**
@@ -965,12 +965,10 @@ window.renderTuViBoardToImage = async function () {
     return;
   }
 
-  try {
-    if (document.fonts && document.fonts.ready) {
-      await Promise.race([document.fonts.ready, new Promise(function(r) { setTimeout(r, 200); })]);
-    }
-    const isMobileTuViRender = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-    const tuviScale = isMobileTuViRender ? 1.8 : 2;
+    const uaTuVi = navigator.userAgent || '';
+    const isIOSTuVi = /iPad|iPhone|iPod/.test(uaTuVi) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+    const isAndroidTuVi = /Android/i.test(uaTuVi);
+    const tuviScale = isIOSTuVi ? 1.5 : (isAndroidTuVi || window.innerWidth <= 768 ? 1.4 : 2);
 
     const canvas = await html2canvas(captureTarget, {
       scale: tuviScale,
@@ -5824,7 +5822,7 @@ function initEventHandlers() {
       modalView.innerHTML = `
         <div id="kinhdich-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openKinhDichImageZoomModal==='function')window.openKinhDichImageZoomModal();" title="Bản Đồ Quẻ Dịch Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
           <div id="kinhdich-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer;">
+            <div id="kinhdich-live-card" style="width: 1150px; min-width: 1150px; max-width: 1150px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer; user-select: none; -webkit-user-select: none;">
               <style>
                 #kinhdich-live-card .dq-download-toolbar { display: none !important; }
                 #kinhdich-live-card .dq-cards-row { flex-direction: row !important; }
@@ -5832,6 +5830,8 @@ function initEventHandlers() {
               </style>
               ${html}
             </div>
+            <!-- THẺ ẢNH THỰC THỂ PHỦ LÊN LIVE BOARD PHỤC VỤ CHẠM GIỮ / CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
+            <img id="kinhdich-board-img" class="tuvi-board-img" src="${cachedKinhDichDataUrl || ''}" alt="Bản đồ Quẻ Dịch" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Quẻ Dịch Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chạm giữ để Lưu / Tải ảnh)" onclick="if(typeof window.openKinhDichImageZoomModal==='function')window.openKinhDichImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedKinhDichDataUrl){this.src=cachedKinhDichDataUrl;}else if(typeof renderKinhDichBoardToImage==='function'){renderKinhDichBoardToImage();}}" />
           </div>
         </div>
       `;
@@ -5868,12 +5868,12 @@ function initEventHandlers() {
       }
     }
 
-    // Tự động kết xuất ảnh ngầm siêu tốc để cấp src cho thẻ img phục vụ chạm giữ / menu chuột phải Lưu / Tải ảnh
+    // Tự động kết xuất ảnh ngầm siêu tốc (50ms) để cấp src cho thẻ img phục vụ chạm giữ / menu chuột phải Lưu / Tải ảnh
     setTimeout(function() {
       if (typeof renderKinhDichBoardToImage === 'function') {
         renderKinhDichBoardToImage();
       }
-    }, 120);
+    }, 50);
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search
@@ -6017,18 +6017,13 @@ if (typeof window !== "undefined") {
     }
 
     try {
-      // Đợi font chữ và layout render ổn định
-      if (document.fonts && document.fonts.ready) {
-        await document.fonts.ready;
-      }
-      await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
-      await new Promise(r => setTimeout(r, 100));
-
       const targetWidth = 1150;
       const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1200;
 
-      const isMobileKDRender = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-      const canvasScale = isMobileKDRender ? 1.8 : 3;
+      const uaKD = navigator.userAgent || '';
+      const isIOSKD = /iPad|iPhone|iPod/.test(uaKD) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isAndroidKD = /Android/i.test(uaKD);
+      const canvasScale = isIOSKD ? 1.4 : (isAndroidKD || window.innerWidth <= 768 ? 1.3 : 3);
 
       const canvas = await html2canvas(sheet, {
         scale: canvasScale,

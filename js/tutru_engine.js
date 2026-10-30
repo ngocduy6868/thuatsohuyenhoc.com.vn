@@ -1187,9 +1187,11 @@
       tutruView.innerHTML = `
         <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
           <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
-            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer;">
+            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer; user-select: none; -webkit-user-select: none;">
               ${stagingCard.innerHTML}
             </div>
+            <!-- THẺ ẢNH THỰC THỂ PHỦ LÊN LIVE BOARD PHỤC VỤ CHẠM GIỮ / CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
+            <img id="tutru-board-img" class="tuvi-board-img" src="${cachedTuTruDataUrl || ''}" alt="Bản Đồ Lá Số Tứ Trụ" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chạm giữ để Lưu / Tải ảnh)" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuTruDataUrl){this.src=cachedTuTruDataUrl;}else if(typeof window.renderTuTruBoardToImage==='function'){window.renderTuTruBoardToImage();}}" />
           </div>
         </div>
       `;
@@ -1205,12 +1207,12 @@
       }
     }
 
-    // Tự động kết xuất đồ bản thành ảnh bằng html2canvas siêu tốc đưa vào #tutru-modal phục vụ chạm giữ lưu ảnh
+    // Tự động kết xuất đồ bản thành ảnh bằng html2canvas siêu tốc (50ms) đưa vào #tutru-modal phục vụ chạm giữ lưu ảnh
     setTimeout(function() {
       if (typeof window.renderTuTruBoardToImage === 'function') {
         window.renderTuTruBoardToImage();
       }
-    }, 120);
+    }, 50);
   }
 
   /**
@@ -1377,16 +1379,13 @@ if (typeof window !== "undefined") {
     }
 
     try {
-      if (document.fonts && document.fonts.ready) {
-        await document.fonts.ready;
-      }
-      await new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r)));
-
       const targetWidth = 1060;
       const targetHeight = sheet.scrollHeight || sheet.offsetHeight || 1450;
 
-      const isMobileTuTruRender = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-      const canvasScale = isMobileTuTruRender ? 1.5 : 2;
+      const uaTT = navigator.userAgent || '';
+      const isIOSTT = /iPad|iPhone|iPod/.test(uaTT) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+      const isAndroidTT = /Android/i.test(uaTT);
+      const canvasScale = isIOSTT ? 1.4 : (isAndroidTT || window.innerWidth <= 768 ? 1.25 : 2);
 
       const canvas = await html2canvas(sheet, {
         scale: canvasScale,
