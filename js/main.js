@@ -794,12 +794,8 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-  // Tự động kết xuất ảnh ngầm siêu tốc (50ms) để cấp src cho thẻ img overlay phục vụ menu chuột phải / chạm giữ Lưu / Tải ảnh
-  setTimeout(function() {
-    if (typeof window.renderTuViBoardToImage === 'function') {
-      window.renderTuViBoardToImage();
-    }
-  }, 50);
+  // Giữ nguyên đồ bản Live Board phẳng chuẩn 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
+  // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
 }
 
 /**
@@ -5869,12 +5865,8 @@ function initEventHandlers() {
       }
     }
 
-    // Tự động kết xuất ảnh ngầm siêu tốc (50ms) để cấp src cho thẻ img phục vụ chạm giữ / menu chuột phải Lưu / Tải ảnh
-    setTimeout(function() {
-      if (typeof renderKinhDichBoardToImage === 'function') {
-        renderKinhDichBoardToImage();
-      }
-    }, 50);
+    // Giữ nguyên đồ bản Quẻ Dịch Live Card 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
+    // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search

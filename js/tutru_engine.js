@@ -1207,12 +1207,8 @@
       }
     }
 
-    // Tự động kết xuất đồ bản thành ảnh bằng html2canvas siêu tốc (50ms) đưa vào #tutru-modal phục vụ chạm giữ lưu ảnh
-    setTimeout(function() {
-      if (typeof window.renderTuTruBoardToImage === 'function') {
-        window.renderTuTruBoardToImage();
-      }
-    }, 50);
+    // Giữ nguyên đồ bản Live Board phẳng chuẩn 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
+    // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
   }
 
   /**
