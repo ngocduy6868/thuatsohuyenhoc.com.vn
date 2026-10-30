@@ -1185,26 +1185,20 @@
     const stagingCard = container.querySelector('.tt-laso-card');
     if (tutruView && stagingCard) {
       tutruView.innerHTML = `
-        <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden;" onclick="if(!(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)||(window.innerWidth<=768))){if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();}" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
-          <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden;">
-            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0;">
+        <div id="tutru-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
+          <div id="tutru-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
+            <div id="tutru-live-board" class="tt-laso-card" style="width: 1060px; min-width: 1060px; max-width: 1060px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; background: #F5F2EB; margin: 0; cursor: pointer;">
               ${stagingCard.innerHTML}
             </div>
           </div>
         </div>
       `;
-      const isMobileTuTruClick = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-      if (!isMobileTuTruClick) {
-        tutruView.style.cursor = 'pointer';
-        tutruView.onclick = function(e) {
-          if (typeof window.openTuTruImageZoomModal === 'function') {
-            window.openTuTruImageZoomModal();
-          }
-        };
-      } else {
-        tutruView.style.cursor = 'default';
-        tutruView.onclick = null;
-      }
+      tutruView.style.cursor = 'pointer';
+      tutruView.onclick = function(e) {
+        if (typeof window.openTuTruImageZoomModal === 'function') {
+          window.openTuTruImageZoomModal();
+        }
+      };
       if (typeof window.fitTuTruModalLiveBoard === 'function') {
         window.fitTuTruModalLiveBoard();
         requestAnimationFrame(function() { window.fitTuTruModalLiveBoard(); });
@@ -1686,11 +1680,10 @@ if (typeof window !== "undefined") {
           modal.classList.add('hidden');
           return;
         }
-        // Nhấn chuột trái trên PC vào lá số Tứ Trụ -> Mở khung ảnh phóng to (Trên Mobile không kích hoạt để vuốt cuộn tự do)
-        const isMobileTuTruClickEvent = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
+        // Nhấn chuột trái trên PC hoặc chạm 1 cái trên Mobile vào lá số Tứ Trụ -> Mở khung ảnh phóng to
         const inTutruBoard = e.target.closest('#tutru-image-view, #tutru-scaler-box, #tutru-scaler-inner, #tutru-live-board, #tutru-board-img, .tt-laso-card');
         const inActionBtn = e.target.closest('button, a, .tuvi-modal-header, .tuvi-modal-footer');
-        if (!isMobileTuTruClickEvent && inTutruBoard && !inActionBtn) {
+        if (inTutruBoard && !inActionBtn) {
           window.openTuTruImageZoomModal();
         }
       }
