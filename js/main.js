@@ -965,6 +965,7 @@ window.renderTuViBoardToImage = async function () {
     return;
   }
 
+  try {
     const uaTuVi = navigator.userAgent || '';
     const isIOSTuVi = /iPad|iPhone|iPod/.test(uaTuVi) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isAndroidTuVi = /Android/i.test(uaTuVi);
