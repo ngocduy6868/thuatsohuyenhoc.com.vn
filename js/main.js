@@ -794,16 +794,12 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-  // Tự động kết xuất ảnh ngầm trên PC để cấp src cho thẻ img overlay phục vụ menu chuột phải Lưu / Tải ảnh
-  // Trên Mobile tuyệt đối KHÔNG chạy ngầm để giữ nguyên tốc độ hiển thị và đóng mở 0 giây
-  const isMobileTuViAuto = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-  if (!isMobileTuViAuto) {
-    setTimeout(function() {
-      if (typeof window.renderTuViBoardToImage === 'function') {
-        window.renderTuViBoardToImage();
-      }
-    }, 400);
-  }
+  // Tự động kết xuất ảnh ngầm siêu tốc để cấp src cho thẻ img overlay phục vụ menu chuột phải / chạm giữ Lưu / Tải ảnh
+  setTimeout(function() {
+    if (typeof window.renderTuViBoardToImage === 'function') {
+      window.renderTuViBoardToImage();
+    }
+  }, 120);
 }
 
 /**
@@ -5872,12 +5868,12 @@ function initEventHandlers() {
       }
     }
 
-    // Kết xuất đồ bản thành ảnh PNG độ nét cao đưa vào Modal
-    // Trên Mobile tuyệt đối KHÔNG chạy ngầm để mở quẻ tức thì 0 giây và tắt mở siêu mượt
-    const isMobileKDAuto = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-    if (!isMobileKDAuto && typeof renderKinhDichBoardToImage === 'function') {
-      setTimeout(function() { renderKinhDichBoardToImage(); }, 400);
-    }
+    // Tự động kết xuất ảnh ngầm siêu tốc để cấp src cho thẻ img phục vụ chạm giữ / menu chuột phải Lưu / Tải ảnh
+    setTimeout(function() {
+      if (typeof renderKinhDichBoardToImage === 'function') {
+        renderKinhDichBoardToImage();
+      }
+    }, 120);
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search

@@ -1205,12 +1205,12 @@
       }
     }
 
-    // Kích hoạt kết xuất đồ bản thành ảnh bằng html2canvas đưa vào #tutru-modal
-    // Trên Mobile tuyệt đối KHÔNG chạy ngầm để hiển thị lá số 0 giây và đóng mở tức thì
-    const isMobileTuTruAuto = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || (window.innerWidth <= 768);
-    if (!isMobileTuTruAuto && typeof window.renderTuTruBoardToImage === 'function') {
-      setTimeout(function() { window.renderTuTruBoardToImage(); }, 400);
-    }
+    // Tự động kết xuất đồ bản thành ảnh bằng html2canvas siêu tốc đưa vào #tutru-modal phục vụ chạm giữ lưu ảnh
+    setTimeout(function() {
+      if (typeof window.renderTuTruBoardToImage === 'function') {
+        window.renderTuTruBoardToImage();
+      }
+    }, 120);
   }
 
   /**
