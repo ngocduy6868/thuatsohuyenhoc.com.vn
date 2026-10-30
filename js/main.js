@@ -406,22 +406,10 @@ function render12Palaces(userData) {
         return `<div class="tuvi-phu-star star-${s.element} ${s.status ? 'font-semibold' : ''}">${s.name}${s.status || ''}</div>`;
       }).join('');
 
-    const hasBadgeAtNgoMui = (Array.isArray(tuanPositions) && tuanPositions.includes(6) && tuanPositions.includes(7)) ||
-                             (Array.isArray(trietPositions) && trietPositions.includes(6) && trietPositions.includes(7));
-    const hasBadgeAtSuuTy = (Array.isArray(tuanPositions) && tuanPositions.includes(0) && tuanPositions.includes(1)) ||
-                            (Array.isArray(trietPositions) && trietPositions.includes(0) && trietPositions.includes(1));
-
     let headerLeftCornerStyle = '';
     let headerRightCornerStyle = '';
     let footerLeftCornerStyle = '';
     let footerRightCornerStyle = '';
-    if (hasBadgeAtNgoMui) {
-      if (chiIdx === 6) footerRightCornerStyle = 'padding-right: 20px;';
-      else if (chiIdx === 7) footerLeftCornerStyle = 'padding-left: 20px;';
-    }
-    if (hasBadgeAtSuuTy) {
-      if (chiIdx === 1) headerRightCornerStyle = 'padding-right: 20px;';
-    }
 
     return `
       <div class="tuvi-cell" style="grid-column: ${colStart}; grid-row: ${rowStart};">

@@ -414,23 +414,10 @@ function render12Palaces(userData) {
         return `<div class="tuvi-phu-star star-${s.element} ${s.status ? 'font-semibold' : ''} whitespace-nowrap">${starName}${s.status || ''}</div>`;
       }).join('');
 
-    // Khoảng cách đệm an toàn tránh nhãn Tuần/Triệt chạm vào chữ ở các cung ranh giới
-    const hasBadgeAtNgoMui = (Array.isArray(tuanPositions) && tuanPositions.includes(6) && tuanPositions.includes(7)) ||
-                             (Array.isArray(trietPositions) && trietPositions.includes(6) && trietPositions.includes(7));
-    const hasBadgeAtSuuTy = (Array.isArray(tuanPositions) && tuanPositions.includes(0) && tuanPositions.includes(1)) ||
-                            (Array.isArray(trietPositions) && trietPositions.includes(0) && trietPositions.includes(1));
-
     let headerLeftCornerStyle = '';
     let headerRightCornerStyle = '';
     let footerLeftCornerStyle = '';
     let footerRightCornerStyle = '';
-    if (hasBadgeAtNgoMui) {
-      if (chiIdx === 6) footerRightCornerStyle = 'padding-right: 20px;'; // Cung Ngọ: tránh góc phải dưới
-      else if (chiIdx === 7) footerLeftCornerStyle = 'padding-left: 20px;';  // Cung Mùi: tránh góc trái dưới
-    }
-    if (hasBadgeAtSuuTy) {
-      if (chiIdx === 1) headerRightCornerStyle = 'padding-right: 20px;'; // Cung Sửu: tránh góc phải trên
-    }
 
     return `
       <div class="tuvi-cell col-start-${colStart} row-start-${rowStart} relative">

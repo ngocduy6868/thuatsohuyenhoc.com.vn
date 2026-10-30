@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="vi"><head>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EKKXRN1DLL"></script>
@@ -99855,23 +99855,10 @@ function renderTuViBoardLive(userData, containerId) {
         return '<div class="tuvi-phu-star star-' + s.element + ' ' + (s.status ? 'font-semibold' : '') + '">' + s.name + (s.status || '') + '</div>';
       }).join('');
 
-    var hasBadgeAtNgoMui = (tuanPositions.indexOf(6) >= 0 && tuanPositions.indexOf(7) >= 0) ||
-                           (trietPositions.indexOf(6) >= 0 && trietPositions.indexOf(7) >= 0);
-    var hasBadgeAtSuuTy = (tuanPositions.indexOf(0) >= 0 && tuanPositions.indexOf(1) >= 0) ||
-                          (trietPositions.indexOf(0) >= 0 && trietPositions.indexOf(1) >= 0);
-
     var headerLeftCornerStyle = '';
     var headerRightCornerStyle = '';
     var footerLeftCornerStyle = '';
     var footerRightCornerStyle = '';
-    if (hasBadgeAtNgoMui) {
-      if (chiIdx === 6) footerRightCornerStyle = 'padding-right: 20px;';
-      else if (chiIdx === 7) footerLeftCornerStyle = 'padding-left: 20px;';
-    }
-    if (hasBadgeAtSuuTy) {
-      if (chiIdx === 1) headerRightCornerStyle = 'padding-right: 20px;';
-      else if (chiIdx === 0) headerLeftCornerStyle = 'padding-left: 20px;';
-    }
 
     return '' +
       '<div class="tuvi-cell" style="grid-column: ' + colStart + '; grid-row: ' + rowStart + ';">' +
