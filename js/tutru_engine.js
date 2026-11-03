@@ -1,4 +1,4 @@
-/**
+﻿/**
  * TUTRU_ENGINE.JS - BỘ CÔNG THỨC LẬP LÁ SỐ TỨ TRỤ (TỬ BÌNH - BÁT TỰ)
  * Chuẩn thuật toán cổ truyền & hệ thống tính toán lyso.vn/lasotutru.php
  * Thiết kế giao diện cắt chuẩn theo sheet "BẢNG XUẤT TỨ TRỤ" (Thiết Kế Trang.xlsx)
@@ -1191,7 +1191,7 @@
               ${stagingCard.innerHTML}
             </div>
             <!-- THẺ ẢNH THỰC THỂ PHỦ LÊN LIVE BOARD PHỤC VỤ CHẠM GIỮ / CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
-            <img id="tutru-board-img" class="tuvi-board-img" src="${cachedTuTruDataUrl || ''}" alt="Bản Đồ Lá Số Tứ Trụ" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chạm giữ để Lưu / Tải ảnh)" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuTruDataUrl){this.src=cachedTuTruDataUrl;}else if(typeof window.renderTuTruBoardToImage==='function'){window.renderTuTruBoardToImage();}}" />
+                        <img id="tutru-board-img" class="tuvi-board-img" src="${cachedTuTruDataUrl || ''}" alt="Bản Đồ Lá Số Tứ Trụ" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: ${cachedTuTruDataUrl ? '1' : '0.01'}; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important; -webkit-user-drag: auto !important;" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();" onmouseenter="if(!this.src || this.src===window.location.href){if(cachedTuTruDataUrl){this.src=cachedTuTruDataUrl;this.style.opacity='1';}else if(typeof window.renderTuTruBoardToImage==='function'){window.renderTuTruBoardToImage();}}" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuTruDataUrl){this.src=cachedTuTruDataUrl;this.style.opacity='1';}else if(typeof window.renderTuTruBoardToImage==='function'){window.renderTuTruBoardToImage();}}" ontouchstart="if(!this.src || this.src===window.location.href){if(cachedTuTruDataUrl){this.src=cachedTuTruDataUrl;this.style.opacity='1';}else if(typeof window.renderTuTruBoardToImage==='function'){window.renderTuTruBoardToImage();}}" />
           </div>
         </div>
       `;
@@ -1201,14 +1201,20 @@
           window.openTuTruImageZoomModal();
         }
       };
-      if (typeof window.fitTuTruModalLiveBoard === 'function') {
+            if (typeof window.fitTuTruModalLiveBoard === 'function') {
         window.fitTuTruModalLiveBoard();
         requestAnimationFrame(function() { window.fitTuTruModalLiveBoard(); });
       }
     }
 
-    // Giữ nguyên đồ bản Live Board phẳng chuẩn 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
-    // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
+    // Tự động kết xuất ảnh ngầm siêu tốc (40ms) ngay khi mở lá số Tứ Trụ
+    // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiện ngay Menu Hình Ảnh (Lưu / Tải / Sao chép)
+    clearTimeout(window.__tutruPreRenderTimer);
+    window.__tutruPreRenderTimer = setTimeout(function () {
+      if (!cachedTuTruDataUrl && typeof renderTuTruBoardToImage === "function") {
+        renderTuTruBoardToImage();
+      }
+    }, 40);
   }
 
   /**
@@ -1381,7 +1387,7 @@ if (typeof window !== "undefined") {
       const uaTT = navigator.userAgent || '';
       const isIOSTT = /iPad|iPhone|iPod/.test(uaTT) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
       const isAndroidTT = /Android/i.test(uaTT);
-      const canvasScale = isIOSTT ? 1.4 : (isAndroidTT || window.innerWidth <= 768 ? 1.25 : 2);
+      const canvasScale = isIOSTT ? 1.4 : (isAndroidTT || window.innerWidth <= 768 ? 1.3 : 1.5);
 
       const canvas = await html2canvas(sheet, {
         scale: canvasScale,
@@ -1443,19 +1449,18 @@ if (typeof window !== "undefined") {
         }
       });
 
-      cachedTuTruDataUrl = canvas.toDataURL('image/png');
+            cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
 
-      view.innerHTML = `<img id="tutru-board-img" src="${cachedTuTruDataUrl}" alt="Bản Đồ Lá Số Tứ Trụ" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)" style="cursor: pointer;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();">`;
-      view.scrollTop = 0;
-      view.style.cursor = 'pointer';
-      view.onclick = function(e) {
-        if (typeof window.openTuTruImageZoomModal === 'function') {
-          window.openTuTruImageZoomModal();
-        }
-      };
-      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
-      if (modalBody) modalBody.scrollTop = 0;
+      // Cập nhật src và chuyển thẻ img overlay thành ảnh thực thể 100% (opacity = 1)
+      // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiển thị Menu Hình Ảnh
+      const overlayImg = document.getElementById('tutru-board-img');
+      if (overlayImg) {
+        overlayImg.src = cachedTuTruDataUrl;
+        overlayImg.style.opacity = '1';
+        overlayImg.style.webkitTouchCallout = 'default';
+        overlayImg.style.pointerEvents = 'auto';
+      }
 
       const zoomModal = document.getElementById('modal-image-zoom');
       const zoomImg = document.getElementById('modal-zoom-img');
