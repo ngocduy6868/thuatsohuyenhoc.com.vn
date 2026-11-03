@@ -765,7 +765,7 @@ function render12Palaces(userData) {
             </div>
           </div>
           <!-- THẺ ẢNH THỰC THỂ TRONG SUỐT PHỦ LÊN LIVE BOARD PHỤC VỤ MENU CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
-          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmouseenter="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" ontouchstart="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
+          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: ${cachedTuViDataUrl ? '1' : '0.01'}; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important; -webkit-user-drag: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmouseenter="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;this.style.opacity='1';}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;this.style.opacity='1';}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" ontouchstart="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;this.style.opacity='1';}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
         </div>
       </div>
     </div>
@@ -795,18 +795,14 @@ function render12Palaces(userData) {
   }
   // Tu dong ket xuat anh ngam thong minh khi trinh duyet ranh de cap src cho the img overlay
   // Giup khi nguoi dung chuot phai (PC) hoac cham giu (Mobile) la hien ngay Menu Hinh Anh (nhu Anh 2)
+    // Tự động kết xuất ảnh ngầm siêu tốc (40ms) ngay khi mở lá số
+  // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiện ngay Menu Hình Ảnh (Lưu / Tải / Sao chép)
   clearTimeout(window.__tuviPreRenderTimer);
   window.__tuviPreRenderTimer = setTimeout(function () {
     if (!cachedTuViDataUrl && typeof window.renderTuViBoardToImage === "function") {
-      if (typeof window.requestIdleCallback === "function") {
-        window.requestIdleCallback(function () {
-          window.renderTuViBoardToImage();
-        }, { timeout: 2000 });
-      } else {
-        window.renderTuViBoardToImage();
-      }
+      window.renderTuViBoardToImage();
     }
-  }, 120);
+  }, 40);
 
 }
 
@@ -988,7 +984,7 @@ window.renderTuViBoardToImage = async function () {
     const uaTuVi = navigator.userAgent || '';
     const isIOSTuVi = /iPad|iPhone|iPod/.test(uaTuVi) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
     const isAndroidTuVi = /Android/i.test(uaTuVi);
-    const tuviScale = isIOSTuVi ? 1.5 : (isAndroidTuVi || window.innerWidth <= 768 ? 1.4 : 2);
+    const tuviScale = isIOSTuVi ? 1.4 : (isAndroidTuVi || window.innerWidth <= 768 ? 1.3 : 1.5);
 
     const canvas = await html2canvas(captureTarget, {
       scale: tuviScale,
@@ -1131,9 +1127,14 @@ window.renderTuViBoardToImage = async function () {
     });
 
     // Cập nhật src cho thẻ img overlay trên Live Board phục vụ menu chuột phải
+        // Cập nhật src và chuyển thẻ img overlay thành ảnh thực thể 100% (opacity = 1)
+    // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiển thị Menu Hình Ảnh
     const overlayImg = document.getElementById('tuvi-board-img');
     if (overlayImg) {
       overlayImg.src = cachedTuViDataUrl;
+      overlayImg.style.opacity = '1';
+      overlayImg.style.webkitTouchCallout = 'default';
+      overlayImg.style.pointerEvents = 'auto';
     }
 
     // Lưu blob và dataURL để phục vụ tải ảnh/sao chép/in ấn, TUYỆT ĐỐI không ghi đè view.innerHTML
