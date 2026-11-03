@@ -1,4 +1,4 @@
-/**
+﻿/**
  * THUẬT SỐ HUYỀN HỌC - MAIN INTERACTIVE SCRIPT
  * Tích hợp động cơ an sao Tử Vi Đẩu Số 12 Cung & Thiên Bàn
  */
@@ -765,7 +765,7 @@ function render12Palaces(userData) {
             </div>
           </div>
           <!-- THẺ ẢNH THỰC THỂ TRONG SUỐT PHỦ LÊN LIVE BOARD PHỤC VỤ MENU CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
-          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
+          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmouseenter="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" ontouchstart="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
         </div>
       </div>
     </div>
@@ -793,9 +793,21 @@ function render12Palaces(userData) {
     requestAnimationFrame(function() { window.fitTuViModalLiveBoard(); });
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
+  // Tu dong ket xuat anh ngam thong minh khi trinh duyet ranh de cap src cho the img overlay
+  // Giup khi nguoi dung chuot phai (PC) hoac cham giu (Mobile) la hien ngay Menu Hinh Anh (nhu Anh 2)
+  clearTimeout(window.__tuviPreRenderTimer);
+  window.__tuviPreRenderTimer = setTimeout(function () {
+    if (!cachedTuViDataUrl && typeof window.renderTuViBoardToImage === "function") {
+      if (typeof window.requestIdleCallback === "function") {
+        window.requestIdleCallback(function () {
+          window.renderTuViBoardToImage();
+        }, { timeout: 2000 });
+      } else {
+        window.renderTuViBoardToImage();
+      }
+    }
+  }, 120);
 
-  // Giữ nguyên đồ bản Live Board phẳng chuẩn 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
-  // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
 }
 
 /**
@@ -949,6 +961,16 @@ window.renderTuViBoardToImage = async function () {
   const staging = document.getElementById('tuvi-render-staging');
   const captureTarget = (staging && (staging.querySelector('#tuvi-staging-board') || staging.firstElementChild)) || document.getElementById("tuvi-live-board");
   if (!view || !captureTarget) return;
+  // Da co san ca anh dataUrl va blob thi khong render lai
+  if (cachedTuViBlob && cachedTuViDataUrl) return;
+  // Tranh chay trung lap nhieu tien trinh render cung luc
+  if (window.__isRenderingTuVi) {
+    while (window.__isRenderingTuVi) {
+      await new Promise(r => setTimeout(r, 60));
+    }
+    return;
+  }
+  window.__isRenderingTuVi = true;
 
   const fallbackToLiveBoard = () => {
     if (typeof window.fitTuViModalLiveBoard === "function") {
@@ -958,6 +980,7 @@ window.renderTuViBoardToImage = async function () {
 
   if (typeof html2canvas !== 'function') {
     fallbackToLiveBoard();
+    window.__isRenderingTuVi = false;
     return;
   }
 
@@ -1100,9 +1123,12 @@ window.renderTuViBoardToImage = async function () {
     });
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
-    canvas.toBlob((blob) => {
-      cachedTuViBlob = blob;
-    }, 'image/png');
+    await new Promise((resolve) => {
+      canvas.toBlob((blob) => {
+        cachedTuViBlob = blob;
+        resolve(blob);
+      }, "image/png");
+    });
 
     // Cập nhật src cho thẻ img overlay trên Live Board phục vụ menu chuột phải
     const overlayImg = document.getElementById('tuvi-board-img');
@@ -1115,6 +1141,8 @@ window.renderTuViBoardToImage = async function () {
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
     fallbackToLiveBoard();
+  } finally {
+    window.__isRenderingTuVi = false;
   }
 };
 
@@ -1122,15 +1150,20 @@ window.renderTuViBoardToImage = async function () {
  * Lấy Blob của ảnh lá số (Đảm bảo xuất chuẩn từ bản phẳng gốc 832px)
  */
 async function getTuViImageBlob() {
-  if (cachedTuViBlob && cachedTuViDataUrl) {
+  if (cachedTuViBlob) {
     return cachedTuViBlob;
   }
-  if (typeof window.renderTuViBoardToImage === 'function') {
+  if (typeof window.renderTuViBoardToImage === "function") {
     await window.renderTuViBoardToImage();
+  }
+  if (cachedTuViBlob) {
+    return cachedTuViBlob;
+  }
+  if (cachedTuViDataUrl) {
+    cachedTuViBlob = window.tuviDataURLtoBlob(cachedTuViDataUrl);
   }
   return cachedTuViBlob;
 }
-
 /**
  * Chuyển đổi chuỗi base64 DataURL thành Blob an toàn 100% trên cả giao thức file:/// và https://
  */
@@ -5866,7 +5899,7 @@ function initEventHandlers() {
     }
 
     // Giữ nguyên đồ bản Quẻ Dịch Live Card 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
-    // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
+  
   }
 
   // 7. Tra Cứu 64 Quẻ Grid & Search
