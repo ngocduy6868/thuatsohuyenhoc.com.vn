@@ -1449,18 +1449,19 @@ if (typeof window !== "undefined") {
         }
       });
 
-            cachedTuTruDataUrl = canvas.toDataURL('image/png');
+                  cachedTuTruDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedTuTruBlob = blob; }, 'image/png');
 
-      // Cập nhật src và chuyển thẻ img overlay thành ảnh thực thể 100% (opacity = 1)
-      // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiển thị Menu Hình Ảnh
-      const overlayImg = document.getElementById('tutru-board-img');
-      if (overlayImg) {
-        overlayImg.src = cachedTuTruDataUrl;
-        overlayImg.style.opacity = '1';
-        overlayImg.style.webkitTouchCallout = 'default';
-        overlayImg.style.pointerEvents = 'auto';
-      }
+      view.innerHTML = `<img id="tutru-board-img" src="${cachedTuTruDataUrl}" alt="Bản Đồ Lá Số Tứ Trụ" class="tuvi-board-img" draggable="true" title="Bản Đồ Lá Số Tứ Trụ Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)" style="cursor: pointer; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; margin: auto; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" onclick="if(typeof window.openTuTruImageZoomModal==='function')window.openTuTruImageZoomModal();">`;
+      view.scrollTop = 0;
+      view.style.cursor = 'pointer';
+      view.onclick = function(e) {
+        if (typeof window.openTuTruImageZoomModal === 'function') {
+          window.openTuTruImageZoomModal();
+        }
+      };
+      const modalBody = document.querySelector('#tutru-modal .tuvi-modal-body');
+      if (modalBody) modalBody.scrollTop = 0;
 
       const zoomModal = document.getElementById('modal-image-zoom');
       const zoomImg = document.getElementById('modal-zoom-img');

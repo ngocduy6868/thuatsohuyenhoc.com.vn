@@ -6130,17 +6130,21 @@ if (typeof window !== "undefined") {
         }
       });
 
-            cachedKinhDichDataUrl = canvas.toDataURL('image/png');
+                  cachedKinhDichDataUrl = canvas.toDataURL('image/png');
       canvas.toBlob((blob) => { cachedKinhDichBlob = blob; }, 'image/png');
 
-      // Cập nhật src và chuyển thẻ img overlay thành ảnh thực thể 100% (opacity = 1)
-      // Phục vụ chuột phải trên PC và chạm giữ ngón tay trên Mobile hiển thị Menu Hình Ảnh
-      const overlayImg = document.getElementById('kinhdich-board-img');
-      if (overlayImg) {
-        overlayImg.src = cachedKinhDichDataUrl;
-        overlayImg.style.opacity = '1';
-        overlayImg.style.webkitTouchCallout = 'default';
-        overlayImg.style.pointerEvents = 'auto';
+      if (modalView) {
+        modalView.innerHTML = `<img id="kinhdich-board-img" src="${cachedKinhDichDataUrl}" alt="Bản đồ Quẻ Dịch" class="tuvi-board-img" draggable="true" title="Bản Đồ Quẻ Dịch Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" style="cursor: pointer; max-width: 100%; max-height: 100%; width: auto; height: auto; object-fit: contain; margin: auto; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" onclick="if(typeof window.openKinhDichImageZoomModal==='function')window.openKinhDichImageZoomModal();">`;
+        const img = modalView.querySelector('img');
+        if (img) {
+          if (img.complete && img.clientWidth > 0) {
+            adjustKinhDichModalWidth();
+          } else {
+            img.onload = () => requestAnimationFrame(adjustKinhDichModalWidth);
+          }
+          requestAnimationFrame(adjustKinhDichModalWidth);
+          setTimeout(adjustKinhDichModalWidth, 80);
+        }
       }
 
       const zoomModal = document.getElementById('modal-image-zoom');
