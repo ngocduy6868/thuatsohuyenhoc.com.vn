@@ -599,7 +599,7 @@ function render12Palaces(userData) {
   }
 
   container.innerHTML = `
-    <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.downloadTuViImage==='function')window.downloadTuViImage();" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn để Tải ảnh về máy)">
+    <div id="tuvi-image-view" style="width: 100%; height: 100%; min-height: 0; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Độ nét cao - Nhấn để phóng to)">
       <div id="tuvi-scaler-box" style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer;">
         <div id="tuvi-scaler-inner" style="position: relative; margin: 0 auto; overflow: hidden; cursor: pointer;">
           <div id="tuvi-live-board" class="tuvi-sheet-wrapper" style="width: 832px; background: #F5F2EB; padding: 22px 16px; position: absolute; left: 0; top: 0; transform-origin: 0 0; box-sizing: border-box; cursor: pointer; user-select: none; -webkit-user-select: none;">
@@ -765,7 +765,7 @@ function render12Palaces(userData) {
             </div>
           </div>
           <!-- THẺ ẢNH THỰC THỂ TRONG SUỐT PHỦ LÊN LIVE BOARD PHỤC VỤ MENU CHUỘT PHẢI (LƯU / TẢI / SAO CHÉP ẢNH) -->
-          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để Tải ảnh, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.downloadTuViImage==='function')window.downloadTuViImage();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" ontouchstart="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
+          <img id="tuvi-board-img" class="tuvi-board-img" src="${cachedTuViDataUrl || ''}" alt="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống" style="position: absolute; left: 0; top: 0; width: 100%; height: 100%; opacity: 0.015; z-index: 30; cursor: pointer; display: block; -webkit-touch-callout: default !important; -webkit-user-select: auto !important; user-select: auto !important;" title="Bản Đồ Lá Số Tử Vi Chuẩn Truyền Thống (Nhấn chuột trái để phóng to, chuột phải để Lưu / Tải ảnh)" onclick="if(typeof window.openTuViImageZoomModal==='function')window.openTuViImageZoomModal();" onmousedown="if(!this.src || this.src===window.location.href){if(cachedTuViDataUrl){this.src=cachedTuViDataUrl;}else if(typeof window.renderTuViBoardToImage==='function'){window.renderTuViBoardToImage();}}" />
         </div>
       </div>
     </div>
@@ -794,20 +794,8 @@ function render12Palaces(userData) {
     setTimeout(function() { if (typeof window.fitTuViModalLiveBoard === "function") window.fitTuViModalLiveBoard(); }, 50);
   }
 
-  // Khởi động chụp ảnh ngầm thông minh trong nền sau khi Live Board đã hiển thị xong 0.5s
-  // Giúp khi người dùng bấm "Tải ảnh" là tải ngay 0 giây, hoặc chạm giữ trên Mobile là ăn ngay 100%
-  clearTimeout(window.__tuviPreRenderTimer);
-  window.__tuviPreRenderTimer = setTimeout(function () {
-    if (!cachedTuViDataUrl && typeof window.renderTuViBoardToImage === 'function') {
-      if (typeof window.requestIdleCallback === 'function') {
-        window.requestIdleCallback(function () {
-          window.renderTuViBoardToImage();
-        }, { timeout: 2500 });
-      } else {
-        window.renderTuViBoardToImage();
-      }
-    }
-  }, 500);
+  // Giữ nguyên đồ bản Live Board phẳng chuẩn 0 giây, hoàn toàn không chạy tác vụ nén ảnh ngầm để máy mượt mà 100%
+  // Tác vụ kết xuất ảnh chỉ kích hoạt khi người dùng bấm "Tải ảnh" hoặc "Phóng to"
 }
 
 /**
@@ -961,16 +949,6 @@ window.renderTuViBoardToImage = async function () {
   const staging = document.getElementById('tuvi-render-staging');
   const captureTarget = (staging && (staging.querySelector('#tuvi-staging-board') || staging.firstElementChild)) || document.getElementById("tuvi-live-board");
   if (!view || !captureTarget) return;
-  // Da co san ca anh dataUrl va blob thi khong render lai
-  if (cachedTuViBlob && cachedTuViDataUrl) return;
-  // Tranh xung dot chay nhieu tien trinh render cung luc
-  if (window.__isRenderingTuVi) {
-    while (window.__isRenderingTuVi) {
-      await new Promise(r => setTimeout(r, 60));
-    }
-    return;
-  }
-  window.__isRenderingTuVi = true;
 
   const fallbackToLiveBoard = () => {
     if (typeof window.fitTuViModalLiveBoard === "function") {
@@ -980,7 +958,6 @@ window.renderTuViBoardToImage = async function () {
 
   if (typeof html2canvas !== 'function') {
     fallbackToLiveBoard();
-    window.__isRenderingTuVi = false;
     return;
   }
 
@@ -1123,12 +1100,9 @@ window.renderTuViBoardToImage = async function () {
     });
 
     cachedTuViDataUrl = canvas.toDataURL('image/png');
-    await new Promise((resolve) => {
-      canvas.toBlob((blob) => {
-        cachedTuViBlob = blob;
-        resolve(blob);
-      }, 'image/png');
-    });
+    canvas.toBlob((blob) => {
+      cachedTuViBlob = blob;
+    }, 'image/png');
 
     // Cập nhật src cho thẻ img overlay trên Live Board phục vụ menu chuột phải
     const overlayImg = document.getElementById('tuvi-board-img');
@@ -1141,8 +1115,6 @@ window.renderTuViBoardToImage = async function () {
   } catch (err) {
     console.error('Lỗi kết xuất ảnh lá số:', err);
     fallbackToLiveBoard();
-  } finally {
-    window.__isRenderingTuVi = false;
   }
 };
 
@@ -1150,17 +1122,11 @@ window.renderTuViBoardToImage = async function () {
  * Lấy Blob của ảnh lá số (Đảm bảo xuất chuẩn từ bản phẳng gốc 832px)
  */
 async function getTuViImageBlob() {
-  if (cachedTuViBlob) {
+  if (cachedTuViBlob && cachedTuViDataUrl) {
     return cachedTuViBlob;
   }
   if (typeof window.renderTuViBoardToImage === 'function') {
     await window.renderTuViBoardToImage();
-  }
-  if (cachedTuViBlob) {
-    return cachedTuViBlob;
-  }
-  if (cachedTuViDataUrl) {
-    cachedTuViBlob = window.tuviDataURLtoBlob(cachedTuViDataUrl);
   }
   return cachedTuViBlob;
 }
