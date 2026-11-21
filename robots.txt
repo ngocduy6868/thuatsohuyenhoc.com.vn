@@ -1,0 +1,11 @@
+# Robots.txt cho thuatsohuyenhoc.com.vn
+User-agent: *
+Allow: /
+
+# Chặn file hệ thống & dữ liệu nội bộ
+Disallow: /api-baiviet.php
+Disallow: /data-baiviet.json
+Disallow: /scratch/
+
+# Sitemap
+Sitemap: https://thuatsohuyenhoc.com.vn/sitemap.xml
