@@ -3203,7 +3203,7 @@
           });
           if (el.parentNode) el.parentNode.replaceChild(h3, el);
         } else {
-          if (!el.style.fontSize || el.style.fontSize === "14pt") el.style.fontSize = "14px";
+          el.style.fontSize = "14px";
           el.style.lineHeight = "1.65";
           el.style.textAlign = "justify";
           el.style.fontFamily = "'Inter', system-ui, -apple-system, sans-serif";
@@ -3242,17 +3242,26 @@
             if (inner.getAttribute && (inner.getAttribute("color") === "#000000" || inner.getAttribute("color") === "#000" || inner.getAttribute("color") === "black")) {
               inner.removeAttribute("color");
             }
+            // Đồng nhất: gỡ cỡ chữ & font riêng của thẻ con để chữ theo đúng 1 cỡ / 1 font của đoạn
+            if (inner.style) {
+              inner.style.removeProperty("font-size");
+              inner.style.removeProperty("font-family");
+            }
+            if (inner.getAttribute && inner.getAttribute("size")) inner.removeAttribute("size");
+            if (inner.getAttribute && inner.getAttribute("face")) inner.removeAttribute("face");
           });
         }
       });
 
-      // 5. Chuẩn hóa kích cỡ chữ: BẢO TOÀN toàn bộ kích cỡ chữ tùy biến của người dùng
+      // 5. ĐỒNG NHẤT cỡ chữ & font thân bài: gỡ MỌI cỡ chữ / font riêng trên thẻ định dạng
+      //    để toàn bộ chữ trong đoạn theo đúng 1 cỡ (14px) và 1 font (Inter) của thẻ cha.
+      //    Tiêu đề (h1-h6) không bị ảnh hưởng vì cỡ nằm trên chính thẻ h, không nằm ở các thẻ con này.
       tempDiv.querySelectorAll("span, font, b, strong, i, em, u, a, small, sub, sup").forEach(el => {
-        if (el.hasAttribute("size")) {
-          const sz = el.getAttribute("size");
-          if (sz === "5" || sz === "6") el.style.fontSize = "17pt";
-          else if (sz === "4") el.style.fontSize = "14pt";
-          el.removeAttribute("size");
+        el.removeAttribute("size");
+        el.removeAttribute("face");
+        if (el.style) {
+          el.style.removeProperty("font-size");
+          el.style.removeProperty("font-family");
         }
       });
 
