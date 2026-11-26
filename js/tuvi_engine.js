@@ -359,7 +359,7 @@ const TuViEngine = (function () {
    * HÀM CHÍNH: LẬP TOÀN BỘ LÁ SỐ TỬ VI
    */
   function lapLaSo(params) {
-    const { name, day, month, year, hour, gender, calendarType, viewYear } = params;
+    const { name, day, month, year, hour, gender, calendarType, viewYear, isLeapMonth } = params;
 
     let solDay = parseInt(day, 10) || 15;
     let solMonth = parseInt(month, 10) || 7;
@@ -390,7 +390,7 @@ const TuViEngine = (function () {
       // Người dùng nhập Âm lịch -> tính Dương lịch tương ứng
       if (isLateZi) {
         // Nếu nhập Âm lịch mà giờ sinh từ 23h00 -> sang ngày Âm lịch tiếp theo
-        const solCurr = convertLunar2Solar(solDay, solMonth, solYear, false, 7.0);
+        const solCurr = convertLunar2Solar(solDay, solMonth, solYear, !!isLeapMonth, 7.0);
         const nextDate = new Date(solCurr.year, solCurr.month - 1, solCurr.day + 1);
         calcSolDay = nextDate.getDate();
         calcSolMonth = nextDate.getMonth() + 1;
@@ -404,7 +404,7 @@ const TuViEngine = (function () {
         lunDay = solDay;
         lunMonth = solMonth;
         lunYear = solYear;
-        const sol = convertLunar2Solar(lunDay, lunMonth, lunYear, false, 7.0);
+        const sol = convertLunar2Solar(lunDay, lunMonth, lunYear, !!isLeapMonth, 7.0);
         solDay = sol.day;
         solMonth = sol.month;
         solYear = sol.year;

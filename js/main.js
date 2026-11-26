@@ -1459,6 +1459,7 @@ function initEventHandlers() {
         const dayVal = parseInt(document.getElementById('select-lunar-day')?.value || '8', 10);
         const hourChi = document.getElementById('select-lunar-hour')?.value || 'Tỵ';
         const isOver60 = document.getElementById('check-over-60')?.checked || false;
+        const isLeapMonth = document.getElementById('check-lunar-leap')?.checked || false;
 
         const calcYear = calculateYearFromCanChi(can, chi, isOver60);
 
@@ -1475,6 +1476,7 @@ function initEventHandlers() {
           hour,
           gender,
           calendarType: 'Âm lịch',
+          isLeapMonth,
           viewYear: limitYear
         });
       } else {
