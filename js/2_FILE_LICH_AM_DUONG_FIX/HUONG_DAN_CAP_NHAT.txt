@@ -1,0 +1,20 @@
+====================================================================
+HƯỚNG DẪN CẬP NHẬT 2 FILE SỬA LỖI LỊCH ÂM DƯƠNG VÀ THÁNG NHUẬN
+====================================================================
+
+Thư mục này chứa 2 file đã được chuẩn hóa 100% thuật toán thiên văn:
+1. lichvannien_engine.js (Dành cho Lịch Vạn Niên & Tra Cứu Âm Dương)
+2. tuvi_engine.js (Dành cho Lập Lá Số Tử Vi)
+
+CÁCH 1: NẾU ANH TỰ TẢI LÊN GITHUB (BẰNG TRÌNH DUYỆT)
+- Bước 1: Vào kho GitHub: https://github.com/ngocduy6868/thuatsohuyenhoc.com.vn
+- Bước 2: Bấm vào thư mục "js"
+- Bước 3: Bấm nút "Add file" -> Chọn "Upload files"
+- Bước 4: Kéo thả 2 file trong thư mục này vào:
+          + lichvannien_engine.js
+          + tuvi_engine.js
+- Bước 5: Kéo xuống dưới cùng bấm nút "Commit changes".
+          Vercel sẽ tự động cập nhật lên trang web https://thuatsohuyenhoc.com.vn sau 1 phút!
+
+CÁCH 2: NẾU ANH MUỐN EM BẤM LỆNH ĐẨY THẲNG LÊN GITHUB (GIT PUSH)
+- Anh chỉ cần nhắn "đẩy lên github cho anh", em sẽ chạy lệnh git push tự động 1 giây là xong ngay!
