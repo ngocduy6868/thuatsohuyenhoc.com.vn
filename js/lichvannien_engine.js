@@ -132,8 +132,8 @@
     return Math.floor(JdNew + 0.5 + timeZone / 24);
   }
 
-  function getSunLongitude(jdn, timeZone) {
-    const T = (jdn - 2451545.0 + 0.5 - timeZone / 24.0) / 36525.0;
+  function getSunLongitude(jdn, timeZone = 7) {
+    const T = (jdn - 2451545.5 - timeZone / 24.0) / 36525.0;
     const T2 = T * T;
     const dr = PI / 180;
     const M = 357.52910 + 35999.05030 * T - 0.0001559 * T2 - 0.00000048 * T * T2;
@@ -141,14 +141,13 @@
     let DL = (1.914600 - 0.004817 * T - 0.000014 * T2) * Math.sin(dr * M);
     DL += (0.019993 - 0.000101 * T) * Math.sin(dr * 2 * M) + 0.000290 * Math.sin(dr * 3 * M);
     let L = L0 + DL;
-    L = (L * dr) % (2 * PI);
-    if (L < 0) L += 2 * PI;
-    return Math.floor(L / (PI / 6));
+    L = L * dr;
+    L = L - Math.PI * 2 * Math.floor(L / (Math.PI * 2));
+    return Math.floor(L / (Math.PI / 6));
   }
 
-  function getLunarMonth11(yy, timeZone) {
-    let off = jdFromDate(31, 12, yy) - 2415021;
-    let k = Math.floor(off / 29.530588853);
+  function getLunarMonth11(yy, timeZone = 7) {
+    let k = Math.floor((jdFromDate(31, 12, yy) - 2415021.0769986) / 29.530588853);
     let nm = getNewMoonDay(k, timeZone);
     let sunLong = getSunLongitude(nm, timeZone);
     if (sunLong >= 9) {
@@ -157,8 +156,8 @@
     return nm;
   }
 
-  function getLeapMonthOffset(a11, timeZone) {
-    let k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+  function getLeapMonthOffset(a11, timeZone = 7) {
+    let k = Math.floor((a11 - 2415021.0769986) / 29.530588853 + 0.5);
     let last = 0;
     let i = 1;
     let arc = getSunLongitude(getNewMoonDay(k + i, timeZone), timeZone);
@@ -172,49 +171,45 @@
 
   function convertSolar2Lunar(dd, mm, yyyy, timeZone = 7) {
     const dayNumber = jdFromDate(dd, mm, yyyy);
-    const k = Math.floor((dayNumber - 2415021.076998695) / 29.530588853);
-    let lastNm = getNewMoonDay(k + 1, timeZone);
-    if (lastNm > dayNumber) {
-      lastNm = getNewMoonDay(k, timeZone);
+    const k = Math.floor((dayNumber - 2415021.0769986) / 29.530588853);
+    let monthStart = getNewMoonDay(k + 1, timeZone);
+    if (monthStart > dayNumber) {
+      monthStart = getNewMoonDay(k, timeZone);
     }
     let a11 = getLunarMonth11(yyyy, timeZone);
     let b11 = a11;
-    let y = yyyy;
-    if (a11 >= lastNm) {
-      y = yyyy - 1;
-      a11 = getLunarMonth11(y, timeZone);
+    let lunarYear;
+    if (a11 >= monthStart) {
+      lunarYear = yyyy;
+      a11 = getLunarMonth11(yyyy - 1, timeZone);
     } else {
+      lunarYear = yyyy + 1;
       b11 = getLunarMonth11(yyyy + 1, timeZone);
     }
-    let kCurrent = Math.floor((lastNm - 2415021.076998695) / 29.530588853 + 0.5);
-    let k11 = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
-    let diff = kCurrent - k11;
-    let leap = false;
-    let lunarYear = y + 1;
-    let leapMonth = 0;
-    if (Math.floor((b11 - a11) / 29) > 12) {
-      leapMonth = getLeapMonthOffset(a11, timeZone);
-      let leapIndex = leapMonth - 1;
-      if (diff === leapIndex) {
-        leap = true;
-      }
-      if (diff > leapIndex) {
-        diff--;
+    const lunarDay = dayNumber - monthStart + 1;
+    const diff = Math.floor((monthStart - a11) / 29);
+    let lunarLeap = 0;
+    let lunarMonth = diff + 11;
+    if (b11 - a11 > 365) {
+      const leapMonthDiff = getLeapMonthOffset(a11, timeZone);
+      if (diff >= leapMonthDiff) {
+        lunarMonth = diff + 10;
+        if (diff === leapMonthDiff) {
+          lunarLeap = 1;
+        }
       }
     }
-    let lunarMonth = diff + 11;
     if (lunarMonth > 12) {
       lunarMonth -= 12;
     }
     if (lunarMonth >= 11 && diff < 4) {
-      lunarYear -= 1;
+      lunarYear--;
     }
-    const lunarDay = dayNumber - lastNm + 1;
     return {
       day: lunarDay,
       month: lunarMonth,
       year: lunarYear,
-      leap,
+      leap: lunarLeap === 1,
       jd: dayNumber
     };
   }
@@ -226,17 +221,17 @@
     } else {
       a11 = getLunarMonth11(lunarYear, timeZone);
     }
-    let b11 = getLunarMonth11(lunarYear, timeZone);
-    let k = Math.floor((a11 - 2415021.076998695) / 29.530588853 + 0.5);
+    let k = Math.floor((a11 - 2415021.0769986) / 29.530588853 + 0.5);
     let off = lunarMonth - 11;
     if (off < 0) off += 12;
-    if (Math.floor((b11 - a11) / 29) > 12) {
+    if (getLunarMonth11(lunarYear, timeZone) - a11 > 365) {
       let leapOff = getLeapMonthOffset(a11, timeZone);
-      let leapIndex = leapOff - 1;
-      if (lunarLeap) {
+      let leapMonth = leapOff - 2;
+      if (leapMonth < 0) leapMonth += 12;
+      if ((lunarLeap === true || lunarLeap === 1) && lunarMonth === leapMonth) {
         off = leapOff;
       } else if (off >= leapOff) {
-        off += 1;
+        off++;
       }
     }
     let nm = getNewMoonDay(k + off, timeZone);

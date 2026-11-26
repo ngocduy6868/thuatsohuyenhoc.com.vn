@@ -1,4 +1,4 @@
-﻿/**
+/**
  * THUẬT SỐ HUYỀN HỌC - MAIN INTERACTIVE SCRIPT
  * Tích hợp động cơ an sao Tử Vi Đẩu Số 12 Cung & Thiên Bàn
  */
@@ -1630,8 +1630,8 @@ function initEventHandlers() {
     return Math.floor(Jd1 + C1 - deltat + 0.5 + timeZone / 24);
   }
 
-  function getSunLongitude(jdn, timeZone) {
-    let T = (jdn - 2451545.0 + 0.5 - timeZone / 24) / 36525;
+  function getSunLongitude(jdn, timeZone = 7) {
+    let T = (jdn - 2451545.5 - timeZone / 24) / 36525;
     let dr = PI / 180;
     let L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T * T;
     let M = 357.52910 + 35999.05030 * T - 0.0001559 * T * T - 0.00000048 * T * T * T;
@@ -1643,8 +1643,8 @@ function initEventHandlers() {
     return Math.floor(theta / PI * 6);
   }
 
-  function getLunarMonth11(yy, timeZone) {
-    let off = jdFromDate(31, 12, yy) - 2415021;
+  function getLunarMonth11(yy, timeZone = 7) {
+    let off = jdFromDate(31, 12, yy) - 2415021.0769986;
     let k = Math.floor(off / 29.530588853);
     let nm = getNewMoonDay(k, timeZone);
     let sunLong = getSunLongitude(nm, timeZone);
@@ -1652,7 +1652,7 @@ function initEventHandlers() {
     return nm;
   }
 
-  function getLeapMonthOffset(a11, timeZone) {
+  function getLeapMonthOffset(a11, timeZone = 7) {
     let k = Math.floor((a11 - 2415021.0769986) / 29.530588853 + 0.5);
     let last = 0;
     let i = 1;
@@ -1665,7 +1665,12 @@ function initEventHandlers() {
     return i - 1;
   }
 
-  function convertSolar2Lunar(dd, mm, yy, timeZone) {
+  function convertSolar2Lunar(dd, mm, yy, timeZone = 7) {
+    if (window.LICH_VAN_NIEN_ENGINE && typeof window.LICH_VAN_NIEN_ENGINE.convertSolar2Lunar === 'function') {
+      const res = window.LICH_VAN_NIEN_ENGINE.convertSolar2Lunar(dd, mm, yy, timeZone);
+      if (Array.isArray(res)) return res;
+      return [res.day, res.month, res.year, res.leap ? 1 : 0];
+    }
     let dayNumber = jdFromDate(dd, mm, yy);
     let k = Math.floor((dayNumber - 2415021.0769986) / 29.530588853);
     let monthStart = getNewMoonDay(k + 1, timeZone);
@@ -1696,7 +1701,10 @@ function initEventHandlers() {
     return [lunarDay, lunarMonth, lunarYear, lunarLeap];
   }
 
-  function convertLunar2Solar(lunarDay, lunarMonth, lunarYear, lunarLeap, timeZone) {
+  function convertLunar2Solar(lunarDay, lunarMonth, lunarYear, lunarLeap, timeZone = 7) {
+    if (window.LICH_VAN_NIEN_ENGINE && typeof window.LICH_VAN_NIEN_ENGINE.convertLunar2Solar === 'function') {
+      return window.LICH_VAN_NIEN_ENGINE.convertLunar2Solar(lunarDay, lunarMonth, lunarYear, lunarLeap, timeZone);
+    }
     let a11;
     if (lunarMonth < 11) a11 = getLunarMonth11(lunarYear - 1, timeZone);
     else a11 = getLunarMonth11(lunarYear, timeZone);
@@ -1838,10 +1846,13 @@ function initEventHandlers() {
     const chiNgay = CHI[chiNgayIdx];
     const canChiNgay = `${canNgay} ${chiNgay}`;
 
-    const lunar = convertSolar2Lunar(d, m, y, 7.0);
-    const lDay = lunar[0];
-    const lMonth = lunar[1];
-    const lYear = lunar[2];
+    const lunar = (window.LICH_VAN_NIEN_ENGINE && typeof window.LICH_VAN_NIEN_ENGINE.convertSolar2Lunar === 'function')
+      ? window.LICH_VAN_NIEN_ENGINE.convertSolar2Lunar(d, m, y, 7.0)
+      : convertSolar2Lunar(d, m, y, 7.0);
+    const lDay = Array.isArray(lunar) ? lunar[0] : (lunar.day || lunar[0]);
+    const lMonth = Array.isArray(lunar) ? lunar[1] : (lunar.month || lunar[1]);
+    const lYear = Array.isArray(lunar) ? lunar[2] : (lunar.year || lunar[2]);
+    const isLeap = Array.isArray(lunar) ? (lunar[3] === 1) : Boolean(lunar.leap);
 
     const canNam = CAN[(lYear + 6) % 10];
     const chiNam = CHI[(lYear + 8) % 12];
@@ -1849,7 +1860,7 @@ function initEventHandlers() {
 
     const canThang = CAN[(lYear * 12 + lMonth + 3) % 10];
     const chiThang = CHI[(lMonth + 1) % 12];
-    const canChiThang = `${canThang} ${chiThang}`;
+    const canChiThang = `${canThang} ${chiThang}${isLeap ? ' (Nhuận)' : ''}`;
 
     // Khởi Giờ Tý theo Can Ngày (Ngũ Thử Độn)
     const mapKhoiCan = {
@@ -1878,7 +1889,7 @@ function initEventHandlers() {
     if (elNamDuong) elNamDuong.innerText = y;
 
     const elAmNgayThang = document.getElementById("main-txt-am-ngay-thang");
-    if (elAmNgayThang) elAmNgayThang.innerText = `${lDay} - ${lMonth}`;
+    if (elAmNgayThang) elAmNgayThang.innerText = `${lDay} - ${lMonth}${isLeap ? ' (Nhuận)' : ''}`;
 
     const elThu = document.getElementById("main-txt-thu");
     if (elThu) elThu.innerText = thuStr;
@@ -1893,7 +1904,7 @@ function initEventHandlers() {
     const elNgayAm = document.getElementById("main-txt-ngay-am");
     if (elNgayAm) elNgayAm.innerText = lDay;
     const elThangAm = document.getElementById("main-txt-thang-am");
-    if (elThangAm) elThangAm.innerText = lMonth;
+    if (elThangAm) elThangAm.innerText = isLeap ? `${lMonth} (Nhuận)` : lMonth;
     const elNamAm = document.getElementById("main-txt-nam-am");
     if (elNamAm) elNamAm.innerText = lYear;
 
@@ -5234,13 +5245,15 @@ function initEventHandlers() {
           };
         } else {
           // Lấy quẻ theo Dương lịch
-          const y = parseInt(selNam?.value, 10) || curYear;
-          const m = parseInt(selThang?.value, 10) || curMonth;
-          const d = parseInt(selNgay?.value, 10) || curDate;
-          const h = parseInt(selGio?.value, 10) || curHour;
-          const mi = parseInt(selPhut?.value, 10) || curMin;
+          const y = (selNam && !isNaN(parseInt(selNam.value, 10))) ? parseInt(selNam.value, 10) : curYear;
+          const m = (selThang && !isNaN(parseInt(selThang.value, 10))) ? parseInt(selThang.value, 10) : curMonth;
+          const d = (selNgay && !isNaN(parseInt(selNgay.value, 10))) ? parseInt(selNgay.value, 10) : curDate;
+          const h = (selGio && !isNaN(parseInt(selGio.value, 10))) ? parseInt(selGio.value, 10) : curHour;
+          const mi = (selPhut && !isNaN(parseInt(selPhut.value, 10))) ? parseInt(selPhut.value, 10) : curMin;
           options.duongLich = { nam: y, thang: m, ngay: d, gio: h, phut: mi };
           options.date = new Date(y, m - 1, d, h, mi);
+          const pad = n => String(n).padStart(2, '0');
+          options.timeStr = pad(d) + '/' + pad(m) + '/' + y + ' ' + pad(h) + ':' + pad(mi);
         }
 
         const result = window.DICH_QUAI_ENGINE.lapQueMaiHoa(shared.question, options);
@@ -5790,6 +5803,8 @@ function initEventHandlers() {
   };
 
   // 6. Hiển thị Kết quả ra Bảng Xuất Quẻ (Trang Dịch Quái)
+  let cachedKinhDichDataUrl = null;
+  let cachedKinhDichBlob = null;
   function hienThiKetQuaXuatQue(resultData) {
     const xuatQueContainer = document.getElementById('xuat-que-container');
     const resultBox = document.getElementById('kinhdich-result');
@@ -5798,6 +5813,10 @@ function initEventHandlers() {
     const xuatQuePanel = document.getElementById('view-xuat-que');
 
     if (!window.DICH_QUAI_ENGINE) return;
+
+    // Reset bộ nhớ đệm ảnh cũ để đảm bảo mỗi lần người dùng đổi ngày/giờ/quẻ đều xuất ra ảnh mới 100%
+    cachedKinhDichDataUrl = null;
+    cachedKinhDichBlob = null;
 
     // Đổi tên Subtab 4 động
     if (resultData && resultData.methodName) {
@@ -6011,8 +6030,6 @@ function initEventHandlers() {
   // =========================================================================
   // XUẤT QUẺ KINH DỊCH THÀNH ẢNH & MODAL POPUP (CHUẨN TỬ VI & TỨ TRỤ)
   // =========================================================================
-  let cachedKinhDichDataUrl = null;
-  let cachedKinhDichBlob = null;
 window.fitKinhDichModalLiveBoard = function() {
   const box = document.getElementById("kinhdich-scaler-box") || document.getElementById("kinhdich-image-view");
   const inner = document.getElementById("kinhdich-scaler-inner");
@@ -6204,6 +6221,13 @@ if (typeof window !== "undefined") {
     const modal = document.getElementById('kinhdich-modal');
     if (modal) {
       modal.classList.add('hidden');
+    }
+    cachedKinhDichDataUrl = null;
+    cachedKinhDichBlob = null;
+    const oldImg = document.getElementById('kinhdich-board-img');
+    if (oldImg) {
+      oldImg.src = '';
+      oldImg.style.opacity = '0.01';
     }
   };
 

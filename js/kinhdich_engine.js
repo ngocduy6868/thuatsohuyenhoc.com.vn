@@ -1,4 +1,4 @@
-/**
+﻿/**
  * =========================================================================
  * KINHDICH_ENGINE.JS - HỆ THỐNG DỰ TRẮC KINH DỊCH & BỐC PHỆ LỤC HÀO
  * Thuật Số Huyền Học - Chuẩn hóa theo Đồ Bản Nạp Giáp Bốc Phệ Cổ Truyền
@@ -382,6 +382,92 @@
     let date = options.date || new Date();
     let canChi = options.canChi || getCanChiThoiDiem(date, options.cachTinhToan);
 
+    // 1. Khởi quẻ theo 3 số tâm khởi
+    if (options.mode === 'number' && options.num1 && options.num2 && options.num3) {
+      const thuongId = options.num1 % 8 === 0 ? 8 : options.num1 % 8;
+      const haId = options.num2 % 8 === 0 ? 8 : options.num2 % 8;
+      const dongHao = options.num3 % 6 === 0 ? 6 : options.num3 % 6;
+      return buildDichQuaiFullResult({
+        method: 'Mai Hoa Dịch Số (3 Số Tâm Khởi)',
+        methodName: 'Xuất Quẻ Mai Hoa',
+        methodTitle: 'PHẦN MỀM LẬP QUẺ DỊCH - XUẤT QUẺ MAI HOA',
+        question: question || 'Khởi quẻ theo 3 con số tâm thức',
+        timeStr: options.timeStr || `${date.getDate().toString().padStart(2, '0')}/${(date.getMonth() + 1).toString().padStart(2, '0')}/${date.getFullYear()} ${date.getHours().toString().padStart(2, '0')}:${date.getMinutes().toString().padStart(2, '0')}`,
+        canChi,
+        thuongId,
+        haId,
+        dongList: [dongHao],
+        dungThan: options.dungThan || 5,
+        cachTinhToan: options.cachTinhToan !== undefined ? options.cachTinhToan : 1
+      });
+    }
+
+    // 2. Khởi quẻ theo Âm Lịch trực tiếp
+    if (options.amLich) {
+      const am = options.amLich;
+      const canNam = am.canNam || canChi.canNam || 'Giáp';
+      const chiNam = am.chiNam || canChi.chiNam || 'Thìn';
+      const thangAm = parseInt(am.thangAm, 10) || 1;
+      const ngayAm = parseInt(am.ngayAm, 10) || 1;
+      const chiGio = am.chiGioAm || 'Tý';
+
+      const namChiVal = CHI.indexOf(chiNam) + 1;
+      const thangVal = thangAm;
+      const ngayVal = ngayAm;
+      const gioChiVal = CHI.indexOf(chiGio) + 1;
+
+      const tongThuong = namChiVal + thangVal + ngayVal;
+      const thuongId = tongThuong % 8 === 0 ? 8 : tongThuong % 8;
+
+      const tongHa = namChiVal + thangVal + ngayVal + gioChiVal;
+      const haId = tongHa % 8 === 0 ? 8 : tongHa % 8;
+
+      const dongHao = tongHa % 6 === 0 ? 6 : tongHa % 6;
+
+      // Tính Can Chi cho thời điểm Âm Lịch theo cổ truyền
+      const canNamIdx = CAN.indexOf(canNam);
+      const canDanIdx = ((canNamIdx % 5) * 2 + 2) % 10;
+      const chiThangIdx = (thangAm + 1) % 12; // Tháng 1 = Dần (idx 2)
+      const stepFromDan = (chiThangIdx - 2 + 12) % 12;
+      const canThang = CAN[(canDanIdx + stepFromDan) % 10];
+      const chiThang = CHI[chiThangIdx];
+
+      // Chi Giờ và Can Giờ
+      const chiGioIdx = CHI.indexOf(chiGio);
+      const canNgay = canChi.canNgay || 'Giáp';
+      const chiNgay = canChi.chiNgay || 'Tý';
+      const canNgayIdx = CAN.indexOf(canNgay);
+      const canGioStart = (canNgayIdx % 5) * 2;
+      const canGio = CAN[(canGioStart + chiGioIdx) % 10];
+
+      canChi = {
+        canNam, chiNam,
+        canThang, chiThang,
+        canNgay, chiNgay,
+        canGio, chiGio,
+        tietKhi: canChi.tietKhi || 'Âm Lịch Cổ Truyền',
+        amLichNgay: ngayAm,
+        amLichThang: thangAm,
+        amLichNam: `${canNam} ${chiNam}`
+      };
+
+      const pad = n => String(n).padStart(2, '0');
+      return buildDichQuaiFullResult({
+        method: 'Mai Hoa Dịch Số (Âm Lịch)',
+        methodName: 'Xuất Quẻ Mai Hoa',
+        methodTitle: 'PHẦN MỀM LẬP QUẺ DỊCH - XUẤT QUẺ MAI HOA',
+        question: question || 'Xem tổng quan sự việc đại sự',
+        timeStr: options.timeStr || `Ngày ${pad(ngayAm)}/${pad(thangAm)} Âm Lịch (Năm ${canNam} ${chiNam} - Giờ ${chiGio})`,
+        canChi,
+        thuongId,
+        haId,
+        dongList: [dongHao],
+        dungThan: options.dungThan || 5,
+        cachTinhToan: options.cachTinhToan !== undefined ? options.cachTinhToan : 2
+      });
+    }
+
+    // 3. Khởi quẻ theo Dương Lịch (Thời Gian Lập Quẻ Chuẩn)
     let namChiVal = CHI.indexOf(canChi.chiNam) + 1;
     let thangVal = canChi.amLichThang || (date.getMonth() + 1);
     let ngayVal = canChi.amLichNgay || date.getDate();
@@ -1245,8 +1331,26 @@
 
     // 6. Tiết Khí
     let tietKhi = 'Bạch Lộ';
-    if (typeof window !== 'undefined' && window.LICH_VAN_NIEN && typeof window.LICH_VAN_NIEN.getTietKhiByJd === 'function') {
-      tietKhi = window.LICH_VAN_NIEN.getTietKhiByJd(jdn, 7);
+    const lvn = (typeof window !== 'undefined') ? (window.LICH_VAN_NIEN_ENGINE || window.LICH_VAN_NIEN) : null;
+    if (lvn && typeof lvn.getTietKhiByJd === 'function') {
+      tietKhi = lvn.getTietKhiByJd(jdn, 7);
+    } else {
+      const TIET_KHI_LIST = [
+        'Xuân Phân', 'Thanh Minh', 'Cốc Vũ', 'Lập Hạ', 'Tiểu Mãn', 'Mang Chủng',
+        'Hạ Chí', 'Tiểu Thử', 'Đại Thử', 'Lập Thu', 'Xử Thử', 'Bạch Lộ',
+        'Thu Phân', 'Hàn Lộ', 'Sương Giáng', 'Lập Đông', 'Tiểu Tuyết', 'Đại Tuyết',
+        'Đông Chí', 'Tiểu Hàn', 'Đại Hàn', 'Lập Xuân', 'Vũ Thủy', 'Kinh Trập'
+      ];
+      const T = (jdn - 2451545.5 - 7.0 / 24) / 36525;
+      const dr = Math.PI / 180;
+      const L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T * T;
+      const M = 357.52910 + 35999.05030 * T - 0.0001559 * T * T - 0.00000048 * T * T * T;
+      let C = (1.914600 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M * dr);
+      C += (0.019993 - 0.000101 * T) * Math.sin(2 * M * dr) + 0.000290 * Math.sin(3 * M * dr);
+      let theta = (L0 + C) * dr;
+      theta = theta - Math.PI * 2 * Math.floor(theta / (Math.PI * 2));
+      const sunLong = Math.floor(theta / Math.PI * 6);
+      tietKhi = TIET_KHI_LIST[sunLong] || 'Bạch Lộ';
     }
 
     // 7. Chi Tháng & Can Tháng

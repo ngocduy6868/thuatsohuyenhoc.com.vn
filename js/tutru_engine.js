@@ -1642,6 +1642,13 @@ if (typeof window !== "undefined") {
   window.closeTuTruModal = function () {
     const modal = document.getElementById('tutru-modal');
     if (modal) modal.classList.add('hidden');
+    cachedTuTruDataUrl = null;
+    cachedTuTruBlob = null;
+    const oldImg = document.getElementById('tutru-board-img');
+    if (oldImg) {
+      oldImg.src = '';
+      oldImg.style.opacity = '0.01';
+    }
   };
 
   window.openTuTruImageZoomModal = async function () {
