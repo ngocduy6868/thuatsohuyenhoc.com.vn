@@ -2973,6 +2973,23 @@
     }
   
   </style>
+<style id="pm-article-sync-style">
+/* Dong nhat dinh dang bai viet trang phu GIONG trang chinh (modal) - dat cuoi de thang */
+#tuvi-xongdat-content p, #thang-tuvi-thang-content p, #ngay-tuvi-ngay-content p {
+  font-size: 15.5px !important; line-height: 1.68 !important; margin: 0 0 12px 0 !important; text-align: justify !important;
+}
+#tuvi-xongdat-content h3, #thang-tuvi-thang-content h3, #ngay-tuvi-ngay-content h3,
+#tuvi-xongdat-content h1, #tuvi-xongdat-content h2, #thang-tuvi-thang-content h1, #thang-tuvi-thang-content h2, #ngay-tuvi-ngay-content h1, #ngay-tuvi-ngay-content h2 {
+  font-size: 18px !important; font-weight: 700 !important; color: #7A1414 !important; line-height: 1.45 !important;
+  margin: 22px 0 10px 0 !important; border-left: 0 !important; padding-left: 0 !important;
+}
+#tuvi-xongdat-content h4, #thang-tuvi-thang-content h4, #ngay-tuvi-ngay-content h4 {
+  font-size: 16px !important; font-weight: 700 !important; color: #7A1414 !important; line-height: 1.45 !important; margin: 16px 0 8px 0 !important;
+}
+#tuvi-xongdat-content li, #thang-tuvi-thang-content li, #ngay-tuvi-ngay-content li {
+  font-size: 15.5px !important; line-height: 1.52 !important; margin: 0 0 5px 0 !important; text-align: justify !important;
+}
+</style>
 </head>
 <body>
 
@@ -13819,5 +13836,52 @@ function generateTuViModalContent(birthYear, namXem, gender, conGiapKey) {
   window.saoChepKetQuaNgay = saoChepKetQua;
 })();
 </script>
+<script id="pm-force-article-style">
+(function(){
+  var IDS = ["tuvi-xongdat-content","thang-tuvi-thang-content","ngay-tuvi-ngay-content","subpage-modal-body","xd-zodiac-content","thang-res-topic-content","ngay-res-topic-content"];
+  function force(){
+    IDS.forEach(function(id){
+      var box = document.getElementById(id); if(!box) return;
+      box.querySelectorAll("p").forEach(function(p){
+        p.style.setProperty("font-size","15.5px","important");
+        p.style.setProperty("line-height","1.68","important");
+        p.style.setProperty("text-align","justify","important");
+        p.style.setProperty("margin","0 0 12px 0","important");
+      });
+      box.querySelectorAll("li").forEach(function(li){
+        li.style.setProperty("font-size","15.5px","important");
+        li.style.setProperty("line-height","1.52","important");
+      });
+      box.querySelectorAll("h1,h2,h3").forEach(function(h){
+        h.style.setProperty("font-size","18px","important");
+        h.style.setProperty("color","#7A1414","important");
+        h.style.setProperty("line-height","1.45","important");
+        h.style.setProperty("margin","22px 0 10px 0","important");
+        h.style.setProperty("border-left","0","important");
+        h.style.setProperty("padding-left","0","important");
+        h.style.setProperty("font-weight","700","important");
+      });
+      box.querySelectorAll("h4,h5,h6").forEach(function(h){
+        h.style.setProperty("font-size","16px","important");
+        h.style.setProperty("color","#7A1414","important");
+        h.style.setProperty("line-height","1.45","important");
+      });
+      box.querySelectorAll("span,font").forEach(function(x){
+        x.style.setProperty("font-size","inherit","important");
+        x.style.setProperty("line-height","inherit","important");
+      });
+    });
+  }
+  function hook(){
+    IDS.forEach(function(id){
+      var b = document.getElementById(id); if(!b) return;
+      new MutationObserver(function(){ clearTimeout(b.__ft); b.__ft = setTimeout(force,80); }).observe(b,{childList:true,subtree:true});
+    });
+    force(); setTimeout(force,500); setTimeout(force,1500);
+  }
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", hook); else hook();
+})();
+</script>
+
 </body>
 </html>
