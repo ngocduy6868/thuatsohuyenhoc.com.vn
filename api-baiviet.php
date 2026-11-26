@@ -4,12 +4,16 @@
  * Tự động nhận dữ liệu từ trang viet-bai.html và cập nhật cho toàn bộ website
  */
 header('Content-Type: application/json; charset=utf-8');
-header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: GET, POST, OPTIONS');
-header('Access-Control-Allow-Headers: Content-Type');
 
-if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-    http_response_code(200);
+// KHÓA API: chỉ chấp nhận yêu cầu mang khóa bí mật (header X-Api-Key).
+// Khóa nằm NGOÀI thư mục web, không bao giờ đưa lên GitHub.
+// Chưa có file khóa => từ chối mọi yêu cầu.
+$keyFile = dirname(__DIR__) . '/thuatso-secrets/api_key.txt';
+$serverKey = is_readable($keyFile) ? trim(file_get_contents($keyFile)) : '';
+$clientKey = isset($_SERVER['HTTP_X_API_KEY']) ? $_SERVER['HTTP_X_API_KEY'] : '';
+if ($serverKey === '' || strlen($serverKey) < 32 || !hash_equals($serverKey, $clientKey)) {
+    http_response_code(403);
+    echo json_encode(['success' => false, 'message' => 'API đã khóa.'], JSON_UNESCAPED_UNICODE);
     exit;
 }
 
