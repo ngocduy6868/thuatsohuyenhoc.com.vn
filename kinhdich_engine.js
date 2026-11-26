@@ -1,4 +1,4 @@
-/**
+﻿/**
  * =========================================================================
  * KINHDICH_ENGINE.JS - HỆ THỐNG DỰ TRẮC KINH DỊCH & BỐC PHỆ LỤC HÀO
  * Thuật Số Huyền Học - Chuẩn hóa theo Đồ Bản Nạp Giáp Bốc Phệ Cổ Truyền
@@ -1334,6 +1334,23 @@
     const lvn = (typeof window !== 'undefined') ? (window.LICH_VAN_NIEN_ENGINE || window.LICH_VAN_NIEN) : null;
     if (lvn && typeof lvn.getTietKhiByJd === 'function') {
       tietKhi = lvn.getTietKhiByJd(jdn, 7);
+    } else {
+      const TIET_KHI_LIST = [
+        'Xuân Phân', 'Thanh Minh', 'Cốc Vũ', 'Lập Hạ', 'Tiểu Mãn', 'Mang Chủng',
+        'Hạ Chí', 'Tiểu Thử', 'Đại Thử', 'Lập Thu', 'Xử Thử', 'Bạch Lộ',
+        'Thu Phân', 'Hàn Lộ', 'Sương Giáng', 'Lập Đông', 'Tiểu Tuyết', 'Đại Tuyết',
+        'Đông Chí', 'Tiểu Hàn', 'Đại Hàn', 'Lập Xuân', 'Vũ Thủy', 'Kinh Trập'
+      ];
+      const T = (jdn - 2451545.5 - 7.0 / 24) / 36525;
+      const dr = Math.PI / 180;
+      const L0 = 280.46645 + 36000.76983 * T + 0.0003032 * T * T;
+      const M = 357.52910 + 35999.05030 * T - 0.0001559 * T * T - 0.00000048 * T * T * T;
+      let C = (1.914600 - 0.004817 * T - 0.000014 * T * T) * Math.sin(M * dr);
+      C += (0.019993 - 0.000101 * T) * Math.sin(2 * M * dr) + 0.000290 * Math.sin(3 * M * dr);
+      let theta = (L0 + C) * dr;
+      theta = theta - Math.PI * 2 * Math.floor(theta / (Math.PI * 2));
+      const sunLong = Math.floor(theta / Math.PI * 6);
+      tietKhi = TIET_KHI_LIST[sunLong] || 'Bạch Lộ';
     }
 
     // 7. Chi Tháng & Can Tháng
