@@ -7391,19 +7391,13 @@
       syncPhysicalMasterArticlesToLocalStorage();
 
       // Khi bấm F5 hoặc tải lại trang: BẢO TOÀN NGUYÊN VẸN TRẠNG THÁI ĐANG SOẠN HOẶC ĐANG SỬA
-      let isRestoredOnLoad = false;
+      // KHONG tu dong mo lai bai dang sua khi tai/quay lai trang -> luon la khung trang (yeu cau USER)
       try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const editId = urlParams.get("edit") || sessionStorage.getItem("VIET_BAI_CURRENT_EDITING_ID");
-        if (editId) {
-          editPost(editId);
-          isRestoredOnLoad = true;
-        }
+        sessionStorage.removeItem("VIET_BAI_CURRENT_EDITING_ID");
+        const _u = new URL(window.location.href);
+        if (_u.searchParams.has("edit")) { _u.searchParams.delete("edit"); window.history.replaceState(null, "", _u.toString()); }
       } catch(e) {}
-
-      if (!isRestoredOnLoad) {
-        checkDraftOnLoad();
-      }
+      checkDraftOnLoad();
 
       // Giữ nguyên 100% danh sách bài viết bên dưới với dữ liệu và hình ảnh mới nhất
       renderExistingPosts();
