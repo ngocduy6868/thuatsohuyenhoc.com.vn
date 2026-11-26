@@ -5907,23 +5907,8 @@
 
         // NẾU LÀ CẬP NHẬT BÀI CŨ: Giữ nguyên dữ liệu vừa cập nhật trong form & trên URL để bảo toàn 100% khi F5
         // NẾU LÀ ĐĂNG BÀI MỚI: Reset form trắng sạch để sẵn sàng viết bài tiếp
-        if (isUpdatingExisting) {
-          try {
-            sessionStorage.setItem("VIET_BAI_CURRENT_EDITING_ID", targetId);
-            const url = new URL(window.location.href);
-            url.searchParams.set("edit", targetId);
-            window.history.replaceState(null, "", url.toString());
-            document.getElementById("editing-post-id").value = targetId;
-            document.getElementById("editing-post-name").innerText = title;
-            document.getElementById("editing-alert").classList.add("active");
-            document.getElementById("btn-submit-text").innerText = "CẬP NHẬT BÀI VIẾT";
-            document.getElementById("form-panel-title").innerText = "CHỈNH SỬA BÀI VIẾT";
-            const btnSaveNew = document.getElementById("btn-save-as-new");
-            if (btnSaveNew) btnSaveNew.style.display = "inline-flex";
-          } catch(e) {}
-        } else {
-          resetFormToNew();
-        }
+        // CẬP NHẬT/ĐĂNG XONG: LUÔN xóa trắng khung để sẵn sàng soạn bài mới (theo yêu cầu USER)
+        resetFormToNew();
 
         // Giữ vị trí người dùng ổn định tại form, không cuộn giật làm văng màn hình
         if (successBanner) {
